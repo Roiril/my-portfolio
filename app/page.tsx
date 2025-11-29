@@ -224,7 +224,7 @@ export default function Home() {
             </p>
             
             <div className="mt-6">
-              <h3 className="font-bold text-black mb-2">Technical Skills</h3>
+              <h3 className="font-bold text-black mb-2">今まで使ってきたもの</h3>
               <div className="flex flex-wrap gap-2">
                 {['Unity', 'Blender', 'Processing', 'TypeScript', 'Next.js', 'React', 'Supabase','C#' ,'Python', 'Suno AI'].map((skill) => (
                   <span key={skill} className="px-3 py-1 bg-gray-100 text-gray-800 rounded-md text-sm border border-gray-300">
@@ -257,9 +257,9 @@ export default function Home() {
                     </div>
                     <h3 className="text-2xl font-bold mb-3 text-black">Concept Movie: UNIQLO "Future Service"</h3>
                     <p className="text-gray-600 text-sm mb-6 leading-relaxed">
-                      企画からCG制作(Blender)、VFX合成、動画編集、そしてBGMの作曲まで、全工程を単独で制作した架空のサービス紹介動画。
-                      実写映像と3DCGを違和感なく合成し、近未来の購買体験を映像化しました。
-                      クリエイティブの総力を結集した意欲作です。
+                      架空のサービス紹介動画。CG制作(Blender)、VFX合成、動画編集、そしてBGMの作曲(SunoAI)を担当しました。
+                      近未来の購買体験を映像化しました。
+                      大学3年で作りましたが、作るのすっごい楽しかったです！
                     </p>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {['Blender', 'VFX', 'Video Editing', 'Composition', 'DTM'].map(tag => (
@@ -288,10 +288,11 @@ export default function Home() {
                   ></div>
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-lg font-bold mb-2 text-black">Generative Aquarium</h3>
+                  <h3 className="text-lg font-bold mb-2 text-black">Aquarium inProcessing</h3>
                   <p className="text-gray-600 text-sm mb-4 flex-grow">
-                    Processingを用いたプロシージャル・アニメーション。
+                    Processingを用いたアクアリウムプログラミング。
                     コードによって生み出された魚たちが、群れを成して自律的に泳ぎ回る様子をシミュレーションしました。
+                    大学2年の作品です。懐かしい、夢中になってモデリングしたりしてました
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">Processing</span>
@@ -315,7 +316,8 @@ export default function Home() {
                   <h3 className="text-lg font-bold mb-2 text-black">Digital Twin: Meiji Univ.</h3>
                   <p className="text-gray-600 text-sm mb-4 flex-grow">
                     明治大学中野キャンパス3階をBlenderでフォトリアルに再現。
-                    実際の建築図面や取材に基づき、空間の広がりや照明の反射まで緻密にモデリングしました。
+                    歩幅で測ってモデリングして、写真を撮って張り付けて、机とか黒板とか細かいところはモデリングして、、、
+                    Unityで動いたときは感動しました。大学3年の時の作品です。
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">Blender</span>
@@ -339,7 +341,8 @@ export default function Home() {
                   <h3 className="text-lg font-bold mb-2 text-black">AI-Augmented Composition</h3>
                   <p className="text-gray-600 text-sm mb-4 flex-grow">
                     人間の感性とAIの生成能力の協働実験。
-                    StudioOneで制作したトラックをベースに、生成AI(Suno)を用いて楽曲を展開・拡張。クリエイターとAIの共創を探求しました。
+                    StudioOneで制作したトラックをベースに、生成AI(Suno)を用いて楽曲を展開・拡張。
+                    大学1年の時にStudioOneで作った曲が、大学4年の時にAIで壮大な曲になって帰ってきて、すっごい感動しました、、、
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">StudioOne</span>
