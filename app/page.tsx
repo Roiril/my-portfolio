@@ -23,11 +23,22 @@ type Square = {
   fixedY?: number; 
 };
 
+// ドラッグ状態の型定義（SquareとUI要素の共用）
+type DragState = 
+  | { type: 'square'; id: number; side: 'left'|'right'; offsetX: number; offsetY: number }
+  | { type: 'ui'; id: string; startPageX: number; startPageY: number; initialX: number; initialY: number };
+
 export default function Home() {
   const [squares, setSquares] = useState<Square[]>([]);
   
+  // UI要素の位置管理 (id -> {x, y})
+  const [uiPositions, setUiPositions] = useState<Record<string, { x: number, y: number }>>({});
+  
   // ドラッグ状態の管理
-  const draggingRef = useRef<{ id: number, side: 'left'|'right', offsetX: number, offsetY: number } | null>(null);
+  const draggingRef = useRef<DragState | null>(null);
+  
+  // ドラッグが発生したかを判定するフラグ（クリック動作の抑制用）
+  const isDraggingRef = useRef(false);
 
   useEffect(() => {
     const width = typeof window !== 'undefined' ? window.innerWidth : 1000;
@@ -78,32 +89,51 @@ export default function Home() {
       }
 
       const { x, y } = getClientPos(e);
-      const { id, side, offsetX, offsetY } = draggingRef.current;
-      
-      // ページ全体の座標を計算（スクロール量を含む）
       const pageX = x + window.scrollX;
       const pageY = y + window.scrollY;
 
-      const newX = pageX - offsetX;
-      const newY = pageY - offsetY;
+      // 移動が発生したらフラグを立てる（クリック無効化のため）
+      isDraggingRef.current = true;
 
-      setSquares((prev) => prev.map(sq => {
-        if (sq.id === id && sq.side === side) {
-          return { ...sq, fixedX: newX, fixedY: newY };
-        }
-        return sq;
-      }));
+      // --- Squareのドラッグ処理 ---
+      if (draggingRef.current.type === 'square') {
+        const { id, side, offsetX, offsetY } = draggingRef.current;
+        const newX = pageX - offsetX;
+        const newY = pageY - offsetY;
+
+        setSquares((prev) => prev.map(sq => {
+          if (sq.id === id && sq.side === side) {
+            return { ...sq, fixedX: newX, fixedY: newY };
+          }
+          return sq;
+        }));
+      }
+      // --- UI要素のドラッグ処理 ---
+      else if (draggingRef.current.type === 'ui') {
+        const { id, startPageX, startPageY, initialX, initialY } = draggingRef.current;
+        const dx = pageX - startPageX;
+        const dy = pageY - startPageY;
+
+        setUiPositions((prev) => ({
+          ...prev,
+          [id]: { x: initialX + dx, y: initialY + dy }
+        }));
+      }
     };
 
     const handleEnd = () => {
       if (draggingRef.current) {
         draggingRef.current = null;
         document.body.style.cursor = 'auto'; 
-        // スマホでのスクロールロック解除などの処理が必要ならここに記述
+        
+        // 少し遅延させてドラッグフラグを下ろす（onClickイベントが発火するタイミングを避けるため）
+        setTimeout(() => {
+          isDraggingRef.current = false;
+        }, 50);
       }
     };
 
-    // イベントリスナーの登録（passive: false は preventDefault を呼ぶために重要）
+    // イベントリスナーの登録
     window.addEventListener('mousemove', handleMove);
     window.addEventListener('mouseup', handleEnd);
     window.addEventListener('touchmove', handleMove, { passive: false });
@@ -117,31 +147,22 @@ export default function Home() {
     };
   }, []);
 
-  // 要素上での開始イベント
-  const handleStart = (
+  // --- Squareの開始イベント ---
+  const handleSquareStart = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>, 
     square: Square
   ) => {
-    // ブラウザのデフォルト動作（テキスト選択など）を無効化
-    // ただし touchstart で preventDefault すると click が発火しなくなる場合があるので注意が必要だが、
-    // 今回はドラッグ専用要素なので preventDefault しても概ね問題ない
-    // e.preventDefault(); 
-    // ↑ Reactの合成イベントでの preventDefault は TouchEvent だと passive リスナー問題が出る可能性があるため
-    // ここでは伝播止めのみ行い、スクロール防止は window の touchmove で行う
-
     e.stopPropagation();
+    isDraggingRef.current = false; // リセット
 
     const element = e.currentTarget;
     const rect = element.getBoundingClientRect();
     
-    // クライアント座標（画面上の表示位置）を取得
     let clientX, clientY;
     if ('touches' in e.nativeEvent) {
-       // TouchEvent
        clientX = e.nativeEvent.touches[0].clientX;
        clientY = e.nativeEvent.touches[0].clientY;
     } else {
-       // MouseEvent
        clientX = (e as React.MouseEvent).clientX;
        clientY = (e as React.MouseEvent).clientY;
     }
@@ -150,15 +171,16 @@ export default function Home() {
     const offsetY = clientY - rect.top;
 
     draggingRef.current = {
+      type: 'square',
       id: square.id,
       side: square.side,
       offsetX,
       offsetY
     };
 
+    // Squareの場合は初期位置を固定座標に変換する処理も行う
     const currentX = rect.left + window.scrollX;
     const currentY = rect.top + window.scrollY;
-
     setSquares((prev) => prev.map(sq => {
       if (sq.id === square.id && sq.side === square.side) {
         return { ...sq, fixedX: currentX, fixedY: currentY };
@@ -167,6 +189,61 @@ export default function Home() {
     }));
 
     document.body.style.cursor = 'grabbing'; 
+  };
+
+  // --- UI要素の開始イベント ---
+  const handleUiStart = (
+    e: React.MouseEvent | React.TouchEvent,
+    id: string
+  ) => {
+    // リンククリックなどを即座に発火させない
+    // e.preventDefault(); // これを入れるとリンクが死ぬので入れない。onClickで制御する。
+    e.stopPropagation();
+    isDraggingRef.current = false;
+
+    // 現在のマウス/タッチ位置
+    let clientX, clientY;
+    if ('touches' in e.nativeEvent) {
+       clientX = e.nativeEvent.touches[0].clientX;
+       clientY = e.nativeEvent.touches[0].clientY;
+    } else {
+       clientX = (e as React.MouseEvent).clientX;
+       clientY = (e as React.MouseEvent).clientY;
+    }
+    const startPageX = clientX + window.scrollX;
+    const startPageY = clientY + window.scrollY;
+
+    // 現在のtranslate値を取得（なければ0）
+    const currentPos = uiPositions[id] || { x: 0, y: 0 };
+
+    draggingRef.current = {
+      type: 'ui',
+      id,
+      startPageX,
+      startPageY,
+      initialX: currentPos.x,
+      initialY: currentPos.y
+    };
+
+    document.body.style.cursor = 'grabbing';
+  };
+
+  // UI要素のクリックハンドラ（ドラッグ後の誤クリック防止）
+  const handleUiClick = (e: React.MouseEvent) => {
+    if (isDraggingRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
+  // UI要素用のスタイル生成ヘルパー
+  const getUiStyle = (id: string) => {
+    const pos = uiPositions[id] || { x: 0, y: 0 };
+    return {
+      transform: `translate(${pos.x}px, ${pos.y}px)`,
+      cursor: 'grab',
+      touchAction: 'none' // タッチデバイスでのスクロール干渉を防ぐ
+    };
   };
 
   return (
@@ -185,8 +262,6 @@ export default function Home() {
       `}</style>
 
       {/* ▼▼▼ 四角形の装飾層 (z-0) ▼▼▼ */}
-      {/* touch-action-none を追加してブラウザのデフォルトタッチ操作（スクロール等）を無効化するのが定石だが、
-          今回は個別の要素をドラッグするため、個々の要素で制御する */}
       <div className="absolute inset-0 z-0 pointer-events-none h-full overflow-hidden grayscale">
         {squares.map((sq) => {
           const isFixed = sq.fixedX !== undefined && sq.fixedY !== undefined;
@@ -200,7 +275,6 @@ export default function Home() {
                 opacity: sq.opacity,
                 borderRadius: '8px',
                 fontSize: `calc(${sq.size} * 0.6)`,
-                // タッチ操作の遅延をなくす
                 touchAction: 'none', 
                 ...(isFixed ? {
                   position: 'absolute', 
@@ -220,8 +294,8 @@ export default function Home() {
                   animationDelay: sq.delay,
                 })
               }}
-              onMouseDown={(e) => handleStart(e, sq)}
-              onTouchStart={(e) => handleStart(e, sq)}
+              onMouseDown={(e) => handleSquareStart(e, sq)}
+              onTouchStart={(e) => handleSquareStart(e, sq)}
             >
               {sq.char}
             </div>
@@ -250,21 +324,48 @@ export default function Home() {
 
           {/* コンテンツ */}
           <div className="relative z-10 text-center space-y-4 pointer-events-auto">
-            <h1 className="text-5xl font-extrabold tracking-tight text-black sm:text-6xl drop-shadow-sm">
+            <h1 
+              className="text-5xl font-extrabold tracking-tight text-black sm:text-6xl drop-shadow-sm inline-block select-none active:cursor-grabbing"
+              style={getUiStyle('title')}
+              onMouseDown={(e) => handleUiStart(e, 'title')}
+              onTouchStart={(e) => handleUiStart(e, 'title')}
+            >
                {/* タイトルを変更：検索されやすい「Roil's Portfolio」へ */}
                <span className="text-gray-600">Roil's</span> Portfolio
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            
+            <p 
+              className="text-xl text-gray-600 max-w-2xl mx-auto cursor-grab active:cursor-grabbing select-none"
+              style={getUiStyle('desc')}
+              onMouseDown={(e) => handleUiStart(e, 'desc')}
+              onTouchStart={(e) => handleUiStart(e, 'desc')}
+            >
               {/* 名前も併記して、どちらでも検索できるようにする */}
               Shiroishi / 明治大学 FMS
               <br />
               面白いと思ったものを作る。
             </p>
-            <div className="mt-8 flex justify-center gap-4">
-              <a href="#works" className="px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition shadow-lg">
+            
+            <div 
+              className="mt-8 flex justify-center gap-4 cursor-grab active:cursor-grabbing"
+              style={getUiStyle('buttons')}
+              onMouseDown={(e) => handleUiStart(e, 'buttons')}
+              onTouchStart={(e) => handleUiStart(e, 'buttons')}
+            >
+              <a 
+                href="#works" 
+                onClick={handleUiClick}
+                className="px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition shadow-lg select-none"
+                draggable={false} // ネイティブのドラッグを無効化
+              >
                 View Works
               </a>
-              <a href="#contact" className="px-6 py-3 rounded-full border border-gray-400 text-gray-600 hover:bg-gray-100 hover:text-black transition shadow-lg">
+              <a 
+                href="#contact" 
+                onClick={handleUiClick}
+                className="px-6 py-3 rounded-full border border-gray-400 text-gray-600 hover:bg-gray-100 hover:text-black transition shadow-lg select-none"
+                draggable={false}
+              >
                 Contact Me
               </a>
             </div>
