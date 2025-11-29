@@ -1,21 +1,46 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+// ▼▼▼ Google検索＆SNSシェア用の設定 ▼▼▼
 export const metadata: Metadata = {
+  // サイトのベースURL（自分のVercelのURLに書き換えてください）
+  metadataBase: new URL("https://my-portfolio-ruby-delta-87.vercel.app"), 
+
   title: "Roil's Portfolio | 明治大学 FMS",
   description: "Roil (Shiroishi) のポートフォリオサイト。明治大学FMSでHCIを研究中。Unity, Next.js, Blenderなどの作品を公開しています。",
+  
+  // 検索キーワード（Googleへのヒント）
+  keywords: ["Roil", "Shiroishi", "明治大学", "FMS", "HCI", "Unity", "Portfolio", "個人開発"],
+
+  // SNSでシェアされた時の表示設定（OGP）
+  openGraph: {
+    title: "Roil's Portfolio",
+    description: "明治大学FMS / HCI研究 / 面白いと思ったものを作る。",
+    url: "https://my-portfolio-ruby-delta-87.vercel.app",
+    siteName: "Roil's Portfolio",
+    images: [
+      {
+        url: "/images/Roil_hci_icon.png", // シェア時に表示される画像
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "ja_JP",
+    type: "website",
+  },
+
+  // Twitterカードの設定
+  twitter: {
+    card: "summary_large_image",
+    title: "Roil's Portfolio",
+    description: "明治大学FMS / HCI研究 / 面白いと思ったものを作る。",
+    images: ["/images/Roil_hci_icon.png"], // Twitter用の画像
+  },
 };
+// ▲▲▲ ここまで ▲▲▲
 
 export default function RootLayout({
   children,
@@ -23,12 +48,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="ja">
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
