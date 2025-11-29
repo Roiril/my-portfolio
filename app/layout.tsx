@@ -39,6 +39,12 @@ export const metadata: Metadata = {
     description: "明治大学FMS / HCI研究 / 面白いと思ったものを作る。",
     images: ["/images/Roil_hci_icon.png"], // Twitter用の画像
   },
+
+  // ▼▼▼ Google Search Consoleの所有権確認 ▼▼▼
+  verification: {
+    // ⚠️重要: Google Search Consoleの <meta ... content="ここの文字列" /> をコピーして貼り付けてください
+    google: "N7ViILHjllx9qexJlKXjneaofKTxnPU18dXtkSJetRs", 
+  },
 };
 // ▲▲▲ ここまで ▲▲▲
 
