@@ -26,10 +26,12 @@ type Square = {
 export default function Home() {
   const [squares, setSquares] = useState<Square[]>([]);
   
+  // ドラッグ状態の管理
   const draggingRef = useRef<{ id: number, side: 'left'|'right', offsetX: number, offsetY: number } | null>(null);
 
   useEffect(() => {
     const width = typeof window !== 'undefined' ? window.innerWidth : 1000;
+    // スマホだともう少し少なくてもいいかもしれないので調整
     const count = Math.max(10, Math.floor(width / 30));
 
     const generateSquares = (side: 'left' | 'right') => {
@@ -53,13 +55,37 @@ export default function Home() {
     setSquares([...generateSquares('left'), ...generateSquares('right')]);
   }, []);
 
+  // Window全体でのイベントリスナー（移動・終了）
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    // 座標取得ヘルパー
+    const getClientPos = (e: MouseEvent | TouchEvent) => {
+      if ('touches' in e && e.touches.length > 0) {
+        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+      // TouchEventだがtouchesがない場合（touchendなど）やMouseEventの場合
+      if ('changedTouches' in e && e.changedTouches.length > 0) {
+         return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+      }
+      return { x: (e as MouseEvent).clientX, y: (e as MouseEvent).clientY };
+    };
+
+    const handleMove = (e: MouseEvent | TouchEvent) => {
       if (!draggingRef.current) return;
 
+      // タッチ操作時のスクロール防止
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      const { x, y } = getClientPos(e);
       const { id, side, offsetX, offsetY } = draggingRef.current;
-      const newX = e.pageX - offsetX;
-      const newY = e.pageY - offsetY;
+      
+      // ページ全体の座標を計算（スクロール量を含む）
+      const pageX = x + window.scrollX;
+      const pageY = y + window.scrollY;
+
+      const newX = pageX - offsetX;
+      const newY = pageY - offsetY;
 
       setSquares((prev) => prev.map(sq => {
         if (sq.id === id && sq.side === side) {
@@ -69,31 +95,59 @@ export default function Home() {
       }));
     };
 
-    const handleMouseUp = () => {
+    const handleEnd = () => {
       if (draggingRef.current) {
         draggingRef.current = null;
         document.body.style.cursor = 'auto'; 
+        // スマホでのスクロールロック解除などの処理が必要ならここに記述
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    // イベントリスナーの登録（passive: false は preventDefault を呼ぶために重要）
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleEnd);
+    window.addEventListener('touchmove', handleMove, { passive: false });
+    window.addEventListener('touchend', handleEnd);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleEnd);
+      window.removeEventListener('touchmove', handleMove);
+      window.removeEventListener('touchend', handleEnd);
     };
   }, []);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>, square: Square) => {
-    e.preventDefault(); 
+  // 要素上での開始イベント
+  const handleStart = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>, 
+    square: Square
+  ) => {
+    // ブラウザのデフォルト動作（テキスト選択など）を無効化
+    // ただし touchstart で preventDefault すると click が発火しなくなる場合があるので注意が必要だが、
+    // 今回はドラッグ専用要素なので preventDefault しても概ね問題ない
+    // e.preventDefault(); 
+    // ↑ Reactの合成イベントでの preventDefault は TouchEvent だと passive リスナー問題が出る可能性があるため
+    // ここでは伝播止めのみ行い、スクロール防止は window の touchmove で行う
+
     e.stopPropagation();
 
     const element = e.currentTarget;
     const rect = element.getBoundingClientRect();
     
-    const offsetX = e.clientX - rect.left;
-    const offsetY = e.clientY - rect.top;
+    // クライアント座標（画面上の表示位置）を取得
+    let clientX, clientY;
+    if ('touches' in e.nativeEvent) {
+       // TouchEvent
+       clientX = e.nativeEvent.touches[0].clientX;
+       clientY = e.nativeEvent.touches[0].clientY;
+    } else {
+       // MouseEvent
+       clientX = (e as React.MouseEvent).clientX;
+       clientY = (e as React.MouseEvent).clientY;
+    }
+    
+    const offsetX = clientX - rect.left;
+    const offsetY = clientY - rect.top;
 
     draggingRef.current = {
       id: square.id,
@@ -131,6 +185,8 @@ export default function Home() {
       `}</style>
 
       {/* ▼▼▼ 四角形の装飾層 (z-0) ▼▼▼ */}
+      {/* touch-action-none を追加してブラウザのデフォルトタッチ操作（スクロール等）を無効化するのが定石だが、
+          今回は個別の要素をドラッグするため、個々の要素で制御する */}
       <div className="absolute inset-0 z-0 pointer-events-none h-full overflow-hidden grayscale">
         {squares.map((sq) => {
           const isFixed = sq.fixedX !== undefined && sq.fixedY !== undefined;
@@ -144,6 +200,8 @@ export default function Home() {
                 opacity: sq.opacity,
                 borderRadius: '8px',
                 fontSize: `calc(${sq.size} * 0.6)`,
+                // タッチ操作の遅延をなくす
+                touchAction: 'none', 
                 ...(isFixed ? {
                   position: 'absolute', 
                   left: sq.fixedX,
@@ -162,7 +220,8 @@ export default function Home() {
                   animationDelay: sq.delay,
                 })
               }}
-              onMouseDown={(e) => handleMouseDown(e, sq)}
+              onMouseDown={(e) => handleStart(e, sq)}
+              onTouchStart={(e) => handleStart(e, sq)}
             >
               {sq.char}
             </div>
