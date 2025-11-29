@@ -192,10 +192,12 @@ export default function Home() {
           {/* コンテンツ */}
           <div className="relative z-10 text-center space-y-4 pointer-events-auto">
             <h1 className="text-5xl font-extrabold tracking-tight text-black sm:text-6xl drop-shadow-sm">
-               <span className="text-gray-600">Shiroishi</span> Lab
+               {/* タイトルを変更：検索されやすい「Roil's Portfolio」へ */}
+               <span className="text-gray-600">Roil's</span> Portfolio
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              明治大学/先端メディアサイエンス学科
+              {/* 名前も併記して、どちらでも検索できるようにする */}
+              Shiroishi / 明治大学 FMS
               <br />
               面白いと思ったものを作る。
             </p>
