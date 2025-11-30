@@ -9,16 +9,16 @@ export const metadata: Metadata = {
   // サイトのベースURL（自分のVercelのURLに書き換えてください）
   metadataBase: new URL("https://my-portfolio-ruby-delta-87.vercel.app"), 
 
-  title: "Roil's Portfolio | 明治大学 FMS",
-  description: "Roil (Shiroishi) のポートフォリオサイト。明治大学FMSでHCIを研究中。Unity, Next.js, Blenderなどの作品を公開しています。",
+  title: "Roil's Portfolio | 白石大晴 明治大学 FMS",
+  description: "Roil (白石大晴) のポートフォリオサイト。明治大学FMSでHCIを研究中。Unity, Next.js, Blenderなどの作品を公開しています。",
   
   // 検索キーワード（Googleへのヒント）
-  keywords: ["Roil", "Shiroishi", "明治大学", "FMS", "HCI", "Unity", "Portfolio", "個人開発"],
+  keywords: ["白石大晴","白石","大晴","Roil", "Shiroishi", "明治大学", "FMS", "HCI", "Unity", "Portfolio", "個人開発"],
 
   // SNSでシェアされた時の表示設定（OGP）
   openGraph: {
     title: "Roil's Portfolio",
-    description: "明治大学FMS / HCI研究 / 面白いと思ったものを作る。",
+    description: "白石大晴 / 明治大学FMS / HCI研究 / 面白いと思ったものを作る。",
     url: "https://my-portfolio-ruby-delta-87.vercel.app",
     siteName: "Roil's Portfolio",
     images: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Roil's Portfolio",
-    description: "明治大学FMS / HCI研究 / 面白いと思ったものを作る。",
+    description: "白石大晴 / 明治大学FMS / HCI研究 / 面白いと思ったものを作る。",
     images: ["/images/Roil_hci_icon.png"], // Twitter用の画像
   },
 
