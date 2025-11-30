@@ -403,34 +403,35 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold mb-12 text-center text-black drop-shadow-sm pointer-events-auto">Works</h2>
             
-            {/* 🔥 Featured Work */}
+            {/* 🔥 Featured Work (CubeDiary) */}
             <div className="mb-12 pointer-events-auto">
               <div className="bg-white/80 rounded-2xl overflow-hidden shadow-xl border border-gray-200 backdrop-blur-sm hover:border-gray-400 transition group">
                 <div className="grid md:grid-cols-2 gap-0">
-                  <div className="h-64 md:h-auto relative overflow-hidden bg-black">
+                  <div className="h-64 md:h-auto relative overflow-hidden bg-gray-100">
                     <div 
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                      style={{ backgroundImage: "url('/images/UniqloCap.png')" }}
+                      // ※画像をpublicフォルダに配置してください
+                      style={{ backgroundImage: "url('/images/CubeDiaryCap.png')" }}
                     ></div>
                   </div>
                   <div className="p-8 flex flex-col justify-center">
                     <div className="mb-2">
                       <span className="text-xs font-bold px-2 py-1 bg-black text-white rounded uppercase tracking-wider">Featured</span>
                     </div>
-                    <h3 className="text-2xl font-bold mb-3 text-black">Concept Movie: UNIQLO "Future Service"</h3>
+                    <h3 className="text-2xl font-bold mb-3 text-black">Web App: CubeDiary</h3>
                     <p className="text-gray-600 text-sm mb-6 leading-relaxed">
-                      架空のサービス紹介動画。CG制作(Blender)、VFX合成、動画編集、そしてBGMの作曲(SunoAI)を担当しました。
-                      近未来の購買体験を映像化しました。
-                      大学3年で作りましたが、作るのすっごい楽しかったです！
+                      個人の大切な記憶をキューブにして保管します。<br/>
+                      Next.jsとThree.jsを使用して、ウェブ上で3D空間操作を実現しました。
+                      記憶を箱に閉じ込めて、いつでも振り返ることができるデジタル日記です。
                     </p>
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {['Blender', 'VFX', 'Video Editing', 'Composition', 'DTM'].map(tag => (
+                      {['Next.js', 'Three.js', 'Database'].map(tag => (
                         <span key={tag} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">{tag}</span>
                       ))}
                     </div>
                     <div>
-                      <a href="https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white bg-black px-5 py-2 rounded-full hover:bg-gray-800 transition text-sm font-medium">
-                        <span>▶</span> Watch on YouTube
+                      <a href="https://cube-diary.vercel.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white bg-black px-5 py-2 rounded-full hover:bg-gray-800 transition text-sm font-medium">
+                        <span>🚀</span> Launch App
                       </a>
                     </div>
                   </div>
@@ -441,7 +442,32 @@ export default function Home() {
             {/* その他の作品（グリッド表示） */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               
-              {/* ① アクアリウム */}
+              {/* ① Concept Movie: UNIQLO (旧Featuredをここに移動) */}
+              <div className="bg-white/80 rounded-xl overflow-hidden shadow-lg border border-gray-200 backdrop-blur-sm hover:border-gray-400 transition pointer-events-auto flex flex-col">
+                <div className="h-48 bg-gray-100 relative overflow-hidden group">
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                    style={{ backgroundImage: "url('/images/UniqloCap.png')" }}
+                  ></div>
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-lg font-bold mb-2 text-black">UNIQLO "Future Service"</h3>
+                  <p className="text-gray-600 text-sm mb-4 flex-grow">
+                    架空のサービス紹介動画。CG制作(Blender)、VFX合成、動画編集、BGM作曲を担当。
+                    近未来の購買体験を映像化しました。大学3年時の作品です。
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">Blender</span>
+                    <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">VFX</span>
+                    <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">Video</span>
+                  </div>
+                  <a href="https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-black underline text-sm transition">
+                    View Video →
+                  </a>
+                </div>
+              </div>
+
+              {/* ② アクアリウム */}
               <div className="bg-white/80 rounded-xl overflow-hidden shadow-lg border border-gray-200 backdrop-blur-sm hover:border-gray-400 transition pointer-events-auto flex flex-col">
                 <div className="h-48 bg-gray-100 relative overflow-hidden group">
                   <div 
@@ -454,7 +480,6 @@ export default function Home() {
                   <p className="text-gray-600 text-sm mb-4 flex-grow">
                     Processingを用いたアクアリウムプログラミング。
                     コードによって生み出された魚たちが、群れを成して自律的に泳ぎ回る様子をシミュレーションしました。
-                    大学2年の作品です。懐かしい、夢中になってモデリングしたりしてました
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">Processing</span>
@@ -466,7 +491,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* ② 明治大学3Dモデル */}
+              {/* ③ 明治大学3Dモデル */}
               <div className="bg-white/80 rounded-xl overflow-hidden shadow-lg border border-gray-200 backdrop-blur-sm hover:border-gray-400 transition pointer-events-auto flex flex-col">
                 <div className="h-48 bg-gray-100 relative overflow-hidden group">
                   <div 
@@ -479,7 +504,7 @@ export default function Home() {
                   <p className="text-gray-600 text-sm mb-4 flex-grow">
                     明治大学中野キャンパス3階をBlenderでフォトリアルに再現。
                     歩幅で測ってモデリングして、写真を撮って張り付けて、机とか黒板とか細かいところはモデリングして、、、
-                    Unityで動いたときは感動しました。大学3年の時の作品です。
+                    Unityで動いたときは感動しました。
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">Blender</span>
@@ -504,7 +529,6 @@ export default function Home() {
                   <p className="text-gray-600 text-sm mb-4 flex-grow">
                     人間の感性とAIの生成能力の協働実験。
                     StudioOneで制作したトラックをベースに、生成AI(Suno)を用いて楽曲を展開・拡張。
-                    大学1年の時にStudioOneで作った曲が、大学4年の時にAIで壮大な曲になって帰ってきて、すっごい感動しました、、、
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300">StudioOne</span>
