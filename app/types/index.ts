@@ -24,8 +24,26 @@ export type SocialLink = {
   icon: string;
 };
 
+// ツール項目
+export type ToolItem = {
+  name: string;
+  description?: string;
+};
+
+// ツールカテゴリ（サブカテゴリあり）
+export type ToolCategory = {
+  title: string;
+  items: ToolItem[];
+};
+
+// メインカテゴリ
+export type ToolSection = {
+  title: string;
+  categories: ToolCategory[];
+};
+
 // 自己紹介データ
 export type AboutData = {
   bio: string[];
-  skills: string[];
+  toolSections: ToolSection[];
 };
