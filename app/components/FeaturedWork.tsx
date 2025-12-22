@@ -36,15 +36,30 @@ export default function FeaturedWork({ work }: Props) {
               ))}
             </div>
             {work.links.length > 0 && (
-              <div>
-                <a
-                  href={work.links[0].url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-white bg-black px-5 py-2 rounded-full hover:bg-gray-800 transition text-sm font-medium"
-                >
-                  <span>🚀</span> Launch App
-                </a>
+              <div className="flex flex-wrap gap-3">
+                {work.links.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={
+                      link.type === 'launch'
+                        ? "inline-flex items-center gap-2 text-white bg-black px-5 py-2 rounded-full hover:bg-gray-800 transition text-sm font-medium"
+                        : "inline-flex items-center gap-2 text-gray-700 bg-gray-100 px-5 py-2 rounded-full hover:bg-gray-200 border border-gray-300 transition text-sm font-medium"
+                    }
+                  >
+                    {link.type === 'launch' ? (
+                      <>
+                        <span>🚀</span> Launch App
+                      </>
+                    ) : (
+                      <>
+                        <span>▶</span> {link.label || 'Video'}
+                      </>
+                    )}
+                  </a>
+                ))}
               </div>
             )}
           </div>

@@ -2,13 +2,27 @@ import { Work } from '@/app/types';
 
 export const works: Work[] = [
   {
+    id: 'retroTV-portfolio',
+    title: 'Portfolio: Retro TV version',
+    description: 'レトロな感じのテレビ風ポートフォリオサイト。Three.jsで3Dモデリングとアニメーションを実装し、Next.jsでウェブアプリケーションとして構築しました。',
+    image: '/images/retroTV-portfolio.png',
+    tags: ['Next.js', 'Three.js'],
+    links: [
+      { type: 'launch', url: 'https://my-retro-portfolio-rust.vercel.app/' },
+      { type: 'video', url: 'https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS' },
+    ],
+    featured: true,
+  },
+  {
     id: 'cube-diary',
     title: 'Web App: CubeDiary',
     description: '個人の大切な記憶をキューブにして保管します。\nNext.jsとThree.jsを使用して、ウェブ上で3D空間操作を実現しました。記憶を箱に閉じ込めて、いつでも振り返ることができるデジタル日記です。',
     image: '/images/CubeDiaryCap.png',
     tags: ['Next.js', 'Three.js', 'Database'],
-    links: [{ type: 'launch', url: 'https://cube-diary.vercel.app/' }],
-    featured: true,
+    links: [
+      { type: 'launch', url: 'https://cube-diary.vercel.app/' },
+      { type: 'video', url: 'https://youtube.com/shorts/UY0FlFT1WY8?si=Hm70ycGAHvYiZp20' },
+    ],
   },
   {
     id: 'uniqlo-future',
@@ -44,14 +58,6 @@ export const works: Work[] = [
       { type: 'video', url: 'https://youtube.com/shorts/EPZ6CyN0CKQ?si=bLckXFs04Tpznf-P', label: 'Original' },
       { type: 'video', url: 'https://youtube.com/shorts/61PpnNePhsk?si=EbQLesmbgxvFs2jA', label: 'AI Ver.' },
     ],
-  },
-  {
-    id: 'markdown-diary',
-    title: 'Web App: Markdown Diary',
-    description: 'Next.jsとSupabaseでフルスクラッチ開発した日記アプリ。認証、CRUD、セキュリティ設定を完備し、プライベートな記録ツールとして日常的に使用可能なレベルに仕上げました。',
-    image: '/images/DairyMarkdown.png',
-    tags: ['Next.js', 'Supabase'],
-    links: [{ type: 'launch', url: 'https://my-markdown-diary.vercel.app' }],
   },
   {
     id: 'portfolio',
