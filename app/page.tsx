@@ -340,9 +340,9 @@ export default function Home() {
               onTouchStart={(e) => handleUiStart(e, 'desc')}
             >
               {/* 名前も併記して、どちらでも検索できるようにする */}
-              Shiroishi / 明治大学 FMS
+              白石 大晴 / 明治大学 FMS
               <br />
-              面白いと思ったものを作る。
+              情緒
             </p>
             
             <div 
