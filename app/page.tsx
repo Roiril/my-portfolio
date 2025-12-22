@@ -7,7 +7,6 @@ const random = (min: number, max: number) => Math.random() * (max - min) + min;
 
 // ひらがなのリスト
 const hiraganaChars = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん";
-
 // 四角形のデータの型定義
 type Square = {
   id: number;
