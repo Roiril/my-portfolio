@@ -1,0 +1,65 @@
+import { Work } from '@/app/types';
+
+export const works: Work[] = [
+  {
+    id: 'cube-diary',
+    title: 'Web App: CubeDiary',
+    description: '個人の大切な記憶をキューブにして保管します。\nNext.jsとThree.jsを使用して、ウェブ上で3D空間操作を実現しました。記憶を箱に閉じ込めて、いつでも振り返ることができるデジタル日記です。',
+    image: '/images/CubeDiaryCap.png',
+    tags: ['Next.js', 'Three.js', 'Database'],
+    links: [{ type: 'launch', url: 'https://cube-diary.vercel.app/' }],
+    featured: true,
+  },
+  {
+    id: 'uniqlo-future',
+    title: 'UNIQLO "Future Service"',
+    description: '架空のサービス紹介動画。CG制作(Blender)、VFX合成、動画編集、BGM作曲を担当。近未来の購買体験を映像化しました。大学3年時の作品です。',
+    image: '/images/UniqloCap.png',
+    tags: ['Blender', 'VFX', 'Video'],
+    links: [{ type: 'video', url: 'https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn' }],
+  },
+  {
+    id: 'aquarium',
+    title: 'Aquarium inProcessing',
+    description: 'Processingを用いたアクアリウムプログラミング。コードによって生み出された魚たちが、群れを成して自律的に泳ぎ回る様子をシミュレーションしました。',
+    image: '/images/AcuariumPrograming.png',
+    tags: ['Processing', 'Generative Art'],
+    links: [{ type: 'video', url: 'https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN' }],
+  },
+  {
+    id: 'meiji-3d',
+    title: 'Digital Twin: Meiji Univ.',
+    description: '明治大学中野キャンパス3階をBlenderでフォトリアルに再現。歩幅で測ってモデリングして、写真を撮って張り付けて、机とか黒板とか細かいところはモデリングして、、、Unityで動いたときは感動しました。',
+    image: '/images/Meiji3fVideoCapture.png',
+    tags: ['Blender', '3D Modeling'],
+    links: [{ type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' }],
+  },
+  {
+    id: 'ai-composition',
+    title: 'AI-Augmented Composition',
+    description: '人間の感性とAIの生成能力の協働実験。StudioOneで制作したトラックをベースに、生成AI(Suno)を用いて楽曲を展開・拡張。',
+    image: '/images/StudioOneCap.png',
+    tags: ['StudioOne', 'Suno AI'],
+    links: [
+      { type: 'video', url: 'https://youtube.com/shorts/EPZ6CyN0CKQ?si=bLckXFs04Tpznf-P', label: 'Original' },
+      { type: 'video', url: 'https://youtube.com/shorts/61PpnNePhsk?si=EbQLesmbgxvFs2jA', label: 'AI Ver.' },
+    ],
+  },
+  {
+    id: 'markdown-diary',
+    title: 'Web App: Markdown Diary',
+    description: 'Next.jsとSupabaseでフルスクラッチ開発した日記アプリ。認証、CRUD、セキュリティ設定を完備し、プライベートな記録ツールとして日常的に使用可能なレベルに仕上げました。',
+    image: '/images/DairyMarkdown.png',
+    tags: ['Next.js', 'Supabase'],
+    links: [{ type: 'launch', url: 'https://my-markdown-diary.vercel.app' }],
+  },
+  {
+    id: 'portfolio',
+    title: 'Interactive Portfolio',
+    description: 'このサイト自体も作品の一つです。「つかんで置ける」背景の文字など、HCI専攻らしくデジタル空間に物理的な手触りを持たせるインタラクションを実装しました。',
+    image: '/images/MyPortfolio.png',
+    tags: ['Next.js', 'React'],
+    links: [],
+    isCurrent: true,
+  },
+];
