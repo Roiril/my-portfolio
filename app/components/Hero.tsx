@@ -11,7 +11,7 @@ export default function Hero() {
         }}
       ></div>
 
-      <div className="relative z-10 max-w-3xl">
+      <div className="relative z-10 max-w-6xl mx-auto">
         {/* Eyebrow：所属/領域 */}
         <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-widest uppercase mb-4">
           白石 大晴 / Roil
