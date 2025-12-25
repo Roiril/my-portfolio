@@ -13,4 +13,4 @@ export const socialLinks: SocialLink[] = [
   },
 ];
 
-export const contactMessage = '面白そうだと思ったら声をかけてほしい。XでもYouTubeでも。';
+export const contactMessage = '面白そうだと思ったらフォローしてください。XでもYouTubeでも。';

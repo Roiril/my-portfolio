@@ -12,8 +12,8 @@ export default function Works() {
             Works
           </h2>
           <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl">
-            Next.js、Three.js、Blender など複数の技術を組み合わせた実績。
-            各プロジェクトは情緒的な体験設計を軸に制作されました。
+            Next.js、Three.js、Blender など複数の技術を組み合わせた作品。
+            各プロジェクトは情緒的な体験設計を軸に制作。
           </p>
         </div>
 

@@ -1,32 +1,19 @@
-import { MetadataRoute } from 'next'
+// app/sitemap.ts
+import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://my-portfolio-ruby-delta-87.vercel.app'
+  // 本番URLを環境変数で管理（Vercelで設定推奨）
+  // 例: NEXT_PUBLIC_SITE_URL = https://my-portfolio-ruby-delta-87.vercel.app
+  const baseUrl =
+    (process.env.NEXT_PUBLIC_SITE_URL ?? "https://my-portfolio-ruby-delta-87.vercel.app")
+      .replace(/\/+$/, ""); // 末尾スラッシュ除去
 
   return [
     {
-      url: baseUrl,
+      url: `${baseUrl}/`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 1,
     },
-    {
-      url: `${baseUrl}#about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}#works`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}#contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-  ]
+  ];
 }
