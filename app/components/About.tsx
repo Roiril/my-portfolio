@@ -57,20 +57,37 @@ export default function About() {
                     <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-widest mb-3">
                       {category.title}
                     </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {category.items.map((item) => (
-                        <div key={item.name}>
-                          <span className="text-xs text-gray-700 bg-gray-100 border border-gray-200 px-2 py-1 inline-block">
-                            {item.name}
-                          </span>
-                          {item.description && (
-                            <div className="text-gray-700 text-xs mt-2 ml-0.5">
-                              {item.description}
+                    {section.title === 'Making in AI Nature' ? (
+                      <div className="space-y-4">
+                        {category.items.map((item) => (
+                          <div key={item.name}>
+                            <div className="text-gray-800 font-medium text-sm">
+                              {item.name}
                             </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                            {item.description && (
+                              <div className="text-gray-700 text-xs mt-2">
+                                {item.description}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="flex flex-wrap gap-2">
+                        {category.items.map((item) => (
+                          <div key={item.name}>
+                            <span className="text-xs text-gray-700 bg-gray-100 border border-gray-200 px-2 py-1 inline-block">
+                              {item.name}
+                            </span>
+                            {item.description && (
+                              <div className="text-gray-700 text-xs mt-2 ml-0.5">
+                                {item.description}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
