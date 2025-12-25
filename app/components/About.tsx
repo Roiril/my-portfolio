@@ -28,9 +28,6 @@ export default function About() {
         {/* 下段：Key Facts */}
         {aboutData.keyFacts && aboutData.keyFacts.length > 0 && (
           <div className="border-t border-gray-200 pt-12 mb-10 pointer-events-auto">
-            <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-widest mb-12">
-              Key Facts
-            </h3>
             <div className="grid grid-cols-2 gap-6">
               {aboutData.keyFacts.map((fact) => (
                 <div key={fact.title}>
@@ -57,19 +54,34 @@ export default function About() {
               <div className="space-y-12">
                 {section.categories.map((category) => (
                   <div key={category.title}>
-                    <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-widest mb-6">
+                    <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-widest mb-3">
                       {category.title}
                     </h4>
-                    <div className="flex flex-wrap gap-6 gap-y-4">
+                    <div className={section.title === 'Core Making Stack' ? 'flex flex-wrap gap-2' : 'flex flex-wrap gap-8 gap-y-4'}>
                       {category.items.map((item) => (
-                        <div key={item.name} className="text-sm">
-                          <div className="text-gray-800 font-medium">
-                            {item.name}
-                          </div>
-                          {item.description && (
-                            <div className="text-gray-700 text-xs mt-2">
-                              {item.description}
-                            </div>
+                        <div key={item.name}>
+                          {section.title === 'Core Making Stack' ? (
+                            <>
+                              <span className="text-xs text-gray-700 bg-gray-100 border border-gray-200 px-2 py-1 inline-block">
+                                {item.name}
+                              </span>
+                              {item.description && (
+                                <div className="text-gray-700 text-xs mt-2 ml-0.5">
+                                  {item.description}
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            <>
+                              <div className="text-gray-800 font-medium text-sm">
+                                {item.name}
+                              </div>
+                              {item.description && (
+                                <div className="text-gray-700 text-xs mt-2">
+                                  {item.description}
+                                </div>
+                              )}
+                            </>
                           )}
                         </div>
                       ))}

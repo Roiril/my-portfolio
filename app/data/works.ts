@@ -4,7 +4,7 @@ export const works: Work[] = [
   {
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
-    description: 'ブラウン管テレビをThree.jsで3Dモデリング。Next.jsで動く。画面に触れるとノイズが走る。',
+    description: 'ブラウン管テレビをThree.jsで3Dモデリング。Next.jsで動く。チャンネルを変えるとノイズが走る。',
     image: '/images/retroTV-portfolio.png',
     tags: ['Next.js', 'Three.js'],
     links: [
@@ -16,8 +16,8 @@ export const works: Work[] = [
   {
     id: 'cube-diary',
     title: 'Web App: CubeDiary',
-    description: '記憶をキューブにして3D空間に配置する日記アプリ。Next.js + Three.js。書いた日記が立方体になって、手で掴んで並べ替えられる。',
-    image: '/images/CubeDiaryCap.png',
+    description: '記憶をキューブにして3D空間に配置する日記アプリ。Next.js + Three.js。書いた日記が立方体になって、美しく整列される。',
+    image: '/images/CubeDiary.png',
     tags: ['Next.js', 'Three.js', 'Database'],
     links: [
       { type: 'launch', url: 'https://cube-diary.vercel.app/' },
@@ -27,7 +27,7 @@ export const works: Work[] = [
   {
     id: 'uniqlo-future',
     title: 'UNIQLO "Future Service"',
-    description: '大学3年時の映像作品。架空のUNIQLO購買体験を近未来的に。Blenderでモデリング、VFX合成、BGM作曲まですべて一人で。',
+    description: '2023年に作った映像作品。架空のUNIQLOサービスを近未来的に。Blenderでモデリング、VFX合成、AIで作曲。',
     image: '/images/UniqloCap.png',
     tags: ['Blender', 'VFX', 'Video'],
     links: [{ type: 'video', url: 'https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn' }],
@@ -51,7 +51,7 @@ export const works: Work[] = [
   {
     id: 'ai-composition',
     title: 'AI-Augmented Composition',
-    description: 'AI作曲が主流になる前に作成した曲を、Suno AIで再構成。感動した。',
+    description: 'AI作曲が主流になる前に作成した曲を、Suno AIで再構成。技術の進歩を感じた。',
     image: '/images/StudioOneCap.png',
     tags: ['StudioOne', 'Suno AI'],
     links: [

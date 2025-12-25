@@ -5,10 +5,10 @@ export const aboutData: AboutData = {
     '明治大学先端メディアサイエンス学科に在籍。研究はHCI、個人開発はUnityとWebアプリケーション。',
   ],
   keyFacts: [
-    { title: '研究領域', description: 'HCI（Human-Computer Interaction）' },
+    { title: '研究領域', description: 'HCI' },
     { title: '得意技術', description: 'Web, Blender, Unity' },
-    { title: '制作スタイル', description: 'Claude-Code、Gemini、ChatGPTを活用' },
-    { title: 'いま注力', description: '情緒的でデジネな体験' },
+    { title: '制作の友', description: 'Claude-Code、Gemini、ChatGPT' },
+    { title: 'いま注目', description: '情緒的こだわりデジ' },
   ],
   toolSections: [
     {
@@ -19,13 +19,13 @@ export const aboutData: AboutData = {
           items: [
             { name: 'Claude / Claude Code', description: '実装、文章推敲' },
             { name: 'Gemini', description: '画像生成、ビジュアル試作' },
-            { name: 'ChatGPT', description: 'リサーチ、思考整理' },
+            { name: 'ChatGPT / Codex', description: 'リサーチ、思考整理、実装' },
           ],
         },
       ],
     },
     {
-      title: 'Core Making Stack',
+      title: 'Making With',
       categories: [
         {
           title: 'Languages',
@@ -57,7 +57,7 @@ export const aboutData: AboutData = {
           title: 'Hardware / Fabrication',
           items: [
             { name: 'toio' },
-            { name: '3D Printing', description: 'Bambu Lab' },
+            { name: '3D Printing(Bambu Lab)' },
           ],
         },
       ],

@@ -23,14 +23,14 @@ export default function Hero() {
 
         {/* H1：改行位置を意味で固定 */}
         <h1 className="text-5xl sm:text-6xl font-black text-black leading-tight mb-16">
-          情緒的で気持ちいい<br />
-          デジネな体験を
+          情緒的<br />
+          デジ体験を
         </h1>
 
         {/* サブコピー：体験特徴優先 */}
         <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl mb-20">
-          かわいい/かっこいい動きでデジタルを生き生きと<br />
-          Next.js・Unity・Blenderで制作しています。
+          世の中がもっとデジタルで溢れてほしい。<br />
+          作品はNext.js・Unity・Blenderで制作しています。
         </p>
 
         {/* CTA：主従明確 */}
