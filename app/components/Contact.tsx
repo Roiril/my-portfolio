@@ -2,7 +2,7 @@ import { socialLinks, contactMessage } from '@/app/data/contact';
 
 export default function Contact() {
   return (
-    <section id="contact" className="px-8 py-24 bg-fafafa">
+    <section id="contact" className="px-8 py-10 bg-fafafa">
       <div className="max-w-3xl mx-auto text-center pointer-events-auto">
         {/* セクションヘッダー */}
         <h2 className="text-3xl sm:text-4xl font-bold text-black mb-6">

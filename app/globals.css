@@ -31,5 +31,5 @@ body {
 }
 
 .hero-bg {
-  background-size: clamp(400px, 50vw, 800px) !important;
+  background-size: clamp(400px, 38vw, 700px) !important;
 }
