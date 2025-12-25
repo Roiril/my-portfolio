@@ -3,7 +3,7 @@ import { aboutData } from '@/app/data/about';
 export default function About() {
   return (
     <section id="about" className="px-8 py-10 bg-fafafa">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* セクションヘッダー */}
         <div className="mb-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-black mb-8">
@@ -12,7 +12,7 @@ export default function About() {
         </div>
 
         {/* 上段：リード */}
-        <div className="border-t border-gray-200 pt-10 mb-10 pointer-events-auto max-w-2xl">
+        <div className="border-t border-gray-200 pt-10 mb-10 pointer-events-auto">
           <div className="space-y-6">
             {aboutData.bio.map((paragraph, index) => (
               <p
@@ -31,7 +31,7 @@ export default function About() {
             <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-widest mb-12">
               Key Facts
             </h3>
-            <div className="grid grid-cols-2 gap-6 max-w-2xl">
+            <div className="grid grid-cols-2 gap-6">
               {aboutData.keyFacts.map((fact) => (
                 <div key={fact.title}>
                   <p className="text-sm font-semibold text-gray-800 mb-2">

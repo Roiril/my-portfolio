@@ -61,8 +61,8 @@ export const works: Work[] = [
   },
   {
     id: 'portfolio',
-    title: 'Interactive Portfolio',
-    description: 'このサイト自体も作品。タイトルや背景の文字を掴んで動かせる。',
+    title: 'Portfolio',
+    description: '普通のサイト',
     image: '/images/MyPortfolio.png',
     tags: ['Next.js', 'React'],
     links: [],
