@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/images/Roil_hci_icon.png", // シェア時に表示される画像
-        width: 1200,
-        height: 630,
+        width: 1024,
+        height: 1024,
       },
     ],
     locale: "ja_JP",
@@ -53,8 +53,48 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://my-portfolio-ruby-delta-87.vercel.app/#person",
+        "name": "白石大晴",
+        "alternateName": ["Roil", "Daiharu Shiroishi"],
+        "url": "https://my-portfolio-ruby-delta-87.vercel.app",
+        "description": "明治大学FMSでHCIを研究中。Unity, Next.js, Blenderを使った個人開発やポートフォリオを公開しています。",
+        "jobTitle": "学生 / 研究者 / クリエイター",
+        "affiliation": {
+          "@type": "EducationalOrganization",
+          "name": "明治大学",
+          "url": "https://www.meiji.ac.jp"
+        },
+        "image": "https://my-portfolio-ruby-delta-87.vercel.app/images/Roil_hci_icon.png",
+        "sameAs": [
+          "https://twitter.com/roil_hci"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://my-portfolio-ruby-delta-87.vercel.app/#website",
+        "url": "https://my-portfolio-ruby-delta-87.vercel.app",
+        "name": "Roil's Portfolio",
+        "description": "白石大晴のポートフォリオサイト。HCI研究と個人開発の作品を公開しています。",
+        "creator": {
+          "@id": "https://my-portfolio-ruby-delta-87.vercel.app/#person"
+        }
+      }
+    ]
+  };
+
   return (
     <html lang="ja">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );

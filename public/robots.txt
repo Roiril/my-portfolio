@@ -1,0 +1,9 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://my-portfolio-ruby-delta-87.vercel.app/sitemap.xml
+
+# Crawl delay (optional - tells bots to wait 1 second between requests)
+Crawl-delay: 1
