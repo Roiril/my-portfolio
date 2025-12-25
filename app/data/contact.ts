@@ -13,4 +13,4 @@ export const socialLinks: SocialLink[] = [
   },
 ];
 
-export const contactMessage = 'HCI関連の研究や開発について、お気軽にご連絡ください。';
+export const contactMessage = '面白そうだと思ったら声をかけてほしい。XでもYouTubeでも。';

@@ -2,57 +2,84 @@ import { aboutData } from '@/app/data/about';
 
 export default function About() {
   return (
-    <section id="about" className="py-20 px-6 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-8 text-center text-black drop-shadow-sm pointer-events-auto">
-        About Me
-      </h2>
+    <section id="about" className="px-8 py-10 bg-fafafa">
+      <div className="max-w-4xl mx-auto">
+        {/* セクションヘッダー */}
+        <div className="mb-10">
+          <h2 className="text-3xl sm:text-4xl font-bold text-black mb-8">
+            About
+          </h2>
+        </div>
 
-      {/* Bio */}
-      <div className="bg-white/80 p-8 rounded-2xl shadow-lg border border-gray-200 backdrop-blur-sm pointer-events-auto mb-8">
-        {aboutData.bio.map((paragraph, index) => (
-          <p key={index} className="leading-relaxed text-gray-700 mb-4 last:mb-0">
-            {paragraph}
-          </p>
-        ))}
-      </div>
+        {/* 上段：リード */}
+        <div className="border-t border-gray-200 pt-10 mb-10 pointer-events-auto max-w-2xl">
+          <div className="space-y-6">
+            {aboutData.bio.map((paragraph, index) => (
+              <p
+                key={index}
+                className="text-base sm:text-lg text-gray-800 leading-7"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
 
-      {/* Tool Sections */}
-      <div className="space-y-6 pointer-events-auto">
-        {aboutData.toolSections.map((section) => (
-          <div
-            key={section.title}
-            className="bg-white/80 p-6 rounded-2xl shadow-lg border border-gray-200 backdrop-blur-sm"
-          >
-            <h3 className="text-lg font-bold text-black mb-4 pb-2 border-b border-gray-200">
-              {section.title}
+        {/* 下段：Key Facts */}
+        {aboutData.keyFacts && aboutData.keyFacts.length > 0 && (
+          <div className="border-t border-gray-200 pt-12 mb-10 pointer-events-auto">
+            <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-widest mb-12">
+              Key Facts
             </h3>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {section.categories.map((category) => (
-                <div key={category.title}>
-                  <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
-                    {category.title}
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {category.items.map((item) => (
-                      <span
-                        key={item.name}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-800 rounded-md text-sm border border-gray-200 hover:bg-gray-200 transition-colors"
-                      >
-                        <span className="font-medium">{item.name}</span>
-                        {item.description && (
-                          <span className="text-gray-500 text-xs">
-                            / {item.description}
-                          </span>
-                        )}
-                      </span>
-                    ))}
-                  </div>
+            <div className="grid grid-cols-2 gap-6 max-w-2xl">
+              {aboutData.keyFacts.map((fact) => (
+                <div key={fact.title}>
+                  <p className="text-sm font-semibold text-gray-800 mb-2">
+                    {fact.title}
+                  </p>
+                  <p className="text-base text-gray-700 leading-relaxed">
+                    {fact.description}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
-        ))}
+        )}
+
+        {/* Skill Sections */}
+        <div className="space-y-16 pointer-events-auto">
+          {aboutData.toolSections.map((section) => (
+            <div key={section.title} className="border-t border-gray-200 pt-12">
+              <h3 className="text-lg sm:text-xl font-bold text-black mb-6">
+                {section.title}
+              </h3>
+
+              <div className="space-y-12">
+                {section.categories.map((category) => (
+                  <div key={category.title}>
+                    <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-widest mb-6">
+                      {category.title}
+                    </h4>
+                    <div className="flex flex-wrap gap-6 gap-y-4">
+                      {category.items.map((item) => (
+                        <div key={item.name} className="text-sm">
+                          <div className="text-gray-800 font-medium">
+                            {item.name}
+                          </div>
+                          {item.description && (
+                            <div className="text-gray-700 text-xs mt-2">
+                              {item.description}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

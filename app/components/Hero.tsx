@@ -1,69 +1,51 @@
-"use client";
-import { useRef } from 'react';
-
-type Props = {
-  uiPositions: Record<string, { x: number; y: number }>;
-  onUiStart: (e: React.MouseEvent | React.TouchEvent, id: string) => void;
-  onUiClick: (e: React.MouseEvent) => void;
-  getUiStyle: (id: string) => React.CSSProperties;
-};
-
-export default function Hero({ uiPositions, onUiStart, onUiClick, getUiStyle }: Props) {
+export default function Hero() {
   return (
-    <section className="relative flex flex-col items-center justify-center h-screen px-4 overflow-hidden">
+    <section className="relative px-8 pt-8 pb-16 bg-white overflow-hidden">
+      {/* 背景：気づかない程度に */}
       <div
-        className="absolute inset-0 z-0 grayscale"
+        className="absolute inset-0 z-0 opacity-5 hero-bg"
         style={{
           backgroundImage: "url('/images/Roil_hci_icon.png')",
-          backgroundSize: 'contain',
+          backgroundPosition: 'bottom right',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          opacity: 0.1,
         }}
       ></div>
 
-      <div className="relative z-10 text-center space-y-4 pointer-events-auto">
-        <h1
-          className="text-5xl font-extrabold tracking-tight text-black sm:text-6xl drop-shadow-sm inline-block select-none active:cursor-grabbing"
-          style={getUiStyle('title')}
-          onMouseDown={(e) => onUiStart(e, 'title')}
-          onTouchStart={(e) => onUiStart(e, 'title')}
-        >
-          <span className="text-gray-600">Roil's</span> Portfolio
-        </h1>
-
-        <p
-          className="text-xl text-gray-600 max-w-2xl mx-auto cursor-grab active:cursor-grabbing select-none"
-          style={getUiStyle('desc')}
-          onMouseDown={(e) => onUiStart(e, 'desc')}
-          onTouchStart={(e) => onUiStart(e, 'desc')}
-        >
-          白石 大晴 / 明治大学 FMS
-          <br />
-          情緒
+      <div className="relative z-10 max-w-3xl">
+        {/* Eyebrow：所属/領域 */}
+        <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-widest uppercase mb-4">
+          白石 大晴 / Roil
+        </p>
+        <p className="text-sm sm:text-base text-gray-700 mb-16 leading-relaxed">
+          明治大学先端メディアサイエンス学科<br />
+          HCI研究 / Web × 3D / AI-assisted Making
         </p>
 
-        <div
-          className="mt-8 flex justify-center gap-4 cursor-grab active:cursor-grabbing"
-          style={getUiStyle('buttons')}
-          onMouseDown={(e) => onUiStart(e, 'buttons')}
-          onTouchStart={(e) => onUiStart(e, 'buttons')}
-        >
+        {/* H1：改行位置を意味で固定 */}
+        <h1 className="text-5xl sm:text-6xl font-black text-black leading-tight mb-16">
+          情緒的で気持ちいい<br />
+          デジネな体験を
+        </h1>
+
+        {/* サブコピー：体験特徴優先 */}
+        <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl mb-20">
+          かわいい/かっこいい動きでデジタルを生き生きと<br />
+          Next.js・Unity・Blenderで制作しています。
+        </p>
+
+        {/* CTA：主従明確 */}
+        <div className="flex flex-row gap-4 mb-0">
           <a
             href="#works"
-            onClick={onUiClick}
-            className="px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition shadow-lg select-none"
-            draggable={false}
+            className="px-8 py-3 border-2 border-black text-black font-medium hover:bg-black hover:text-white transition-colors duration-200 text-center sm:text-left"
           >
-            View Works
+            作品を見る
           </a>
           <a
             href="#contact"
-            onClick={onUiClick}
-            className="px-6 py-3 rounded-full border border-gray-400 text-gray-600 hover:bg-gray-100 hover:text-black transition shadow-lg select-none"
-            draggable={false}
+            className="px-8 py-3 border-2 border-black text-black font-medium hover:bg-black hover:text-white transition-colors duration-200 text-center sm:text-left"
           >
-            Contact Me
+            お問い合わせ
           </a>
         </div>
       </div>

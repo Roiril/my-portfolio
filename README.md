@@ -1,36 +1,423 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Roil's Portfolio | 白石大晴のポートフォリオ
+
+An interactive HCI-focused portfolio built with Next.js 16, React 19, and TypeScript, showcasing creative technical work with draggable UI elements and animated hiragana characters.
+
+**Live Demo**: [https://my-portfolio-ruby-delta-87.vercel.app](https://my-portfolio-ruby-delta-87.vercel.app)
+
+---
+
+## Key Features
+
+- **Interactive Hero Section**: Draggable title, description, and buttons with smooth touch/mouse support
+- **Floating Hiragana Animation**: 20+ animated background characters that can be grabbed and repositioned
+- **Portfolio Showcase**: 7 diverse projects including Three.js 3D modeling, Blender work, and generative art
+- **Hierarchical Skills Display**: Organized tool sections with categories (Languages, Frameworks, Hardware)
+- **Responsive Design**: Full mobile support with touch gestures
+- **Production Security**: Configured security headers (X-Frame-Options, CSP policies)
+- **Bilingual Support**: Japanese and English content throughout
+
+---
+
+## Tech Stack
+
+- **Runtime**: Node.js 18+ (recommended)
+- **Framework**: Next.js 16.0.7 (App Router)
+- **React**: 19.2.0
+- **Language**: TypeScript 5 (strict mode)
+- **Styling**: Tailwind CSS 4 with PostCSS
+- **Code Quality**: ESLint
+- **Hosting**: Vercel
+
+---
+
+## Project Structure
+
+```
+C:\Users\rinky\my-portfolio/
+├── app/
+│   ├── components/              # React components
+│   │   ├── Hero.tsx            # Interactive hero with draggable elements
+│   │   ├── About.tsx           # Bio and tools/skills sections
+│   │   ├── Works.tsx           # Portfolio projects grid
+│   │   ├── Contact.tsx         # Social links and contact message
+│   │   ├── Footer.tsx          # Footer navigation
+│   │   ├── FloatingChars.tsx   # Animated hiragana background
+│   │   ├── WorkCard.tsx        # Individual project card
+│   │   └── FeaturedWork.tsx    # Featured project showcase (2-column)
+│   │
+│   ├── data/                    # Data files (TypeScript)
+│   │   ├── works.ts            # Portfolio projects data
+│   │   ├── about.ts            # Bio paragraphs and tool sections
+│   │   └── contact.ts          # Social links and contact message
+│   │
+│   ├── types/
+│   │   └── index.ts            # TypeScript type definitions
+│   │
+│   ├── layout.tsx              # Root layout with metadata/SEO
+│   ├── page.tsx                # Main page with drag state management
+│   └── globals.css             # Tailwind configuration
+│
+├── public/
+│   └── images/                 # Portfolio project images
+│
+├── next.config.ts              # Security headers configuration
+├── tsconfig.json               # TypeScript strict mode settings
+├── package.json                # Dependencies and scripts
+└── README.md                   # This file
+```
+
+**Key Architecture Patterns**:
+- **Data-driven**: All content stored in `.ts` files, not hardcoded in components
+- **Type safety**: TypeScript interfaces for all data structures
+- **Separation of concerns**: Components focus on rendering, data files on content
+- **Reusable patterns**: DragState type for UI element dragging
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.17 or later
+- npm, yarn, or pnpm package manager
+
+### Installation
 
 ```bash
+# 1. Clone the repository
+git clone https://github.com/Roiril/my-portfolio.git
+cd my-portfolio
+
+# 2. Install dependencies
+npm install
+
+# 3. Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 4. Open browser
+# Navigate to http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### First-Time Setup Customization
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+When setting up your own portfolio:
+1. Update `metadataBase` URL in `app/layout.tsx` for your deployment
+2. Add your Google Search Console verification token in `app/layout.tsx`
+3. Update social links in `app/data/contact.ts`
+4. Replace project images in `public/images/` with your own
+5. Modify project data in `app/data/works.ts` for your portfolio
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Development Workflow
 
-To learn more about Next.js, take a look at the following resources:
+### Available Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev      # Start development server (http://localhost:3000)
+npm run build    # Create production build
+npm start        # Run production server locally
+npm run lint     # Run ESLint code quality checks
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Customizing Content
 
-## Deploy on Vercel
+**Project Data** (`app/data/works.ts`):
+- Add/remove work entries with title, description, tags, links
+- Set `featured: true` to highlight a project on the homepage
+- Link types: `'demo'` (interactive), `'video'` (YouTube), `'launch'` (live site)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**About Section** (`app/data/about.ts`):
+- Update bio paragraphs
+- Add/remove tool sections and categories
+- Organize tools hierarchically (Section > Category > Items)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Social Links** (`app/data/contact.ts`):
+- Update social media URLs
+- Modify contact message
+
+**Images**:
+- Place files in `public/images/`
+- Hero background: `Roil_hci_icon.png`
+- Project thumbnails: Referenced in `works.ts`
+
+### Interactive Features
+
+**Draggable Hero Elements** (app/page.tsx):
+- Title, description, and buttons can be dragged
+- Touch support for mobile devices
+- Mouse cursor changes to show interaction (grab → grabbing)
+- State management at page level using DragState type
+
+**Floating Hiragana Characters** (app/components/FloatingChars.tsx):
+- Click/drag individual characters to pin them in place
+- 20+ characters randomly generated from hiragana set
+- Responsive animation duration based on screen width
+- Grayscale filter for subtle background effect
+
+### Styling
+
+- **Tailwind CSS 4** with PostCSS for styling
+- No additional UI component libraries (pure Tailwind)
+- Custom animations in component files (CSS-in-JS)
+- Responsive breakpoints: sm, md, lg
+
+### SEO & Metadata
+
+Configure in `app/layout.tsx`:
+- Open Graph (OGP) tags for social sharing
+- Twitter Card configuration
+- Google Search Console verification
+
+---
+
+## Deployment
+
+### Vercel Deployment (Recommended)
+
+**Method 1: Auto-deploy from Git**
+1. Push to GitHub
+2. Connect repository to Vercel dashboard
+3. Vercel auto-deploys on every push to main branch
+
+**Method 2: Manual deployment**
+```bash
+npm run build
+vercel deploy --prod
+```
+
+### Environment Setup
+
+No environment variables required for basic functionality. Add `.env.local` if using database or external services in the future.
+
+### Production Security
+
+Security headers configured in `next.config.ts`:
+- **X-Frame-Options**: DENY (prevents clickjacking)
+- **X-Content-Type-Options**: nosniff (MIME type detection)
+- **Referrer-Policy**: strict-origin-when-cross-origin
+- **Permissions-Policy**: Disables camera, microphone, geolocation
+
+### Performance Optimization
+
+- Next.js 16 automatic code splitting
+- Image optimization with next/image (when applicable)
+- Font optimization with next/font (Inter from Google Fonts)
+- Metadata auto-compression
+
+### Current Deployment
+
+- **Live URL**: https://my-portfolio-ruby-delta-87.vercel.app
+- **Auto-deploys**: On commits to main branch
+
+---
+
+## Architecture & Design Decisions
+
+### Why This Architecture?
+
+**Data-Driven Design**:
+- Content stored in separate TypeScript files, not hardcoded in components
+- **Benefits**: Easy to update portfolio without touching component logic, single source of truth, type safety
+
+**Component Organization**:
+- Small, focused components (Hero, About, Works, Contact, Footer)
+- Shared utilities (WorkCard, FeaturedWork)
+- FloatingChars as independent background system
+- Main page handles complex drag state management
+
+**Interactive Features Strategy**:
+- Page-level drag state management for hero elements (page.tsx)
+- Component-level drag handling for floating characters
+- Touch event support throughout
+- Smooth animations with CSS keyframes
+
+**HCI-Focused Design Principles**:
+- Physical interaction metaphors (dragging, grabbing)
+- Responsive feedback (cursor changes, animations)
+- Accessibility: Semantic HTML, proper navigation
+- Visual hierarchy: Typography, spacing, color contrast
+
+---
+
+## Notable Features Deep Dive
+
+### 1. Interactive Dragging System
+
+The hero section implements a sophisticated drag system (app/page.tsx):
+- Click/touch to grab title, description, or buttons
+- Drag anywhere on screen while holding
+- Smooth movement following cursor/touch
+- Works on both desktop and mobile
+- Mouse cursor changes to show interaction (grab → grabbing)
+
+### 2. Floating Characters Animation
+
+Background features 20+ animated hiragana characters (app/components/FloatingChars.tsx):
+- Randomly selected from full hiragana set
+- Fall animation from top to bottom with 360° rotation
+- Each character has unique size, opacity, speed
+- Click/drag to "pin" characters to new positions
+- Responsive: More characters on wider screens
+- Grayscale filter for subtle background effect
+
+### 3. Portfolio Project System
+
+Works section showcases 7 diverse projects (app/data/works.ts):
+- **Featured project** displayed prominently (Three.js Portfolio)
+- Remaining projects in responsive grid (2-3 columns)
+- Each project includes: Image, title, description, tags, action links
+- Link types: demo (interactive), video (YouTube), launch (live site)
+- Project metadata fully typed in TypeScript
+
+**Notable Projects**:
+- **Retro TV Portfolio**: Three.js 3D modeling with Next.js
+- **CubeDiary**: Web app with 3D space interaction
+- **Digital Twin: Meiji University**: Blender photorealistic architecture modeling
+- **AI-Augmented Composition**: Human + AI music collaboration
+
+### 4. Skills/Tools Organization
+
+Hierarchical tool display in About section (app/data/about.ts):
+- **Top level**: Tool sections (Making in AI Nature, Core Making Stack)
+- **Second level**: Categories (Languages, Frameworks, Tools, Hardware)
+- **Bottom level**: Individual tools with optional descriptions
+- Visual presentation: Responsive grid with badge-style items
+
+---
+
+## Customization & Contributing
+
+### Making This Your Own
+
+**Step 1: Fork & Clone**
+```bash
+# Create your own fork on GitHub
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/my-portfolio.git
+cd my-portfolio
+```
+
+**Step 2: Customize Content**
+- Update `app/data/works.ts` with your projects
+- Update `app/data/about.ts` with your bio and skills
+- Update `app/data/contact.ts` with your social links
+- Replace `public/images/` with your project images
+
+**Step 3: Configure Metadata**
+- Edit `app/layout.tsx`:
+  - Change metadataBase URL
+  - Update title and description
+  - Add Google Search Console verification
+  - Update OGP image and Twitter card
+
+**Step 4: Customize Styling** (Optional)
+- Tailwind CSS is configured in `tailwind.config.ts`
+- Component-specific animations in component files
+- Global styles in `app/globals.css`
+
+**Step 5: Deploy**
+- Push to GitHub
+- Connect to Vercel
+- Auto-deploy on push
+
+### Code Quality Standards
+
+- ESLint enabled: `npm run lint`
+- TypeScript strict mode for type safety
+- Comments explain complex logic (drag handlers, animations)
+- Component props properly typed
+
+### Pull Request Process
+
+For improvements or bug fixes:
+- Ensure `npm run lint` passes
+- Add meaningful commit messages
+- Create PR with description of changes
+
+---
+
+## Troubleshooting
+
+### Build Fails with TypeScript Errors
+
+**Solution**: Run `npm install` to ensure all types are installed. Check `tsconfig.json` settings match your Node.js version.
+
+### Development Server Won't Start
+
+**Solution**: Kill process on port 3000:
+```bash
+# Windows
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+
+# Mac/Linux
+lsof -ti:3000 | xargs kill -9
+
+# Or use different port
+npm run dev -- -p 3001
+```
+
+### Images Not Loading in Production
+
+**Solution**: Ensure images are in `public/` directory. Check image paths in component files match public directory structure.
+
+### Drag Interactions Not Working on Mobile
+
+**Solution**: Check browser console for touch event errors. Ensure touch events are properly handled (check page.tsx and FloatingChars.tsx).
+
+### Deployment Shows Old Content
+
+**Solution**: Clear Vercel cache (Project Settings → Deployments → Redeploy) or make a new commit to main branch.
+
+### SEO Not Working
+
+**Solution**: Verify metadataBase URL in layout.tsx matches your deployment domain. Wait 48 hours for Google to re-crawl. Submit URL to Google Search Console manually.
+
+---
+
+## Learning Resources
+
+### To Understand This Project Better
+
+- [Next.js 16 App Router](https://nextjs.org/docs/app)
+- [React 19 Latest Features](https://react.dev/)
+- [TypeScript for React](https://www.typescriptlang.org/docs/handbook/react.html)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [HCI Principles (Nielsen Norman Group)](https://www.nngroup.com/articles/)
+
+### Technologies Used
+
+- [Three.js (for portfolio projects)](https://threejs.org/)
+- [Vercel Deployment](https://vercel.com/docs)
+- [Web Accessibility (WCAG)](https://www.w3.org/WAI/)
+
+---
+
+## License & Attribution
+
+**License**: MIT License - Feel free to use this as a template for your own portfolio.
+
+**Author**: Roil (白石大晴)
+- Meiji University, Faculty of Science and Engineering
+- HCI Research Focus
+- Contact: See social links in portfolio
+
+**Attribution**: If you use this template as a starting point, attribution is appreciated but not required.
+
+---
+
+## Contact & Social
+
+**Get in Touch**:
+- **YouTube**: [@Roil_HCI](https://www.youtube.com/@Roil_HCI)
+- **X/Twitter**: [@Roil_HCI](https://x.com/Roil_HCI)
+- **Portfolio**: [https://my-portfolio-ruby-delta-87.vercel.app](https://my-portfolio-ruby-delta-87.vercel.app)
+
+**Interested in HCI, Generative Art, or Interactive Design?**
+
+Open to collaboration and discussion. Feel free to reach out for project inquiries.
+
+---
+
+**Built with** ❤️ **by Roil | 白石大晴**

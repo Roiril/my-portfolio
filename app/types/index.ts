@@ -42,8 +42,15 @@ export type ToolSection = {
   categories: ToolCategory[];
 };
 
+// Key Fact項目
+export type KeyFact = {
+  title: string;
+  description: string;
+};
+
 // 自己紹介データ
 export type AboutData = {
   bio: string[];
+  keyFacts?: KeyFact[];
   toolSections: ToolSection[];
 };
