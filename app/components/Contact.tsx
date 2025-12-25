@@ -2,20 +2,20 @@ import { socialLinks, contactMessage } from '@/app/data/contact';
 
 export default function Contact() {
   return (
-    <section id="contact" className="px-8 py-48 bg-fafafa">
+    <section id="contact" className="px-8 py-24 bg-fafafa">
       <div className="max-w-3xl mx-auto text-center pointer-events-auto">
         {/* セクションヘッダー */}
-        <h2 className="text-3xl sm:text-4xl font-bold text-black mb-8">
+        <h2 className="text-3xl sm:text-4xl font-bold text-black mb-6">
           Get in Touch
         </h2>
 
         {/* メッセージ */}
-        <p className="text-base sm:text-lg text-gray-800 mb-24 leading-7">
+        <p className="text-base sm:text-lg text-gray-800 mb-12 leading-7">
           {contactMessage}
         </p>
 
         {/* ソーシャルリンク */}
-        <div className="flex flex-row flex-wrap justify-center gap-4">
+        <div className="flex flex-row flex-wrap justify-center gap-3">
           {socialLinks.map((link) => (
             <a
               key={link.platform}

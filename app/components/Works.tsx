@@ -4,10 +4,10 @@ export default function Works() {
   const allWorks = works;
 
   return (
-    <section id="works" className="px-8 py-32 bg-white">
+    <section id="works" className="px-8 py-12 bg-white">
       <div className="max-w-6xl mx-auto">
         {/* セクションヘッダー */}
-        <div className="mb-20">
+        <div className="mb-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-black mb-8">
             Works
           </h2>

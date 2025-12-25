@@ -51,7 +51,7 @@ export default function About() {
                 {section.title}
               </h3>
 
-              <div className="space-y-12">
+              <div className={section.title === 'Making With' ? 'space-y-6' : 'space-y-12'}>
                 {section.categories.map((category) => (
                   <div key={category.title}>
                     <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-widest mb-3">
@@ -73,7 +73,7 @@ export default function About() {
                         ))}
                       </div>
                     ) : (
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 gap-y-1">
                         {category.items.map((item) => (
                           <div key={item.name}>
                             <span className="text-xs text-gray-700 bg-gray-100 border border-gray-200 px-2 py-1 inline-block">
