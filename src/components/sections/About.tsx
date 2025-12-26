@@ -1,4 +1,4 @@
-import { aboutData } from '@/app/data/about';
+import { aboutData } from '@/content/about';
 
 export default function About() {
   return (
@@ -53,10 +53,12 @@ export default function About() {
 
               <div className={section.title === 'Making With' ? 'space-y-6' : 'space-y-12'}>
                 {section.categories.map((category) => (
-                  <div key={category.title}>
-                    <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-widest mb-3">
-                      {category.title}
-                    </h4>
+                  <div key={category.title || 'untitled'}>
+                    {category.title && (
+                      <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-widest mb-3">
+                        {category.title}
+                      </h4>
+                    )}
                     {section.title === 'Making in AI Nature' ? (
                       <div className="space-y-4">
                         {category.items.map((item) => (

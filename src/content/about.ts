@@ -1,4 +1,4 @@
-import { AboutData } from '@/app/types';
+import { AboutData } from '@/types/content';
 
 export const aboutData: AboutData = {
   bio: [
@@ -15,7 +15,6 @@ export const aboutData: AboutData = {
       title: 'Making in AI Nature',
       categories: [
         {
-          title: 'AI-assisted Making',
           items: [
             { name: 'Claude / Claude Code', description: '実装、文章推敲' },
             { name: 'Gemini', description: '画像生成、ビジュアル試作' },

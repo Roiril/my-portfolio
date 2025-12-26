@@ -1,9 +1,9 @@
 "use client";
-import Hero from './components/Hero';
-import About from './components/About';
-import Works from './components/Works';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import Hero from '@/components/sections/Hero';
+import About from '@/components/sections/About';
+import Works from '@/components/sections/Works';
+import Contact from '@/components/sections/Contact';
+import Footer from '@/components/sections/Footer';
 
 export default function Home() {
   return (

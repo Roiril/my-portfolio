@@ -1,4 +1,4 @@
-import { socialLinks, contactMessage } from '@/app/data/contact';
+import { socialLinks, contactMessage } from '@/content/contact';
 
 export default function Contact() {
   return (

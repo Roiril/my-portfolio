@@ -1,6 +1,6 @@
-# Roil's Portfolio | ÁôΩÁü≥Â§ßÊô¥„ÅÆ„Éù„Éº„Éà„Éï„Ç©„É™„Ç™
+# Roil's Portfolio | ÁôΩÁü≥Â§ßÊô¥„ÅÆ„Éù„ÅE„Éà„Éï„Ç©„É™„Ç™
 
-An interactive HCI-focused portfolio built with Next.js 16, React 19, and TypeScript, showcasing creative technical work with draggable UI elements and animated hiragana characters.
+An HCI-focused portfolio built with Next.js 16, React 19, and TypeScript, showcasing creative technical work and portfolio projects.
 
 **Live Demo**: [https://my-portfolio-ruby-delta-87.vercel.app](https://my-portfolio-ruby-delta-87.vercel.app)
 
@@ -8,11 +8,10 @@ An interactive HCI-focused portfolio built with Next.js 16, React 19, and TypeSc
 
 ## Key Features
 
-- **Interactive Hero Section**: Draggable title, description, and buttons with smooth touch/mouse support
-- **Floating Hiragana Animation**: 20+ animated background characters that can be grabbed and repositioned
+- **Hero Section**: Clear introduction and overview copy
 - **Portfolio Showcase**: 7 diverse projects including Three.js 3D modeling, Blender work, and generative art
 - **Hierarchical Skills Display**: Organized tool sections with categories (Languages, Frameworks, Hardware)
-- **Responsive Design**: Full mobile support with touch gestures
+- **Responsive Design**: Full mobile support
 - **Production Security**: Configured security headers (X-Frame-Options, CSP policies)
 - **Bilingual Support**: Japanese and English content throughout
 
@@ -34,43 +33,40 @@ An interactive HCI-focused portfolio built with Next.js 16, React 19, and TypeSc
 
 ```
 C:\Users\rinky\my-portfolio/
-‚îú‚îÄ‚îÄ app/
-‚îÇ   ‚îú‚îÄ‚îÄ components/              # React components
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ Hero.tsx            # Interactive hero with draggable elements
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ About.tsx           # Bio and tools/skills sections
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ Works.tsx           # Portfolio projects grid
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ Contact.tsx         # Social links and contact message
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ Footer.tsx          # Footer navigation
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ FloatingChars.tsx   # Animated hiragana background
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ WorkCard.tsx        # Individual project card
-‚îÇ   ‚îÇ   ‚îî‚îÄ‚îÄ FeaturedWork.tsx    # Featured project showcase (2-column)
-‚îÇ   ‚îÇ
-‚îÇ   ‚îú‚îÄ‚îÄ data/                    # Data files (TypeScript)
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ works.ts            # Portfolio projects data
-‚îÇ   ‚îÇ   ‚îú‚îÄ‚îÄ about.ts            # Bio paragraphs and tool sections
-‚îÇ   ‚îÇ   ‚îî‚îÄ‚îÄ contact.ts          # Social links and contact message
-‚îÇ   ‚îÇ
-‚îÇ   ‚îú‚îÄ‚îÄ types/
-‚îÇ   ‚îÇ   ‚îî‚îÄ‚îÄ index.ts            # TypeScript type definitions
-‚îÇ   ‚îÇ
-‚îÇ   ‚îú‚îÄ‚îÄ layout.tsx              # Root layout with metadata/SEO
-‚îÇ   ‚îú‚îÄ‚îÄ page.tsx                # Main page with drag state management
-‚îÇ   ‚îî‚îÄ‚îÄ globals.css             # Tailwind configuration
-‚îÇ
-‚îú‚îÄ‚îÄ public/
-‚îÇ   ‚îî‚îÄ‚îÄ images/                 # Portfolio project images
-‚îÇ
-‚îú‚îÄ‚îÄ next.config.ts              # Security headers configuration
-‚îú‚îÄ‚îÄ tsconfig.json               # TypeScript strict mode settings
-‚îú‚îÄ‚îÄ package.json                # Dependencies and scripts
-‚îî‚îÄ‚îÄ README.md                   # This file
+Ñ•ÑüÑü src/
+Ñ†   Ñ•ÑüÑü app/
+Ñ†   Ñ†   Ñ•ÑüÑü (site)/
+Ñ†   Ñ†   Ñ†   Ñ§ÑüÑü page.tsx          # Main page composition
+Ñ†   Ñ†   Ñ•ÑüÑü layout.tsx            # Root layout with metadata/SEO
+Ñ†   Ñ†   Ñ•ÑüÑü globals.css           # Global styles
+Ñ†   Ñ†   Ñ•ÑüÑü robots.ts
+Ñ†   Ñ†   Ñ•ÑüÑü sitemap.ts
+Ñ†   Ñ†   Ñ§ÑüÑü favicon.ico
+Ñ†   Ñ•ÑüÑü components/
+Ñ†   Ñ†   Ñ§ÑüÑü sections/             # Page sections
+Ñ†   Ñ†       Ñ•ÑüÑü Hero.tsx
+Ñ†   Ñ†       Ñ•ÑüÑü About.tsx
+Ñ†   Ñ†       Ñ•ÑüÑü Works.tsx
+Ñ†   Ñ†       Ñ•ÑüÑü Contact.tsx
+Ñ†   Ñ†       Ñ§ÑüÑü Footer.tsx
+Ñ†   Ñ•ÑüÑü content/                  # Data files (TypeScript)
+Ñ†   Ñ†   Ñ•ÑüÑü works.ts
+Ñ†   Ñ†   Ñ•ÑüÑü about.ts
+Ñ†   Ñ†   Ñ§ÑüÑü contact.ts
+Ñ†   Ñ§ÑüÑü types/
+Ñ†       Ñ§ÑüÑü content.ts            # TypeScript type definitions
+Ñ•ÑüÑü public/
+Ñ†   Ñ§ÑüÑü images/                   # Portfolio project images
+Ñ•ÑüÑü next.config.ts                # Security headers configuration
+Ñ•ÑüÑü tsconfig.json                 # TypeScript strict mode settings
+Ñ•ÑüÑü package.json                  # Dependencies and scripts
+Ñ§ÑüÑü README.md                     # This file
 ```
 
 **Key Architecture Patterns**:
 - **Data-driven**: All content stored in `.ts` files, not hardcoded in components
 - **Type safety**: TypeScript interfaces for all data structures
 - **Separation of concerns**: Components focus on rendering, data files on content
-- **Reusable patterns**: DragState type for UI element dragging
 
 ---
 
@@ -101,11 +97,11 @@ npm run dev
 ### First-Time Setup Customization
 
 When setting up your own portfolio:
-1. Update `metadataBase` URL in `app/layout.tsx` for your deployment
-2. Add your Google Search Console verification token in `app/layout.tsx`
-3. Update social links in `app/data/contact.ts`
+1. Update `metadataBase` URL in `src/app/layout.tsx` for your deployment
+2. Add your Google Search Console verification token in `src/app/layout.tsx`
+3. Update social links in `src/content/contact.ts`
 4. Replace project images in `public/images/` with your own
-5. Modify project data in `app/data/works.ts` for your portfolio
+5. Modify project data in `src/content/works.ts` for your portfolio
 
 ---
 
@@ -122,17 +118,17 @@ npm run lint     # Run ESLint code quality checks
 
 ### Customizing Content
 
-**Project Data** (`app/data/works.ts`):
+**Project Data** (`src/content/works.ts`):
 - Add/remove work entries with title, description, tags, links
 - Set `featured: true` to highlight a project on the homepage
 - Link types: `'demo'` (interactive), `'video'` (YouTube), `'launch'` (live site)
 
-**About Section** (`app/data/about.ts`):
+**About Section** (`src/content/about.ts`):
 - Update bio paragraphs
 - Add/remove tool sections and categories
 - Organize tools hierarchically (Section > Category > Items)
 
-**Social Links** (`app/data/contact.ts`):
+**Social Links** (`src/content/contact.ts`):
 - Update social media URLs
 - Modify contact message
 
@@ -140,20 +136,6 @@ npm run lint     # Run ESLint code quality checks
 - Place files in `public/images/`
 - Hero background: `Roil_hci_icon.png`
 - Project thumbnails: Referenced in `works.ts`
-
-### Interactive Features
-
-**Draggable Hero Elements** (app/page.tsx):
-- Title, description, and buttons can be dragged
-- Touch support for mobile devices
-- Mouse cursor changes to show interaction (grab ‚Üí grabbing)
-- State management at page level using DragState type
-
-**Floating Hiragana Characters** (app/components/FloatingChars.tsx):
-- Click/drag individual characters to pin them in place
-- 20+ characters randomly generated from hiragana set
-- Responsive animation duration based on screen width
-- Grayscale filter for subtle background effect
 
 ### Styling
 
@@ -164,7 +146,7 @@ npm run lint     # Run ESLint code quality checks
 
 ### SEO & Metadata
 
-Configure in `app/layout.tsx`:
+Configure in `src/app/layout.tsx`:
 - Open Graph (OGP) tags for social sharing
 - Twitter Card configuration
 - Google Search Console verification
@@ -221,19 +203,12 @@ Security headers configured in `next.config.ts`:
 - **Benefits**: Easy to update portfolio without touching component logic, single source of truth, type safety
 
 **Component Organization**:
-- Small, focused components (Hero, About, Works, Contact, Footer)
-- Shared utilities (WorkCard, FeaturedWork)
-- FloatingChars as independent background system
-- Main page handles complex drag state management
-
-**Interactive Features Strategy**:
-- Page-level drag state management for hero elements (page.tsx)
-- Component-level drag handling for floating characters
-- Touch event support throughout
-- Smooth animations with CSS keyframes
+- Section components live in src/components/sections
+- Page composition lives in src/app/(site)/page.tsx
+- Content and types live in src/content and src/types
 
 **HCI-Focused Design Principles**:
-- Physical interaction metaphors (dragging, grabbing)
+- Interaction metaphors and responsive feedback
 - Responsive feedback (cursor changes, animations)
 - Accessibility: Semantic HTML, proper navigation
 - Visual hierarchy: Typography, spacing, color contrast
@@ -242,28 +217,9 @@ Security headers configured in `next.config.ts`:
 
 ## Notable Features Deep Dive
 
-### 1. Interactive Dragging System
+### 1. Portfolio Project System
 
-The hero section implements a sophisticated drag system (app/page.tsx):
-- Click/touch to grab title, description, or buttons
-- Drag anywhere on screen while holding
-- Smooth movement following cursor/touch
-- Works on both desktop and mobile
-- Mouse cursor changes to show interaction (grab ‚Üí grabbing)
-
-### 2. Floating Characters Animation
-
-Background features 20+ animated hiragana characters (app/components/FloatingChars.tsx):
-- Randomly selected from full hiragana set
-- Fall animation from top to bottom with 360¬∞ rotation
-- Each character has unique size, opacity, speed
-- Click/drag to "pin" characters to new positions
-- Responsive: More characters on wider screens
-- Grayscale filter for subtle background effect
-
-### 3. Portfolio Project System
-
-Works section showcases 7 diverse projects (app/data/works.ts):
+Works section showcases 7 diverse projects (src/content/works.ts):
 - **Featured project** displayed prominently (Three.js Portfolio)
 - Remaining projects in responsive grid (2-3 columns)
 - Each project includes: Image, title, description, tags, action links
@@ -276,9 +232,9 @@ Works section showcases 7 diverse projects (app/data/works.ts):
 - **Digital Twin: Meiji University**: Blender photorealistic architecture modeling
 - **AI-Augmented Composition**: Human + AI music collaboration
 
-### 4. Skills/Tools Organization
+### 2. Skills/Tools Organization
 
-Hierarchical tool display in About section (app/data/about.ts):
+Hierarchical tool display in About section (src/content/about.ts):
 - **Top level**: Tool sections (Making in AI Nature, Core Making Stack)
 - **Second level**: Categories (Languages, Frameworks, Tools, Hardware)
 - **Bottom level**: Individual tools with optional descriptions
@@ -299,13 +255,13 @@ cd my-portfolio
 ```
 
 **Step 2: Customize Content**
-- Update `app/data/works.ts` with your projects
-- Update `app/data/about.ts` with your bio and skills
-- Update `app/data/contact.ts` with your social links
+- Update `src/content/works.ts` with your projects
+- Update `src/content/about.ts` with your bio and skills
+- Update `src/content/contact.ts` with your social links
 - Replace `public/images/` with your project images
 
 **Step 3: Configure Metadata**
-- Edit `app/layout.tsx`:
+- Edit `src/app/layout.tsx`:
   - Change metadataBase URL
   - Update title and description
   - Add Google Search Console verification
@@ -314,7 +270,7 @@ cd my-portfolio
 **Step 4: Customize Styling** (Optional)
 - Tailwind CSS is configured in `tailwind.config.ts`
 - Component-specific animations in component files
-- Global styles in `app/globals.css`
+- Global styles in `src/app/globals.css`
 
 **Step 5: Deploy**
 - Push to GitHub
@@ -325,7 +281,7 @@ cd my-portfolio
 
 - ESLint enabled: `npm run lint`
 - TypeScript strict mode for type safety
-- Comments explain complex logic (drag handlers, animations)
+- Comments explain complex logic when needed
 - Component props properly typed
 
 ### Pull Request Process
@@ -364,11 +320,11 @@ npm run dev -- -p 3001
 
 ### Drag Interactions Not Working on Mobile
 
-**Solution**: Check browser console for touch event errors. Ensure touch events are properly handled (check page.tsx and FloatingChars.tsx).
+**Solution**: Check browser console for interaction errors and verify component event handlers.
 
 ### Deployment Shows Old Content
 
-**Solution**: Clear Vercel cache (Project Settings ‚Üí Deployments ‚Üí Redeploy) or make a new commit to main branch.
+**Solution**: Clear Vercel cache (Project Settings ‚ÜÅEDeployments ‚ÜÅERedeploy) or make a new commit to main branch.
 
 ### SEO Not Working
 
@@ -420,4 +376,13 @@ Open to collaboration and discussion. Feel free to reach out for project inquiri
 
 ---
 
-**Built with** ‚ù§Ô∏è **by Roil | ÁôΩÁü≥Â§ßÊô¥**
+**Built with** ‚ù§ÅEÅE**by Roil | ÁôΩÁü≥Â§ßÊô¥**
+
+
+
+
+
+
+
+
+

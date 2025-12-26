@@ -1,4 +1,4 @@
-import { works } from '@/app/data/works';
+import { works } from '@/content/works';
 
 export default function Works() {
   const allWorks = works;
