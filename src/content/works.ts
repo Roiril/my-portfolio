@@ -1,10 +1,11 @@
-import { Work } from '@/types/content';
+﻿import { Work } from '@/types/content';
 
 export const works: Work[] = [
   {
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
-    description: 'ブラウン管テレビをThree.jsで3Dモデリング。Next.jsで動く。チャンネルを変えるとノイズが走る。',
+    description:
+      'Three.jsでレトロTVの3Dシーンを制作し、Next.jsのポートフォリオに統合しました。',
     image: '/images/retroTV-portfolio.png',
     tags: ['Next.js', 'Three.js'],
     links: [
@@ -16,7 +17,8 @@ export const works: Work[] = [
   {
     id: 'cube-diary',
     title: 'Web App: CubeDiary',
-    description: '記憶をキューブにして3D空間に配置する日記アプリ。Next.js + Three.js。書いた日記が立方体になって、美しく整列される。',
+    description:
+      '3D空間で日記を操作するWebアプリ。Next.js + Three.js + DBで試作しました。',
     image: '/images/CubeDiary.png',
     tags: ['Next.js', 'Three.js', 'Database'],
     links: [
@@ -27,42 +29,60 @@ export const works: Work[] = [
   {
     id: 'uniqlo-future',
     title: 'UNIQLO "Future Service"',
-    description: '2023年に作った映像作品。架空のUNIQLOサービスを近未来的に。Blenderでモデリング、VFX合成、AIで作曲。',
+    description:
+      'UNIQLOの未来サービスを想定したコンセプト映像。Blender + VFXで制作しました。',
     image: '/images/UniqloCap.png',
     tags: ['Blender', 'VFX', 'Video'],
-    links: [{ type: 'video', url: 'https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn' }],
+    links: [
+      { type: 'video', url: 'https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn' },
+    ],
   },
   {
     id: 'aquarium',
-    title: 'Aquarium inProcessing',
-    description: 'Processingで魚の群れをコーディング。自律的に泳ぎ回る。群衆アルゴリズムの視覚化。',
+    title: 'Aquarium in Processing',
+    description:
+      'Processingでジェネラティブな水槽表現を制作。インタラクションと色の変化を試しました。',
     image: '/images/AcuariumPrograming.png',
     tags: ['Processing', 'Generative Art'],
-    links: [{ type: 'video', url: 'https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN' }],
+    links: [
+      { type: 'video', url: 'https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN' },
+    ],
   },
   {
     id: 'meiji-3d',
     title: 'Digital Twin: Meiji Univ.',
-    description: '明治大学中野キャンパス3階をBlenderで再現。歩幅で測ってモデリング、写真を撮って張り付け、机や黒板は細かく作り込んだ。Unityで動いたときは本当に感動した。',
+    description:
+      '明治大学キャンパスをBlenderで再現し、フォトリアルな空間表現を行いました。',
     image: '/images/Meiji3fVideoCapture.png',
     tags: ['Blender', '3D Modeling'],
-    links: [{ type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' }],
+    links: [
+      { type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' },
+    ],
   },
   {
     id: 'ai-composition',
     title: 'AI-Augmented Composition',
-    description: 'AI作曲が主流になる前に作成した曲を、Suno AIで再構成。技術の進歩を感じた。',
+    description:
+      'Suno AIとStudio Oneを使い、AIと共同で楽曲を制作しました。',
     image: '/images/StudioOneCap.png',
     tags: ['StudioOne', 'Suno AI'],
     links: [
-      { type: 'video', url: 'https://youtube.com/shorts/EPZ6CyN0CKQ?si=bLckXFs04Tpznf-P', label: 'Original' },
-      { type: 'video', url: 'https://youtube.com/shorts/61PpnNePhsk?si=EbQLesmbgxvFs2jA', label: 'AI Ver.' },
+      {
+        type: 'video',
+        url: 'https://youtube.com/shorts/EPZ6CyN0CKQ?si=bLckXFs04Tpznf-P',
+        label: 'Original',
+      },
+      {
+        type: 'video',
+        url: 'https://youtube.com/shorts/61PpnNePhsk?si=EbQLesmbgxvFs2jA',
+        label: 'AI Ver.',
+      },
     ],
   },
   {
     id: 'portfolio',
     title: 'Portfolio',
-    description: '普通のサイト',
+    description: 'このポートフォリオサイト自体の制作。',
     image: '/images/MyPortfolio.png',
     tags: ['Next.js', 'React'],
     links: [],

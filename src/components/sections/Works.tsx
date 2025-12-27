@@ -1,4 +1,4 @@
-import { works } from '@/content/works';
+﻿import { works } from '@/content/works';
 
 export default function Works() {
   const allWorks = works;
@@ -6,22 +6,19 @@ export default function Works() {
   return (
     <section id="works" className="px-8 py-12 bg-white">
       <div className="max-w-6xl mx-auto">
-        {/* セクションヘッダー */}
         <div className="mb-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-black mb-8">
             Works
           </h2>
           <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl">
-            Next.js、Three.js、Blender など複数の技術を組み合わせた作品。
-            各プロジェクトは情緒的な体験設計を軸に制作。
+            Next.js、Three.js、Blenderなどを用いた制作物をまとめています。
+            研究や制作の背景も含めて紹介しています。
           </p>
         </div>
 
-        {/* 作品リスト - 統一デザイン */}
         <div className="flex flex-col gap-24 pointer-events-auto">
           {allWorks.map((work) => (
             <div key={work.id} className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-              {/* 画像 */}
               <div className="w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0">
                 <img
                   src={work.image}
@@ -30,9 +27,7 @@ export default function Works() {
                 />
               </div>
 
-              {/* コンテンツ */}
               <div className="flex-1 flex flex-col">
-                {/* Featured ラベル */}
                 {work.featured && (
                   <span className="text-xs font-semibold text-black mb-4 uppercase tracking-widest">
                     Featured
@@ -47,7 +42,6 @@ export default function Works() {
                   {work.description}
                 </p>
 
-                {/* タグ */}
                 <div className="flex flex-wrap gap-3 mb-6">
                   {work.tags.map((tag) => (
                     <span
@@ -59,10 +53,9 @@ export default function Works() {
                   ))}
                 </div>
 
-                {/* リンク・ステータス */}
                 {work.isCurrent ? (
                   <div className="text-xs sm:text-sm text-gray-700 font-medium">
-                    ← このサイト
+                    このサイトを制作中
                   </div>
                 ) : work.links.length > 0 ? (
                   <div className="flex flex-row gap-3">

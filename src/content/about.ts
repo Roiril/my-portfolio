@@ -1,14 +1,15 @@
-import { AboutData } from '@/types/content';
+﻿import { AboutData } from '@/types/content';
 
 export const aboutData: AboutData = {
   bio: [
-    '明治大学先端メディアサイエンス学科に在籍。研究はHCI、個人開発はUnityとWebアプリケーション。',
+    '明治大学総合数理学部FMSでHCIを研究し、Web・3D・XRを中心に体験設計と実装を行っています。',
+    'Unity、Next.js、Blenderなどを用いて、プロトタイプから映像制作まで幅広く取り組んでいます。',
   ],
   keyFacts: [
-    { title: '研究領域', description: 'HCI' },
-    { title: '得意技術', description: 'Web, Blender, Unity' },
-    { title: '制作の友', description: 'Claude-Code、Gemini、ChatGPT' },
-    { title: 'いま注目', description: '情緒的こだわりデジ' },
+    { title: '研究領域', description: 'HCI / Human-Computer Interaction' },
+    { title: '制作領域', description: 'Web, 3D, XR' },
+    { title: '主なツール', description: 'Next.js, Unity, Blender' },
+    { title: '拠点', description: '明治大学（東京）' },
   ],
   toolSections: [
     {
@@ -16,10 +17,11 @@ export const aboutData: AboutData = {
       categories: [
         {
           items: [
-            { name: 'Claude / Claude Code', description: '実装、文章推敲' },
-            { name: 'Gemini', description: '画像生成、ビジュアル試作' },
-            { name: 'ChatGPT / Codex', description: 'リサーチ、思考整理、実装' },
+            { name: 'Claude / Claude Code', description: '設計・リサーチの壁打ち' },
+            { name: 'ChatGPT / Codex', description: '実装・検証の補助' },
+            { name: 'Gemini', description: '画像・データの探索' },
           ],
+          title: '',
         },
       ],
     },
@@ -39,7 +41,7 @@ export const aboutData: AboutData = {
           items: [
             { name: 'Next.js' },
             { name: 'React' },
-            { name: 'three.js' }, 
+            { name: 'three.js' },
           ],
         },
         {
@@ -56,10 +58,10 @@ export const aboutData: AboutData = {
           title: 'Hardware / Fabrication',
           items: [
             { name: 'toio' },
-            { name: '3D Printing(Bambu Lab)' },
+            { name: '3D Printing (Bambu Lab)' },
           ],
         },
       ],
-    }
+    },
   ],
 };
