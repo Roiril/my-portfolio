@@ -4,14 +4,14 @@ export const socialLinks: SocialLink[] = [
   {
     platform: 'YouTube',
     url: 'https://www.youtube.com/@Roil_HCI',
-    icon: 'YT',
+    icon: '',
   },
   {
-    platform: 'X (Twitter)',
+    platform: 'X',
     url: 'https://x.com/Roil_HCI',
-    icon: 'X',
+    icon: '',
   },
 ];
 
 export const contactMessage =
-  'コラボや制作の相談はお気軽にご連絡ください。YouTubeやXでも発信しています。';
+  '相談や依頼など気軽にご連絡ください。';
