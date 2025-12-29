@@ -1,388 +1,113 @@
-# Roil's Portfolio | ÁôΩÁü≥Â§ßÊô¥„ÅÆ„Éù„ÅE„Éà„Éï„Ç©„É™„Ç™
+# Roil„ÅÆ„Éù„Éº„Éà„Éï„Ç©„É™„Ç™
 
-An HCI-focused portfolio built with Next.js 16, React 19, and TypeScript, showcasing creative technical work and portfolio projects.
+ÊòéÊ≤ªÂ§ßÂ≠¶Á∑èÂêàÊï∞ÁêÜÂ≠¶ÈÉ®FMS„ÅßHCI„ÇíÁ†îÁ©∂„Åó„ÄÅWeb„Éª3D„ÉªXR„Çí‰∏≠ÂøÉ„Å´‰ΩìÈ®ìË®≠Ë®à„Å®ÂÆüË£Ö„ÇíË°å„Å£„Å¶„ÅÑ„Åæ„Åô„ÄÇ
 
-**Live Demo**: [https://my-portfolio-ruby-delta-87.vercel.app](https://my-portfolio-ruby-delta-87.vercel.app)
+Unity„ÄÅNext.js„ÄÅBlender„Å™„Å©„ÇíÁî®„ÅÑ„Å¶„ÄÅ„Éó„É≠„Éà„Çø„Ç§„Éó„Åã„ÇâÊò†ÂÉèÂà∂‰Ωú„Åæ„ÅßÂπÖÂ∫É„ÅèÂèñ„ÇäÁµÑ„Çì„Åß„ÅÑ„Åæ„Åô„ÄÇ
 
----
+## „Éö„Éº„Ç∏ÊßãÊàê
 
-## Key Features
+- Hero: HCI / Portfolio / Roil „ÅÆÂ∞éÂÖ•„Å®CTA
+- About: Áï•Ê≠¥„ÉªÁ†îÁ©∂/Âà∂‰ΩúÈ†òÂüü„Éª„ÉÑ„Éº„É´
+- Works: ‰ΩúÂìÅ‰∏ÄË¶ß
+- Contact: ÈÄ£Áµ°ÂÖà
+- Footer: Ê®©Âà©Ë°®Ë®ò
 
-- **Hero Section**: Clear introduction and overview copy
-- **Portfolio Showcase**: 7 diverse projects including Three.js 3D modeling, Blender work, and generative art
-- **Hierarchical Skills Display**: Organized tool sections with categories (Languages, Frameworks, Hardware)
-- **Responsive Design**: Full mobile support
-- **Production Security**: Configured security headers (X-Frame-Options, CSP policies)
-- **Bilingual Support**: Japanese and English content throughout
+## „Éó„É≠„Éï„Ç£„Éº„É´
 
----
+- ÁôΩÁü≥Â§ßÊô¥ / Taisei Shiroishi
 
-## Tech Stack
+### „Ç≠„Éº„Éï„Ç°„ÇØ„Éà
 
-- **Runtime**: Node.js 18+ (recommended)
-- **Framework**: Next.js 16.0.7 (App Router)
-- **React**: 19.2.0
-- **Language**: TypeScript 5 (strict mode)
-- **Styling**: Tailwind CSS 4 with PostCSS
-- **Code Quality**: ESLint
-- **Hosting**: Vercel
+- Á†îÁ©∂È†òÂüü: HCI / Human-Computer Interaction
+- Âà∂‰ΩúÈ†òÂüü: Web, 3D, XR
+- ‰∏ª„Å™„ÉÑ„Éº„É´: Next.js, Unity, Blender
+- Êã†ÁÇπ: ÊòéÊ≤ªÂ§ßÂ≠¶ÔºàÊù±‰∫¨Ôºâ
 
----
+## „ÉÑ„Éº„É´/Âà∂‰ΩúÁí∞Â¢É
 
-## Project Structure
+### Making in AI Nature
 
-```
-C:\Users\rinky\my-portfolio/
-Ñ•ÑüÑü src/
-Ñ†   Ñ•ÑüÑü app/
-Ñ†   Ñ†   Ñ•ÑüÑü (site)/
-Ñ†   Ñ†   Ñ†   Ñ§ÑüÑü page.tsx          # Main page composition
-Ñ†   Ñ†   Ñ•ÑüÑü layout.tsx            # Root layout with metadata/SEO
-Ñ†   Ñ†   Ñ•ÑüÑü globals.css           # Global styles
-Ñ†   Ñ†   Ñ•ÑüÑü robots.ts
-Ñ†   Ñ†   Ñ•ÑüÑü sitemap.ts
-Ñ†   Ñ†   Ñ§ÑüÑü favicon.ico
-Ñ†   Ñ•ÑüÑü components/
-Ñ†   Ñ†   Ñ§ÑüÑü sections/             # Page sections
-Ñ†   Ñ†       Ñ•ÑüÑü Hero.tsx
-Ñ†   Ñ†       Ñ•ÑüÑü About.tsx
-Ñ†   Ñ†       Ñ•ÑüÑü Works.tsx
-Ñ†   Ñ†       Ñ•ÑüÑü Contact.tsx
-Ñ†   Ñ†       Ñ§ÑüÑü Footer.tsx
-Ñ†   Ñ•ÑüÑü content/                  # Data files (TypeScript)
-Ñ†   Ñ†   Ñ•ÑüÑü works.ts
-Ñ†   Ñ†   Ñ•ÑüÑü about.ts
-Ñ†   Ñ†   Ñ§ÑüÑü contact.ts
-Ñ†   Ñ§ÑüÑü types/
-Ñ†       Ñ§ÑüÑü content.ts            # TypeScript type definitions
-Ñ•ÑüÑü public/
-Ñ†   Ñ§ÑüÑü images/                   # Portfolio project images
-Ñ•ÑüÑü next.config.ts                # Security headers configuration
-Ñ•ÑüÑü tsconfig.json                 # TypeScript strict mode settings
-Ñ•ÑüÑü package.json                  # Dependencies and scripts
-Ñ§ÑüÑü README.md                     # This file
-```
+- ChatGPT / Codex: ÂÆüË£Ö„ÄÅ„Ç¢„Ç§„Éá„Ç¢Âá∫„Åó„ÄÅ„É™„Çµ„Éº„ÉÅ
+- Claude / Claude Code: ÂÆüË£Ö
+- Gemini: ÁîªÂÉèÁ∑®ÈõÜ„ÄÅÂä†Â∑•
 
-**Key Architecture Patterns**:
-- **Data-driven**: All content stored in `.ts` files, not hardcoded in components
-- **Type safety**: TypeScript interfaces for all data structures
-- **Separation of concerns**: Components focus on rendering, data files on content
+### Making With
 
----
+- Languages: C#, JavaScript / TypeScript, Python
+- Frameworks & Libraries: Next.js, React, three.js
+- Tools: VS Code, Cursor, Unity, Blender, Processing
+- Hardware / Fabrication: toio, 3D Printing (Bambu Lab)
 
-## Getting Started
+## ‰ΩúÂìÅ
 
-### Prerequisites
+### Portfolio: Retro TV version
 
-- Node.js 18.17 or later
-- npm, yarn, or pnpm package manager
+- „É¨„Éà„É≠„Å™„Éñ„É©„Ç¶„É≥ÁÆ°„ÉÜ„É¨„Éì‰∏ä„ÅÆ„Éù„Éº„Éà„Éï„Ç©„É™„Ç™„Çµ„Ç§„Éà„ÄÇThree.js + Next.js„ÅßÂà∂‰Ωú„Åó„Åæ„Åó„Åü„ÄÇ
+- Tags: Next.js, Three.js
+- Links:
+  - Launch: https://my-retro-portfolio-rust.vercel.app/
+  - Video: https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS
 
-### Installation
+### Web App: CubeDiary
+
+- 3DÁ©∫Èñì„ÅßÊó•Ë®ò„ÇíÊìç‰Ωú„Åô„ÇãWeb„Ç¢„Éó„É™„ÄÇNext.js + Three.js + Supabase„ÅßË©¶‰Ωú„Åó„Åæ„Åó„Åü„ÄÇ
+- Tags: Next.js, Three.js, Database
+- Links:
+  - Launch: https://cube-diary.vercel.app/
+  - Video: https://youtube.com/shorts/UY0FlFT1WY8?si=Hm70ycGAHvYiZp20
+
+### UNIQLO "Future Service"
+
+- UNIQLO„ÅÆÊú™Êù•„Çµ„Éº„Éì„Çπ„ÇíÊÉ≥ÂÆö„Åó„Åü„Ç≥„É≥„Çª„Éó„ÉàÊò†ÂÉè„ÄÇBlender + VFX + Fimola„ÅßÂà∂‰Ωú„Åó„Åæ„Åó„Åü„ÄÇ
+- Tags: Blender, VFX, Video
+- Links:
+  - Video: https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn
+
+### Aquarium in Processing
+
+- Ê∞¥ÊßΩ„Å®Áæ§„Çå„ÅßÊ≥≥„ÅêÈ≠ö„ÇíÂà∂‰Ωú„ÄÇ Processing + Blender„ÅßÂà∂‰Ωú„Åó„Åæ„Åó„Åü„ÄÇ
+- Tags: Processing, Generative Art
+- Links:
+  - Video: https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN
+
+### Digital Twin: Meiji Univ.
+
+- ÊòéÊ≤ªÂ§ßÂ≠¶3F„Çí„ÄÅÊ≠©ÂπÖ„ÅßÊ∏¨Èáè„Åó„Å¶Blender„ÅßÂÜçÁèæ„ÄÇUnity„ÅßÊé¢Á¥¢„Åß„Åç„Çã„Çà„ÅÜ„Å´„Åó„Åæ„Åó„Åü„ÄÇ
+- Tags: Blender, 3D Modeling
+- Links:
+  - Video: https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi
+
+### AI-Augmented Composition
+
+- Studio One„ÅßÊòî‰Ωú„Å£„ÅüÊõ≤„Çí„ÄÅSuno AI„ÅßÂÜçÊßãÊàê„ÉªÊã°Âºµ„Åó„Åæ„Åó„Åü„ÄÇ
+- Tags: StudioOne, Suno AI
+
+### Portfolio
+
+- „Åì„ÅÆ„Éù„Éº„Éà„Éï„Ç©„É™„Ç™„Çµ„Ç§„ÉàËá™‰Ωì„ÅÆÂà∂‰Ωú„ÄÇ
+- Tags: Next.js, React
+- Status: „Åì„ÅÆ„Çµ„Ç§„Éà„ÇíÂà∂‰Ωú‰∏≠
+
+## ÈÄ£Áµ°ÂÖà
+
+- Message: Áõ∏Ë´á„ÇÑ‰æùÈ†º„Å™„Å©Ê∞óËªΩ„Å´„ÅîÈÄ£Áµ°„Åè„Å†„Åï„ÅÑ„ÄÇ
+- Email: rinkyouaoi@gmail.com
+- Social:
+  - YouTube: https://www.youtube.com/@Roil_HCI
+  - X: https://x.com/Roil_HCI
+
+## „Éá„Éº„Çø„ÅÆÂ†¥ÊâÄ
+
+- „Éö„Éº„Ç∏ÊßãÊàê: src/app/(site)/page.tsx
+- About: src/content/about.ts
+- Works: src/content/works.ts
+- Contact: src/content/contact.ts
+
+## ÈñãÁô∫
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Roiril/my-portfolio.git
-cd my-portfolio
-
-# 2. Install dependencies
 npm install
-
-# 3. Run development server
 npm run dev
-
-# 4. Open browser
-# Navigate to http://localhost:3000
 ```
 
-### First-Time Setup Customization
-
-When setting up your own portfolio:
-1. Update `metadataBase` URL in `src/app/layout.tsx` for your deployment
-2. Add your Google Search Console verification token in `src/app/layout.tsx`
-3. Update social links in `src/content/contact.ts`
-4. Replace project images in `public/images/` with your own
-5. Modify project data in `src/content/works.ts` for your portfolio
-
----
-
-## Development Workflow
-
-### Available Scripts
-
-```bash
-npm run dev      # Start development server (http://localhost:3000)
-npm run build    # Create production build
-npm start        # Run production server locally
-npm run lint     # Run ESLint code quality checks
-```
-
-### Customizing Content
-
-**Project Data** (`src/content/works.ts`):
-- Add/remove work entries with title, description, tags, links
-- Set `featured: true` to highlight a project on the homepage
-- Link types: `'demo'` (interactive), `'video'` (YouTube), `'launch'` (live site)
-
-**About Section** (`src/content/about.ts`):
-- Update bio paragraphs
-- Add/remove tool sections and categories
-- Organize tools hierarchically (Section > Category > Items)
-
-**Social Links** (`src/content/contact.ts`):
-- Update social media URLs
-- Modify contact message
-
-**Images**:
-- Place files in `public/images/`
-- Hero background: `Roil_hci_icon.png`
-- Project thumbnails: Referenced in `works.ts`
-
-### Styling
-
-- **Tailwind CSS 4** with PostCSS for styling
-- No additional UI component libraries (pure Tailwind)
-- Custom animations in component files (CSS-in-JS)
-- Responsive breakpoints: sm, md, lg
-
-### SEO & Metadata
-
-Configure in `src/app/layout.tsx`:
-- Open Graph (OGP) tags for social sharing
-- Twitter Card configuration
-- Google Search Console verification
-
----
-
-## Deployment
-
-### Vercel Deployment (Recommended)
-
-**Method 1: Auto-deploy from Git**
-1. Push to GitHub
-2. Connect repository to Vercel dashboard
-3. Vercel auto-deploys on every push to main branch
-
-**Method 2: Manual deployment**
-```bash
-npm run build
-vercel deploy --prod
-```
-
-### Environment Setup
-
-No environment variables required for basic functionality. Add `.env.local` if using database or external services in the future.
-
-### Production Security
-
-Security headers configured in `next.config.ts`:
-- **X-Frame-Options**: DENY (prevents clickjacking)
-- **X-Content-Type-Options**: nosniff (MIME type detection)
-- **Referrer-Policy**: strict-origin-when-cross-origin
-- **Permissions-Policy**: Disables camera, microphone, geolocation
-
-### Performance Optimization
-
-- Next.js 16 automatic code splitting
-- Image optimization with next/image (when applicable)
-- Font optimization with next/font (Inter from Google Fonts)
-- Metadata auto-compression
-
-### Current Deployment
-
-- **Live URL**: https://my-portfolio-ruby-delta-87.vercel.app
-- **Auto-deploys**: On commits to main branch
-
----
-
-## Architecture & Design Decisions
-
-### Why This Architecture?
-
-**Data-Driven Design**:
-- Content stored in separate TypeScript files, not hardcoded in components
-- **Benefits**: Easy to update portfolio without touching component logic, single source of truth, type safety
-
-**Component Organization**:
-- Section components live in src/components/sections
-- Page composition lives in src/app/(site)/page.tsx
-- Content and types live in src/content and src/types
-
-**HCI-Focused Design Principles**:
-- Interaction metaphors and responsive feedback
-- Responsive feedback (cursor changes, animations)
-- Accessibility: Semantic HTML, proper navigation
-- Visual hierarchy: Typography, spacing, color contrast
-
----
-
-## Notable Features Deep Dive
-
-### 1. Portfolio Project System
-
-Works section showcases 7 diverse projects (src/content/works.ts):
-- **Featured project** displayed prominently (Three.js Portfolio)
-- Remaining projects in responsive grid (2-3 columns)
-- Each project includes: Image, title, description, tags, action links
-- Link types: demo (interactive), video (YouTube), launch (live site)
-- Project metadata fully typed in TypeScript
-
-**Notable Projects**:
-- **Retro TV Portfolio**: Three.js 3D modeling with Next.js
-- **CubeDiary**: Web app with 3D space interaction
-- **Digital Twin: Meiji University**: Blender photorealistic architecture modeling
-- **AI-Augmented Composition**: Human + AI music collaboration
-
-### 2. Skills/Tools Organization
-
-Hierarchical tool display in About section (src/content/about.ts):
-- **Top level**: Tool sections (Making in AI Nature, Core Making Stack)
-- **Second level**: Categories (Languages, Frameworks, Tools, Hardware)
-- **Bottom level**: Individual tools with optional descriptions
-- Visual presentation: Responsive grid with badge-style items
-
----
-
-## Customization & Contributing
-
-### Making This Your Own
-
-**Step 1: Fork & Clone**
-```bash
-# Create your own fork on GitHub
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/my-portfolio.git
-cd my-portfolio
-```
-
-**Step 2: Customize Content**
-- Update `src/content/works.ts` with your projects
-- Update `src/content/about.ts` with your bio and skills
-- Update `src/content/contact.ts` with your social links
-- Replace `public/images/` with your project images
-
-**Step 3: Configure Metadata**
-- Edit `src/app/layout.tsx`:
-  - Change metadataBase URL
-  - Update title and description
-  - Add Google Search Console verification
-  - Update OGP image and Twitter card
-
-**Step 4: Customize Styling** (Optional)
-- Tailwind CSS is configured in `tailwind.config.ts`
-- Component-specific animations in component files
-- Global styles in `src/app/globals.css`
-
-**Step 5: Deploy**
-- Push to GitHub
-- Connect to Vercel
-- Auto-deploy on push
-
-### Code Quality Standards
-
-- ESLint enabled: `npm run lint`
-- TypeScript strict mode for type safety
-- Comments explain complex logic when needed
-- Component props properly typed
-
-### Pull Request Process
-
-For improvements or bug fixes:
-- Ensure `npm run lint` passes
-- Add meaningful commit messages
-- Create PR with description of changes
-
----
-
-## Troubleshooting
-
-### Build Fails with TypeScript Errors
-
-**Solution**: Run `npm install` to ensure all types are installed. Check `tsconfig.json` settings match your Node.js version.
-
-### Development Server Won't Start
-
-**Solution**: Kill process on port 3000:
-```bash
-# Windows
-netstat -ano | findstr :3000
-taskkill /PID <PID> /F
-
-# Mac/Linux
-lsof -ti:3000 | xargs kill -9
-
-# Or use different port
-npm run dev -- -p 3001
-```
-
-### Images Not Loading in Production
-
-**Solution**: Ensure images are in `public/` directory. Check image paths in component files match public directory structure.
-
-### Drag Interactions Not Working on Mobile
-
-**Solution**: Check browser console for interaction errors and verify component event handlers.
-
-### Deployment Shows Old Content
-
-**Solution**: Clear Vercel cache (Project Settings ‚ÜÅEDeployments ‚ÜÅERedeploy) or make a new commit to main branch.
-
-### SEO Not Working
-
-**Solution**: Verify metadataBase URL in layout.tsx matches your deployment domain. Wait 48 hours for Google to re-crawl. Submit URL to Google Search Console manually.
-
----
-
-## Learning Resources
-
-### To Understand This Project Better
-
-- [Next.js 16 App Router](https://nextjs.org/docs/app)
-- [React 19 Latest Features](https://react.dev/)
-- [TypeScript for React](https://www.typescriptlang.org/docs/handbook/react.html)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [HCI Principles (Nielsen Norman Group)](https://www.nngroup.com/articles/)
-
-### Technologies Used
-
-- [Three.js (for portfolio projects)](https://threejs.org/)
-- [Vercel Deployment](https://vercel.com/docs)
-- [Web Accessibility (WCAG)](https://www.w3.org/WAI/)
-
----
-
-## License & Attribution
-
-**License**: MIT License - Feel free to use this as a template for your own portfolio.
-
-**Author**: Roil (ÁôΩÁü≥Â§ßÊô¥)
-- Meiji University, Faculty of Science and Engineering
-- HCI Research Focus
-- Contact: See social links in portfolio
-
-**Attribution**: If you use this template as a starting point, attribution is appreciated but not required.
-
----
-
-## Contact & Social
-
-**Get in Touch**:
-- **YouTube**: [@Roil_HCI](https://www.youtube.com/@Roil_HCI)
-- **X/Twitter**: [@Roil_HCI](https://x.com/Roil_HCI)
-- **Portfolio**: [https://my-portfolio-ruby-delta-87.vercel.app](https://my-portfolio-ruby-delta-87.vercel.app)
-
-**Interested in HCI, Generative Art, or Interactive Design?**
-
-Open to collaboration and discussion. Feel free to reach out for project inquiries.
-
----
-
-**Built with** ‚ù§ÅEÅE**by Roil | ÁôΩÁü≥Â§ßÊô¥**
-
-
-
-
-
-
-
-
-
+„Éñ„É©„Ç¶„Ç∂„Åß http://localhost:3000 „ÇíÈñã„ÅÑ„Å¶Á¢∫Ë™ç„Åó„Åæ„Åô„ÄÇ

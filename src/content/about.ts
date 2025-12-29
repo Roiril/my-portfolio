@@ -13,7 +13,7 @@ export const aboutData: AboutData = {
   ],
   toolSections: [
     {
-      title: 'Making in AI Nature',
+      title: 'AI Nature Creation',
       categories: [
         {
           items: [
@@ -26,7 +26,7 @@ export const aboutData: AboutData = {
       ],
     },
     {
-      title: 'Making With',
+      title: 'Create With',
       categories: [
         {
           title: 'Languages',

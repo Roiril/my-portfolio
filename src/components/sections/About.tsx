@@ -59,11 +59,11 @@ export default function About() {
                         {category.title}
                       </h4>
                     )}
-                    {section.title === 'Making in AI Nature' ? (
-                      <div className="space-y-4">
-                        {category.items.map((item) => (
-                          <div key={item.name}>
-                            <div className="text-gray-800 font-medium text-sm">
+                    {section.title === 'AI Nature Creation' ? (
+                      <div className="flex flex-wrap gap-6">
+                        {category.items.map((item, index) => (
+                          <div key={item.name} className={`flex-1 min-w-[180px] ${index !== category.items.length - 1 ? 'border-r border-gray-300 pr-6' : ''}`}>
+                            <div className="text-gray-800 font-bold text-sm">
                               {item.name}
                             </div>
                             {item.description && (

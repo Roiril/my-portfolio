@@ -16,9 +16,9 @@ export default function Works() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-24 pointer-events-auto">
+        <div className="flex flex-col gap-10 pointer-events-auto">
           {allWorks.map((work) => (
-            <div key={work.id} className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+            <div key={work.id} className="flex flex-col md:flex-row gap-8 md:gap-12 items-start pb-10 border-b border-gray-200 last:border-b-0">
               <div className="w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0">
                 <img
                   src={work.image}
@@ -38,7 +38,7 @@ export default function Works() {
                   {work.title}
                 </h3>
 
-                <p className="text-sm sm:text-base text-gray-800 mb-6 leading-7 whitespace-pre-line">
+                <p className="text-sm sm:text-base text-gray-800 mb-2 leading-7 whitespace-pre-line">
                   {work.description}
                 </p>
 

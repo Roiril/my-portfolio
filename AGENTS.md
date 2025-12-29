@@ -46,7 +46,7 @@ Prefer unified diff. Do not paste whole large files unless asked.
 
 ## Working agreements
 
-- Start with a plan only. Do not edit files until I say "implement".
+- Start with a plan only. Do not edit files until I say "おっけい".
 - When implementing: keep changes minimal and reviewable.
 - Always show a short checklist of what you will change (files + reasons) before edits.
 - After changes: run `npm run lint` and `npm run build` (or explain why not).
