@@ -5,7 +5,7 @@ export const works: Work[] = [
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
     description:
-      'レトロなブラウン管テレビ上のポートフォリオサイト。Three.js + Next.jsで制作しました。',
+      'レトロなブラウン管テレビ上のポートフォリオサイト．',
     image: '/images/retroTV-portfolio.png',
     tags: ['Next.js', 'Three.js'],
     links: [
@@ -18,7 +18,7 @@ export const works: Work[] = [
     id: 'cube-diary',
     title: 'Web App: CubeDiary',
     description:
-      '3D空間で日記を操作するWebアプリ。Next.js + Three.js + Supabaseで試作しました。',
+      '真っ暗な世界に記憶をキューブで保存するアプリ．',
     image: '/images/CubeDiary.png',
     tags: ['Next.js', 'Three.js', 'Database'],
     links: [
@@ -30,7 +30,7 @@ export const works: Work[] = [
     id: 'uniqlo-future',
     title: 'UNIQLO "Future Service"',
     description:
-      'UNIQLOの未来サービスを想定したコンセプト映像。Blender + VFX + Fimolaで制作しました。',
+      'UNIQLOの未来サービスを想定したコンセプト映像．Blender + VFX + Fimolaで制作しました．',
     image: '/images/UniqloCap.png',
     tags: ['Blender', 'VFX', 'Video'],
     links: [
@@ -41,7 +41,7 @@ export const works: Work[] = [
     id: 'aquarium',
     title: 'Aquarium in Processing',
     description:
-      '水槽と群れで泳ぐ魚を制作。 Processing + Blenderで制作しました。',
+      '水槽と群れで泳ぐ魚を制作． Processing + Blenderで制作しました．',
     image: '/images/AcuariumPrograming.png',
     tags: ['Processing', 'Generative Art'],
     links: [
@@ -52,7 +52,7 @@ export const works: Work[] = [
     id: 'meiji-3d',
     title: 'Digital Twin: Meiji Univ.',
     description:
-      '明治大学3Fを、歩幅で測量してBlenderで再現。Unityで探索できるようにしました。',
+      '明治大学3Fを，歩幅で測量してBlenderで再現．Unityで探索できるようにしました．',
     image: '/images/Meiji3fVideoCapture.png',
     tags: ['Blender', '3D Modeling'],
     links: [
@@ -63,7 +63,7 @@ export const works: Work[] = [
     id: 'ai-composition',
     title: 'AI-Augmented Composition',
     description:
-      'Studio Oneで昔作った曲を、Suno AIで再構成・拡張しました。',
+      'Studio Oneで昔作った曲を，Suno AIで再構成・拡張しました．',
     image: '/images/StudioOneCap.png',
     tags: ['StudioOne', 'Suno AI'],
     links: [
@@ -82,7 +82,7 @@ export const works: Work[] = [
   {
     id: 'portfolio',
     title: 'Portfolio',
-    description: 'このポートフォリオサイト自体の制作。',
+    description: 'このポートフォリオサイト自体の制作．',
     image: '/images/MyPortfolio.png',
     tags: ['Next.js', 'React'],
     links: [],

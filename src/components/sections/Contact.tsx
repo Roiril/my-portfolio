@@ -31,48 +31,48 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="px-8 py-10 bg-fafafa">
-      <div className="max-w-3xl mx-auto text-center pointer-events-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-black mb-6">
-          お問い合わせ
+    <section id="contact" className="px-8 py-16 bg-white">
+      <div className="max-w-4xl mx-auto text-center pointer-events-auto">
+        <h2 className="text-4xl sm:text-5xl font-black text-black mb-8">
+          Contact
         </h2>
 
-        <p className="text-base sm:text-lg text-gray-800 mb-8 leading-7">
+        <p className="text-lg sm:text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
           {contactMessage}
         </p>
 
-        <div className="flex flex-col items-center gap-2 mb-6">
-          <span className="text-base text-gray-800">Email</span>
+        <div className="flex flex-col items-center mb-16">
           <button
             type="button"
             onClick={handleCopy}
-            className="px-4 py-2 border-2 border-black bg-black text-white font-medium hover:bg-white hover:text-black transition-colors duration-200 inline-flex items-center justify-center"
+            className="group flex flex-col items-center transition-all duration-300"
           >
-            <span className="text-base">{emailAddress}</span>
+            <div className="relative pb-1">
+              <span className="text-2xl sm:text-4xl font-bold text-black border-b-4 border-black/10 transition-all duration-300">
+                {emailAddress}
+              </span>
+              <div className="absolute bottom-[-1px] left-0 w-0 h-[4px] bg-black transition-all duration-300 group-hover:w-full"></div>
+            </div>
+            <div className="mt-4 text-xs font-semibold tracking-widest uppercase text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              {copied ? 'Copied to clipboard' : 'Click to copy email'}
+            </div>
           </button>
-          <span className="text-sm text-gray-600">
-            {copied ? 'コピーしました' : 'クリックでコピー'}
-          </span>
         </div>
 
-        <div className="flex flex-row flex-wrap justify-center gap-2">
+        <div className="flex flex-row justify-center gap-12 sm:gap-16">
           {socialLinks.map((link) => (
             <a
               key={link.platform}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 border-2 border-black text-black font-medium hover:bg-black hover:text-white transition-colors duration-200 inline-flex items-center justify-center gap-2 text-base"
+              className="group relative pb-1 text-xl sm:text-2xl font-bold text-black border-b-2 border-black/10 transition-all duration-300"
             >
-              {link.icon ? <span className="text-lg">{link.icon}</span> : null}
-              <span>{link.platform}</span>
+              <span>{link.platform} ↗</span>
+              <div className="absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all duration-300 group-hover:w-full"></div>
             </a>
           ))}
         </div>
-
-        <p className="text-sm sm:text-base text-gray-700 mt-4">
-          作ったものを投げてます。よかったらフォローして見ていってください。
-        </p>
       </div>
     </section>
   );

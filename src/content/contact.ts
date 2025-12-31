@@ -14,4 +14,4 @@ export const socialLinks: SocialLink[] = [
 ];
 
 export const contactMessage =
-  '相談や依頼など気軽にご連絡ください。';
+  '相談や依頼など気軽にご連絡ください．';

@@ -11,8 +11,7 @@ export default function Works() {
             Works
           </h2>
           <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl">
-            Next.js、Three.js、Blenderなどを用いた制作物をまとめています。
-            研究や制作の背景も含めて紹介しています。
+            Next.js，Three.js，Blender，Unityなどを用いた制作物をまとめています．
           </p>
         </div>
 
@@ -54,22 +53,21 @@ export default function Works() {
                 </div>
 
                 {work.isCurrent ? (
-                  <div className="text-xs sm:text-sm text-gray-700 font-medium">
-                    このサイトを制作中
+                  <div className="text-xs font-medium text-gray-400 tracking-widest uppercase">
+                    Currently in development
                   </div>
                 ) : work.links.length > 0 ? (
-                  <div className="flex flex-row gap-3">
+                  <div className="flex flex-row gap-8">
                     {work.links.map((link) => (
                       <a
                         key={link.url}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-2 border-2 border-black text-black text-xs sm:text-sm font-medium hover:bg-black hover:text-white transition-colors duration-200 text-center"
+                        className="group relative pb-0.5 text-sm font-bold text-black border-b-2 border-black/10 transition-colors duration-300 inline-flex items-center gap-0.5"
                       >
-                        {link.type === 'launch'
-                          ? 'Launch'
-                          : link.label || 'Video'}
+                        <span>{link.type === 'launch' ? 'Launch' : link.label || 'Video'} ↗</span>
+                        <div className="absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all duration-300 group-hover:w-full"></div>
                       </a>
                     ))}
                   </div>

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `${PERSON_NAME}（${PERSON_NAME_KANA}） | HCI / Portfolio`,
   description:
-    `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ。明治大学総合数理学部FMSでHCIを研究し、Unity・Next.js・Blenderなどの制作・開発を掲載。`,
+    `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ．明治大学総合数理学部FMSでHCIを研究し，Unity・Next.js・Blenderなどの制作・開発を掲載．`,
   keywords: [
     PERSON_NAME,
     PERSON_NAME_KANA,
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${PERSON_NAME}（${PERSON_NAME_KANA}） | Portfolio`,
     description:
-      `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ。HCI研究と制作物をまとめています。`,
+      `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ．HCI研究と制作物をまとめています．`,
     url: SITE_URL,
     siteName: `${PERSON_NAME} Portfolio`,
     images: [
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${PERSON_NAME}（${PERSON_NAME_KANA}） | Portfolio`,
     description:
-      `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ。HCI研究と制作物をまとめています。`,
+      `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ．HCI研究と制作物をまとめています．`,
     images: ["/images/Roil_hci_icon.png"],
   },
   verification: {
@@ -91,7 +91,7 @@ export default function RootLayout({
         alternateName: [PERSON_NAME_KANA, PERSON_NAME_ROMAJI, "Roil"],
         url: SITE_URL,
         description:
-          `${PERSON_NAME}（${PERSON_NAME_KANA}）。明治大学総合数理学部FMSでHCIを研究し、Unity・Next.js・Blenderなどで制作・開発を行っています。`,
+          `${PERSON_NAME}（${PERSON_NAME_KANA}）．明治大学総合数理学部FMSでHCIを研究し，Unity・Next.js・Blenderなどで制作・開発を行っています．`,
         jobTitle: "学生",
         affiliation: {
           "@type": "EducationalOrganization",
@@ -118,7 +118,7 @@ export default function RootLayout({
         url: SITE_URL,
         name: `${PERSON_NAME} Portfolio`,
         description:
-          `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオサイト。HCI研究と制作物を紹介しています。`,
+          `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオサイト．HCI研究と制作物を紹介しています．`,
         publisher: { "@id": `${SITE_URL}/#person` },
         creator: { "@id": `${SITE_URL}/#person` },
         inLanguage: "ja",
