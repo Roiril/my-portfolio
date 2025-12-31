@@ -5,7 +5,7 @@ export const works: Work[] = [
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
     description:
-      'レトロなブラウン管テレビ上のポートフォリオサイト．',
+      'レトロなテレビにポートフォリオを映し出す．',
     image: '/images/retroTV-portfolio.png',
     tags: ['Next.js', 'Three.js'],
     links: [
@@ -16,11 +16,11 @@ export const works: Work[] = [
   },
   {
     id: 'cube-diary',
-    title: 'Web App: CubeDiary',
+    title: 'CubeDiary',
     description:
       '真っ暗な世界に記憶をキューブで保存するアプリ．',
     image: '/images/CubeDiary.png',
-    tags: ['Next.js', 'Three.js', 'Database'],
+    tags: ['Next.js', 'Three.js', 'Supabase'],
     links: [
       { type: 'launch', url: 'https://cube-diary.vercel.app/' },
       { type: 'video', url: 'https://youtube.com/shorts/UY0FlFT1WY8?si=Hm70ycGAHvYiZp20' },
@@ -28,9 +28,9 @@ export const works: Work[] = [
   },
   {
     id: 'uniqlo-future',
-    title: 'UNIQLO "Future Service"',
+    title: 'UNIQLO: Imaginary Service',
     description:
-      'UNIQLOの未来サービスを想定したコンセプト映像．Blender + VFX + Fimolaで制作しました．',
+      'UNIQLOの架空のサービス「服自販機」を紹介する動画．',
     image: '/images/UniqloCap.png',
     tags: ['Blender', 'VFX', 'Video'],
     links: [
@@ -41,7 +41,7 @@ export const works: Work[] = [
     id: 'aquarium',
     title: 'Aquarium in Processing',
     description:
-      '水槽と群れで泳ぐ魚を制作． Processing + Blenderで制作しました．',
+      'かわいいデジ水槽の中を群れて泳ぐデジ魚たち．',
     image: '/images/AcuariumPrograming.png',
     tags: ['Processing', 'Generative Art'],
     links: [
@@ -50,9 +50,9 @@ export const works: Work[] = [
   },
   {
     id: 'meiji-3d',
-    title: 'Digital Twin: Meiji Univ.',
+    title: 'Meiji Univ 3F',
     description:
-      '明治大学3Fを，歩幅で測量してBlenderで再現．Unityで探索できるようにしました．',
+      'いつも通っている明治大学中野キャンパス3Fのデジタル化．',
     image: '/images/Meiji3fVideoCapture.png',
     tags: ['Blender', '3D Modeling'],
     links: [
@@ -63,7 +63,7 @@ export const works: Work[] = [
     id: 'ai-composition',
     title: 'AI-Augmented Composition',
     description:
-      'Studio Oneで昔作った曲を，Suno AIで再構成・拡張しました．',
+      'Studio Oneで昔作った曲を，Suno AIで拡張．',
     image: '/images/StudioOneCap.png',
     tags: ['StudioOne', 'Suno AI'],
     links: [
@@ -82,7 +82,7 @@ export const works: Work[] = [
   {
     id: 'portfolio',
     title: 'Portfolio',
-    description: 'このポートフォリオサイト自体の制作．',
+    description: 'このポートフォリオサイト．',
     image: '/images/MyPortfolio.png',
     tags: ['Next.js', 'React'],
     links: [],

@@ -3,7 +3,7 @@ import { aboutData } from '@/content/about';
 export default function About() {
   return (
     <section id="about" className="px-8 py-12 bg-gray-50">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* セクションヘッダー */}
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-black font-sans">

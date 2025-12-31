@@ -5,7 +5,7 @@ export default function Works() {
 
   return (
     <section id="works" className="px-8 py-12 bg-white">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="mb-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-black mb-8">
             Works

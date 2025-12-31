@@ -10,7 +10,7 @@
         }}
       ></div>
 
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto">
         <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-widest uppercase mb-4">
           HCI / Portfolio / Roil
         </p>
@@ -27,9 +27,9 @@
         </h1>
 
         <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl mb-12">
-          感覚に寄り添う体験を，デザインと実装で形にします．
+          感覚に寄り添う体験を大事に．
           <br />
-          Unity・ Antigravity・Blenderを中心に制作中．
+          Unity・ Antigravity・Blenderなどで制作中．
         </p>
 
         <div className="flex flex-row gap-10 mb-0">
