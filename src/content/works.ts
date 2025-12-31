@@ -7,7 +7,7 @@ export const works: Work[] = [
     description:
       'レトロなテレビにポートフォリオを映し出す．',
     image: '/images/retroTV-portfolio.png',
-    tags: ['Next.js', 'Three.js'],
+    tags: ['Web', 'Next.js', 'Three.js'],
     links: [
       { type: 'launch', url: 'https://my-retro-portfolio-rust.vercel.app/' },
       { type: 'video', url: 'https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS' },
@@ -20,7 +20,7 @@ export const works: Work[] = [
     description:
       '真っ暗な世界に記憶をキューブで保存するアプリ．',
     image: '/images/CubeDiary.png',
-    tags: ['Next.js', 'Three.js', 'Supabase'],
+    tags: ['Web App', 'Next.js', 'Supabase'],
     links: [
       { type: 'launch', url: 'https://cube-diary.vercel.app/' },
       { type: 'video', url: 'https://youtube.com/shorts/UY0FlFT1WY8?si=Hm70ycGAHvYiZp20' },
@@ -32,7 +32,7 @@ export const works: Work[] = [
     description:
       'UNIQLOの架空のサービス「服自販機」を紹介する動画．',
     image: '/images/UniqloCap.png',
-    tags: ['Blender', 'VFX', 'Video'],
+    tags: ['Video', 'Blender', 'VFX'],
     links: [
       { type: 'video', url: 'https://youtu.be/-q5xsLlaN8M?si=NFpSSjy8pEHkGonn' },
     ],
@@ -43,7 +43,7 @@ export const works: Work[] = [
     description:
       'かわいいデジ水槽の中を群れて泳ぐデジ魚たち．',
     image: '/images/AcuariumPrograming.png',
-    tags: ['Processing', 'Generative Art'],
+    tags: ['Creative Coding', 'Processing'],
     links: [
       { type: 'video', url: 'https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN' },
     ],
@@ -54,7 +54,7 @@ export const works: Work[] = [
     description:
       'いつも通っている明治大学中野キャンパス3Fのデジタル化．',
     image: '/images/Meiji3fVideoCapture.png',
-    tags: ['Blender', '3D Modeling'],
+    tags: ['3D', 'Blender', 'Digital Twin'],
     links: [
       { type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' },
     ],
@@ -65,7 +65,7 @@ export const works: Work[] = [
     description:
       'Studio Oneで昔作った曲を，Suno AIで拡張．',
     image: '/images/StudioOneCap.png',
-    tags: ['StudioOne', 'Suno AI'],
+    tags: ['Sound', 'Studio One', 'AI'],
     links: [
       {
         type: 'video',
@@ -84,7 +84,7 @@ export const works: Work[] = [
     title: 'Portfolio',
     description: 'このポートフォリオサイト．',
     image: '/images/MyPortfolio.png',
-    tags: ['Next.js', 'React'],
+    tags: ['Web', 'Next.js', 'Antigravity'],
     links: [],
     isCurrent: true,
   },
