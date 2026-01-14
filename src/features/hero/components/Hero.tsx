@@ -14,12 +14,12 @@ export default function Hero() {
 
             <div className="relative z-10 max-w-4xl mx-auto">
                 <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-widest uppercase mb-4">
-                    HCI / Portfolio / Roil
+                    XR / AI / Film
                 </p>
                 <p className="text-sm sm:text-base text-gray-700 mb-12 leading-relaxed">
-                    HCIを軸に，Web・3D・XRの体験を設計・実装しています．
+                    XRの体験と映像作品を，AIと一緒に作っています．
                     <br />
-                    Human-Computer Interaction / Web / 3D / AI-assisted Making
+                    Meiji Univ. / Tokyo
                 </p>
 
                 <h1 className="text-5xl sm:text-6xl font-black text-black leading-tight mb-12">
@@ -31,7 +31,7 @@ export default function Hero() {
                 <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl mb-12">
                     感覚に寄り添う体験を大事に．
                     <br />
-                    Unity・ Antigravity・Blenderなどで制作中．
+                    Unity・ Antigravity・Blender・Filmoraなどで制作中．
                 </p>
 
                 <div className="flex flex-row gap-10 mb-0">
