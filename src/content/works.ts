@@ -22,6 +22,15 @@ export const works: Work[] = [
     featured: true,
   },
   {
+    id: 'metaquest-devs',
+    title: 'MetaQuest Devs',
+    description: '過去にQuestで設計，開発した様々なプロトタイプ',
+    image: '/images/Mr-Devs.png',
+    tags: ['MetaQuest', 'Unity'],
+    links: [],
+    featured: true,
+  },
+  {
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
     description:
