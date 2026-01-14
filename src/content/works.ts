@@ -1,4 +1,4 @@
-﻿import { Work } from '@/types/content';
+﻿import { Work } from '@/features/works/types';
 
 export const works: Work[] = [
   {

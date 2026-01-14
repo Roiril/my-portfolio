@@ -1,4 +1,4 @@
-﻿import { SocialLink } from '@/types/content';
+﻿import { SocialLink } from '@/features/contact/types';
 
 export const socialLinks: SocialLink[] = [
   {
