@@ -1,15 +1,12 @@
 import { aboutData } from '@/content/about';
+import { SectionHeader } from '@/components/ui';
 
 export default function About() {
     return (
         <section id="about" className="px-8 py-12 bg-gray-50">
             <div className="max-w-4xl mx-auto">
                 {/* セクションヘッダー */}
-                <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-black font-sans">
-                        About
-                    </h2>
-                </div>
+                <SectionHeader title="About" size="md" />
 
                 {/* 紹介文 */}
                 <div className="mb-6 pointer-events-auto">

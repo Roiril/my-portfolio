@@ -1,4 +1,5 @@
 import { works } from '@/content/works';
+import { SectionHeader, Tag, Link } from '@/components/ui';
 
 export default function Works() {
     const allWorks = works;
@@ -7,9 +8,7 @@ export default function Works() {
         <section id="works" className="px-8 py-12 bg-white">
             <div className="max-w-4xl mx-auto">
                 <div className="mb-10">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-black mb-8">
-                        Works
-                    </h2>
+                    <SectionHeader title="Works" />
                     <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl">
                         Next.js，Three.js，Blender，Unityなどを用いた制作物をまとめています．
                     </p>
@@ -43,12 +42,7 @@ export default function Works() {
 
                                 <div className="flex flex-wrap gap-3 mb-6">
                                     {work.tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="text-xs text-gray-700 bg-gray-100 border border-gray-200 px-3 py-1"
-                                        >
-                                            {tag}
-                                        </span>
+                                        <Tag key={tag}>{tag}</Tag>
                                     ))}
                                 </div>
 
@@ -59,16 +53,14 @@ export default function Works() {
                                 ) : work.links.length > 0 ? (
                                     <div className="flex flex-row gap-8">
                                         {work.links.map((link) => (
-                                            <a
+                                            <Link
                                                 key={link.url}
                                                 href={link.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="group relative pb-0.5 text-sm font-bold text-black border-b-2 border-black/10 transition-colors duration-300 inline-flex items-center gap-0.5"
+                                                isExternal
+                                                size="sm"
                                             >
-                                                <span>{link.type === 'launch' ? 'Launch' : link.label || 'Video'} ↗</span>
-                                                <div className="absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all duration-300 group-hover:w-full"></div>
-                                            </a>
+                                                {link.type === 'launch' ? 'Launch' : link.label || 'Video'}
+                                            </Link>
                                         ))}
                                     </div>
                                 ) : null}

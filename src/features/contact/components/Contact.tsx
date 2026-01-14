@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { contactMessage } from '@/content/contact';
 import { SITE_EMAIL, SOCIAL_LINKS } from '@/constants/site';
 import { copyToClipboard } from '@/lib/clipboard';
+import { SectionHeader, Link } from '@/components/ui';
 
 export default function Contact() {
     const [copied, setCopied] = useState(false);
@@ -19,9 +20,7 @@ export default function Contact() {
     return (
         <section id="contact" className="px-8 py-12 bg-gray-50">
             <div className="max-w-4xl mx-auto pointer-events-auto">
-                <h2 className="text-2xl font-bold text-black mb-6">
-                    Contact
-                </h2>
+                <SectionHeader title="Contact" size="md" />
 
                 <p className="text-base text-gray-800 mb-6 leading-relaxed max-w-2xl">
                     {contactMessage}
@@ -47,16 +46,13 @@ export default function Contact() {
 
                 <div className="flex flex-row justify-start gap-8 sm:gap-12">
                     {SOCIAL_LINKS.map((link) => (
-                        <a
+                        <Link
                             key={link.platform}
                             href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative pb-1 text-base sm:text-lg font-bold text-black border-b-2 border-black/10 transition-all duration-300"
+                            isExternal
                         >
-                            <span>{link.platform} ↗</span>
-                            <div className="absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all duration-300 group-hover:w-full"></div>
-                        </a>
+                            {link.platform}
+                        </Link>
                     ))}
                 </div>
             </div>

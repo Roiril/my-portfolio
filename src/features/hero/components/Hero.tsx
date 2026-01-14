@@ -1,3 +1,5 @@
+import { Link } from '@/components/ui';
+
 export default function Hero() {
     return (
         <section className="relative px-8 pt-8 pb-12 bg-white overflow-hidden">
@@ -33,20 +35,8 @@ export default function Hero() {
                 </p>
 
                 <div className="flex flex-row gap-10 mb-0">
-                    <a
-                        href="#works"
-                        className="group relative pb-1 text-base sm:text-lg font-bold text-black border-b-2 border-black/10 transition-colors duration-300"
-                    >
-                        <span>View Works</span>
-                        <div className="absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all duration-300 group-hover:w-full"></div>
-                    </a>
-                    <a
-                        href="#contact"
-                        className="group relative pb-1 text-base sm:text-lg font-bold text-black border-b-2 border-black/10 transition-colors duration-300"
-                    >
-                        <span>Contact</span>
-                        <div className="absolute bottom-[-2px] left-0 w-0 h-[2px] bg-black transition-all duration-300 group-hover:w-full"></div>
-                    </a>
+                    <Link href="#works">View Works</Link>
+                    <Link href="#contact">Contact</Link>
                 </div>
             </div>
         </section>

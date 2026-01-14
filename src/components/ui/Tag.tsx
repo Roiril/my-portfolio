@@ -1,0 +1,18 @@
+import React from 'react';
+
+interface TagProps {
+    children: React.ReactNode;
+    className?: string;
+}
+
+export const Tag: React.FC<TagProps> = ({ children, className = '' }) => {
+    return (
+        <span
+            className={`text-xs text-gray-700 bg-gray-100 border border-gray-200 px-3 py-1 ${className}`}
+        >
+            {children}
+        </span>
+    );
+};
+
+export default Tag;
