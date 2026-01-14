@@ -37,22 +37,24 @@ export default function About() {
                             </span>
                         </div>
                     ))}
+                </div>
 
-                    {/* Skill Sections */}
+                {/* Skill Sections - モバイルでは1列、幅広で2列 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 sm:gap-x-12 gap-y-8 mt-10 pointer-events-auto">
                     {aboutData.toolSections?.map((section) => (
                         <div key={section.title} className="flex flex-col">
-                            <h3 className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+                            <span className="text-xs font-medium text-gray-500 mb-3 uppercase tracking-wider">
                                 {section.title}
-                            </h3>
+                            </span>
 
                             <div className="flex flex-wrap gap-1.5">
                                 {section.categories?.flatMap((category) =>
-                                    category.items.map((item) => (
-                                        <Tag key={item.name}>
-                                            {item.name}
-                                        </Tag>
-                                    ))
-                                )}
+                                    category.items.flatMap((item) =>
+                                        item.name.split(',').map((s) => s.trim())
+                                    )
+                                ).map((toolName) => (
+                                    <Tag key={toolName}>{toolName}</Tag>
+                                ))}
                             </div>
                         </div>
                     ))}
