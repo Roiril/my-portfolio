@@ -1,20 +1,22 @@
 import { aboutData } from '@/content/about';
-import { SectionHeader } from '@/components/ui';
+import { SectionHeader, Tag } from '@/components/ui';
 
 export default function About() {
     return (
         <section id="about" className="px-8 py-12 bg-gray-50">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-3xl mx-auto">
                 {/* セクションヘッダー */}
-                <SectionHeader title="About" size="md" />
+                <div className="mb-6">
+                    <SectionHeader title="About" size="md" />
+                </div>
 
                 {/* 紹介文 */}
                 <div className="mb-6 pointer-events-auto">
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {aboutData.bio.map((paragraph, index) => (
                             <p
                                 key={index}
-                                className="text-base text-gray-800 leading-relaxed"
+                                className="text-base sm:text-lg text-gray-800 leading-relaxed"
                             >
                                 {paragraph}
                             </p>
@@ -22,44 +24,35 @@ export default function About() {
                     </div>
                 </div>
 
-                {/* Key Facts */}
-                {aboutData.keyFacts && aboutData.keyFacts.length > 0 && (
-                    <div className="mb-6 pointer-events-auto">
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-3">
-                            {aboutData.keyFacts.map((fact) => (
-                                <div key={fact.title}>
-                                    <p className="text-xs font-semibold text-gray-500 mb-0.5">
-                                        {fact.title}
-                                    </p>
-                                    <p className="text-base text-gray-800">
-                                        {fact.description}
-                                    </p>
-                                </div>
-                            ))}
+                {/* 2カラム構成のグリッド (Key Facts & Tools) */}
+                <div className="grid grid-cols-2 gap-x-6 sm:gap-x-12 gap-y-6 pointer-events-auto">
+                    {/* Key Facts */}
+                    {aboutData.keyFacts?.map((fact) => (
+                        <div key={fact.title} className="flex flex-col">
+                            <span className="text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">
+                                {fact.title}
+                            </span>
+                            <span className="text-base text-gray-800 leading-normal">
+                                {fact.description}
+                            </span>
                         </div>
-                    </div>
-                )}
+                    ))}
 
-                {/* Skill Sections */}
-                <div className="space-y-6 pointer-events-auto">
-                    {aboutData.toolSections.map((section) => (
-                        <div key={section.title}>
-                            <h3 className="text-xs font-semibold text-gray-500 mb-3 tracking-wide">
+                    {/* Skill Sections */}
+                    {aboutData.toolSections?.map((section) => (
+                        <div key={section.title} className="flex flex-col">
+                            <h3 className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
                                 {section.title}
                             </h3>
 
-                            <div className="space-y-1.5">
-                                {section.categories.map((category) => (
-                                    <div key={category.title || 'untitled'}>
-                                        <div className="flex flex-col gap-1.5">
-                                            {category.items.map((item) => (
-                                                <div key={item.name} className="text-base font-medium text-gray-800 leading-tight">
-                                                    {item.name}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
+                            <div className="flex flex-wrap gap-1.5">
+                                {section.categories?.flatMap((category) =>
+                                    category.items.map((item) => (
+                                        <Tag key={item.name}>
+                                            {item.name}
+                                        </Tag>
+                                    ))
+                                )}
                             </div>
                         </div>
                     ))}

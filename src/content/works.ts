@@ -11,12 +11,12 @@ export const works: Work[] = [
       {
         type: 'video',
         url: 'https://youtu.be/Jgeij_JIZlQ?si=dTJwyRpyCQlMxWNb',
-        label: 'Watch 1 (YouTube)',
+        label: 'Video1',
       },
       {
         type: 'video',
         url: 'https://youtube.com/shorts/x7claprYtdw?si=dYpL2hF9nm6KEMj5',
-        label: 'Watch 2 (YouTube Shorts)',
+        label: 'Video2',
       },
     ],
     featured: true,

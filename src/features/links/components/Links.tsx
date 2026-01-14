@@ -29,24 +29,20 @@ export default function Links() {
                 </p>
 
                 <div className="flex flex-col items-start mb-10">
-                    <a
-                        href={`mailto:${SITE_EMAIL}`}
-                        className="group flex flex-col items-start transition-all duration-300"
-                    >
-                        <div className="relative pb-1">
-                            <span className="text-xl sm:text-2xl font-bold text-black border-b-4 border-black/10 transition-all duration-300">
-                                {SITE_EMAIL}
-                            </span>
-                            <div className="absolute bottom-[-1px] left-0 w-0 h-[4px] bg-black transition-all duration-300 group-hover:w-full"></div>
-                        </div>
-                    </a>
                     <button
                         type="button"
                         onClick={handleCopy}
-                        className="mt-3 text-xs font-semibold tracking-widest uppercase text-gray-400 hover:text-black transition-colors"
+                        className="group flex flex-col items-start transition-all duration-300 cursor-pointer"
                     >
-                        {copied ? 'Copied!' : 'Click to copy email'}
+                        <div className="relative pb-1">
+                            <span className="text-xl sm:text-2xl font-bold text-black border-b-4 border-black/10 transition-all duration-300 group-hover:border-black">
+                                {SITE_EMAIL}
+                            </span>
+                        </div>
                     </button>
+                    <p className="mt-3 text-xs font-semibold tracking-widest uppercase text-gray-400">
+                        {copied ? 'COPIED!' : 'Click to copy email'}
+                    </p>
                 </div>
 
                 <div className="flex flex-row flex-wrap justify-start gap-8 sm:gap-12">
