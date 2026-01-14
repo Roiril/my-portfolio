@@ -3,29 +3,16 @@
 import { useState } from 'react';
 import { contactMessage } from '@/content/contact';
 import { SITE_EMAIL, SOCIAL_LINKS } from '@/constants/site';
+import { copyToClipboard } from '@/lib/clipboard';
 
 export default function Contact() {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = async () => {
-        try {
-            if (navigator.clipboard?.writeText) {
-                await navigator.clipboard.writeText(SITE_EMAIL);
-            } else {
-                const textarea = document.createElement('textarea');
-                textarea.value = SITE_EMAIL;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.focus();
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-            }
+        const success = await copyToClipboard(SITE_EMAIL);
+        if (success) {
             setCopied(true);
             window.setTimeout(() => setCopied(false), 2000);
-        } catch {
-            setCopied(false);
         }
     };
 
