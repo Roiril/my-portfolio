@@ -22,6 +22,8 @@ description: 事故防止と品質維持のための基本ルール
 - MUST: app/ の page.tsx / layout.tsx は薄く保ち、実装の本体は features/ や components/ から呼ぶ
 - SHOULD: URL には出したくない整理用の階層は Route Group を使う（例: app/(site)/, app/(admin)/）
 - MUST NOT: app/ の中に共通ロジックや巨大な UI 実装を溜め込まない
+- lib/constants/components/ui は必要になった時点で作成し、空ディレクトリは増やさない
+
 
 ### B. 機能（ページの意味単位）は features/ に束ねる
 - MUST: 「Projects」「Works」「Blog」「About」「Contact」など、ポートフォリオの意味単位を features/ 配下に作る
@@ -49,6 +51,7 @@ description: 事故防止と品質維持のための基本ルール
   - 形式は mdx / json / ts のどれでもよいが、1種類に寄せる
   - 例: content/projects/*.mdx, content/posts/*.mdx
 - SHOULD: 記事や作品のメタ情報は frontmatter か 1ファイル1オブジェクトで統一する
+- MUST: src/content は編集される文章・記述を置く。URL・メール等のサイト定数は src/constants に置き、必要なら content から参照してよい。
 
 ### E. 命名と分割のルール（迷いを減らす）
 - MUST: フォルダ名は小文字ケバブ（例: work-history, visual-system）

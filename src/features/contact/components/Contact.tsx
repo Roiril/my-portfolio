@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { socialLinks, contactMessage } from '@/content/contact';
-
-const emailAddress = 'rinkyouaoi@gmail.com';
+import { contactMessage } from '@/content/contact';
+import { SITE_EMAIL, SOCIAL_LINKS } from '@/constants/site';
 
 export default function Contact() {
     const [copied, setCopied] = useState(false);
@@ -11,10 +10,10 @@ export default function Contact() {
     const handleCopy = async () => {
         try {
             if (navigator.clipboard?.writeText) {
-                await navigator.clipboard.writeText(emailAddress);
+                await navigator.clipboard.writeText(SITE_EMAIL);
             } else {
                 const textarea = document.createElement('textarea');
-                textarea.value = emailAddress;
+                textarea.value = SITE_EMAIL;
                 textarea.style.position = 'fixed';
                 textarea.style.opacity = '0';
                 document.body.appendChild(textarea);
@@ -49,7 +48,7 @@ export default function Contact() {
                     >
                         <div className="relative pb-1">
                             <span className="text-xl sm:text-2xl font-bold text-black border-b-4 border-black/10 transition-all duration-300">
-                                {emailAddress}
+                                {SITE_EMAIL}
                             </span>
                             <div className="absolute bottom-[-1px] left-0 w-0 h-[4px] bg-black transition-all duration-300 group-hover:w-full"></div>
                         </div>
@@ -60,7 +59,7 @@ export default function Contact() {
                 </div>
 
                 <div className="flex flex-row justify-start gap-8 sm:gap-12">
-                    {socialLinks.map((link) => (
+                    {SOCIAL_LINKS.map((link) => (
                         <a
                             key={link.platform}
                             href={link.url}
