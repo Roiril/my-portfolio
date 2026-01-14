@@ -6,10 +6,12 @@ import { SITE_EMAIL, SOCIAL_LINKS } from '@/constants/site';
 import { copyToClipboard } from '@/lib/clipboard';
 import { SectionHeader, Link } from '@/components/ui';
 
-export default function Contact() {
+export default function Links() {
     const [copied, setCopied] = useState(false);
 
-    const handleCopy = async () => {
+    const handleCopy = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
         const success = await copyToClipboard(SITE_EMAIL);
         if (success) {
             setCopied(true);
@@ -18,18 +20,17 @@ export default function Contact() {
     };
 
     return (
-        <section id="contact" className="px-8 py-12 bg-gray-50">
+        <section id="links" className="px-8 py-12 bg-gray-50">
             <div className="max-w-4xl mx-auto pointer-events-auto">
-                <SectionHeader title="Contact" size="md" />
+                <SectionHeader title="Links" size="md" />
 
                 <p className="text-base text-gray-800 mb-6 leading-relaxed max-w-2xl">
                     {contactMessage}
                 </p>
 
                 <div className="flex flex-col items-start mb-10">
-                    <button
-                        type="button"
-                        onClick={handleCopy}
+                    <a
+                        href={`mailto:${SITE_EMAIL}`}
                         className="group flex flex-col items-start transition-all duration-300"
                     >
                         <div className="relative pb-1">
@@ -38,13 +39,17 @@ export default function Contact() {
                             </span>
                             <div className="absolute bottom-[-1px] left-0 w-0 h-[4px] bg-black transition-all duration-300 group-hover:w-full"></div>
                         </div>
-                        <div className="mt-3 text-xs font-semibold tracking-widest uppercase text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                            {copied ? 'Copied to clipboard' : 'Click to copy email'}
-                        </div>
+                    </a>
+                    <button
+                        type="button"
+                        onClick={handleCopy}
+                        className="mt-3 text-xs font-semibold tracking-widest uppercase text-gray-400 hover:text-black transition-colors"
+                    >
+                        {copied ? 'Copied!' : 'Click to copy email'}
                     </button>
                 </div>
 
-                <div className="flex flex-row justify-start gap-8 sm:gap-12">
+                <div className="flex flex-row flex-wrap justify-start gap-8 sm:gap-12">
                     {SOCIAL_LINKS.map((link) => (
                         <Link
                             key={link.platform}

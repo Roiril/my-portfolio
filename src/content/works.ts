@@ -2,6 +2,26 @@
 
 export const works: Work[] = [
   {
+    id: 'ai-music-video',
+    title: 'AI Generated MusicVideo',
+    description: '試行錯誤しながらAIを組み合わせてミュージックビデオ制作中',
+    image: '/images/Ai-Generated-Mv.png',
+    tags: ['SunoAI', 'ChatGPT', 'Gemini', 'Flow', 'Filmora'],
+    links: [
+      {
+        type: 'video',
+        url: 'https://youtu.be/Jgeij_JIZlQ?si=dTJwyRpyCQlMxWNb',
+        label: 'Watch 1 (YouTube)',
+      },
+      {
+        type: 'video',
+        url: 'https://youtube.com/shorts/x7claprYtdw?si=dYpL2hF9nm6KEMj5',
+        label: 'Watch 2 (YouTube Shorts)',
+      },
+    ],
+    featured: true,
+  },
+  {
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
     description:
@@ -12,7 +32,6 @@ export const works: Work[] = [
       { type: 'launch', url: 'https://my-retro-portfolio-rust.vercel.app/' },
       { type: 'video', url: 'https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS' },
     ],
-    featured: true,
   },
   {
     id: 'cube-diary',

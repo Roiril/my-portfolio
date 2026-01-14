@@ -7,7 +7,7 @@ export const aboutData: AboutData = {
   ],
   keyFacts: [
     { title: '研究領域', description: 'HCI（Human-Computer Interaction）' },
-    { title: '制作領域', description: 'XR / AI / Film' },
+    { title: '制作領域', description: 'XR / 映像' },
     { title: '主なツール', description: 'Unity，Antigravity，Filmora，Blender' },
     { title: '拠点', description: '明治大学（東京）' },
   ],
