@@ -10,7 +10,7 @@ export default function Works() {
                 <div className="mb-10">
                     <SectionHeader title="Works" />
                     <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl">
-                        Next.js，Three.js，Blender，Unityなどを用いた制作物をまとめています．
+                        過去の制作物をまとめています．
                     </p>
                 </div>
 
