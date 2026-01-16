@@ -2,8 +2,8 @@
 
 export const aboutData: AboutData = {
   bio: [
-    '明治大学総合数理学部先端メディアサイエンス学科でHCIを勉強しています．',
-    'XRプロトタイプから映像制作まで幅広く取り組んでいます．',
+    '明治大学総合数理学部先端メディアサイエンス学科４年生．来年から同大学先端数理科学研究所の修士課程に進学予定',
+    'HCI研究やXRプロトタイプ作成，映像制作まで幅広く取り組んでいます．',
   ],
   keyFacts: [
     { title: '研究領域', description: 'HCI（Human-Computer Interaction）' },

@@ -24,7 +24,7 @@ export const works: Work[] = [
   {
     id: 'metaquest-devs',
     title: 'MetaQuest Devs',
-    description: '過去にQuestで設計，開発した様々なプロトタイプ',
+    description: '卒論のためにQuestで試行錯誤した様々なプロトタイプ',
     image: '/images/Mr-Devs.png',
     tags: ['MetaQuest', 'Unity'],
     links: [],
