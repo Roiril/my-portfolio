@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { aboutData } from '@/content/about';
 import { SectionHeader, Tag } from '@/components/ui';
 
@@ -5,9 +6,21 @@ export default function About() {
     return (
         <section id="about" className="px-8 py-12 bg-gray-50">
             <div className="max-w-3xl mx-auto">
-                {/* セクションヘッダー */}
-                <div className="mb-6">
-                    <SectionHeader title="About" size="md" />
+                {/* セクションヘッダー & プロフィール画像 */}
+                <div className="flex items-center gap-4 sm:gap-6 mb-8">
+                    {aboutData.profileImage && (
+                        <div className="flex-shrink-0">
+                            <Image
+                                src={aboutData.profileImage.src}
+                                alt={aboutData.profileImage.alt}
+                                width={80}
+                                height={80}
+                                className="w-14 h-14 sm:w-20 sm:h-20 rounded-full object-cover border border-black/10 shadow-sm"
+                                priority
+                            />
+                        </div>
+                    )}
+                    <SectionHeader title="About" size="md" className="mb-0 mt-6" />
                 </div>
 
                 {/* 紹介文 */}

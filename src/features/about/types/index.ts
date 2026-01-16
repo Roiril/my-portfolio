@@ -24,6 +24,10 @@ export type KeyFact = {
 
 // 自己紹介データ
 export type AboutData = {
+    profileImage?: {
+        src: string;
+        alt: string;
+    };
     bio: string[];
     keyFacts?: KeyFact[];
     toolSections: ToolSection[];

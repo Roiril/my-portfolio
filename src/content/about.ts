@@ -1,8 +1,12 @@
 ﻿import { AboutData } from '@/features/about/types';
 
 export const aboutData: AboutData = {
+  profileImage: {
+    src: '/images/MyFace.png',
+    alt: 'プロフィール写真',
+  },
   bio: [
-    '明治大学総合数理学部先端メディアサイエンス学科４年生．来年から同大学先端数理科学研究所の修士課程に進学予定',
+    '明治大学総合数理学部先端メディアサイエンス学科の4年生です．来年から同大学の修士課程で研究を続けます．',
     'HCI研究やXRプロトタイプ作成，映像制作まで幅広く取り組んでいます．',
   ],
   keyFacts: [
