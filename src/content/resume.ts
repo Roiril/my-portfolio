@@ -9,7 +9,7 @@ export const resumeProfile = {
   kana: 'Shiroishi Taisei',
   title: 'HCI研究者・インタラクションデザイナー',
   tagline:
-    '人・ロボット・AIが「次に何をしようとしているか」を，相手の負担を増やさず伝える設計．',
+    '人と人，人とロボット，人とAIのあいだに，誤解のない心地よいインタラクションを作る．',
   email: SITE_EMAIL,
   location: '東京 / 明治大学大学院',
   links: SOCIAL_LINKS,
