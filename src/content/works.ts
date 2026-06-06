@@ -34,7 +34,7 @@ export const works: Work[] = [
     title: 'IntentLayer',
     description:
       '対面で「いま話しかけてよいか」の判断を，人の意図を複合現実空間に配置して支援するMRシステム．卒業研究．HMD版とWeb版を実装し，1週間の運用と半構造化インタビューで評価した．',
-    image: '', // 後で差し込み（想定: /images/intentlayer.png）
+    image: '/images/intentlayer.png',
     tags: ['Research', 'Mixed Reality', 'Unity', 'Next.js'],
     links: [],
     category: 'research',
