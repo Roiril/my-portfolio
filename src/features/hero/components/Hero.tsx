@@ -14,10 +14,10 @@ export default function Hero() {
 
             <div className="relative z-10 max-w-4xl mx-auto">
                 <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-widest uppercase mb-4">
-                    XR / AI / Film
+                    HCI Researcher &amp; Interaction Designer ｜ HCI / XR / AI
                 </p>
                 <p className="text-sm sm:text-base text-gray-700 mb-12 leading-relaxed">
-                    XRの体験と映像作品を，AIと一緒に作っています．
+                    HCI研究者・インタラクションデザイナー．人・ロボット・AIの意図伝達をテーマに，研究と開発をしています．
                     <br />
                     Meiji Univ. / Tokyo
                 </p>
@@ -29,9 +29,9 @@ export default function Hero() {
                 </h1>
 
                 <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl mb-12">
-                    感覚に寄り添う体験を大事に．
+                    人・ロボット・AIが「次に何をしようとしているか」を，相手の負担を増やさず伝える．
                     <br />
-                    Unity・ Antigravity・Blender・Filmoraなどで制作中．
+                    個人研究では，企画から実装，ユーザ評価までを一人で回してきました．
                 </p>
 
                 <div className="flex flex-row gap-10 mb-0">

@@ -1,7 +1,34 @@
 ﻿import { Work } from '@/features/works/types';
 
 export const works: Work[] = [
-  // ===== 研究 / Research =====
+  // ===== 研究 / Research（新しい順） =====
+  {
+    id: 'robot-collab',
+    title: '人と機械の協働インタラクション設計',
+    description:
+      '人と機械が同じ場で一緒に作業するときの，見た目・動き・関わり方をどう設計するかを探る研究．プロトタイプを作って人に試してもらいながら，協力が自然に生まれる条件を探っている（進行中）．',
+    image: '/images/robot-collab.png',
+    tags: ['Research', 'HCI', 'Human-Agent Interaction'],
+    links: [],
+    category: 'research',
+    period: '2026 –（修士研究）',
+    role: '単独',
+    featured: true,
+    isCurrent: true,
+  },
+  {
+    id: 'mawarimi',
+    title: '廻リ視 — Mawarimi',
+    description:
+      '固定カメラ視点とHMDで「自分の身体だと感じる感覚」を揺さぶる実空間ホラー体験．学生VRコンテスト IVRC 2026 の書類審査を通過し，チームで制作を進行中．',
+    image: '/images/mawarimi.png',
+    tags: ['Research', 'XR', 'Substitutional Reality'],
+    links: [],
+    category: 'research',
+    period: '2026（M1）',
+    role: '企画・システム設計（チーム）',
+    isCurrent: true,
+  },
   {
     id: 'intentlayer',
     title: 'IntentLayer',
@@ -13,33 +40,6 @@ export const works: Work[] = [
     category: 'research',
     period: '2025（卒業研究）',
     role: '単独（着想・実装・実験・分析・執筆）',
-    featured: true,
-  },
-  {
-    id: 'mawarimi',
-    title: '廻リ視 — Mawarimi',
-    description:
-      '固定カメラ視点とHMDで「自分の身体だと感じる感覚」を揺さぶる実空間ホラー体験．学生VRコンテスト IVRC 2026 の書類審査を通過し，チームで制作を進行中．',
-    image: '', // 後で差し込み（想定: /images/mawarimi.png）
-    tags: ['Research', 'XR', 'Substitutional Reality'],
-    links: [],
-    category: 'research',
-    period: '2026（M1）',
-    role: '企画・システム設計（チーム）',
-    isCurrent: true,
-  },
-  {
-    id: 'robot-collab',
-    title: '人と機械の協働インタラクション設計',
-    description:
-      '人と機械が同じ場で一緒に作業するときの，見た目・動き・関わり方をどう設計するかを探る研究．プロトタイプを作って人に試してもらいながら，協力が自然に生まれる条件を探っている（進行中）．',
-    image: '', // 後で差し込み（想定: /images/robot-collab.png）
-    tags: ['Research', 'HCI', 'Human-Agent Interaction'],
-    links: [],
-    category: 'research',
-    period: '2026 –（修士研究）',
-    role: '単独',
-    isCurrent: true,
   },
 
   // ===== インターン / Internship =====
@@ -62,7 +62,7 @@ export const works: Work[] = [
     title: 'couple-sync',
     description:
       'パートナーと予定・記念日・体調などを共有するアプリ．オフライン動作と端末間のリアルタイム同期を両立し，ローカルLLMも連携している．',
-    image: '', // 後で差し込み（想定: /images/couple-sync.png）
+    image: '/images/couple-sync.jpg',
     tags: ['Web App', 'React', 'Supabase', 'PWA'],
     links: [],
     category: 'personal',
@@ -73,7 +73,7 @@ export const works: Work[] = [
     title: 'cogni-storage',
     description:
       '研究の読書・調査・執筆・スライド生成を一つの流れで管理する自作ツール．AIエージェント向けの自動化基盤を組み込んでいる．',
-    image: '', // 後で差し込み（想定: /images/cogni-storage.png）
+    image: '/images/cogni-storage.png',
     tags: ['Web App', 'React', 'Supabase'],
     links: [],
     category: 'personal',
