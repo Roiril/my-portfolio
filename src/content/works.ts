@@ -1,6 +1,86 @@
 ﻿import { Work } from '@/features/works/types';
 
 export const works: Work[] = [
+  // ===== 研究 / Research =====
+  {
+    id: 'intentlayer',
+    title: 'IntentLayer',
+    description:
+      '対面で「いま話しかけてよいか」の判断を，人の意図を複合現実空間に配置して支援するMRシステム．卒業研究．HMD版とWeb版を実装し，1週間の運用と半構造化インタビューで評価した．',
+    image: '', // 後で差し込み（想定: /images/intentlayer.png）
+    tags: ['Research', 'Mixed Reality', 'Unity', 'Next.js'],
+    links: [],
+    category: 'research',
+    period: '2025（卒業研究）',
+    role: '単独（着想・実装・実験・分析・執筆）',
+    featured: true,
+  },
+  {
+    id: 'mawarimi',
+    title: '廻リ視 — Mawarimi',
+    description:
+      '固定カメラ視点とHMDで「自分の身体だと感じる感覚」を揺さぶる実空間ホラー体験．学生VRコンテスト IVRC 2026 の書類審査を通過し，チームで制作を進行中．',
+    image: '', // 後で差し込み（想定: /images/mawarimi.png）
+    tags: ['Research', 'XR', 'Substitutional Reality'],
+    links: [],
+    category: 'research',
+    period: '2026（M1）',
+    role: '企画・システム設計（チーム）',
+    isCurrent: true,
+  },
+  {
+    id: 'robot-collab',
+    title: '人と機械の協働インタラクション設計',
+    description:
+      '人と機械が同じ場で一緒に作業するときの，見た目・動き・関わり方をどう設計するかを探る研究．プロトタイプを作って人に試してもらいながら，協力が自然に生まれる条件を探っている（進行中）．',
+    image: '', // 後で差し込み（想定: /images/robot-collab.png）
+    tags: ['Research', 'HCI', 'Human-Agent Interaction'],
+    links: [],
+    category: 'research',
+    period: '2026 –（修士研究）',
+    role: '単独',
+    isCurrent: true,
+  },
+
+  // ===== インターン / Internship =====
+  {
+    id: 'ai-business-tools',
+    title: 'AI業務ツール開発（長期インターン）',
+    description:
+      '社内で実際に運用されるAI業務ツールを，要件定義から運用まで担当．商談内容から見積書の下書きを生成する機能や，社内マニュアルに自然言語で答えるチャットをRAG構成で開発し，回答の根拠を人が確認できる運用も整えた．',
+    image: '', // 後で差し込み（想定: /images/ai-business-tools.png）
+    tags: ['Internship', 'LLM', 'RAG'],
+    links: [],
+    category: 'internship',
+    period: '長期インターン',
+    role: '要件定義〜実装〜運用',
+  },
+
+  // ===== 個人開発 / Personal =====
+  {
+    id: 'couple-sync',
+    title: 'couple-sync',
+    description:
+      'パートナーと予定・記念日・体調などを共有するアプリ．オフライン動作と端末間のリアルタイム同期を両立し，ローカルLLMも連携している．',
+    image: '', // 後で差し込み（想定: /images/couple-sync.png）
+    tags: ['Web App', 'React', 'Supabase', 'PWA'],
+    links: [],
+    category: 'personal',
+    period: '個人開発',
+  },
+  {
+    id: 'cogni-storage',
+    title: 'cogni-storage',
+    description:
+      '研究の読書・調査・執筆・スライド生成を一つの流れで管理する自作ツール．AIエージェント向けの自動化基盤を組み込んでいる．',
+    image: '', // 後で差し込み（想定: /images/cogni-storage.png）
+    tags: ['Web App', 'React', 'Supabase'],
+    links: [],
+    category: 'personal',
+    period: '個人開発',
+  },
+
+  // ===== 制作 / Creative =====
   {
     id: 'ai-music-video',
     title: 'AI Generated MusicVideo',

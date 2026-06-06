@@ -33,3 +33,20 @@ body {
 .hero-bg {
   background-size: clamp(400px, 38vw, 700px) !important;
 }
+
+/* 履歴書 /resume の印刷（PDF保存）最適化 */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .resume-sheet {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

@@ -10,19 +10,25 @@ export default function Works() {
                 <div className="mb-10">
                     <SectionHeader title="Works" />
                     <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl">
-                        過去の制作物をまとめています．
+                        研究・インターン・個人開発から，映像やクリエイティブコーディングまでをまとめています．
                     </p>
                 </div>
 
                 <div className="flex flex-col gap-10 pointer-events-auto">
                     {allWorks.map((work) => (
                         <div key={work.id} className="flex flex-col md:flex-row gap-8 md:gap-12 items-start pb-10 border-b border-gray-200 last:border-b-0">
-                            <div className="w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0">
-                                <img
-                                    src={work.image}
-                                    alt={work.title}
-                                    className="w-full h-full object-cover"
-                                />
+                            <div className="w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                {work.image ? (
+                                    <img
+                                        src={work.image}
+                                        alt={work.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <span className="text-[10px] text-gray-400 tracking-widest uppercase">
+                                        Image coming soon
+                                    </span>
+                                )}
                             </div>
 
                             <div className="flex-1 flex flex-col">
@@ -30,6 +36,12 @@ export default function Works() {
                                     <span className="text-xs font-semibold text-black mb-4 uppercase tracking-widest">
                                         Featured
                                     </span>
+                                )}
+
+                                {(work.period || work.role) && (
+                                    <p className="text-xs text-gray-500 mb-2">
+                                        {[work.period, work.role].filter(Boolean).join('　/　')}
+                                    </p>
                                 )}
 
                                 <h3 className="text-xl sm:text-2xl font-bold text-black mb-4 leading-tight">
@@ -59,7 +71,11 @@ export default function Works() {
                                                 isExternal
                                                 size="sm"
                                             >
-                                                {link.type === 'launch' ? 'Launch' : link.label || 'Video'}
+                                                {link.type === 'launch'
+                                                    ? 'Launch'
+                                                    : link.type === 'paper'
+                                                        ? link.label || 'Paper'
+                                                        : link.label || 'Video'}
                                             </Link>
                                         ))}
                                     </div>
