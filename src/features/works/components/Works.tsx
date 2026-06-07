@@ -62,7 +62,8 @@ export default function Works() {
                                     <div className="text-xs font-medium text-gray-400 tracking-widest uppercase">
                                         Currently in development
                                     </div>
-                                ) : work.links.length > 0 ? (
+                                ) : null}
+                                {work.links.length > 0 ? (
                                     <div className="flex flex-row gap-8">
                                         {work.links.map((link) => (
                                             <Link

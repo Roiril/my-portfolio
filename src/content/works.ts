@@ -23,10 +23,13 @@ export const works: Work[] = [
       '固定カメラ視点とHMDで「自分の身体だと感じる感覚」を揺さぶる実空間ホラー体験．学生VRコンテスト IVRC 2026 の書類審査を通過し，チームで制作を進行中．',
     image: '/images/mawarimi.png',
     tags: ['Research', 'XR', 'Substitutional Reality'],
-    links: [],
+    links: [
+      { type: 'paper', url: '/mawarimi.pdf', label: '企画書' },
+    ],
     category: 'research',
     period: '2026（M1）',
     role: '企画・システム設計（チーム）',
+    featured: true,
     isCurrent: true,
   },
   {
@@ -36,10 +39,13 @@ export const works: Work[] = [
       '対面で「いま話しかけてよいか」の判断を，人の意図を複合現実空間に配置して支援するMRシステム．卒業研究．HMD版とWeb版を実装し，1週間の運用と半構造化インタビューで評価した．',
     image: '/images/intentlayer.png',
     tags: ['Research', 'Mixed Reality', 'Unity', 'Next.js'],
-    links: [],
+    links: [
+      { type: 'paper', url: '/soturon.pdf', label: '卒業論文' },
+    ],
     category: 'research',
     period: '2025（卒業研究）',
     role: '単独（着想・実装・実験・分析・執筆）',
+    featured: true,
   },
 
   // ===== インターン / Internship =====
@@ -54,6 +60,7 @@ export const works: Work[] = [
     category: 'internship',
     period: '長期インターン',
     role: '要件定義〜実装〜運用',
+    featured: true,
   },
 
   // ===== 個人開発 / Personal =====
@@ -99,7 +106,6 @@ export const works: Work[] = [
         label: 'Video2',
       },
     ],
-    featured: true,
   },
   {
     id: 'metaquest-devs',
@@ -108,7 +114,6 @@ export const works: Work[] = [
     image: '/images/Mr-Devs.png',
     tags: ['MetaQuest', 'Unity'],
     links: [],
-    featured: true,
   },
   {
     id: 'retroTV-portfolio',
