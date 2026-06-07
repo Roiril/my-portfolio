@@ -69,7 +69,7 @@ export const works: Work[] = [
     title: 'couple-sync',
     description:
       'パートナーと予定・記念日・体調などを共有するアプリ．オフライン動作と端末間のリアルタイム同期を両立し，ローカルLLMも連携している．',
-    image: '/images/couple-sync.jpg',
+    image: '/images/couple-sync.png',
     imageFit: 'contain',
     tags: ['Web App', 'React', 'Supabase', 'PWA'],
     links: [
