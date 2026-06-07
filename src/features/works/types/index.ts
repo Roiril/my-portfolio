@@ -14,6 +14,8 @@ export type Work = {
     title: string;
     description: string;
     image: string;
+    // 画像の表示方法（既定: cover＝領域を埋めてはみ出しを切り取る / contain＝全体を領域内に収める）
+    imageFit?: 'cover' | 'contain';
     tags: string[];
     links: WorkLink[];
     category?: WorkCategory;

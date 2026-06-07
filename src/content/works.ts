@@ -70,6 +70,7 @@ export const works: Work[] = [
     description:
       'パートナーと予定・記念日・体調などを共有するアプリ．オフライン動作と端末間のリアルタイム同期を両立し，ローカルLLMも連携している．',
     image: '/images/couple-sync.jpg',
+    imageFit: 'contain',
     tags: ['Web App', 'React', 'Supabase', 'PWA'],
     links: [],
     category: 'personal',
@@ -81,6 +82,7 @@ export const works: Work[] = [
     description:
       '研究の読書・調査・執筆・スライド生成を一つの流れで管理する自作ツール．AIエージェント向けの自動化基盤を組み込んでいる．',
     image: '/images/cogni-storage.png',
+    imageFit: 'contain',
     tags: ['Web App', 'React', 'Supabase'],
     links: [],
     category: 'personal',

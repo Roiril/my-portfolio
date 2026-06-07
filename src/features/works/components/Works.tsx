@@ -22,7 +22,7 @@ export default function Works() {
                                     <img
                                         src={work.image}
                                         alt={work.title}
-                                        className="w-full h-full object-cover"
+                                        className={`w-full h-full ${work.imageFit === 'contain' ? 'object-contain' : 'object-cover'}`}
                                     />
                                 ) : (
                                     <span className="text-[10px] text-gray-400 tracking-widest uppercase">
