@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Minimalist warm-colored icon for Cogni Storage -->
+  
+  <!-- Outer glowing ring / container to define the safe area -->
+  <circle cx="256" cy="256" r="240" fill="#000000" />
+  
+  <!-- Soft, warm glowing center -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#ffdead" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#ff8c00" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  
+  <circle cx="256" cy="256" r="180" fill="url(#glow)" />
+  
+  <!-- Central core design: A glowing node representing a stored thought -->
+  <!-- Main central node -->
+  <circle cx="256" cy="256" r="60" fill="#fffaf0" />
+  <circle cx="256" cy="256" r="68" fill="none" stroke="#ffdead" stroke-width="6" stroke-dasharray="24 12" />
+  
+  <!-- Connecting satellite thoughts (to emphasize mapping/storage of ideas) -->
+  <circle cx="360" cy="180" r="28" fill="#ffdead" />
+  <line x1="298" y1="225" x2="340" y2="194" stroke="#ffdead" stroke-width="4" stroke-linecap="round" />
+  
+  <circle cx="160" cy="340" r="32" fill="#ffdead" />
+  <line x1="213" y1="293" x2="183" y2="319" stroke="#ffdead" stroke-width="4" stroke-linecap="round" />
+  
+  <circle cx="150" cy="170" r="20" fill="#ffdead" />
+  <line x1="213" y1="222" x2="166" y2="182" stroke="#ffdead" stroke-width="4" stroke-linecap="round" />
+
+</svg>

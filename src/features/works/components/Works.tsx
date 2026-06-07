@@ -73,7 +73,7 @@ export default function Works() {
                                                 size="sm"
                                             >
                                                 {link.type === 'launch'
-                                                    ? 'Launch'
+                                                    ? link.label || 'Launch'
                                                     : link.type === 'paper'
                                                         ? link.label || 'Paper'
                                                         : link.label || 'Video'}

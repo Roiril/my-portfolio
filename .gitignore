@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# demo build sources (UI-only copies of couple-sync / cogni-storage)
+/.demo-src/

@@ -72,7 +72,9 @@ export const works: Work[] = [
     image: '/images/couple-sync.jpg',
     imageFit: 'contain',
     tags: ['Web App', 'React', 'Supabase', 'PWA'],
-    links: [],
+    links: [
+      { type: 'launch', url: '/demos/couple-sync/index.html', label: 'UIデモ' },
+    ],
     category: 'personal',
     period: '個人開発',
   },
@@ -84,7 +86,9 @@ export const works: Work[] = [
     image: '/images/cogni-storage.png',
     imageFit: 'contain',
     tags: ['Web App', 'React', 'Supabase'],
-    links: [],
+    links: [
+      { type: 'launch', url: '/demos/cogni-storage/index.html', label: 'UIデモ' },
+    ],
     category: 'personal',
     period: '個人開発',
   },
