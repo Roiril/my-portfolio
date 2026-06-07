@@ -22,13 +22,6 @@ export type KeyFact = {
     description: string;
 };
 
-// 通底する軸
-export type AboutAxis = {
-    tag: string;
-    title: string;
-    body: string;
-};
-
 // 自己紹介データ
 export type AboutData = {
     profileImage?: {
@@ -37,6 +30,5 @@ export type AboutData = {
     };
     bio: string[];
     keyFacts?: KeyFact[];
-    axes?: AboutAxis[];
     toolSections: ToolSection[];
 };

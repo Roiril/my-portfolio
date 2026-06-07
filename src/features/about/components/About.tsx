@@ -37,27 +37,6 @@ export default function About() {
                     </div>
                 </div>
 
-                {/* 通底する3つの軸 */}
-                {aboutData.axes && aboutData.axes.length > 0 && (
-                    <div className="mb-10 pointer-events-auto border-t border-b border-gray-200 divide-y divide-gray-200">
-                        {aboutData.axes.map((axis) => (
-                            <div key={axis.tag} className="flex gap-4 sm:gap-6 py-4">
-                                <span className="text-2xl font-black text-gray-300 leading-none w-6 flex-shrink-0">
-                                    {axis.tag}
-                                </span>
-                                <div>
-                                    <h3 className="text-base font-bold text-black mb-1 leading-snug">
-                                        {axis.title}
-                                    </h3>
-                                    <p className="text-sm text-gray-700 leading-relaxed">
-                                        {axis.body}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
                 {/* 2カラム構成のグリッド (Key Facts & Tools) */}
                 <div className="grid grid-cols-2 gap-x-6 sm:gap-x-12 gap-y-6 pointer-events-auto">
                     {/* Key Facts */}
