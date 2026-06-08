@@ -36,7 +36,7 @@ export default function Hero() {
 
                 <div className="flex flex-row gap-10 mb-0">
                     <Link href="#works">View Works</Link>
-                    <Link href="#contact">Contact</Link>
+                    <Link href="#links">Links</Link>
                 </div>
             </div>
         </section>
