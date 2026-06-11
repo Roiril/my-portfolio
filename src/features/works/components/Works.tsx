@@ -1,9 +1,19 @@
 import { works } from '@/content/works';
+import { Work, WorkCategory } from '@/features/works/types';
 import { SectionHeader, Tag, Link } from '@/components/ui';
 
-export default function Works() {
-    const allWorks = works;
+const CATEGORY_GROUPS: { key: WorkCategory; label: string; sublabel: string }[] = [
+    { key: 'research', label: '研究 / Research', sublabel: 'HCI・XRの研究プロジェクト' },
+    { key: 'internship', label: 'インターン / Internship', sublabel: '実務で開発・運用したもの' },
+    { key: 'personal', label: '個人開発 / Personal', sublabel: '自分の生活と研究のために作ったツール' },
+    { key: 'creative', label: '制作 / Creative', sublabel: '映像・3D・サウンド・クリエイティブコーディング' },
+];
 
+function groupOf(work: Work): WorkCategory {
+    return work.category ?? 'creative';
+}
+
+export default function Works() {
     return (
         <section id="works" className="px-8 py-12 bg-white">
             <div className="max-w-4xl mx-auto">
@@ -14,8 +24,20 @@ export default function Works() {
                     </p>
                 </div>
 
-                <div className="flex flex-col gap-10 pointer-events-auto">
-                    {allWorks.map((work) => (
+                {CATEGORY_GROUPS.map(({ key, label, sublabel }) => {
+                    const groupWorks = works.filter((w) => groupOf(w) === key);
+                    if (groupWorks.length === 0) return null;
+                    return (
+                        <div key={key} className="mb-14 last:mb-0">
+                            <div className="mb-8 border-b-2 border-black pb-2">
+                                <h3 className="text-sm font-bold text-black tracking-widest uppercase">
+                                    {label}
+                                </h3>
+                                <p className="text-xs text-gray-500 mt-1">{sublabel}</p>
+                            </div>
+
+                            <div className="flex flex-col gap-10 pointer-events-auto">
+                                {groupWorks.map((work) => (
                         <div key={work.id} className="flex flex-col md:flex-row gap-8 md:gap-12 items-start pb-10 border-b border-gray-200 last:border-b-0">
                             <div className="w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0 flex items-center justify-center">
                                 {work.image ? (
@@ -44,9 +66,9 @@ export default function Works() {
                                     </p>
                                 )}
 
-                                <h3 className="text-xl sm:text-2xl font-bold text-black mb-4 leading-tight">
+                                <h4 className="text-xl sm:text-2xl font-bold text-black mb-4 leading-tight">
                                     {work.title}
-                                </h3>
+                                </h4>
 
                                 <p className="text-sm sm:text-base text-gray-800 mb-2 leading-7 whitespace-pre-line">
                                     {work.description}
@@ -83,8 +105,11 @@ export default function Works() {
                                 ) : null}
                             </div>
                         </div>
-                    ))}
-                </div>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );

@@ -51,10 +51,11 @@ export const works: Work[] = [
   // ===== インターン / Internship =====
   {
     id: 'ai-business-tools',
-    title: 'AI業務ツール開発（長期インターン）',
+    title: 'AI業務ツール開発',
     description:
       '社内で実際に運用されるAI業務ツールを，要件定義から運用まで担当．商談内容から見積書の下書きを生成する機能や，社内マニュアルに自然言語で答えるチャットをRAG構成で開発し，回答の根拠を人が確認できる運用も整えた．',
-    image: '', // 後で差し込み（想定: /images/ai-business-tools.png）
+    image: '/images/ai-business-tools.svg',
+    imageFit: 'contain',
     tags: ['Internship', 'LLM', 'RAG'],
     links: [],
     category: 'internship',

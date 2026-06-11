@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `${PERSON_NAME}（${PERSON_NAME_KANA}） | HCI / Portfolio`,
   description:
-    `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ．明治大学総合数理学部FMSでHCIを研究し，Unity・Next.js・Blenderなどの制作・開発を掲載．`,
+    `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ．明治大学大学院でHCIを研究し，Unity・Next.js・Blenderなどの制作・開発を掲載．`,
   keywords: [
     PERSON_NAME,
     PERSON_NAME_KANA,
@@ -91,11 +91,11 @@ export default function RootLayout({
         alternateName: [PERSON_NAME_KANA, PERSON_NAME_ROMAJI, "Roil"],
         url: SITE_URL,
         description:
-          `${PERSON_NAME}（${PERSON_NAME_KANA}）．明治大学総合数理学部FMSでHCIを研究し，Unity・Next.js・Blenderなどで制作・開発を行っています．`,
-        jobTitle: "学生",
+          `${PERSON_NAME}（${PERSON_NAME_KANA}）．明治大学大学院でHCIを研究し，Unity・Next.js・Blenderなどで制作・開発を行っています．`,
+        jobTitle: "大学院生（修士課程）",
         affiliation: {
           "@type": "EducationalOrganization",
-          name: "明治大学 総合数理学部",
+          name: "明治大学大学院 先端数理科学研究科",
           url: "https://www.meiji.ac.jp",
         },
         knowsAbout: [

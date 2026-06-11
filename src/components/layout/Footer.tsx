@@ -3,7 +3,7 @@ export default function Footer() {
         <footer className="px-8 py-8 bg-white border-t border-gray-200">
             <div className="max-w-6xl mx-auto text-center">
                 <p className="text-sm text-gray-700 pointer-events-auto">
-                    (c) {new Date().getFullYear()} Shiroishi Lab / Roil. All rights reserved.
+                    (c) {new Date().getFullYear()} Taisei Shiroishi (Roil). All rights reserved.
                 </p>
             </div>
         </footer>

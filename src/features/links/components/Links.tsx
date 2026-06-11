@@ -55,6 +55,7 @@ export default function Links() {
                             {link.platform}
                         </Link>
                     ))}
+                    <Link href="/resume">Resume</Link>
                 </div>
             </div>
         </section>

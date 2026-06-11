@@ -1,0 +1,64 @@
+<svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" font-family="'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif">
+  <rect width="640" height="480" fill="#fafafa"/>
+
+  <!-- title -->
+  <text x="320" y="48" text-anchor="middle" font-size="20" font-weight="bold" fill="#111">AI業務ツール（RAG構成）</text>
+  <text x="320" y="72" text-anchor="middle" font-size="12" fill="#888">要件定義 〜 実装 〜 社内運用</text>
+
+  <!-- sources -->
+  <g>
+    <rect x="48" y="120" width="150" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+    <text x="123" y="144" text-anchor="middle" font-size="13" fill="#111">商談内容</text>
+    <text x="123" y="162" text-anchor="middle" font-size="11" fill="#666">議事録・メモ</text>
+
+    <rect x="48" y="208" width="150" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+    <text x="123" y="232" text-anchor="middle" font-size="13" fill="#111">社内マニュアル</text>
+    <text x="123" y="250" text-anchor="middle" font-size="11" fill="#666">ナレッジベース</text>
+  </g>
+
+  <!-- arrows to RAG -->
+  <g stroke="#555" stroke-width="1.5" fill="none">
+    <path d="M198 148 H236 V184 H252"/>
+    <path d="M198 236 H236 V200 H252"/>
+  </g>
+  <polygon points="256,184 248,179 248,189" fill="#555"/>
+  <polygon points="256,200 248,195 248,205" fill="#555"/>
+
+  <!-- RAG + LLM -->
+  <g>
+    <rect x="256" y="152" width="150" height="80" fill="#111"/>
+    <text x="331" y="186" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">検索 + LLM</text>
+    <text x="331" y="206" text-anchor="middle" font-size="11" fill="#bbb">RAG パイプライン</text>
+  </g>
+
+  <!-- arrows to outputs -->
+  <g stroke="#555" stroke-width="1.5" fill="none">
+    <path d="M406 176 H428 V148 H444"/>
+    <path d="M406 208 H428 V236 H444"/>
+  </g>
+  <polygon points="452,148 444,143 444,153" fill="#555"/>
+  <polygon points="452,236 444,231 444,241" fill="#555"/>
+
+  <!-- outputs -->
+  <g>
+    <rect x="452" y="120" width="150" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+    <text x="527" y="144" text-anchor="middle" font-size="13" fill="#111">見積書ドラフト</text>
+    <text x="527" y="162" text-anchor="middle" font-size="11" fill="#666">自動生成</text>
+
+    <rect x="452" y="208" width="150" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+    <text x="527" y="232" text-anchor="middle" font-size="13" fill="#111">Q&amp;Aチャット</text>
+    <text x="527" y="250" text-anchor="middle" font-size="11" fill="#666">自然言語で回答</text>
+  </g>
+
+  <!-- human review -->
+  <g stroke="#555" stroke-width="1.5" stroke-dasharray="4 3" fill="none">
+    <path d="M527 264 V312"/>
+  </g>
+  <polygon points="527,320 522,312 532,312" fill="#555"/>
+  <rect x="420" y="320" width="214" height="56" fill="#fff" stroke="#111" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="527" y="344" text-anchor="middle" font-size="13" fill="#111">人による確認</text>
+  <text x="527" y="362" text-anchor="middle" font-size="11" fill="#666">回答の根拠を参照できる運用</text>
+
+  <!-- footnote -->
+  <text x="320" y="436" text-anchor="middle" font-size="11" fill="#999">社内で実運用中のワークフロー（概略）</text>
+</svg>

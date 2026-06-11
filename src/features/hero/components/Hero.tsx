@@ -17,7 +17,7 @@ export default function Hero() {
                     HCI Researcher &amp; Interaction Designer ｜ HCI / XR / AI
                 </p>
                 <p className="text-sm sm:text-base text-gray-700 mb-12 leading-relaxed">
-                    HCI研究者・インタラクションデザイナー．人と人，人とロボット，人とAIの関わり方を設計しています．
+                    明治大学大学院（HCI専攻・M1）
                     <br />
                     Meiji Univ. / Tokyo
                 </p>
@@ -34,8 +34,9 @@ export default function Hero() {
                     企画から実装，ユーザ評価まで，一人で手を動かしながら．
                 </p>
 
-                <div className="flex flex-row gap-10 mb-0">
+                <div className="flex flex-row flex-wrap gap-10 mb-0">
                     <Link href="#works">View Works</Link>
+                    <Link href="/resume">Resume</Link>
                     <Link href="#links">Links</Link>
                 </div>
             </div>
