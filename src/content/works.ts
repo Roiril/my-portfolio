@@ -59,7 +59,7 @@ export const works: Work[] = [
     tags: ['Internship', 'LLM', 'RAG'],
     links: [],
     category: 'internship',
-    period: '長期インターン',
+    period: '2025.11 –（長期インターン）',
     role: '要件定義〜実装〜運用',
     featured: true,
   },
