@@ -94,58 +94,7 @@ export const works: Work[] = [
     period: '個人開発',
   },
 
-  // ===== 制作 / Creative =====
-  {
-    id: 'ai-music-video',
-    title: 'AI Generated MusicVideo',
-    description: '試行錯誤しながらAIを組み合わせてミュージックビデオ制作中',
-    image: '/images/Ai-Generated-Mv.png',
-    tags: ['SunoAI', 'ChatGPT', 'Gemini', 'Flow', 'Filmora'],
-    links: [
-      {
-        type: 'video',
-        url: 'https://youtu.be/Jgeij_JIZlQ?si=dTJwyRpyCQlMxWNb',
-        label: 'Video1',
-      },
-      {
-        type: 'video',
-        url: 'https://youtube.com/shorts/x7claprYtdw?si=dYpL2hF9nm6KEMj5',
-        label: 'Video2',
-      },
-    ],
-  },
-  {
-    id: 'metaquest-devs',
-    title: 'MetaQuest Devs',
-    description: '卒論のためにQuestで試行錯誤した様々なプロトタイプ',
-    image: '/images/Mr-Devs.png',
-    tags: ['MetaQuest', 'Unity'],
-    links: [],
-  },
-  {
-    id: 'retroTV-portfolio',
-    title: 'Portfolio: Retro TV version',
-    description:
-      'レトロなテレビにポートフォリオを映し出す．',
-    image: '/images/retroTV-portfolio.png',
-    tags: ['Web', 'Next.js', 'Three.js'],
-    links: [
-      { type: 'launch', url: 'https://my-retro-portfolio-rust.vercel.app/' },
-      { type: 'video', url: 'https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS' },
-    ],
-  },
-  {
-    id: 'cube-diary',
-    title: 'CubeDiary',
-    description:
-      '真っ暗な世界に記憶をキューブで保存するアプリ．',
-    image: '/images/CubeDiary.png',
-    tags: ['Web App', 'Next.js', 'Supabase'],
-    links: [
-      { type: 'launch', url: 'https://cube-diary.vercel.app/' },
-      { type: 'video', url: 'https://youtube.com/shorts/UY0FlFT1WY8?si=Hm70ycGAHvYiZp20' },
-    ],
-  },
+  // ===== 制作 / Creative（魅力的な順） =====
   {
     id: 'uniqlo-future',
     title: 'UNIQLO: Imaginary Service',
@@ -178,6 +127,57 @@ export const works: Work[] = [
     links: [
       { type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' },
     ],
+  },
+  {
+    id: 'ai-music-video',
+    title: 'AI Generated MusicVideo',
+    description: '試行錯誤しながらAIを組み合わせてミュージックビデオ制作中',
+    image: '/images/Ai-Generated-Mv.png',
+    tags: ['SunoAI', 'ChatGPT', 'Gemini', 'Flow', 'Filmora'],
+    links: [
+      {
+        type: 'video',
+        url: 'https://youtu.be/Jgeij_JIZlQ?si=dTJwyRpyCQlMxWNb',
+        label: 'Video1',
+      },
+      {
+        type: 'video',
+        url: 'https://youtube.com/shorts/x7claprYtdw?si=dYpL2hF9nm6KEMj5',
+        label: 'Video2',
+      },
+    ],
+  },
+  {
+    id: 'retroTV-portfolio',
+    title: 'Portfolio: Retro TV version',
+    description:
+      'レトロなテレビにポートフォリオを映し出す．',
+    image: '/images/retroTV-portfolio.png',
+    tags: ['Web', 'Next.js', 'Three.js'],
+    links: [
+      { type: 'launch', url: 'https://my-retro-portfolio-rust.vercel.app/' },
+      { type: 'video', url: 'https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS' },
+    ],
+  },
+  {
+    id: 'cube-diary',
+    title: 'CubeDiary',
+    description:
+      '真っ暗な世界に記憶をキューブで保存するアプリ．',
+    image: '/images/CubeDiary.png',
+    tags: ['Web App', 'Next.js', 'Supabase'],
+    links: [
+      { type: 'launch', url: 'https://cube-diary.vercel.app/' },
+      { type: 'video', url: 'https://youtube.com/shorts/UY0FlFT1WY8?si=Hm70ycGAHvYiZp20' },
+    ],
+  },
+  {
+    id: 'metaquest-devs',
+    title: 'MetaQuest Devs',
+    description: '卒論のためにQuestで試行錯誤した様々なプロトタイプ',
+    image: '/images/Mr-Devs.png',
+    tags: ['MetaQuest', 'Unity'],
+    links: [],
   },
   {
     id: 'ai-composition',
