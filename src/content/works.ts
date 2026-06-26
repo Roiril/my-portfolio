@@ -129,6 +129,24 @@ export const works: Work[] = [
     ],
   },
   {
+    id: 'ai-anime',
+    title: 'AI Generated Anime',
+    description:
+      'AIを組み合わせて制作したアニメーション作品集．',
+    image: '/images/placeholder.png',
+    tags: ['AI', 'Animation'],
+    links: [],
+  },
+  {
+    id: 'shader-works',
+    title: 'Shader Works',
+    description:
+      'GLSL／シェーダで描いたビジュアル表現の作品集．',
+    image: '/images/placeholder.png',
+    tags: ['Shader', 'GLSL', 'Creative Coding'],
+    links: [],
+  },
+  {
     id: 'ai-music-video',
     title: 'AI Generated MusicVideo',
     description: '試行錯誤しながらAIを組み合わせてミュージックビデオ制作中',
