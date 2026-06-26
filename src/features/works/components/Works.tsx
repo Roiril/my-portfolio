@@ -1,6 +1,8 @@
+import NextLink from 'next/link';
 import { works } from '@/content/works';
 import { Work, WorkCategory } from '@/features/works/types';
 import { SectionHeader, Tag, Link } from '@/components/ui';
+import { WorkCardMedia } from './WorkCardMedia';
 
 const CATEGORY_GROUPS: { key: WorkCategory; label: string; sublabel: string }[] = [
     { key: 'research', label: '研究 / Research', sublabel: 'HCI・XRの研究プロジェクト' },
@@ -25,7 +27,7 @@ export default function Works() {
                 </div>
 
                 {CATEGORY_GROUPS.map(({ key, label, sublabel }) => {
-                    const groupWorks = works.filter((w) => groupOf(w) === key);
+                    const groupWorks = works.filter((w) => groupOf(w) === key && !w.hidden);
                     if (groupWorks.length === 0) return null;
                     return (
                         <div key={key} className="mb-14 last:mb-0">
@@ -38,20 +40,60 @@ export default function Works() {
 
                             <div className="flex flex-col gap-10 pointer-events-auto">
                                 {groupWorks.map((work) => (
-                        <div key={work.id} className="flex flex-col md:flex-row gap-8 md:gap-12 items-start pb-10 border-b border-gray-200 last:border-b-0">
-                            <div className="w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                {work.image ? (
-                                    <img
-                                        src={work.image}
-                                        alt={work.title}
-                                        className={`w-full h-full ${work.imageFit === 'contain' ? 'object-contain' : 'object-cover'}`}
-                                    />
-                                ) : (
-                                    <span className="text-[10px] text-gray-400 tracking-widest uppercase">
-                                        Image coming soon
-                                    </span>
-                                )}
-                            </div>
+                        <div
+                            key={work.id}
+                            className={`group relative flex flex-col md:flex-row gap-8 md:gap-12 items-start pb-10 border-b border-gray-200 last:border-b-0 ${
+                                work.detail
+                                    ? 'md:-mx-6 md:px-6 md:pt-6 rounded-sm transition-colors duration-300 hover:bg-gray-50 cursor-pointer'
+                                    : ''
+                            }`}
+                        >
+                            {work.detail ? (
+                                <NextLink
+                                    href={`/works/${work.id}`}
+                                    aria-label={`${work.title} の詳細を見る`}
+                                    className="absolute inset-0 z-10"
+                                />
+                            ) : null}
+                            {(() => {
+                                const boxClass = 'w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0 flex items-center justify-center';
+                                if (!work.image) {
+                                    return (
+                                        <div className={boxClass}>
+                                            <span className="text-[10px] text-gray-400 tracking-widest uppercase">
+                                                Image coming soon
+                                            </span>
+                                        </div>
+                                    );
+                                }
+                                if (!work.detail) {
+                                    return (
+                                        <div className={boxClass}>
+                                            <WorkCardMedia images={[work.image]} alt={work.title} fit={work.imageFit} />
+                                        </div>
+                                    );
+                                }
+                                const detailImages = [
+                                    ...(work.detail.gallery?.map((g) => g.src) ?? []),
+                                    ...(work.detail.sections?.flatMap((s) => s.gallery?.map((g) => g.src) ?? []) ?? []),
+                                ];
+                                const slideImages = [work.image, ...detailImages];
+                                return (
+                                    <NextLink
+                                        href={`/works/${work.id}`}
+                                        tabIndex={-1}
+                                        aria-hidden
+                                        className={`relative z-20 ${boxClass}`}
+                                    >
+                                        <WorkCardMedia
+                                            images={slideImages}
+                                            alt={work.title}
+                                            fit={work.imageFit}
+                                            interactive
+                                        />
+                                    </NextLink>
+                                );
+                            })()}
 
                             <div className="flex-1 flex flex-col">
                                 {work.featured && (
@@ -66,7 +108,7 @@ export default function Works() {
                                     </p>
                                 )}
 
-                                <h4 className="text-xl sm:text-2xl font-bold text-black mb-4 leading-tight">
+                                <h4 className={`text-xl sm:text-2xl font-bold text-black mb-4 leading-tight ${work.detail ? 'underline decoration-2 underline-offset-4 decoration-transparent transition-colors duration-300 group-hover:decoration-black' : ''}`}>
                                     {work.title}
                                 </h4>
 
@@ -86,7 +128,7 @@ export default function Works() {
                                     </div>
                                 ) : null}
                                 {work.links.length > 0 ? (
-                                    <div className="flex flex-row gap-8">
+                                    <div className="relative z-20 flex flex-row gap-8 self-start">
                                         {work.links.map((link) => (
                                             <Link
                                                 key={link.url}

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { works } from '@/content/works';
 import {
     resumeProfile,
@@ -53,9 +54,9 @@ export default function ResumePage() {
         <main className="min-h-screen bg-neutral-200 py-8 print:bg-white print:py-0">
             {/* ツールバー（画面のみ・印刷時は非表示） */}
             <div className="print:hidden max-w-[800px] mx-auto mb-4 flex items-center justify-between px-4">
-                <a href="/" className="text-sm text-gray-600 hover:text-black underline">
+                <Link href="/" className="text-sm text-gray-600 hover:text-black underline">
                     ← サイトに戻る
-                </a>
+                </Link>
                 <button
                     onClick={() => window.print()}
                     className="text-sm font-semibold bg-black text-white px-5 py-2 hover:bg-gray-800"

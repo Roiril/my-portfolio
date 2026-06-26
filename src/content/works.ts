@@ -96,6 +96,125 @@ export const works: Work[] = [
 
   // ===== 制作 / Creative（魅力的な順） =====
   {
+    id: 'blender-works',
+    title: 'Blender Works',
+    description:
+      'Blenderで制作したモデリング・3Dの小作品集．',
+    image: '/images/works/blender-works/robot-game-01.png',
+    tags: ['3D', 'Blender'],
+    links: [],
+    detail: {
+      lead: 'Blenderで手を動かしながら作ってきた，モデリングからジオメトリノード，VFXまでの小さな実験たち．',
+      sections: [
+        {
+          title: 'ロボット製造ゲームのキービジュアル',
+          body: ['ロボットを製造するゲームのために制作したキービジュアル．'],
+          gallery: [
+            { src: '/images/works/blender-works/robot-game-01.png', alt: 'ロボット製造ゲームのキービジュアル', wide: true },
+          ],
+        },
+        {
+          title: '地下鉄の通路',
+          body: ['「8番出口」のような，どこか不穏で見覚えのある地下鉄通路の空間．'],
+          gallery: [
+            { src: '/images/works/blender-works/subway-01.png', alt: '地下鉄の通路の3Dモデル' },
+            { src: '/images/works/blender-works/subway-02.png', alt: '地下鉄の通路の別アングル' },
+          ],
+        },
+        {
+          title: '好きなキャラクターのモデリング',
+          body: ['好きなキャラクターを，表情差分をつけながらモデリング．'],
+          columns: 4,
+          gallery: [
+            { src: '/images/works/blender-works/character-01.jpg', alt: 'キャラクターモデル（通常）' },
+            { src: '/images/works/blender-works/character-02.jpg', alt: 'キャラクターモデル（アイコン）' },
+            { src: '/images/works/blender-works/character-03.jpg', alt: 'キャラクターモデル（あっかんべー）' },
+            { src: '/images/works/blender-works/character-04.jpg', alt: 'キャラクターモデル（じと目）' },
+            { src: '/images/works/blender-works/character-05.jpg', alt: 'キャラクターモデル（目とじ）' },
+          ],
+        },
+        {
+          title: 'ジオメトリノード工作',
+          body: [
+            '恐竜と文字が切り替わるアニメーションや，動く壁にメモ帳を張り付ける表現など，ジオメトリノードを使った実験．',
+          ],
+          gallery: [
+            { src: '/images/works/blender-works/geo-dino-01.png', alt: '恐竜と文字が切り替わるジオメトリノード' },
+            { src: '/images/works/blender-works/geo-memo-01.png', alt: 'うごくメモ帳を貼り付けた壁' },
+            { src: '/images/works/blender-works/geo-memo-02.png', alt: 'うごくメモ帳を貼り付けた壁（別アングル）' },
+          ],
+        },
+        {
+          title: 'VFX工作',
+          body: ['Blender上でのエフェクト表現の実験．'],
+          gallery: [
+            { src: '/images/works/blender-works/vfx-01.png', alt: 'VFXの実験' },
+            { src: '/images/works/blender-works/vfx-02.png', alt: 'VFXの実験（別カット）' },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    id: 'meiji-3d',
+    title: 'Meiji Univ 3F',
+    description:
+      'いつも通っている明治大学中野キャンパス3Fのデジタル化．',
+    image: '/images/Meiji3fVideoCapture.png',
+    tags: ['3D', 'Blender', 'Digital Twin'],
+    links: [
+      { type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' },
+    ],
+    detail: {
+      lead: 'いつも通っている明治大学中野キャンパス3Fを，できるだけ実空間に忠実にデジタル化したプロジェクト．',
+      body: [
+        '実際に自分の足で歩き，歩幅を基準に各所の寸法を測りながら測量することで，空間全体のスケール感を現実に合わせて再現しました．',
+        'テクスチャは現地で撮影した写真をそのまま貼り込み，柱や什器など写真だけでは表現しきれない部分はモデリングで補うことで，遠目には成立しても近づくと粗が出る“張りぼて”ではなく，近くで見てもリアルに感じられる質感を目指しました．',
+      ],
+      gallery: [
+        { src: '/images/works/meiji-3d/meiji-3d-01.png', alt: '明治大学中野キャンパス3Fの3Dモデル', wide: true },
+        { src: '/images/works/meiji-3d/meiji-3d-02.png', alt: '3Dモデル化した3Fの空間' },
+        { src: '/images/works/meiji-3d/meiji-3d-03.png', alt: '写真テクスチャを貼り込んだ内観' },
+        { src: '/images/works/meiji-3d/meiji-3d-04.png', alt: 'モデリングで再現した什器まわり' },
+        { src: '/images/works/meiji-3d/meiji-3d-05.png', alt: '3Fフロアのデジタルツイン' },
+      ],
+      sections: [
+        {
+          title: 'モデルの活用',
+          body: [
+            '作ったモデルは，ただ眺めるためのものではなく，いろいろな形で活用しています．',
+          ],
+        },
+        {
+          title: '未来の姿をVRで議論する',
+          body: [
+            'デジタル化した空間をVRに持ち込み，この世界が将来どうあるべきかを議論するための場として活用しました．実寸で再現された空間に入り込むことで，図面や言葉だけでは伝わりにくい未来の姿を，みんなで体感しながら検討できます．',
+          ],
+          columns: 2,
+          gallery: [
+            { src: '/images/works/meiji-3d/use-vr-01.png', alt: 'VR空間で3Fモデルを使った議論' },
+            { src: '/images/works/meiji-3d/use-vr-02.png', alt: 'VRで未来の空間を検討する様子' },
+            { src: '/images/works/meiji-3d/use-vr-03.png', alt: 'VR空間内から見たフロア' },
+            { src: '/images/works/meiji-3d/use-vr-04.png', alt: 'VRでの空間体験' },
+          ],
+        },
+        {
+          title: 'シェーダーグラフで遊ぶ',
+          body: [
+            'シェーダーグラフを使って，空間の見え方そのものを変えて遊んだりもしています．',
+          ],
+          columns: 2,
+          gallery: [
+            { src: '/images/works/meiji-3d/use-shader-01.png', alt: 'シェーダーグラフで表現を変えた3F', wide: true },
+          ],
+          links: [
+            { type: 'video', url: 'https://youtu.be/fjkS9zoACuA?si=Uvo_cloQzPg-bHW5' },
+          ],
+        },
+      ],
+    },
+  },
+  {
     id: 'uniqlo-future',
     title: 'UNIQLO: Imaginary Service',
     description:
@@ -116,17 +235,19 @@ export const works: Work[] = [
     links: [
       { type: 'video', url: 'https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN' },
     ],
-  },
-  {
-    id: 'meiji-3d',
-    title: 'Meiji Univ 3F',
-    description:
-      'いつも通っている明治大学中野キャンパス3Fのデジタル化．',
-    image: '/images/Meiji3fVideoCapture.png',
-    tags: ['3D', 'Blender', 'Digital Twin'],
-    links: [
-      { type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' },
-    ],
+    detail: {
+      lead: 'プログラムされた環境，プログラムされた魚，プログラムされた動き．Processingで一から組み上げたデジタル水槽．',
+      body: [
+        '水槽そのものも，泳ぎ回る魚も，群れとして揺らぐその動きも，すべてコードで記述しています．',
+        '個々の魚に「近くの仲間に寄る・ぶつからない・向きを揃える」といった単純なルールを与えるだけで，群れ全体としては生き物のように自然なまとまりが生まれます．かわいさと，アルゴリズムが生む有機的な動きの両立を目指しました．',
+      ],
+      gallery: [
+        { src: '/images/works/aquarium/aquarium-01.png', alt: 'Processingで描いたデジタル水槽' },
+        { src: '/images/works/aquarium/aquarium-02.png', alt: '群れて泳ぐデジ魚たち' },
+        { src: '/images/works/aquarium/aquarium-03.png', alt: 'プログラムされた魚の動き' },
+        { src: '/images/works/aquarium/aquarium-04.png', alt: 'デジタル水槽の様子' },
+      ],
+    },
   },
   {
     id: 'ai-anime',
@@ -136,15 +257,7 @@ export const works: Work[] = [
     image: '/images/placeholder.png',
     tags: ['AI', 'Animation'],
     links: [],
-  },
-  {
-    id: 'shader-works',
-    title: 'Shader Works',
-    description:
-      'GLSL／シェーダで描いたビジュアル表現の作品集．',
-    image: '/images/placeholder.png',
-    tags: ['Shader', 'GLSL', 'Creative Coding'],
-    links: [],
+    hidden: true,
   },
   {
     id: 'ai-music-video',
