@@ -20,7 +20,7 @@ export const works: Work[] = [
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
     description:
-      '固定カメラ視点とHMDで「自分の身体だと感じる感覚」を揺さぶる実空間ホラー体験．学生VRコンテスト IVRC 2026 の書類審査を通過し，チームで制作を進行中．',
+      '固定カメラ視点とHMDで「自分の身体だと感じる感覚」を揺さぶる実空間ホラー体験．学生VRコンテスト IVRC 2026 の書類審査・ビデオ審査を通過し，第31回日本VR学会大会（2026年9月・富山県立大学）で体験展示を行う．',
     image: '/images/mawarimi.png',
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [

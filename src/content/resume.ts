@@ -56,5 +56,5 @@ export const resumeSkills: ResumeSkillTier[] = [
 ];
 
 export const resumeAwards: ResumeAward[] = [
-  { period: '2026', text: '学生VRコンテスト「IVRC 2026」書類審査通過（チーム制作・進行中）' },
+  { period: '2026', text: '学生VRコンテスト「IVRC 2026」ビデオ審査通過 — 第31回日本VR学会大会（富山県立大学）で体験展示（チーム制作）' },
 ];
