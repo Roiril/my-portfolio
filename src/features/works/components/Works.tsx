@@ -73,10 +73,14 @@ export default function Works() {
                                         </div>
                                     );
                                 }
-                                const detailImages = [
-                                    ...(work.detail.gallery?.map((g) => g.src) ?? []),
-                                    ...(work.detail.sections?.flatMap((s) => s.gallery?.map((g) => g.src) ?? []) ?? []),
-                                ];
+                                // スマホ縦画面の作品は一覧では横長ヒーロー1枚のみ表示
+                                // （縦長スクショをランドスケープのセルでスライドすると小さく潰れるため）
+                                const detailImages = work.detail.phone
+                                    ? []
+                                    : [
+                                          ...(work.detail.gallery?.map((g) => g.src) ?? []),
+                                          ...(work.detail.sections?.flatMap((s) => s.gallery?.map((g) => g.src) ?? []) ?? []),
+                                      ];
                                 const slideImages = [work.image, ...detailImages];
                                 return (
                                     <NextLink

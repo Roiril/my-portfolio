@@ -71,7 +71,7 @@ export const works: Work[] = [
     description:
       'React＋TypeScript製のカップル向け同期PWA．Supabaseとオフラインキャッシュで，カレンダー・予定・記念日・体調・時間割・ミニゲームを二端末リアルタイム共有する．AI「シュビー」が近況を読み二人に寄り添う．',
     image: '/images/couple-sync.png',
-    imageFit: 'contain',
+    imageFit: 'cover',
     tags: ['Web App', 'React', 'TypeScript', 'Supabase', 'PWA'],
     links: [
       { type: 'launch', url: '/demos/couple-sync/index.html', label: 'UIデモ' },
@@ -101,7 +101,7 @@ export const works: Work[] = [
     description:
       'React＋TypeScript製の研究ログPWA．読書・リサーチ・論文執筆・スライド生成を一つの流れで管理し，Supabaseとオフラインキャッシュで端末をまたいで同期する．AIエージェント連携の自動化基盤を備える．',
     image: '/images/cogni-storage.png',
-    imageFit: 'contain',
+    imageFit: 'cover',
     tags: ['Web App', 'React', 'TypeScript', 'Supabase', 'PWA'],
     links: [
       { type: 'launch', url: '/demos/cogni-storage/index.html', label: 'UIデモ' },
