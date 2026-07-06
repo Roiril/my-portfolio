@@ -69,7 +69,7 @@ export const works: Work[] = [
     id: 'couple-sync',
     title: 'couple-sync',
     description:
-      'パートナーと予定・記念日・体調などを共有するアプリ．オフライン動作と端末間のリアルタイム同期を両立し，ローカルLLMも連携している．',
+      'React＋TypeScript製のカップル向け同期PWA．Supabaseとオフラインキャッシュで，カレンダー・予定・記念日・体調・時間割・ミニゲームを二端末リアルタイム共有する．AI「シュビー」が近況を読み二人に寄り添う．',
     image: '/images/couple-sync.png',
     imageFit: 'contain',
     tags: ['Web App', 'React', 'Supabase', 'PWA'],
@@ -83,7 +83,7 @@ export const works: Work[] = [
     id: 'cogni-storage',
     title: 'cogni-storage',
     description:
-      '研究の読書・調査・執筆・スライド生成を一つの流れで管理する自作ツール．AIエージェント向けの自動化基盤を組み込んでいる．',
+      'React＋TypeScript製の研究ログPWA．読書・リサーチ・論文執筆・スライド生成を一つの流れで管理し，Supabaseとオフラインキャッシュで端末をまたいで同期する．AIエージェント連携の自動化基盤を備える．',
     image: '/images/cogni-storage.png',
     imageFit: 'contain',
     tags: ['Web App', 'React', 'Supabase'],
