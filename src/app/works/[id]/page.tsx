@@ -52,6 +52,27 @@ function Gallery({
     );
 }
 
+// 縦長スマホ画面のスクショ用ギャラリー（アスペクト比を保ち切り取らずに並べる）
+function PhoneGallery({ images, fallbackAlt }: { images: WorkGalleryImage[]; fallbackAlt: string }) {
+    return (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
+            {images.map((img) => (
+                <div
+                    key={img.src}
+                    className="bg-gray-50 overflow-hidden border border-gray-200 aspect-[402/880]"
+                >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src={img.src}
+                        alt={img.alt ?? fallbackAlt}
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+            ))}
+        </div>
+    );
+}
+
 // detail を持つ作品だけ静的に書き出す
 export function generateStaticParams(): Params[] {
     return works.filter((w) => w.detail).map((w) => ({ id: w.id }));
@@ -138,9 +159,11 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
                         </div>
                     )}
 
-                    {/* 単一ギャラリー */}
+                    {/* 単一ギャラリー（phone 指定時は縦長スマホ表示） */}
                     {detail.gallery && detail.gallery.length > 0 && (
-                        <Gallery images={detail.gallery} fallbackAlt={work.title} />
+                        detail.phone
+                            ? <PhoneGallery images={detail.gallery} fallbackAlt={work.title} />
+                            : <Gallery images={detail.gallery} fallbackAlt={work.title} />
                     )}
 
                     {/* セクション（小作品集など） */}

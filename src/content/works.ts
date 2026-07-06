@@ -72,12 +72,28 @@ export const works: Work[] = [
       'React＋TypeScript製のカップル向け同期PWA．Supabaseとオフラインキャッシュで，カレンダー・予定・記念日・体調・時間割・ミニゲームを二端末リアルタイム共有する．AI「シュビー」が近況を読み二人に寄り添う．',
     image: '/images/couple-sync.png',
     imageFit: 'contain',
-    tags: ['Web App', 'React', 'Supabase', 'PWA'],
+    tags: ['Web App', 'React', 'TypeScript', 'Supabase', 'PWA'],
     links: [
       { type: 'launch', url: '/demos/couple-sync/index.html', label: 'UIデモ' },
     ],
     category: 'personal',
     period: '個人開発',
+    detail: {
+      lead: '離れて暮らすふたりの毎日を，ひとつの画面に．予定・記念日・体調・時間割からふたり専用のミニゲームまでを共有し，オフラインでも使える同期アプリ．',
+      body: [
+        'カレンダーで予定と記念日を共有し，デート予定やお互いの体調・食事も記録できる．時間割やふたり専用のミニゲームも備え，「連絡アプリ」を超えて日々を一緒に運用する場所を目指した．',
+        '設計の核はオフラインファーストの同期基盤．表示は端末内の IndexedDB から即座に描画し，Supabase とはバックグラウンドで差分同期する．フィールド単位の Last-Write-Wins と永続キューにより，電波が無くても編集でき，オンライン復帰時に取りこぼしなく反映される．変更はリアルタイムに相手の端末へ届く．',
+        'AI「シュビー」がふたりの近況を読み取り，質問やおたよりをアプリ内に届ける仕組みも組み込んでいる（本人のデータには読み取りのみでアクセス）．',
+      ],
+      phone: true,
+      gallery: [
+        { src: '/images/works/couple-sync/01-calendar.png', alt: 'カレンダー：予定と記念日の共有' },
+        { src: '/images/works/couple-sync/03-schedule.png', alt: '時間割：ふたり分の授業を管理' },
+        { src: '/images/works/couple-sync/04-health.png', alt: '体調・食事の記録' },
+        { src: '/images/works/couple-sync/05-memories.png', alt: 'ふたりの軌跡・記念日カウント' },
+        { src: '/images/works/couple-sync/06-games.png', alt: 'ふたり専用ミニゲーム' },
+      ],
+    },
   },
   {
     id: 'cogni-storage',
@@ -86,12 +102,28 @@ export const works: Work[] = [
       'React＋TypeScript製の研究ログPWA．読書・リサーチ・論文執筆・スライド生成を一つの流れで管理し，Supabaseとオフラインキャッシュで端末をまたいで同期する．AIエージェント連携の自動化基盤を備える．',
     image: '/images/cogni-storage.png',
     imageFit: 'contain',
-    tags: ['Web App', 'React', 'Supabase'],
+    tags: ['Web App', 'React', 'TypeScript', 'Supabase', 'PWA'],
     links: [
       { type: 'launch', url: '/demos/cogni-storage/index.html', label: 'UIデモ' },
     ],
     category: 'personal',
     period: '個人開発',
+    detail: {
+      lead: '研究の「読む・考える・書く」を一本の流れに．思いつき（Ideas）からテーマ・論文・文献までを一元管理し，オフラインでも動く自分のための研究ログ．',
+      body: [
+        '断片的な思いつきをカードとして貯め，確度を添えて育てていく Ideas を中心に，研究テーマ・執筆中の論文・読んだ文献を横断して管理する．スライド生成まで一つの流れに収め，散らばりがちな研究の営みを一箇所に束ねることを狙った．',
+        '技術的には，端末内の IndexedDB を単一の表示ソースとし，Supabase とは差分同期する構成．永続キューによる送信管理とサーバー採番のカーソルで，オフライン編集と端末間同期を両立している．',
+        'AIコーディングエージェント（Claude Code）と連携した自動化基盤を組み込み，文献の取り込みや翻訳・整理を半自動で回せるようにしている．視覚言語は黒×クリーム×ウォームアクセントのフラット・レトロで統一した．',
+      ],
+      phone: true,
+      gallery: [
+        { src: '/images/works/cogni-storage/02-ideas.png', alt: 'Ideas：思いつきをカードで育てる' },
+        { src: '/images/works/cogni-storage/03-themes.png', alt: 'Themes：研究テーマの管理' },
+        { src: '/images/works/cogni-storage/04-papers.png', alt: 'Papers：執筆中の論文' },
+        { src: '/images/works/cogni-storage/05-readings.png', alt: 'Readings：文献の記録' },
+        { src: '/images/works/cogni-storage/01-home.png', alt: 'ホーム画面' },
+      ],
+    },
   },
 
   // ===== 制作 / Creative（魅力的な順） =====

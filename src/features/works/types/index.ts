@@ -35,6 +35,8 @@ export type WorkDetail = {
     body?: string[];
     // ギャラリー画像（単一ギャラリーの作品用）
     gallery?: WorkGalleryImage[];
+    // gallery を縦長スマホ画面として表示する（アプリのスクショ用。切り取らず全体を見せる）
+    phone?: boolean;
     // 見出し付きセクション（小作品集など）
     sections?: WorkSection[];
 };
