@@ -42,3 +42,7 @@ next-env.d.ts
 
 # demo build sources (UI-only copies of couple-sync / cogni-storage)
 /.demo-src/
+
+# Claude Code ローカル資産（マシン固有・コミット対象外）
+.claude/settings.local.json
+.claude/worktrees/
