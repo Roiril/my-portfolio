@@ -20,11 +20,11 @@ export const works: Work[] = [
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
     description:
-      '90年代サバイバルホラーの固定カメラ視点を，HMDと実空間の複数カメラで再構成したホラー体験．固定カメラ越しに映る自分を見ながら日本人形との鬼ごっこを進め，終盤には立場が入れ替わって「録画された過去の自分」を人形の側から追う．固定視点ゆえ映像の一部を差し替えられる性質を使い，操作と身体感覚のズレから不気味さを生む．学生VRコンテスト IVRC 2026 の書類審査・ビデオ審査を通過し，第31回日本VR学会大会（2026年9月・富山県立大学）で体験展示を行う．',
-    image: '/images/mawarimi.png',
+      '監視カメラに映る自分を見ながら現実空間を歩く，固定視点のホラー体験．HMDと複数のカメラで固定視点を現実空間に再構成し，怪異調査員として呪われた壁の調査に向かう．IVRC2026優勝・DCEXPO賞．2026年11月，DCEXPO2026で展示予定．',
+    image: '/images/works/mawarimi/key-visual.webp',
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
-      { type: 'paper', url: '/mawarimi.pdf', label: '企画書' },
+      { type: 'launch', url: 'https://mawarimi.vercel.app/', label: '公式サイト' },
     ],
     category: 'research',
     period: '2026（M1）',
