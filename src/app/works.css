@@ -76,7 +76,8 @@
   .work-card--featured, .work-group--internship .work-card, .work-group--research .work-card:not(.work-card--featured) { display: block; }
   .work-card--featured .work-content, .work-group--internship .work-content, .work-group--research .work-card:not(.work-card--featured) .work-content { padding-top: 22px; }
   .work-credits { margin-top: 20px; padding: 16px; }
-  .work-credits ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .work-credits ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 10px; font-size: clamp(8.75px, 2.6vw, 9.75px); letter-spacing: -.02em; }
+  .work-credits li { white-space: nowrap; }
   .work-description { font-size: 13px; }
   .work-meta { font-size: 10px; }
   .work-tag { font-size: 10px; }
