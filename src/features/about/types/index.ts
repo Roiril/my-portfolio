@@ -30,5 +30,4 @@ export type AboutData = {
     };
     bio: string[];
     keyFacts?: KeyFact[];
-    toolSections: ToolSection[];
 };

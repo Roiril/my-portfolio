@@ -1,21 +1,7 @@
 ﻿import { Work } from '@/features/works/types';
 
 export const works: Work[] = [
-  // ===== 研究 / Research（新しい順） =====
-  {
-    id: 'robot-collab',
-    title: '人と機械の協働インタラクション設計',
-    description:
-      '人と機械が同じ場で一緒に作業するときの，見た目・動き・関わり方をどう設計するかを探る研究．プロトタイプを作って人に試してもらいながら，協力が自然に生まれる条件を探っている（進行中）．',
-    image: '/images/robot-collab.png',
-    tags: ['Research', 'HCI', 'Human-Agent Interaction'],
-    links: [],
-    category: 'research',
-    period: '2026 –（修士研究）',
-    role: '単独',
-    featured: true,
-    isCurrent: true,
-  },
+  // ===== 研究 / Research =====
   {
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
@@ -25,6 +11,7 @@ export const works: Work[] = [
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
       { type: 'launch', url: 'https://mawarimi.vercel.app/', label: '公式サイト' },
+      { type: 'paper', url: 'https://www.conference.vrsj.org/ac2026/program/doc/IVRC-15.pdf', label: 'Publication' },
     ],
     category: 'research',
     period: '2026（M1）',
@@ -44,6 +31,20 @@ export const works: Work[] = [
     isCurrent: true,
   },
   {
+    id: 'robot-collab',
+    title: '人と機械の協働インタラクション設計',
+    description:
+      '人と機械が同じ場で一緒に作業するときの，見た目・動き・関わり方をどう設計するかを探る研究．プロトタイプを作って人に試してもらいながら，協力が自然に生まれる条件を探っている（進行中）．',
+    image: '/images/robot-collab.png',
+    tags: ['Research', 'HCI', 'Human-Agent Interaction'],
+    links: [],
+    category: 'research',
+    period: '2026 –（修士研究）',
+    role: '単独',
+    featured: true,
+    isCurrent: true,
+  },
+  {
     id: 'intentlayer',
     title: 'IntentLayer',
     description:
@@ -56,7 +57,6 @@ export const works: Work[] = [
     category: 'research',
     period: '2025（卒業研究）',
     role: '単独（着想・実装・実験・分析・執筆）',
-    featured: true,
   },
 
   // ===== インターン / Internship =====
@@ -72,7 +72,6 @@ export const works: Work[] = [
     category: 'internship',
     period: '2025.11 –（長期インターン）',
     role: '要件定義〜実装〜運用',
-    featured: true,
   },
 
   // ===== 個人開発 / Personal =====

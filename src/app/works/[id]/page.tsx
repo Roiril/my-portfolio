@@ -5,6 +5,7 @@ import { works } from '@/content/works';
 import { WorkGalleryImage } from '@/features/works/types';
 import { Tag, Link as ExternalLink } from '@/components/ui';
 import Footer from '@/components/layout/Footer';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 type Params = { id: string };
 
@@ -43,6 +44,7 @@ function Gallery({
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={img.src}
+                        loading="lazy"
                         alt={img.alt ?? fallbackAlt}
                         className="w-full h-full object-cover"
                     />
@@ -64,6 +66,7 @@ function PhoneGallery({ images, fallbackAlt }: { images: WorkGalleryImage[]; fal
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={img.src}
+                        loading="lazy"
                         alt={img.alt ?? fallbackAlt}
                         className="w-full h-full object-cover"
                     />
@@ -102,29 +105,31 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
     const { detail } = work;
 
     return (
-        <main className="relative min-h-screen text-gray-900 font-sans bg-white">
-            <article className="px-8 py-16 sm:py-20">
-                <div className="max-w-4xl mx-auto">
+        <>
+            <SiteHeader />
+            <main>
+            <article className="work-detail">
+                <div className="site-container">
                     {/* 戻る */}
                     <Link
                         href="/#works"
-                        className="text-xs text-gray-500 tracking-widest uppercase border-b-2 border-black/10 pb-0.5 transition-colors hover:text-black"
+                        className="text-link text-link--sm"
                     >
                         ← Works
                     </Link>
 
                     {/* ヘッダー */}
-                    <header className="mt-8 mb-10 border-b-2 border-black pb-6">
+                    <header className="detail-header">
                         {(work.period || work.role) && (
                             <p className="text-xs text-gray-500 mb-3">
                                 {[work.period, work.role].filter(Boolean).join('　/　')}
                             </p>
                         )}
-                        <h1 className="text-3xl sm:text-4xl font-bold text-black leading-tight mb-5">
+                        <h1>
                             {work.title}
                         </h1>
                         {detail.lead && (
-                            <p className="text-base sm:text-lg text-gray-800 leading-8 max-w-2xl">
+                            <p className="detail-lead">
                                 {detail.lead}
                             </p>
                         )}
@@ -172,7 +177,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
                             {detail.sections.map((section, i) => (
                                 <section key={section.title ?? i}>
                                     {section.title && (
-                                        <h2 className="text-lg sm:text-xl font-bold text-black mb-3 border-b border-gray-200 pb-2">
+                                        <h2 className="detail-section-title">
                                             {section.title}
                                         </h2>
                                     )}
@@ -211,7 +216,8 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
                     )}
                 </div>
             </article>
+            </main>
             <Footer />
-        </main>
+        </>
     );
 }

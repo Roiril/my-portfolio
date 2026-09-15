@@ -1,43 +1,53 @@
-import { Link } from '@/components/ui';
+import Image from 'next/image';
 
 export default function Hero() {
     return (
-        <section className="relative px-8 pt-8 pb-12 bg-white overflow-hidden">
-            <div
-                className="absolute inset-0 z-0 opacity-5 hero-bg"
-                style={{
-                    backgroundImage: "url('/images/Roil_hci_icon.png')",
-                    backgroundPosition: 'bottom right',
-                    backgroundRepeat: 'no-repeat',
-                }}
-            ></div>
+        <section id="top" className="hero">
+            <div className="site-container hero__inner">
+                <div className="hero__identity">
+                    <p className="hero__eyebrow">
+                        HCI Researcher &amp; Interaction Designer ｜ HCI / XR / AI
+                    </p>
+                    <h1 className="hero__name">
+                        <span className="hero__name-ja">白石大晴</span>
+                        <span className="hero__name-en">Shiroishi Taisei</span>
+                    </h1>
+                </div>
 
-            <div className="relative z-10 max-w-4xl mx-auto">
-                <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-widest uppercase mb-4">
-                    HCI Researcher &amp; Interaction Designer ｜ HCI / XR / AI
-                </p>
-                <p className="text-sm sm:text-base text-gray-700 mb-12 leading-relaxed">
-                    明治大学大学院（HCI専攻・M1）
-                    <br />
-                    Meiji Univ. / Tokyo
-                </p>
+                <figure className="hero__profile">
+                    <Image
+                        src="/images/MyFace.png"
+                        alt="白石大晴のプロフィール写真"
+                        width={480}
+                        height={579}
+                        className="hero__portrait"
+                        priority
+                        sizes="(max-width: 767px) 150px, 240px"
+                    />
+                    <figcaption className="hero__affiliation">
+                        明治大学大学院（HCI専攻・M1）
+                        <span>Meiji Univ. / Tokyo</span>
+                    </figcaption>
+                </figure>
 
-                <h1 className="text-5xl sm:text-6xl font-black text-black leading-tight mb-12">
-                    白石大晴
-                    <br />
-                    Shiroishi Taisei
-                </h1>
+                <div className="hero__statements">
+                    <div className="hero__statement">
+                        <span className="hero__number" aria-hidden="true">01</span>
+                        <p>人と人，人とロボット，人とAIのあいだに，誤解のない心地よいインタラクションを作る．</p>
+                    </div>
+                    <div className="hero__statement">
+                        <span className="hero__number" aria-hidden="true">02</span>
+                        <p>新しいエンタメ体験を創造する．</p>
+                    </div>
+                </div>
 
-                <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl mb-12">
-                    人と人，人とロボット，人とAIのあいだに，誤解のない心地よいインタラクションを作る．
-                    <br />
-                    企画から実装，ユーザ評価まで，一人で手を動かしながら．
-                </p>
-
-                <div className="flex flex-row flex-wrap gap-10 mb-0">
-                    <Link href="#works">View Works</Link>
-                    <Link href="/resume">Resume</Link>
-                    <Link href="#links">Links</Link>
+                <div className="hero__footer">
+                    <p className="hero__method">企画から実装，ユーザ評価まで．</p>
+                    <nav className="hero__actions" aria-label="主要ページ">
+                    <a className="hero__action hero__action--primary" href="#works">View Works</a>
+                    <a className="hero__action" href="/resume">Resume</a>
+                    <a className="hero__action" href="#links">Links</a>
+                    </nav>
                 </div>
             </div>
         </section>

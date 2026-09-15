@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import { works } from '@/content/works';
-import { Work, WorkCategory } from '@/features/works/types';
-import { SectionHeader, Tag, Link } from '@/components/ui';
+import type { Work, WorkCategory } from '@/features/works/types';
+import { Tag, Link } from '@/components/ui';
 import { WorkCardMedia } from './WorkCardMedia';
 
 const CATEGORY_GROUPS: { key: WorkCategory; label: string; sublabel: string }[] = [
@@ -11,166 +11,89 @@ const CATEGORY_GROUPS: { key: WorkCategory; label: string; sublabel: string }[] 
     { key: 'creative', label: '制作 / Creative', sublabel: '映像・3D・サウンド・クリエイティブコーディング' },
 ];
 
-function groupOf(work: Work): WorkCategory {
-    return work.category ?? 'creative';
+function WorkCard({ work }: { work: Work }) {
+    const detailHref = work.detail ? '/works/' + work.id : undefined;
+    const imageHref = detailHref ?? work.links[0]?.url;
+    const media = work.image ? (
+        <WorkCardMedia src={work.image} alt={work.title} fit={work.imageFit} />
+    ) : (
+        <span className="work-placeholder">Image coming soon</span>
+    );
+
+    return (
+        <article id={'work-' + work.id} className={'work-card' + (work.featured ? ' work-card--featured' : '') + (work.id === 'mawarimi' ? ' work-card--lead' : '')}>
+            {imageHref ? (
+                <a href={imageHref} className="work-media work-media--linked"
+                    aria-label={detailHref ? work.title + ' の詳細を見る' : work.title}
+                    target={detailHref ? undefined : '_blank'} rel={detailHref ? undefined : 'noopener noreferrer'}>
+                    {media}
+                    <span className="work-image-arrow" aria-hidden="true">↗</span>
+                </a>
+            ) : <div className="work-media">{media}</div>}
+            <div className="work-content">
+                <div className="work-meta">
+                    {work.featured && <span className="work-featured">Featured</span>}
+                    {(work.period || work.role) && <p>{[work.period, work.role].filter(Boolean).join('　/　')}</p>}
+                </div>
+                <h4 className="work-title">
+                    {detailHref ? <NextLink href={detailHref}>{work.title}</NextLink> : work.title}
+                </h4>
+                <p className="work-description">{work.description}</p>
+                <div className="work-tags">{work.tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}</div>
+                <div className="work-bottom">
+                    {work.isCurrent && <p className="work-current">Currently in development</p>}
+                    {work.links.length > 0 && (
+                        <div className="work-links">
+                            {work.links.map((link) => (
+                                <Link key={link.url} href={link.url} isExternal size="sm">
+                                    {link.label || (link.type === 'launch' ? 'Launch' : link.type === 'paper' ? 'Paper' : 'Video')}
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+            {work.credits && work.credits.length > 0 && (
+                <div className="work-credits">
+                    <p>クレジット</p>
+                    <ul>{work.credits.map((credit) => <li key={credit}>{credit}</li>)}</ul>
+                </div>
+            )}
+        </article>
+    );
 }
 
 export default function Works() {
+    const groups = CATEGORY_GROUPS.map((group) => ({
+        ...group,
+        items: works.filter((work) => (work.category ?? 'creative') === group.key && !work.hidden),
+    })).filter((group) => group.items.length > 0);
+
     return (
-        <section id="works" className="px-8 py-12 bg-white">
-            <div className="max-w-4xl mx-auto">
-                <div className="mb-10">
-                    <SectionHeader title="Works" />
-                    <p className="text-base sm:text-lg text-gray-800 leading-7 max-w-2xl">
-                        研究・インターン・個人開発から，映像やクリエイティブコーディングまでをまとめています．
-                    </p>
-                </div>
-
-                {CATEGORY_GROUPS.map(({ key, label, sublabel }) => {
-                    const groupWorks = works.filter((w) => groupOf(w) === key && !w.hidden);
-                    if (groupWorks.length === 0) return null;
-                    return (
-                        <div key={key} className="mb-14 last:mb-0">
-                            <div className="mb-8 border-b-2 border-black pb-2">
-                                <h3 className="text-sm font-bold text-black tracking-widest uppercase">
-                                    {label}
-                                </h3>
-                                <p className="text-xs text-gray-500 mt-1">{sublabel}</p>
-                            </div>
-
-                            <div className="flex flex-col gap-10 pointer-events-auto">
-                                {groupWorks.map((work) => (
-                        <div
-                            key={work.id}
-                            className={`group relative flex flex-col md:flex-row gap-8 md:gap-12 items-start pb-10 border-b border-gray-200 last:border-b-0 ${
-                                work.detail
-                                    ? 'md:-mx-6 md:px-6 md:pt-6 rounded-sm transition-colors duration-300 hover:bg-gray-50 cursor-pointer'
-                                    : ''
-                            }`}
-                        >
-                            {work.detail ? (
-                                <NextLink
-                                    href={`/works/${work.id}`}
-                                    aria-label={`${work.title} の詳細を見る`}
-                                    className="absolute inset-0 z-10"
-                                />
-                            ) : null}
-                            {(() => {
-                                const boxClass = 'w-full md:w-1/3 h-48 md:h-64 bg-gray-100 relative overflow-hidden flex-shrink-0 flex items-center justify-center';
-                                if (!work.image) {
-                                    return (
-                                        <div className={boxClass}>
-                                            <span className="text-[10px] text-gray-400 tracking-widest uppercase">
-                                                Image coming soon
-                                            </span>
-                                        </div>
-                                    );
-                                }
-                                if (!work.detail) {
-                                    return (
-                                        <div className={boxClass}>
-                                            <WorkCardMedia images={[work.image]} alt={work.title} fit={work.imageFit} />
-                                        </div>
-                                    );
-                                }
-                                // スマホ縦画面の作品は一覧では横長ヒーロー1枚のみ表示
-                                // （縦長スクショをランドスケープのセルでスライドすると小さく潰れるため）
-                                const detailImages = work.detail.phone
-                                    ? []
-                                    : [
-                                          ...(work.detail.gallery?.map((g) => g.src) ?? []),
-                                          ...(work.detail.sections?.flatMap((s) => s.gallery?.map((g) => g.src) ?? []) ?? []),
-                                      ];
-                                const slideImages = [work.image, ...detailImages];
-                                return (
-                                    <NextLink
-                                        href={`/works/${work.id}`}
-                                        tabIndex={-1}
-                                        aria-hidden
-                                        className={`relative z-20 ${boxClass}`}
-                                    >
-                                        <WorkCardMedia
-                                            images={slideImages}
-                                            alt={work.title}
-                                            fit={work.imageFit}
-                                            interactive
-                                        />
-                                    </NextLink>
-                                );
-                            })()}
-
-                            <div className="flex-1 flex flex-col">
-                                {work.featured && (
-                                    <span className="text-xs font-semibold text-black mb-4 uppercase tracking-widest">
-                                        Featured
-                                    </span>
-                                )}
-
-                                {(work.period || work.role) && (
-                                    <p className="text-xs text-gray-500 mb-2">
-                                        {[work.period, work.role].filter(Boolean).join('　/　')}
-                                    </p>
-                                )}
-
-                                <h4 className={`text-xl sm:text-2xl font-bold text-black mb-4 leading-tight ${work.detail ? 'underline decoration-2 underline-offset-4 decoration-transparent transition-colors duration-300 group-hover:decoration-black' : ''}`}>
-                                    {work.title}
-                                </h4>
-
-                                <p className="text-sm sm:text-base text-gray-800 mb-2 leading-7 whitespace-pre-line">
-                                    {work.description}
-                                </p>
-
-                                {work.credits && work.credits.length > 0 ? (
-                                    <div className="mb-6">
-                                        <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-widest">
-                                            クレジット
-                                        </p>
-                                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-                                            {work.credits.map((credit) => (
-                                                <li key={credit} className="text-xs text-gray-600 leading-5">
-                                                    {credit}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ) : null}
-
-                                <div className="flex flex-wrap gap-3 mb-6">
-                                    {work.tags.map((tag) => (
-                                        <Tag key={tag}>{tag}</Tag>
-                                    ))}
-                                </div>
-
-                                {work.isCurrent ? (
-                                    <div className="text-xs font-medium text-gray-400 tracking-widest uppercase">
-                                        Currently in development
-                                    </div>
-                                ) : null}
-                                {work.links.length > 0 ? (
-                                    <div className="relative z-20 flex flex-row gap-8 self-start">
-                                        {work.links.map((link) => (
-                                            <Link
-                                                key={link.url}
-                                                href={link.url}
-                                                isExternal
-                                                size="sm"
-                                            >
-                                                {link.type === 'launch'
-                                                    ? link.label || 'Launch'
-                                                    : link.type === 'paper'
-                                                        ? link.label || 'Paper'
-                                                        : link.label || 'Video'}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                ) : null}
-                            </div>
-                        </div>
-                                ))}
-                            </div>
-                        </div>
-                    );
-                })}
+        <section id="works" className="works-section" aria-labelledby="works-title">
+            <div className="site-container">
+                <header className="works-heading">
+                    <h2 id="works-title">Works<span aria-hidden="true">({groups.reduce((total, group) => total + group.items.length, 0)})</span></h2>
+                    <p>研究，趣味，授業，インターンなどの公開可能な成果物をまとめています．</p>
+                </header>
+                <nav className="work-index" aria-label="Works">
+                    {groups.map((group, index) => (
+                        <a key={group.key} href={'#works-' + group.key}>
+                            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                            {group.label}
+                            <span aria-hidden="true">↘</span>
+                        </a>
+                    ))}
+                </nav>
+                {groups.map((group, index) => (
+                    <section key={group.key} id={'works-' + group.key} className={'work-group work-group--' + group.key} aria-labelledby={'title-' + group.key}>
+                        <header className="work-group-heading">
+                            <h3 id={'title-' + group.key}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{group.label}</h3>
+                            <p>{group.sublabel}</p>
+                        </header>
+                        <div className="work-grid">{group.items.map((work) => <WorkCard key={work.id} work={work} />)}</div>
+                    </section>
+                ))}
             </div>
         </section>
     );
