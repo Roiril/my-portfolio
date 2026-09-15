@@ -478,8 +478,9 @@
     }
 
     .hero__name-en {
-        font-size: clamp(3.35rem, 17vw, 4.5rem);
+        font-size: clamp(2.35rem, 12vw, 3.5rem);
         line-height: 0.88;
+        white-space: nowrap;
     }
 
     .hero__profile {

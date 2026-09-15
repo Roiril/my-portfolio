@@ -11,7 +11,7 @@ export const works: Work[] = [
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
       { type: 'launch', url: 'https://mawarimi.vercel.app/', label: '公式サイト' },
-      { type: 'paper', url: 'https://www.conference.vrsj.org/ac2026/program/doc/IVRC-15.pdf', label: 'Publication' },
+      { type: 'paper', url: 'https://www.conference.vrsj.org/ac2026/program/doc/IVRC-15.pdf', label: 'Publication（日本VR学会）' },
     ],
     category: 'research',
     period: '2026（M1）',
