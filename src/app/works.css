@@ -42,9 +42,9 @@
 .work-card--lead .work-media { aspect-ratio: 16 / 9; }
 .work-card--featured .work-title { font-size: clamp(24px, 2.5vw, 32px); }
 .work-card--lead .work-title { font-size: clamp(28px, 2.7vw, 36px); }
-.work-credits { grid-column: 1 / -1; display: grid; grid-template-columns: 130px 1fr; gap: 20px; border-top: 1px solid var(--line); padding-top: 20px; }
+.work-credits { margin-top: 20px; padding: 18px 20px; background: var(--background); border-radius: 5px; }
 .work-credits > p { color: var(--muted); font-size: 11px; line-height: 1.8; }
-.work-credits ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 24px; color: var(--muted); font-size: 11px; line-height: 1.8; }
+.work-credits ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; margin-top: 12px; color: var(--muted); font-size: 11px; line-height: 1.8; overflow-wrap: anywhere; }
 .work-group--research .work-grid { row-gap: 56px; }
 .work-group--research .work-card:not(.work-card--featured) { display: grid; grid-column: 1 / -1; grid-template-columns: 1.12fr 1fr; gap: 40px; }
 .work-group--research .work-card:not(.work-card--featured) .work-content { padding-top: 4px; }
@@ -60,8 +60,6 @@
   .work-index { gap: 16px; }
   .work-index a { font-size: 11px; gap: 6px; }
   .work-card--featured, .work-group--internship .work-card, .work-group--research .work-card:not(.work-card--featured) { gap: 24px; grid-template-columns: 1fr 1fr; }
-  .work-credits { grid-template-columns: 100px 1fr; }
-  .work-credits ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 760px) {
@@ -77,8 +75,8 @@
   .work-grid { grid-template-columns: 1fr; gap: 44px; }
   .work-card--featured, .work-group--internship .work-card, .work-group--research .work-card:not(.work-card--featured) { display: block; }
   .work-card--featured .work-content, .work-group--internship .work-content, .work-group--research .work-card:not(.work-card--featured) .work-content { padding-top: 22px; }
-  .work-credits { display: block; margin-top: 24px; padding-top: 18px; }
-  .work-credits ul { margin-top: 12px; column-gap: 14px; font-size: 10px; }
+  .work-credits { padding: 16px; }
+  .work-credits ul { grid-template-columns: 1fr; }
   .work-description { font-size: 13px; }
   .work-meta { font-size: 10px; }
   .work-tag { font-size: 10px; }
