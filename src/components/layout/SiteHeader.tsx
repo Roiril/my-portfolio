@@ -8,7 +8,7 @@ export default function SiteHeader() {
             <div className="site-container site-header__inner">
                 <Link className="site-header__brand" href="/#top" aria-label="Roil ホーム">
                     <Image
-                        src="/images/Roil_hci_icon.png"
+                        src="/images/roil-dinosaur.png"
                         alt=""
                         width={36}
                         height={36}

@@ -44,9 +44,9 @@ export const metadata: Metadata = {
     siteName: `${PERSON_NAME} Portfolio`,
     images: [
       {
-        url: "/images/Roil_hci_icon.png",
-        width: 1024,
-        height: 1024,
+        url: "/images/roil-dinosaur.png",
+        width: 1254,
+        height: 1254,
         alt: `${PERSON_NAME} Portfolio`,
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: `${PERSON_NAME}（${PERSON_NAME_KANA}） | Portfolio`,
     description:
       `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ．HCI研究と制作物をまとめています．`,
-    images: ["/images/Roil_hci_icon.png"],
+    images: ["/images/roil-dinosaur.png"],
   },
   verification: {
     google: "N7ViILHjllx9qexJlKXjneaofKTxnPU18dXtkSJetRs",
@@ -106,7 +106,7 @@ export default function RootLayout({
           "Next.js",
           "Blender",
         ],
-        image: `${SITE_URL}/images/Roil_hci_icon.png`,
+        image: `${SITE_URL}/images/roil-dinosaur.png`,
         sameAs: [
           "https://x.com/Roil_HCI",
           "https://www.youtube.com/@Roil_HCI",
