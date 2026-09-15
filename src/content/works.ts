@@ -6,7 +6,7 @@ export const works: Work[] = [
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
     description:
-      '監視カメラに映る自分を見ながら現実空間を歩く，固定視点のホラー体験．HMDと複数のカメラで固定視点を現実空間に再構成し，怪異調査員として呪われた壁の調査に向かう．IVRC2026優勝・DCEXPO賞．2026年11月，DCEXPO2026で展示予定．',
+      '監視カメラに映る自分を見ながら現実空間を歩く，固定視点のホラー体験．HMDと複数のカメラで固定視点を現実空間に再構成する．体験者は、怪異調査員として呪われた壁の調査に向かう．IVRC2026優勝・DCEXPO賞．2026年11月，DCEXPO2026で展示予定．',
     image: '/images/works/mawarimi/key-visual.webp',
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
