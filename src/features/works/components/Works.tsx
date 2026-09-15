@@ -52,13 +52,13 @@ function WorkCard({ work }: { work: Work }) {
                         </div>
                     )}
                 </div>
-                {work.credits && work.credits.length > 0 && (
-                    <div className="work-credits">
-                        <p>クレジット</p>
-                        <ul>{work.credits.map((credit) => <li key={credit}>{credit}</li>)}</ul>
-                    </div>
-                )}
             </div>
+            {work.credits && work.credits.length > 0 && (
+                <div className="work-credits">
+                    <p>{work.id === 'mawarimi' ? '廻リ視クレジット' : 'クレジット'}</p>
+                    <ul>{work.credits.map((credit) => <li key={credit}>{credit}</li>)}</ul>
+                </div>
+            )}
         </article>
     );
 }
