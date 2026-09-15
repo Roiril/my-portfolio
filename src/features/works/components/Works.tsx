@@ -120,6 +120,21 @@ export default function Works() {
                                     {work.description}
                                 </p>
 
+                                {work.credits && work.credits.length > 0 ? (
+                                    <div className="mb-6">
+                                        <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-widest">
+                                            クレジット
+                                        </p>
+                                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
+                                            {work.credits.map((credit) => (
+                                                <li key={credit} className="text-xs text-gray-600 leading-5">
+                                                    {credit}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ) : null}
+
                                 <div className="flex flex-wrap gap-3 mb-6">
                                     {work.tags.map((tag) => (
                                         <Tag key={tag}>{tag}</Tag>

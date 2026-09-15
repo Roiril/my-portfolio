@@ -54,6 +54,7 @@ export type Work = {
     category?: WorkCategory;
     period?: string;
     role?: string;
+    credits?: string[];
     featured?: boolean;
     isCurrent?: boolean;
     // true の作品は一覧に表示しない（一時的に隠す用）
