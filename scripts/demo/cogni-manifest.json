@@ -1,0 +1,25 @@
+{
+  "source": "cogni-storage",
+  "sourceCommit": "504ed6300ba03cae375ec0404f7ca25687fcabe8",
+  "sourceHash": "sha256:0c0b692dc29f76d9ceb0ddfef7fa1fd8569496dac6a7797e0350d7c625f71cf3",
+  "base": "/demos/cogni-storage/",
+  "copiedPublicFiles": [
+    "icon.svg",
+    "fonts/Rakkas-Regular.ttf",
+    "sounds/GadeTel.mp3",
+    "sounds/TitleTouch.mp3"
+  ],
+  "appliedTransforms": [
+    "Supabase client replaced with the local demo client and fictional seed rows",
+    "IndexedDB namespace isolated as cogni-portfolio-demo-v2",
+    "research workspace imports replaced with fictional projects and references",
+    "praise requests handled by the existing local praise generator",
+    "personal labels and fixed conversation identifiers anonymized",
+    "PWA registration and update UI disabled",
+    "font and sound URLs rebased to the portfolio demo path",
+    "remote font links removed and restrictive noindex CSP added",
+    "public assets restricted to the files used by the current interface",
+    "narrow-screen search and navigation kept within the viewport",
+    "previously installed demo workers retired without affecting other scopes"
+  ]
+}

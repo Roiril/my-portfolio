@@ -6,7 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build:couple-demo": "node scripts/build-couple-demo.mjs",
+    "build:cogni-demo": "node scripts/build-cogni-demo.mjs",
+    "build:demos": "npm run build:couple-demo && npm run build:cogni-demo",
+    "check:local-demo-backend": "node scripts/demo/local-backend.test.mjs",
+    "check:couple-demo": "node scripts/check-couple-demo.mjs && node scripts/check-couple-current.mjs",
+    "check:cogni-demo": "node scripts/check-cogni-demo.mjs",
+    "check:demo-privacy": "node scripts/check-demo-privacy.mjs",
+    "check:demo-migration": "node scripts/check-demo-migration.mjs",
+    "render:couple-thumbnail": "node scripts/render-couple-artwork.mjs"
   },
   "dependencies": {
     "next": "16.0.7",

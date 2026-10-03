@@ -1,25 +1,77 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" /><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"><meta name="robots" content="noindex,nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="theme-color" content="#cfe4be" />
+    <meta name="description" content="猫と過ごす小さな部屋。窓の景色と壁のカレンダーが、今日を映します。" />
+    <title>ちいさな猫の宿</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon-t1uOToeJ.svg" />
+    <link rel="preload" as="image" href="./assets/room-shell-I_BipFlJ.webp" />
+    <link rel="preload" as="image" href="./assets/window-frame-BARFCHj7.webp" />
+    <link rel="preload" as="image" href="./assets/kitten-CKMyaLxI.webp" />
+    <link rel="preload" as="image" href="./assets/kitten-sleeping-jIUbK_dl.webp" />
+    <script type="module" crossorigin src="./assets/index-rDssQJJT.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CNzGB3zG.css">
+  </head>
+  <body><script>window.portfolioDemoStorage={getItem:key=>window.localStorage.getItem('portfolio-demo:couple-sync:'+key),setItem:(key,value)=>window.localStorage.setItem('portfolio-demo:couple-sync:'+key,value),removeItem:key=>window.localStorage.removeItem('portfolio-demo:couple-sync:'+key)};</script><span class="portfolio-demo-badge" aria-hidden="true">DEMO</span>
+    <main class="app" aria-label="猫のいる部屋" data-phase="day" data-weather="unknown">
+      <a class="design-switch room-design-switch" href="./legacy/index.html#today" aria-label="旧デザインへ切り替える" title="旧デザイン"><span aria-hidden="true">↔</span></a>
+      <img class="room" src="./assets/room-shell-I_BipFlJ.webp" alt="" width="887" height="1774" fetchpriority="high" draggable="false" />
+      <div class="window" role="img" aria-label="窓の向こうの空">
+        <div class="window-view" aria-hidden="true">
+          <span class="sun"></span><span class="moon"></span><span class="stars"></span>
+          <span class="cloud cloud-one"></span><span class="cloud cloud-two"></span>
+          <svg class="landscape" viewBox="0 0 200 140" preserveAspectRatio="none">
+            <path class="distant-hill" d="M-20 85Q15 65 42 81T99 78Q132 50 170 77T225 75V160H-20Z"/>
+            <g class="trees">
+              <path d="M24 144v-45M160 144V58M104 144V104" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+              <path d="M24 96C-2 101 4 76 20 78C4 60 30 54 32 74C52 58 62 85 42 90C63 102 44 120 28 110C28 129 6 121 12 108Z"/>
+              <path d="M158 53C133 46 143 30 156 38C144 16 174 12 174 34C190 17 207 40 185 48C211 47 207 70 185 66C207 81 182 91 168 77C181 105 147 107 149 86C126 89 126 66 146 67C127 58 136 43 158 53Z"/>
+              <path d="M102 104C78 110 80 90 95 91C83 75 106 69 112 86C128 75 143 96 125 100C145 112 123 130 109 115C103 133 82 124 92 113Z"/>
+            </g>
+            <path class="near-hill" d="M-10 125Q28 113 60 132Q110 119 137 129Q180 105 220 126V160H-10Z"/>
+          </svg>
+          <span class="mist"></span><span class="rain"></span><span class="snow"></span>
+        </div>
+        <img class="window-art" src="./assets/window-frame-BARFCHj7.webp" alt="" width="1536" height="1024" draggable="false" />
+      </div>
+      <button class="room-picture room-object" type="button" data-room-view="memories" aria-label="ポスターから記念一覧を開く" aria-haspopup="dialog"><img src="./assets/room-picture-yz2v1Zum.webp" alt="" width="1254" height="1254" draggable="false" /></button>
+      <span class="room-shelf decor" aria-hidden="true"><img src="./assets/room-shelf-BhGMjILL.webp" alt="" width="1254" height="1254" draggable="false" /></span>
+      <span class="room-rug decor" aria-hidden="true"><img src="./assets/room-rug-Dgf3TW76.webp" alt="" width="1254" height="1254" draggable="false" /></span>
+      <button class="room-toys room-object" type="button" data-room-view="games" aria-label="おもちゃ箱からゲーム一覧を開く" aria-haspopup="dialog"><img src="./assets/toy-box-D2tdZZtt.webp" alt="" width="1254" height="1254" draggable="false" /></button>
+      <button class="room-table room-object" type="button" data-room-view="notes" aria-label="テーブルからノートを開く" aria-haspopup="dialog"><img src="./assets/note-table-BVOzZeBM.webp" alt="" width="1254" height="1254" draggable="false" /></button>
+      <button class="room-health room-object" type="button" data-room-view="health" aria-label="救急箱から健康記録を開く" aria-haspopup="dialog"><img src="./assets/health-box-BuA8iWdn.webp" alt="" width="1254" height="1254" draggable="false" /></button>
+      <button class="wall-calendar" id="wall-calendar" type="button" aria-label="カレンダーを開く" aria-haspopup="dialog">
+        <span class="paper-rings" aria-hidden="true"></span>
+        <time id="calendar-page">
+          <span class="paper-month" id="calendar-month"></span>
+          <span class="paper-day" id="calendar-day"></span>
+          <span class="paper-weekday" id="calendar-weekday"></span>
+        </time>
+        <span class="paper-corner" aria-hidden="true"></span>
+      </button>
+      <span class="cat-shadow" aria-hidden="true"></span>
+      <button class="cat" type="button" aria-label="猫をなでる" data-pose="awake">
+        <span class="cat-awake" aria-hidden="true">
+          <span class="cat-sway">
+            <span class="cat-breathe">
+              <img class="cat-art" src="./assets/kitten-CKMyaLxI.webp" alt="" width="1254" height="1254" draggable="false" fetchpriority="high" />
+              <svg class="cat-eyelid eye-left" viewBox="0 0 40 40" preserveAspectRatio="none"><ellipse cx="20" cy="20" rx="20" ry="20" fill="#f9f4ed"/><path d="M9 20q11 9 22 0" fill="none" stroke="#63554d" stroke-width="6.2" stroke-linecap="round"/></svg>
+              <svg class="cat-eyelid eye-right" viewBox="0 0 40 40" preserveAspectRatio="none"><ellipse cx="20" cy="20" rx="20" ry="20" fill="#f9f4ed"/><path d="M9 20q11 9 22 0" fill="none" stroke="#63554d" stroke-width="6.2" stroke-linecap="round"/></svg>
+            </span>
+          </span>
+        </span>
+        <span class="cat-sleep" aria-hidden="true">
+          <span class="sleep-breathe"><img class="sleep-art" src="./assets/kitten-sleeping-jIUbK_dl.webp" alt="" width="1254" height="1254" draggable="false" /></span>
+        </span>
+        <span class="sleep-symbols" aria-hidden="true"><span>z</span><span>z</span><span>Z</span></span>
+      </button>
+      <span class="sr-only" role="status" id="cat-response"></span>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/demos/couple-sync/favicon.svg" />
-  <link rel="apple-touch-icon" href="/demos/couple-sync/apple-touch-icon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="robots" content="noindex, nofollow" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <title>Couple Sync</title>
-  <script type="module" crossorigin src="/demos/couple-sync/assets/index-CNL5cSk4.js"></script>
-  <link rel="modulepreload" crossorigin href="/demos/couple-sync/assets/jsx-runtime-BnxRlLMJ.js">
-  <link rel="modulepreload" crossorigin href="/demos/couple-sync/assets/chevron-left-DiCcQDFu.js">
-  <link rel="modulepreload" crossorigin href="/demos/couple-sync/assets/supabase-DkoZVplm.js">
-  <link rel="stylesheet" crossorigin href="/demos/couple-sync/assets/index-DsHMEdWc.css">
-</head>
-
-<body>
-  <div id="root"></div>
-</body>
-
+    </main>
+    <dialog id="calendar-dialog"></dialog>
+    <dialog id="room-dialog"></dialog>
+    <dialog id="play-dialog"></dialog>
+  </body>
 </html>

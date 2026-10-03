@@ -1,0 +1,27 @@
+import { supabase } from '../supabase';
+export const LIVE_FALLBACK_MESSAGE = 'デモの返事を表示できませんでした。';
+export type LiveEvent =
+  | { type: 'status'; label: string; tool: string }
+  | { type: 'text'; delta: string }
+  | { type: 'done'; replyId: string; content: string; remaining: number }
+  | { type: 'asleep'; wakeAt: number; replyId: string | null; message: string | null }
+  | { type: 'error'; code: 'internal'; message: string };
+export interface ShubieStatus { budget: number; used: number; remaining: number; asleep: boolean; wakeAt: number; dayStart: number }
+export async function fetchShubieStatus(): Promise<ShubieStatus> {
+  return { budget: 20, used: 0, remaining: 20, asleep: false, wakeAt: 0, dayStart: Date.now() };
+}
+export async function askShubie(params: { user: 'tai' | 'hina'; replyId: string }, onEvent: (event: LiveEvent) => void, signal?: AbortSignal): Promise<void> {
+  if (signal?.aborted) return;
+  const original = await supabase.from('shubie_replies').select('*').eq('id', params.replyId).maybeSingle();
+  if (!original.data) { onEvent({ type: 'error', code: 'internal', message: LIVE_FALLBACK_MESSAGE }); return; }
+  const content = 'ここではデモ用の返事をしています。書いた内容はこのブラウザにだけ残ります。';
+  const replyId = `${params.replyId}_shubie`;
+  await supabase.from('shubie_replies').upsert({ id: replyId, post_id: original.data.post_id, author: 'shubie', content, origin: 'demo', reaction: null, status: null, created_at: Date.now() });
+  onEvent({ type: 'text', delta: content });
+  onEvent({ type: 'done', replyId, content, remaining: 20 });
+}
+export function stripMarkdown(text: string): string { return text.replace(/\*\*(.+?)\*\*/g, '$1').replace(/`([^`]+)`/g, '$1'); }
+export function askerOf(id: string): 'tai' | 'hina' | null {
+  const who = id.slice(0, -'_shubie'.length).split('_').at(-2);
+  return id.endsWith('_shubie') && (who === 'tai' || who === 'hina') ? who : null;
+}

@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Imported demo sources and generated Vite bundles have their own tooling.
+    ".demo-src/**",
+    "public/demos/**",
+    ".codex/couple-demo-check/**",
   ]),
 ]);
 

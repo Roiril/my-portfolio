@@ -1,0 +1,28 @@
+import { buildLocalPraise } from './local-praise';
+
+export interface PraiseMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  status: string;
+}
+
+const listeners = new Set<(message: PraiseMessage) => void>();
+
+export async function requestPraise(_context: string): Promise<void> {
+  const content = await buildLocalPraise();
+  const message: PraiseMessage = {
+    id: crypto.randomUUID(),
+    role: 'assistant',
+    content,
+    status: 'complete',
+  };
+  queueMicrotask(() => {
+    for (const listener of listeners) listener(message);
+  });
+}
+
+export function subscribeToPraise(onMessage: (message: PraiseMessage) => void): () => void {
+  listeners.add(onMessage);
+  return () => listeners.delete(onMessage);
+}

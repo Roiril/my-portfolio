@@ -1,0 +1,87 @@
+export type ProjectStatus = 'active' | 'dormant' | 'shipped' | 'shelved';
+
+export type TrajectoryKind =
+    | 'note'
+    | 'decision'
+    | 'deadend'
+    | 'question'
+    | 'artifact'
+    | 'milestone';
+
+export interface TrajectoryEntry {
+    id: string;
+    projectId: string;
+    body: string;
+    kind: TrajectoryKind;
+    source: 'agent' | 'human';
+    createdAt: number;
+}
+
+export interface ResearchProject {
+    id: string;
+    name: string;
+    question: string;
+    currentState: string;
+    nextHand: string;
+    status: ProjectStatus;
+    entries: TrajectoryEntry[];
+    lastTouched: number;
+}
+
+export interface ReferenceDoc {
+    id: string;
+    projectId: string;
+    name: string;
+    title: string;
+    body: string;
+}
+
+const projectId = 'demo-tangible-notes';
+
+const projects: ResearchProject[] = [
+    {
+        id: projectId,
+        name: '触れて整理するノート',
+        question: '物を動かす操作は、まだ言葉になっていない考えの整理を助けるか。',
+        currentState: '紙片を机に並べる小さな試作を作り、配置の変化を記録できるようにした。',
+        nextHand: '3種類の課題で試し、配置を変えた理由を短く記録する。',
+        status: 'active',
+        lastTouched: Date.UTC(2026, 8, 18, 4, 30),
+        entries: [
+            {
+                id: 'demo-tangible-notes-1',
+                projectId,
+                body: '最初の試作では、近さと重なりだけを記録する。',
+                kind: 'decision',
+                source: 'human',
+                createdAt: Date.UTC(2026, 8, 12, 2, 0),
+            },
+            {
+                id: 'demo-tangible-notes-2',
+                projectId,
+                body: '操作の回数より、配置を変えた直後の説明を残す方が比較しやすい。',
+                kind: 'note',
+                source: 'agent',
+                createdAt: Date.UTC(2026, 8, 18, 4, 30),
+            },
+        ],
+    },
+];
+
+const references: ReferenceDoc[] = [
+    {
+        id: `${projectId}/demo-observation-guide`,
+        projectId,
+        name: 'demo-observation-guide',
+        title: '観察メモの観点',
+        body: '# 観察メモの観点\n\n- どの物を最初に動かしたか\n- 配置を変えた理由を説明できたか\n- 操作の後に新しい関係へ気づいたか',
+    },
+];
+
+export function loadResearchProjects(): ResearchProject[] {
+    return projects;
+}
+
+export function loadReferenceDocs(): ReferenceDoc[] {
+    return references;
+}

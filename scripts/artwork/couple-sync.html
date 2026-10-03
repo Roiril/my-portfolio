@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<title>couple-sync サムネイル</title>
+<style>
+  :root { --pink: #f4c2bd; --ink: #754638; --cream: #fff5dc; --coral: #bc594c; --green: #d2dfbc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 1600px; height: 1000px; overflow: hidden; background: var(--pink); color: var(--ink); font-family: "Arial", "Yu Gothic", sans-serif; }
+  .backdrop { position: absolute; width: 705px; height: 1230px; top: -96px; right: -35px; background: var(--cream); border-radius: 360px 360px 0 0; transform: rotate(13deg); }
+  .caption { position: absolute; top: 127px; left: 110px; margin: 0; font-size: 27px; font-weight: 700; letter-spacing: .12em; }
+  h1 { position: absolute; top: 210px; left: 102px; margin: 0; font-size: 146px; line-height: .91; font-weight: 900; letter-spacing: -8px; }
+  h1 span { display: block; }
+  h1 .second { color: var(--coral); }
+  .copy { position: absolute; top: 546px; left: 111px; margin: 0; font-size: 37px; line-height: 1.65; letter-spacing: .03em; font-weight: 700; }
+  .note { position: absolute; top: 751px; left: 110px; padding: 18px 30px; background: var(--cream); border-radius: 60px; font-size: 23px; font-weight: 700; transform: rotate(-4deg); }
+  .phone { position: absolute; top: 73px; left: 1003px; width: 430px; height: 850px; padding: 13px; background: var(--cream); border: 4px solid var(--ink); border-radius: 45px; transform: rotate(7deg); }
+  .phone img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 29px; }
+  .phone::before { content: ""; position: absolute; width: 80px; height: 7px; top: 22px; left: 50%; transform: translateX(-50%); border-radius: 9px; background: var(--ink); opacity: .6; }
+  .cat { position: absolute; top: 686px; left: 655px; width: 265px; height: auto; transform: rotate(-7deg); filter: drop-shadow(5px 0 var(--cream)) drop-shadow(-5px 0 var(--cream)) drop-shadow(0 5px var(--cream)) drop-shadow(0 -5px var(--cream)); }
+  .orb { position: absolute; width: 31px; height: 31px; border-radius: 50%; background: var(--cream); top: 465px; left: 744px; }
+  .orb::before { content: ""; position: absolute; width: 17px; height: 17px; border-radius: 50%; background: var(--coral); top: -47px; left: 36px; }
+</style>
+<div class="backdrop" aria-hidden="true"></div>
+<p class="caption">ふたりのためのアプリ</p>
+<h1><span>couple-</span><span class="second">sync</span></h1>
+<p class="copy">ふたりの毎日を<br>ひとつの部屋に。</p>
+<p class="note">予定も。思い出も。</p>
+<div class="orb" aria-hidden="true"></div>
+<div class="phone"><img src="../../public/images/works/couple-sync/00-room.png" alt="現行版の猫のいる部屋"></div>
+<img class="cat" src="./assets/couple-kitten.png" alt="">
+</html>

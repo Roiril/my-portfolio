@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" /><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  
+  <link rel="icon" type="image/svg+xml" href="/demos/couple-sync/legacy/favicon.svg" />
+  <link rel="apple-touch-icon" href="/demos/couple-sync/legacy/apple-touch-icon.png">
+  
+  <meta name="theme-color" content="#000000" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="robots" content="noindex, nofollow" />
+  
+  
+  
+  
+  <title>ちょスケ</title>
+  <style>
+    /* 起動スプラッシュ（通信ゼロ・自己完結）。外部リソース/Web フォント参照は禁止。
+       Web フォント未着でも端末の明朝フォールバックで描画される前提。 */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background: #000000;
+      color: #fffaf0;
+      opacity: 1;
+      transition: opacity 0.4s ease-out;
+      padding: 24px;
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    #splash.splash--hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #splash .splash-title {
+      font-family: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', serif;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #ffdead;
+      margin: 0;
+      text-indent: 0.18em;
+    }
+    #splash .splash-subtitle {
+      font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      font-size: 14px;
+      letter-spacing: 0.24em;
+      color: rgba(255, 250, 240, 0.5);
+      margin: 0;
+      text-indent: 0.24em;
+    }
+    #splash .splash-status {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+      width: 220px;
+      max-width: 70vw;
+    }
+    #splash .splash-step {
+      font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: rgba(255, 250, 240, 0.5);
+      margin: 0;
+      text-align: center;
+      line-height: 1.6;
+    }
+    #splash .splash-track {
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #splash .splash-bar {
+      width: 40%;
+      height: 100%;
+      background: #ffdead;
+      border-radius: 4px;
+      transition: width 0.4s ease-out;
+      animation: splashPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes splashPulse {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+  </style>
+  <script type="module" crossorigin src="/demos/couple-sync/legacy/assets/index-BTrfecCZ.js"></script>
+  <link rel="modulepreload" crossorigin href="/demos/couple-sync/legacy/assets/jsx-runtime-BnxRlLMJ.js">
+  <link rel="modulepreload" crossorigin href="/demos/couple-sync/legacy/assets/createLucideIcon-UAYphFNt.js">
+  <link rel="modulepreload" crossorigin href="/demos/couple-sync/legacy/assets/supabase-CF3NxO12.js">
+  <link rel="stylesheet" crossorigin href="/demos/couple-sync/legacy/assets/index-YJlICUtO.css">
+</head>
+
+<body><script>window.portfolioDemoStorage={getItem:key=>window.localStorage.getItem('portfolio-demo:couple-sync:'+key),setItem:(key,value)=>window.localStorage.setItem('portfolio-demo:couple-sync:'+key,value),removeItem:key=>window.localStorage.removeItem('portfolio-demo:couple-sync:'+key)};</script><span class="portfolio-demo-badge" aria-hidden="true">DEMO</span><p style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">架空の記録を使う公開デモです。保存内容はこのブラウザにだけ残ります。</p>
+  <div id="splash">
+    <h1 class="splash-title">ちょスケ</h1>
+    <p class="splash-subtitle">Couple Sync</p>
+    <div class="splash-status">
+      <p class="splash-step" data-splash-step>アプリを読み込み中…</p>
+      <div class="splash-track">
+        <div class="splash-bar" data-splash-bar></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // スプラッシュ表示開始時刻（hideSplash が最低表示時間の計算に使う）
+    window.__ynSplashShownAt = Date.now();
+    // JS 本体が起動しないまま 20 秒経ったら失敗文言に差し替える（起動時にクリアされる）
+    window.__ynSplashTimeout = window.setTimeout(function () {
+      var el = document.querySelector('#splash [data-splash-step]');
+      if (el) el.textContent = '読み込みに失敗したみたい。通信環境を確認して再読み込みしてね';
+    }, 20000);
+  </script>
+  <div id="root"></div>
+</body>
+
+</html>
