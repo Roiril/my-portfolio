@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function SiteHeader() {
+export default function SiteHeader({ skipHref = '/#works' }: { skipHref?: string }) {
     return (
         <header className="site-header">
-            <Link className="site-header__skip" href="/#works">View Works</Link>
+            <Link className="site-header__skip" href={skipHref}>{skipHref === '/#works' ? 'View Works' : '本文へ移動'}</Link>
             <div className="site-container site-header__inner">
                 <Link className="site-header__brand" href="/#top" aria-label="Roil ホーム">
                     <Image

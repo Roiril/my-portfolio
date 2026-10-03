@@ -6,6 +6,7 @@ import { WorkGalleryImage } from '@/features/works/types';
 import { Tag, Link as ExternalLink } from '@/components/ui';
 import Footer from '@/components/layout/Footer';
 import SiteHeader from '@/components/layout/SiteHeader';
+import CoupleSyncDetail from '@/features/works/components/CoupleSyncDetail';
 
 type Params = { id: string };
 
@@ -103,6 +104,10 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
     if (!work || !work.detail) notFound();
 
     const { detail } = work;
+
+    if (id === 'couple-sync') {
+        return <><SiteHeader skipHref="#couple-content" /><CoupleSyncDetail /><Footer /></>;
+    }
 
     return (
         <>

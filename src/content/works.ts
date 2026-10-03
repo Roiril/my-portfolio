@@ -1,5 +1,7 @@
 ﻿import { Work } from '@/features/works/types';
 
+import { coupleSync } from './couple-sync';
+
 export const works: Work[] = [
   // ===== 研究 / Research =====
   {
@@ -79,7 +81,7 @@ export const works: Work[] = [
     id: 'couple-sync',
     title: 'couple-sync',
     description:
-      'React＋TypeScript製のカップル向け同期PWA．Supabaseとオフラインキャッシュで，カレンダー・予定・記念日・体調・時間割・ミニゲームを二端末リアルタイム共有する．AI「シュビー」が近況を読み二人に寄り添う．',
+      coupleSync.description,
     image: '/images/couple-sync-v2.png',
     imageFit: 'cover',
     tags: ['Web App', 'React', 'TypeScript', 'Supabase', 'PWA'],
@@ -89,13 +91,8 @@ export const works: Work[] = [
     category: 'personal',
     period: '個人開発',
     detail: {
-      lead: '離れて暮らすふたりの毎日を，ひとつの画面に．予定・記念日・体調・時間割からふたり専用のミニゲームまでを共有し，オフラインでも使える同期アプリ．',
-      body: [
-        '猫のいる部屋を入口にした新しいデザイン。壁のカレンダーやテーブルからふたりの記録を開ける。旧デザインにも切り替えられる。デモは架空の記録を使う。変更はこの端末内に保存する。',
-        'カレンダーで予定と記念日を共有し，デート予定やお互いの体調・食事も記録できる．時間割やふたり専用のミニゲームも備え，「連絡アプリ」を超えて日々を一緒に運用する場所を目指した．',
-        '設計の核はオフラインファーストの同期基盤．表示は端末内の IndexedDB から即座に描画し，Supabase とはバックグラウンドで差分同期する．フィールド単位の Last-Write-Wins と永続キューにより，電波が無くても編集でき，オンライン復帰時に取りこぼしなく反映される．変更はリアルタイムに相手の端末へ届く．',
-        'AI「シュビー」がふたりの近況を読み取り，質問やおたよりをアプリ内に届ける仕組みも組み込んでいる（本人のデータには読み取りのみでアクセス）．',
-      ],
+      lead: coupleSync.lead,
+      body: [coupleSync.introduction, ...coupleSync.play.body, ...coupleSync.engineering.map(item => item.body)],
       phone: true,
       gallery: [
         { src: '/images/works/couple-sync/00-room.png', alt: '新デザイン：猫のいる部屋から各機能を開く' },

@@ -22,10 +22,16 @@ try {
     await thumbnail.screenshot({ path: path.join(evidence, `portfolio-thumbnail-${width}.png`) });
     await page.goto(`${base}/works/couple-sync`);
     await page.getByRole('heading', { name: 'couple-sync', exact: true }).waitFor();
-    await page.evaluate(async () => { await document.fonts.ready; await Promise.all([...document.images].filter(image => image.getBoundingClientRect().y < innerHeight).map(image => image.decode())); });
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await Promise.all([...document.images].filter(image => {
+        const bounds = image.getBoundingClientRect();
+        return bounds.width > 0 && bounds.height > 0 && bounds.y < innerHeight;
+      }).map(image => image.decode()));
+    });
     await page.screenshot({ path: path.join(evidence, `portfolio-couple-${width}.png`) });
     const couplePopup = page.waitForEvent('popup');
-    await page.getByRole('link', { name: 'アプリのデモを見る', exact: true }).click();
+    await page.getByRole('link', { name: /^アプリのデモを見る/ }).click();
     const couple = await couplePopup;
     await couple.waitForURL('**/demos/couple-sync/index.html');
     await couple.getByRole('button', { name: 'ガチャガチャを開く', exact: true }).waitFor();
