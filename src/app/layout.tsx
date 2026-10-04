@@ -44,9 +44,9 @@ export const metadata: Metadata = {
     siteName: `${PERSON_NAME} Portfolio`,
     images: [
       {
-        url: "/images/roil-dinosaur.png",
-        width: 1254,
-        height: 1254,
+        url: "/images/identity/hero.webp",
+        width: 1200,
+        height: 900,
         alt: `${PERSON_NAME} Portfolio`,
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: `${PERSON_NAME}（${PERSON_NAME_KANA}） | Portfolio`,
     description:
       `${PERSON_NAME}（${PERSON_NAME_KANA}）のポートフォリオ．HCI研究と制作物をまとめています．`,
-    images: ["/images/roil-dinosaur.png"],
+    images: ["/images/identity/hero.webp"],
   },
   verification: {
     google: "N7ViILHjllx9qexJlKXjneaofKTxnPU18dXtkSJetRs",
@@ -106,7 +106,7 @@ export default function RootLayout({
           "Next.js",
           "Blender",
         ],
-        image: `${SITE_URL}/images/roil-dinosaur.png`,
+        image: `${SITE_URL}/images/MyFace.png`,
         sameAs: [
           "https://x.com/Roil_HCI",
           "https://www.youtube.com/@Roil_HCI",
@@ -131,7 +131,6 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </head>

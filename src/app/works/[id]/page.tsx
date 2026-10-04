@@ -6,6 +6,7 @@ import { WorkGalleryImage } from '@/features/works/types';
 import { Tag, Link as ExternalLink } from '@/components/ui';
 import Footer from '@/components/layout/Footer';
 import SiteHeader from '@/components/layout/SiteHeader';
+import ArtIcon from '@/components/ui/ArtIcon';
 import CoupleSyncDetail from '@/features/works/components/CoupleSyncDetail';
 
 type Params = { id: string };
@@ -120,7 +121,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
                         href="/#works"
                         className="text-link text-link--sm"
                     >
-                        ← Works
+                        <ArtIcon name="arrow" size={16} className="art-icon--back" /> Works
                     </Link>
 
                     {/* ヘッダー */}

@@ -1,0 +1,46 @@
+{
+  "tool": "Built-in image_gen",
+  "style": "Botanical field notebook: forest-green ink with pale sage and ochre watercolor on transparent backgrounds.",
+  "assets": [
+    {
+      "name": "hero",
+      "prompt": "Style is the highest priority: refined botanical field-notebook illustration in delicate dark forest-green ink with very pale sage and muted warm ochre watercolor washes, on genuine transparent background. Fine intentional hand-drawn outlines, sparse hatching only at edges, matte flat pale color, no shine, no glossy 3D. Use case: illustration-story. Asset type: portfolio website hero illustration for a Japanese HCI researcher named Roil who has a dinosaur mascot. Subject: one small friendly long-neck dinosaur researcher at a simple wooden worktable, in side three-quarter view, examining a tiny articulated robot and a small floating translucent rectangle representing mixed reality; an open notebook with abstract marks, one small fern sprig, a pencil. Dinosaur has elegant compact body, calm dot eye, pale sage green, tiny ochre scarf, dignified curious expression, not a baby cartoon. Delicate detail: 5 fern leaves, notebook page edges, three robot joints, two small geometric annotations in the air. Composition: isolated self-contained vignette, wide 4:3 composition, illustration fills 80 percent of image, all objects fully visible. Transparent outside artwork, no ground rectangle. Palette ink #263c31, pale sage #bbc7b1, ochre #b69863, pale cream. No text, no letters, no logo, no border, no gradients, no heavy shadows, no grain covering the image, no watermarks. It must feel like an original thoughtfully drawn editorial illustration, matching a quiet understated design portfolio.",
+      "file": "public/images/identity/hero.webp"
+    },
+    {
+      "name": "brand",
+      "prompt": "Highest priority style: elegant hand-drawn botanical field-notebook icon, fine clean dark forest-green #263c31 ink outlines, pale sage #bbc7b1 washes occupying little area, matte, deliberate slightly organic linework. Use case: logo-brand. Asset type: small portfolio web icon. Isolated centered design on genuinely transparent background, square canvas, fills 75% of canvas, all lines visible. Readable at 32px, consistent 3% canvas stroke weight, crisp shape, restrained minimal details. No text, no letters, no border, no background color, no shadows, no glow, no gradients, no glossy 3D. Subject: a single friendly long-neck dinosaur in side profile, long tail curled slightly upward, small sage body, one calm dot eye, four short legs, thin dark green outline. Simple memorable mascot silhouette.",
+      "file": "public/images/identity/brand.webp"
+    },
+    {
+      "name": "research",
+      "prompt": "Highest priority style: elegant hand-drawn botanical field-notebook icon, fine clean dark forest-green #263c31 ink outlines, pale sage #bbc7b1 washes occupying little area, matte, deliberate slightly organic linework. Use case: logo-brand. Asset type: small portfolio web icon. Isolated centered design on genuinely transparent background, square canvas, fills 75% of canvas, all lines visible. Readable at 32px, consistent 3% canvas stroke weight, crisp shape, restrained minimal details. No text, no letters, no border, no background color, no shadows, no glow, no gradients, no glossy 3D. Subject: one small scientific optical prism with two thin parallel rays entering and a simple branching ray exiting, a tiny four-point twinkle above it. Communicate human-computer interaction research and XR exploration.",
+      "file": "public/images/identity/research.webp"
+    },
+    {
+      "name": "internship",
+      "prompt": "Highest priority style: elegant hand-drawn botanical field-notebook icon, fine clean dark forest-green #263c31 ink outlines, pale sage #bbc7b1 washes occupying little area, matte, deliberate slightly organic linework. Use case: logo-brand. Asset type: small portfolio web icon. Isolated centered design on genuinely transparent background, square canvas, fills 75% of canvas, all lines visible. Readable at 32px, consistent 3% canvas stroke weight, crisp shape, restrained minimal details. No text, no letters, no border, no background color, no shadows, no glow, no gradients, no glossy 3D. Subject: one upright simple briefcase with a tiny two-leaf sprout growing from the handle. Four straight rounded outline edges, sparse detail. Communicate professional work and growth.",
+      "file": "public/images/identity/internship.webp"
+    },
+    {
+      "name": "personal",
+      "prompt": "Highest priority style: elegant hand-drawn botanical field-notebook icon, fine clean dark forest-green #263c31 ink outlines, pale sage #bbc7b1 washes occupying little area, matte, deliberate slightly organic linework. Use case: logo-brand. Asset type: small portfolio web icon. Isolated centered design on genuinely transparent background, square canvas, fills 75% of canvas, all lines visible. Readable at 32px, consistent 3% canvas stroke weight, crisp shape, restrained minimal details. No text, no letters, no border, no background color, no shadows, no glow, no gradients, no glossy 3D. Subject: a small open notebook with one simple little sprout emerging between its pages. Two visible pages, central fold, pale sage leaf fill. Communicate personal projects and considered making.",
+      "file": "public/images/identity/personal.webp"
+    },
+    {
+      "name": "creative",
+      "prompt": "Highest priority style: elegant hand-drawn botanical field-notebook icon, fine clean dark forest-green #263c31 ink outlines, pale sage #bbc7b1 washes occupying little area, matte, deliberate slightly organic linework. Use case: logo-brand. Asset type: small portfolio web icon. Isolated centered design on genuinely transparent background, square canvas, fills 75% of canvas, all lines visible. Readable at 32px, consistent 3% canvas stroke weight, crisp shape, restrained minimal details. No text, no letters, no border, no background color, no shadows, no glow, no gradients, no glossy 3D. Subject: one small diagonal paintbrush crossing a pencil, beside one small four-point twinkle. Fine green outlines, tiny ochre #b69863 accent at the brush tip. Communicate creative craft.",
+      "file": "public/images/identity/creative.webp"
+    },
+    {
+      "name": "arrow",
+      "prompt": "Highest priority style: elegant hand-drawn botanical field-notebook icon, fine clean dark forest-green #263c31 ink outlines, pale sage #bbc7b1 washes occupying little area, matte, deliberate slightly organic linework. Use case: logo-brand. Asset type: small portfolio web icon. Isolated centered design on genuinely transparent background, square canvas, fills 75% of canvas, all lines visible. Readable at 32px, consistent 3% canvas stroke weight, crisp shape, restrained minimal details. No text, no letters, no border, no background color, no shadows, no glow, no gradients, no glossy 3D. Subject: exactly one simple northeast pointing arrow, one straight diagonal stem from lower left to upper right and two 90 degree arrowhead legs. Dark green #263c31 single stroke, no additional decorations, no leaves. Strong clear readable silhouette at 16px.",
+      "file": "public/images/identity/arrow.webp"
+    },
+    {
+      "name": "mail",
+      "prompt": "Highest priority style: elegant hand-drawn botanical field-notebook icon, fine clean dark forest-green #263c31 ink outlines, pale sage #bbc7b1 washes occupying little area, matte, deliberate slightly organic linework. Use case: logo-brand. Asset type: small portfolio web icon. Isolated centered design on genuinely transparent background, square canvas, fills 75% of canvas, all lines visible. Readable at 32px, consistent 3% canvas stroke weight, crisp shape, restrained minimal details. No text, no letters, no border, no background color, no shadows, no glow, no gradients, no glossy 3D. Subject: exactly one simple closed envelope, dark green outline with diagonal envelope flap lines meeting at center, one tiny pale sage leaf at upper right. Simple strong silhouette at 24px.",
+      "file": "public/images/identity/mail.webp"
+    }
+  ]
+}

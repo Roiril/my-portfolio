@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
+import ArtIcon from './ArtIcon';
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string;
@@ -13,7 +14,7 @@ export function Link({ href, children, isExternal = false, className = '', size 
             rel={isExternal ? 'noopener noreferrer' : undefined}
             className={'text-link text-link--' + size + ' ' + className} {...props}>
             <span>{children}</span>
-            {isExternal && <span className="text-link-arrow" aria-hidden="true">↗</span>}
+            {isExternal && <ArtIcon name="arrow" size={16} className="text-link-arrow" />}
         </a>
     );
 }

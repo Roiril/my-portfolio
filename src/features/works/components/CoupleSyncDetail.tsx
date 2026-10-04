@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ArtIcon from '@/components/ui/ArtIcon';
 import { coupleSync as content } from '@/content/couple-sync';
 import './couple-sync.css';
 
@@ -8,7 +9,7 @@ const demoUrl = '/demos/couple-sync/index.html';
 function DemoLink({ label = 'アプリのデモを見る' }: { label?: string }) {
   return (
     <a className="couple-demo-link" href={demoUrl} target="_blank" rel="noopener noreferrer">
-      {label}<span aria-hidden="true">↗</span><span className="couple-sr-only">（新しいタブで開きます）</span>
+      {label}<ArtIcon name="arrow" size={18} /><span className="couple-sr-only">（新しいタブで開きます）</span>
     </a>
   );
 }
@@ -26,7 +27,7 @@ export default function CoupleSyncDetail() {
     <main id="couple-content" className="couple-case" tabIndex={-1}>
       <article>
         <header className="couple-hero couple-wrap">
-          <Link href="/#works" className="couple-back">← 作品一覧に戻る</Link>
+          <Link href="/#works" className="couple-back"><ArtIcon name="arrow" size={16} className="art-icon--back" /> 作品一覧に戻る</Link>
           <div className="couple-hero-grid">
             <div className="couple-hero-copy">
               <p className="couple-eyebrow">個人開発 <span aria-hidden="true">/</span> Web application</p>
@@ -71,7 +72,7 @@ export default function CoupleSyncDetail() {
             ))}
           </div>
           <details className="couple-more-screens">
-            <summary>ほかの画面を見る <span aria-hidden="true">＋</span></summary>
+            <summary>ほかの画面を見る <ArtIcon name="arrow" size={18} className="art-icon--down" /></summary>
             <div className="couple-screen-grid">
               {content.additionalScreens.map(screen => (
                 <figure key={screen.title}>

@@ -30,7 +30,7 @@
 .couple-intro { max-width: 450px; margin-block: 24px 30px; font-size: 15px; color: var(--couple-muted); }
 .couple-demo-link { display: inline-flex; justify-content: space-between; align-items: center; gap: 32px; min-height: 58px; padding: 15px 24px; border-radius: 8px; background: var(--couple-coral); color: var(--couple-paper); font-size: 14px; font-weight: 600; transition: background-color 160ms; }
 .couple-demo-link:hover { background: var(--couple-ink); }
-.couple-demo-link > span[aria-hidden] { font-size: 20px; line-height: 1; }
+.couple-demo-link > .art-icon { filter: brightness(0) invert(1); }
 .couple-hero .couple-demo-note { color: var(--couple-muted); margin-top: 15px; font-size: 12px; line-height: 1.8; }
 .couple-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .couple-hero-stage { position: relative; padding: 32px 24px 24px; border-radius: 160px 160px 18px 18px; background: var(--couple-cream); display: grid; justify-items: center; }
@@ -59,8 +59,8 @@
 .couple-more-screens summary { display: flex; justify-content: space-between; align-items: center; min-height: 64px; gap: 24px; cursor: pointer; font-size: 14px; list-style: none; }
 .couple-more-screens summary::-webkit-details-marker { display: none; }
 .couple-more-screens summary:hover { color: var(--couple-coral); }
-.couple-more-screens summary > span { font-size: 20px; transition: transform 160ms; }
-.couple-more-screens[open] summary > span { transform: rotate(45deg); }
+.couple-more-screens summary > .art-icon { transition: transform 160ms; }
+.couple-more-screens[open] summary > .art-icon { transform: rotate(-90deg); }
 .couple-screen-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; padding-block: 24px 48px; }
 .couple-screen-grid figure { display: grid; justify-items: center; align-content: start; gap: 22px; }
 .couple-screen-grid figcaption { width: 100%; text-align: center; }
@@ -95,6 +95,7 @@
 .couple-try > div > p:last-child { font-size: 13px; }
 .couple-try .couple-demo-link { flex-shrink: 0; background: var(--couple-paper); color: var(--couple-ink); }
 .couple-try .couple-demo-link:hover { background: var(--couple-pink); }
+.couple-try .couple-demo-link > .art-icon { filter: none; }
 .couple-try .couple-demo-link:focus-visible { outline-color: var(--couple-paper); }
 @media (max-width: 1050px) {
   .couple-hero-grid { gap: 40px; grid-template-columns: 1.15fr 1fr; }

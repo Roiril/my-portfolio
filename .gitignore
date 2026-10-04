@@ -45,6 +45,7 @@ next-env.d.ts
 
 # Local screenshots used to check the couple-sync demo and artwork
 /.codex/couple-demo-check/
+/.codex/redesign-check/
 
 # Claude Code ローカル資産（マシン固有・コミット対象外）
 .claude/settings.local.json

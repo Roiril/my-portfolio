@@ -2,18 +2,22 @@ import NextLink from 'next/link';
 import { works } from '@/content/works';
 import type { Work, WorkCategory } from '@/features/works/types';
 import { Tag, Link } from '@/components/ui';
+import ArtIcon, { type ArtIconName } from '@/components/ui/ArtIcon';
 import { WorkCardMedia } from './WorkCardMedia';
 
-const CATEGORY_GROUPS: { key: WorkCategory; label: string; sublabel: string }[] = [
-    { key: 'research', label: '研究 / Research', sublabel: 'HCI・XRの研究プロジェクト' },
-    { key: 'internship', label: 'インターン / Internship', sublabel: '実務で開発・運用したもの' },
-    { key: 'personal', label: '個人開発 / Personal', sublabel: '自分の生活と研究のために作ったツール' },
-    { key: 'creative', label: '制作 / Creative', sublabel: '映像・3D・サウンド・クリエイティブコーディング' },
+const CATEGORY_GROUPS: { key: WorkCategory; label: string; englishLabel: string; sublabel: string; icon: ArtIconName }[] = [
+    { key: 'research', label: '研究', englishLabel: 'Research', sublabel: 'HCI・XRの研究プロジェクト', icon: 'research' },
+    { key: 'internship', label: '実務', englishLabel: 'Internship', sublabel: '実務で開発・運用したもの', icon: 'internship' },
+    { key: 'personal', label: '個人開発', englishLabel: 'Personal', sublabel: '自分の生活と研究のために作ったツール', icon: 'personal' },
+    { key: 'creative', label: '制作', englishLabel: 'Creative', sublabel: '映像・3D・サウンド・クリエイティブコーディング', icon: 'creative' },
 ];
+
+const isExternalHref = (href: string) => /^https?:\/\//.test(href);
 
 function WorkCard({ work }: { work: Work }) {
     const detailHref = work.detail ? '/works/' + work.id : undefined;
     const imageHref = detailHref ?? work.links[0]?.url;
+    const imageIsExternal = imageHref ? isExternalHref(imageHref) : false;
     const media = work.image ? (
         <WorkCardMedia src={work.image} alt={work.title} fit={work.imageFit} />
     ) : (
@@ -25,23 +29,27 @@ function WorkCard({ work }: { work: Work }) {
             {imageHref ? (
                 <a href={imageHref} className="work-media work-media--linked"
                     aria-label={detailHref ? work.title + ' の詳細を見る' : work.title}
-                    target={detailHref ? undefined : '_blank'} rel={detailHref ? undefined : 'noopener noreferrer'}>
+                    target={imageIsExternal ? '_blank' : undefined} rel={imageIsExternal ? 'noopener noreferrer' : undefined}>
                     {media}
-                    <span className="work-image-arrow" aria-hidden="true">↗</span>
+                    <span className="work-image-arrow" aria-hidden="true"><ArtIcon name="arrow" size={18} /></span>
                 </a>
             ) : <div className="work-media">{media}</div>}
             <div className="work-content">
                 <div className="work-meta">
-                    {work.featured && <span className="work-featured">Featured</span>}
+                    {work.featured && <span className="work-featured">Featured project</span>}
                     {(work.period || work.role) && <p>{[work.period, work.role].filter(Boolean).join('　/　')}</p>}
                 </div>
                 <h4 className="work-title">
-                    {detailHref ? <NextLink href={detailHref}>{work.title}</NextLink> : work.title}
+                    {detailHref ? (
+                        <NextLink href={detailHref}>{work.title}</NextLink>
+                    ) : imageHref ? (
+                        <a href={imageHref} target={imageIsExternal ? '_blank' : undefined} rel={imageIsExternal ? 'noopener noreferrer' : undefined}>{work.title}</a>
+                    ) : work.title}
                 </h4>
                 <p className="work-description">{work.description}</p>
                 <div className="work-tags">{work.tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}</div>
                 <div className="work-bottom">
-                    {work.isCurrent && <p className="work-current">Currently in development</p>}
+                    {work.isCurrent && <p className="work-current">進行中</p>}
                     {work.links.length > 0 && (
                         <div className="work-links">
                             {work.links.map((link) => (
@@ -73,22 +81,32 @@ export default function Works() {
         <section id="works" className="works-section" aria-labelledby="works-title">
             <div className="site-container">
                 <header className="works-heading">
-                    <h2 id="works-title">Works<span aria-hidden="true">({groups.reduce((total, group) => total + group.items.length, 0)})</span></h2>
-                    <p>研究，趣味，授業，インターンなどの公開可能な成果物をまとめています．</p>
+                    <div className="works-heading__title">
+                        <p className="section-kicker">01 / SELECTED WORKS</p>
+                        <h2 id="works-title">Works<span aria-hidden="true">({groups.reduce((total, group) => total + group.items.length, 0)})</span></h2>
+                        <p className="section-subtitle">研究と制作</p>
+                    </div>
+                    <p>研究から日々のものづくりまで。公開できる{groups.reduce((total, group) => total + group.items.length, 0)}の成果物をまとめています。</p>
                 </header>
                 <nav className="work-index" aria-label="Works">
                     {groups.map((group, index) => (
                         <a key={group.key} href={'#works-' + group.key}>
-                            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                            {group.label}
-                            <span aria-hidden="true">↘</span>
+                            <ArtIcon name={group.icon} size={28} />
+                            <span>{group.label} / {group.englishLabel}</span>
+                            <span className="work-index__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                            <ArtIcon name="arrow" size={24} className="art-icon--down" />
                         </a>
                     ))}
                 </nav>
                 {groups.map((group, index) => (
                     <section key={group.key} id={'works-' + group.key} className={'work-group work-group--' + group.key} aria-labelledby={'title-' + group.key}>
                         <header className="work-group-heading">
-                            <h3 id={'title-' + group.key}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{group.label}</h3>
+                            <div className="work-group-heading__title">
+                                <ArtIcon name={group.icon} size={40} />
+                                <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                                <h3 id={'title-' + group.key}>{group.label}</h3>
+                                <span>{group.englishLabel}</span>
+                            </div>
                             <p>{group.sublabel}</p>
                         </header>
                         <div className="work-grid">{group.items.map((work) => <WorkCard key={work.id} work={work} />)}</div>
