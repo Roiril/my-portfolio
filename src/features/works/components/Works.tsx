@@ -7,8 +7,8 @@ import { WorkCardMedia } from './WorkCardMedia';
 
 const CATEGORY_GROUPS: { key: WorkCategory; label: string; englishLabel: string; sublabel: string; icon: ArtIconName }[] = [
     { key: 'research', label: '研究', englishLabel: 'Research', sublabel: 'HCI・XRの研究プロジェクト', icon: 'research' },
+    { key: 'personal', label: '個人開発', englishLabel: 'Personal', sublabel: '暮らしと研究のためのアプリ・ゲーム', icon: 'personal' },
     { key: 'internship', label: '実務', englishLabel: 'Internship', sublabel: '実務で開発・運用したもの', icon: 'internship' },
-    { key: 'personal', label: '個人開発', englishLabel: 'Personal', sublabel: '自分の生活と研究のために作ったツール', icon: 'personal' },
     { key: 'creative', label: '制作', englishLabel: 'Creative', sublabel: '映像・3D・サウンド・クリエイティブコーディング', icon: 'creative' },
 ];
 
