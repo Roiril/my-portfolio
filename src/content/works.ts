@@ -83,7 +83,7 @@ export const works: Work[] = [
     description:
       '白いインクで9つの面を塗りつぶすローグライトゲーム。能力を組み合わせて速いクリアを目指す。unity1weekのお題「しろ」に向けて制作。2026年10月5日時点で閲覧14,170回。楽しさの評価は4.434/5。',
     image: '/images/works/whiteout/title.webp',
-    imageFit: 'contain',
+    imageFit: 'cover',
     tags: ['Game', 'Unity', 'unity1week', 'ローグライト'],
     links: [
       { type: 'launch', url: 'https://unityroom.com/games/whiteout-rogue', label: 'unityroomで遊ぶ' },
