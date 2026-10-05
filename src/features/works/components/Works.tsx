@@ -25,7 +25,7 @@ function WorkCard({ work }: { work: Work }) {
     );
 
     return (
-        <article id={'work-' + work.id} className={'work-card' + (work.featured ? ' work-card--featured' : '') + (work.id === 'mawarimi' ? ' work-card--lead' : '')}>
+        <article id={'work-' + work.id} className={'work-card' + (work.featured ? ' work-card--featured' : '') + (work.id === 'mawarimi' || work.id === 'whiteout' ? ' work-card--lead' : '')}>
             {imageHref ? (
                 <a href={imageHref} className="work-media work-media--linked"
                     aria-label={detailHref ? work.title + ' の詳細を見る' : work.title}
