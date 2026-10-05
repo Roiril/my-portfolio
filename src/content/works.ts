@@ -78,6 +78,20 @@ export const works: Work[] = [
 
   // ===== 個人開発 / Personal =====
   {
+    id: 'whiteout',
+    title: 'WhiteOut — 塗りローグ',
+    description:
+      '白いインクで9つの面を塗りつぶすローグライトゲーム。能力を組み合わせて速いクリアを目指す。unity1weekのお題「しろ」に向けて制作。2026年10月5日時点で閲覧14,170回。楽しさの評価は4.434/5。',
+    image: '/images/works/whiteout/title.webp',
+    imageFit: 'contain',
+    tags: ['Game', 'Unity', 'unity1week', 'ローグライト'],
+    links: [
+      { type: 'launch', url: 'https://unityroom.com/games/whiteout-rogue', label: 'unityroomで遊ぶ' },
+    ],
+    category: 'personal',
+    period: '2026.08',
+  },
+  {
     id: 'couple-sync',
     title: 'couple-sync',
     description:
@@ -136,21 +150,6 @@ export const works: Work[] = [
         { src: '/images/works/cogni-storage/01-home.png', alt: 'ホーム画面' },
       ],
     },
-  },
-
-  {
-    id: 'whiteout',
-    title: 'WhiteOut — 塗りローグ',
-    description:
-      '白いインクで9つの面を塗りつぶすローグライトゲーム。能力を組み合わせて速いクリアを目指す。unity1weekのお題「しろ」に向けて制作。2026年10月5日時点で閲覧14,170回。楽しさの評価は4.434/5。',
-    image: '/images/works/whiteout/title.webp',
-    imageFit: 'contain',
-    tags: ['Game', 'Unity', 'unity1week', 'ローグライト'],
-    links: [
-      { type: 'launch', url: 'https://unityroom.com/games/whiteout-rogue', label: 'unityroomで遊ぶ' },
-    ],
-    category: 'personal',
-    period: '2026.08',
   },
 
   // ===== 制作 / Creative（魅力的な順） =====
