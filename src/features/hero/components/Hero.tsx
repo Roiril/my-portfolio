@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import ArtIcon from '@/components/ui/ArtIcon';
+import SunsetLandscape from './SunsetLandscape';
 
 export default function Hero() {
     return (
-        <section id="top" className="hero">
+        <section id="top" className="hero hero--landscape">
+            <SunsetLandscape />
             <div className="site-container hero__inner">
                 <div className="hero__identity">
                     <p className="hero__eyebrow">HCI RESEARCH &amp; INTERACTION DESIGN</p>
@@ -18,10 +20,7 @@ export default function Hero() {
                         <a className="hero__action" href="/resume">Resume<ArtIcon name="arrow" size={16} /></a>
                     </nav>
                 </div>
-                <figure className="hero__illustration">
-                    <Image src="/images/identity/hero.webp" alt="小さな恐竜がノートを開き。ロボットと複合現実の仕組みを研究している線画" width={1200} height={900} priority sizes="(max-width: 760px) 300px, (max-width: 1240px) 44vw, 520px" className="hero__artwork" />
-                    <figcaption><span>Observe. Make. Explore.</span><span>Roil’s field notes</span></figcaption>
-                </figure>
+                <div className="hero__landscape-space" aria-hidden="true" />
                 <div className="hero__footer">
                     <a href="#about" className="hero__affiliation">
                         <Image src="/images/MyFace.png" alt="白石大晴" width={44} height={44} sizes="44px" className="hero__avatar" />
