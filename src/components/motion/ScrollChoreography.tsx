@@ -20,7 +20,7 @@ type ProgressTarget = {
 };
 
 const MAX_DRIFT = 18;
-const IMAGE_SCALE = 1.1;
+const IMAGE_SCALE = 1.04;
 const TIME_CONSTANT = 80;
 
 function clamp(value: number, min = 0, max = 1) {

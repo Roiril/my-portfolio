@@ -37,12 +37,13 @@ export default function Links() {
     return (
         <section id="links" className="links-section contact-editorial" aria-labelledby="contact-title" data-scroll-section>
             <div className="site-container links-section__inner">
-                <p className="section-kicker">03 / CONTACT</p>
-                <div className="contact-editorial__heading">
-                    <h2 id="contact-title" className="links-section__title" data-reveal data-scroll-rule>連絡先</h2>
-                    <GeometryMark variant="planes" />
+                <div className="section-heading contact-editorial__heading" data-scroll-rule>
+                    <div className="section-heading__title" data-reveal>
+                        <p className="section-kicker">03 / ELSEWHERE</p>
+                        <h2 id="contact-title" className="links-section__title">Links</h2>
+                    </div>
+                    <p className="section-heading__aside links-section__message">{contactMessage}</p>
                 </div>
-                <p className="links-section__message">{contactMessage}</p>
 
                 <div className="links-section__email-block" data-reveal>
                     <button
@@ -77,6 +78,7 @@ export default function Links() {
                     ))}
                     <a href="/resume">Resume <span aria-hidden="true">↗</span></a>
                 </nav>
+                <div className="contact-editorial__signature" aria-hidden="true"><span>LET’S KEEP IN TOUCH.</span><GeometryMark variant="planes" /></div>
             </div>
         </section>
     );

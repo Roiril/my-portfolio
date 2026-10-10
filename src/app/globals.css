@@ -16,7 +16,11 @@
   --font-editorial: var(--font-sans);
   --font-sans: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Noto Sans CJK JP', 'Yu Gothic', Meiryo, sans-serif;
   --font-mono: Consolas, 'Courier New', monospace;
-  --space-section: clamp(80px, 9vw, 144px);
+  --page-gutter: clamp(24px, 4.5vw, 64px);
+  --grid-gap: 24px;
+  --section-space: clamp(88px, 11vw, 160px);
+  --space-section: var(--section-space);
+  --body-ink: #444740;
 }
 
 @theme inline {
@@ -34,7 +38,11 @@ button { font: inherit; }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 section[id], article[id] { scroll-margin-top: 96px; }
 section#about, section#links, section#works { scroll-margin-top: 88px; }
-.site-container { width: min(1440px, calc(100% - 112px)); margin-inline: auto; }
+.site-container { width: min(1280px, calc(100% - var(--page-gutter) * 2)); margin-inline: auto; }
+.section-heading { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--grid-gap); align-items: end; text-align: left; }
+.section-heading__title { grid-column: 1 / 8; }
+.section-heading__aside { grid-column: 9 / 13; margin: 0; color: var(--body-ink); font-size: 15px; line-height: 1.9; }
+.section-heading h2 { margin: 0; font: 400 clamp(64px, 8vw, 112px)/1.05 var(--font-sans); letter-spacing: -.055em; }
 .art-icon { display: inline-block; flex: 0 0 auto; object-fit: contain; vertical-align: middle; }
 .art-icon--down { transform: rotate(90deg); }
 .art-icon--up { transform: rotate(-45deg); }
@@ -52,7 +60,10 @@ section#about, section#links, section#works { scroll-margin-top: 88px; }
 .work-tag + .work-tag::before { content: '/'; margin-right: 8px; color: var(--line); }
 
 @media (max-width: 760px) {
-  .site-container { width: calc(100% - 40px); }
+  :root { --page-gutter: 20px; --grid-gap: 16px; }
+  .section-heading { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 16px; }
+  .section-heading__title, .section-heading__aside { grid-column: 1 / -1; }
+  .section-heading h2 { font-size: clamp(58px, 16vw, 80px); }
   section[id], article[id] { scroll-margin-top: 82px; }
 }
 

@@ -7,10 +7,12 @@ export default function About() {
     return (
         <section id="about" className="about-section about-editorial" aria-labelledby="about-title" data-scroll-section>
             <div className="site-container">
-                <p className="section-kicker">02 / ABOUT</p>
-                <div className="about-editorial__heading">
-                    <h2 id="about-title" className="about-section__title" data-reveal data-scroll-rule>わたしについて</h2>
-                    <GeometryMark />
+                <div className="section-heading about-editorial__heading" data-scroll-rule>
+                    <div className="section-heading__title" data-reveal>
+                        <p className="section-kicker">02 / PROFILE</p>
+                        <h2 id="about-title" className="about-section__title">About</h2>
+                    </div>
+                    <p className="section-heading__aside">明治大学大学院で<br />HCIを研究しています。</p>
                 </div>
 
                 <div className="about-section__grid">
@@ -23,13 +25,14 @@ export default function About() {
                             sizes="(max-width: 760px) 140px, 300px"
                         />
                         <figcaption>
-                            <span>白石 大晴 / Shiroishi Taisei</span>
-                            <span>明治大学大学院 先端数理科学研究科</span>
+                            <span>明治大学大学院</span>
+                            <span>先端数理科学研究科</span>
                         </figcaption>
+                        <GeometryMark />
                     </figure>
 
                     <div className="about-section__body" data-reveal>
-                        <h3 className="about-editorial__statement">人とコンピュータの<br />関わりを研究しています。</h3>
+                        <h3 className="about-editorial__statement">白石 大晴<span>Taisei Shiroishi</span></h3>
                         <div className="about-section__bio">
                             {aboutData.bio.map((paragraph) => (
                                 <p key={paragraph}>{paragraph}</p>

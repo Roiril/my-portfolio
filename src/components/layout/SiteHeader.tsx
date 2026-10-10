@@ -10,7 +10,7 @@ import './site-navigation.css';
 const SECTION_LINKS = [
     { href: '/#works', id: 'works', label: 'Works' },
     { href: '/#about', id: 'about', label: 'About' },
-    { href: '/#links', id: 'links', label: 'Contact' },
+    { href: '/#links', id: 'links', label: 'Links' },
 ] as const;
 
 function MotionControl() {

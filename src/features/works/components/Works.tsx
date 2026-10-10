@@ -93,8 +93,8 @@ export default function Works() {
             <div className="site-container">
                 <header className="works-heading" data-scroll-rule>
                     <div className="works-heading__title">
-                        <p className="section-kicker">01 / WORKS</p>
-                        <h2 id="works-title">研究と制作</h2>
+                        <p className="section-kicker">01 / PROJECTS</p>
+                        <h2 id="works-title">Works</h2>
                     </div>
                     <p>研究のプロトタイプからWebアプリやゲームまで。{workCount}件の制作を掲載しています。</p>
                 </header>
@@ -109,10 +109,12 @@ export default function Works() {
                             data-scroll-section
                         >
                             <header className="work-group-heading" data-scroll-rule>
-                                <span className="work-group-heading__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                                 <div className="work-group-heading__title">
                                     <p>{group.englishLabel}</p>
-                                    <h3 id={'title-' + group.key}>{group.label}</h3>
+                                    <div className="work-group-heading__title-line">
+                                        <span className="work-group-heading__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                                        <h3 id={'title-' + group.key}>{group.label}</h3>
+                                    </div>
                                 </div>
                                 <p>{group.sublabel}</p>
                             </header>

@@ -28,13 +28,13 @@ export default function Hero() {
 
         const paint = () => {
             const arrangement = smooth(clamp((current - .12) / .74));
-            const intro = smooth(clamp((current - .46) / .34));
+            const intro = smooth(clamp((current - .42) / .38));
             root.style.setProperty('--hero-progress', String(current));
             root.style.setProperty('--opening-opacity', String(1 - smooth(clamp(current / .42))));
             root.style.setProperty('--opening-y', -current * 100 + 'px');
-            root.style.setProperty('--art-x', (width > 760 ? -width * .45 * arrangement : 0) + 'px');
-            root.style.setProperty('--art-y', (width <= 760 ? -arrangement * height * .24 : 0) + 'px');
-            root.style.setProperty('--art-scale', String(1 - arrangement * .12));
+            root.style.setProperty('--art-x', (width > 760 ? width * .08 * arrangement : 0) + 'px');
+            root.style.setProperty('--art-y', (-arrangement * height * (width <= 760 ? .36 : .23)) + 'px');
+            root.style.setProperty('--art-scale', String(1 - arrangement * (width <= 760 ? .40 : .58)));
             root.style.setProperty('--intro-opacity', String(intro));
             root.style.setProperty('--intro-y', (1 - intro) * 40 + 'px');
             root.dataset.progress = current.toFixed(3);
@@ -92,12 +92,12 @@ export default function Hero() {
     return (
         <section ref={rootRef} id="top" className="immersive-hero" aria-labelledby="hero-title">
             <div className="immersive-hero__stage">
-                <div className="immersive-hero__guides" aria-hidden="true"><span /><span /><span /></div>
-                <div className="immersive-hero__art" aria-hidden="true">
+                <div className="immersive-hero__guides site-container" aria-hidden="true"><span /><span /><span /></div>
+                <div className="immersive-hero__visual site-container" aria-hidden="true"><div className="immersive-hero__art">
                     <div className="immersive-hero__fallback">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ rotate: i * 3 + 'deg', scale: 1 - i * .035 }} />)}</div>
                     <InteractionScene progressRef={progressRef} motionEnabled={enabled} />
                     <span className="immersive-hero__figure-note">FORM STUDY — 01</span>
-                </div>
+                </div></div>
                 <div className="immersive-hero__opening site-container">
                     <p className="immersive-hero__eyebrow">PORTFOLIO <span>2026</span></p>
                     <div className="immersive-hero__identity">
@@ -109,13 +109,12 @@ export default function Hero() {
                 </div>
                 <div className="immersive-hero__introduction site-container">
                     <div className="immersive-hero__context">
-                        <p className="section-kicker">RESEARCH &amp; PRACTICE</p>
-                        <h2>HCIの研究。<br />XRとWebの制作。</h2>
-                        <p>人と機械が同じ場所で作業するときの<br className="desktop-break" />関わり方を研究しています。</p>
-                        <p>企画から実装とユーザ評価まで。<br />試作したものを使ってもらいながら確かめています。</p>
+                        <p className="section-kicker">ENTERTAINMENT &amp; INTERACTION</p>
+                        <h2><span>新しいエンタメ体験</span><span>人とコンピューターの間を設計</span></h2>
+                        <p>XRの体験やWebアプリを制作しています。<br />人と機械の関わり方を、試作とユーザ評価を通じて研究しています。</p>
                     </div>
                 </div>
-                <div className="immersive-hero__index site-container" aria-hidden="true"><span>01 / FORM &amp; STRUCTURE</span><span>↓ WORKS</span></div>
+                <div className="immersive-hero__index site-container" aria-hidden="true"><span>EXPLORE THE POSSIBILITIES</span><span>↓ SCROLL</span></div>
             </div>
         </section>
     );
