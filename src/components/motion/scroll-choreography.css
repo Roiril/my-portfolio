@@ -1,0 +1,92 @@
+html[data-motion='on'] .work-media[data-drift] .work-image:not(.work-image--contain) {
+    translate: 0 var(--media-drift, 0px);
+    scale: 1.1;
+    will-change: translate;
+}
+
+[data-scroll-rule] {
+    --rule-progress: 1;
+    position: relative;
+}
+
+[data-scroll-rule]::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    background: currentColor;
+    opacity: .46;
+    pointer-events: none;
+    transform: scaleX(var(--rule-progress));
+    transform-origin: left;
+}
+
+.about-section__fact[data-scroll-rule]::after,
+.links-section__nav[data-scroll-rule]::after {
+    top: 0;
+    bottom: auto;
+}
+
+[data-scroll-section] {
+    --section-progress: 1;
+}
+
+.about-section[data-scroll-section],
+.links-section[data-scroll-section] {
+    position: relative;
+    isolation: isolate;
+}
+
+.about-section[data-scroll-section]::before,
+.links-section[data-scroll-section]::before {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    content: '';
+    background-image:
+        linear-gradient(90deg, color-mix(in srgb, currentColor 8%, transparent) 1px, transparent 1px),
+        linear-gradient(color-mix(in srgb, currentColor 8%, transparent) 1px, transparent 1px);
+    background-position: 0 calc(var(--section-progress) * 28px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+    opacity: .32;
+    pointer-events: none;
+}
+
+.about-section[data-scroll-section] > .site-container,
+.links-section[data-scroll-section] > .site-container {
+    position: relative;
+    z-index: 1;
+}
+
+html[data-motion='off'] .work-media .work-image,
+html[data-motion='off'] .work-media[data-drift] .work-image {
+    translate: none;
+    scale: none;
+}
+
+html[data-motion='off'] [data-scroll-rule]::after {
+    transform: scaleX(1);
+}
+
+html[data-motion='off'] [data-scroll-section] {
+    --section-progress: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .work-media .work-image,
+    .work-media[data-drift] .work-image {
+        translate: none;
+        scale: none;
+    }
+
+    [data-scroll-rule]::after {
+        transform: scaleX(1);
+    }
+
+    [data-scroll-section] {
+        --section-progress: 1 !important;
+    }
+}

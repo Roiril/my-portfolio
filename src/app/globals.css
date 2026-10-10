@@ -3,28 +3,30 @@
 
 :root {
   color-scheme: light;
-  --background: #f7f6f0;
-  --foreground: #263c31;
-  --muted: #626b60;
-  --accent: #365942;
-  --accent-hover: #1e3928;
-  --line: #dcded3;
-  --surface: #fcfbf7;
-  --media-background: #e9ece2;
-  --font-editorial: Georgia, 'Times New Roman', serif;
-  --font-sans: Arial, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
+  --background: #f3f1eb;
+  --foreground: #242624;
+  --muted: #62655e;
+  --accent: #ac4838;
+  --orange: #ac4838;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --accent-hover: #85372c;
+  --line: #d1d1c9;
+  --surface: #faf9f5;
+  --media-background: #e7e6df;
+  --font-editorial: var(--font-sans);
+  --font-sans: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Noto Sans CJK JP', 'Yu Gothic', Meiryo, sans-serif;
   --font-mono: Consolas, 'Courier New', monospace;
-  --space-section: clamp(64px, 7vw, 80px);
+  --space-section: clamp(80px, 9vw, 144px);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  --font-sans: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Noto Sans CJK JP', 'Yu Gothic', Meiryo, sans-serif;
   --font-mono: Consolas, "Courier New", monospace;
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+html { scroll-behavior: smooth; scroll-padding-top: 0; }
 body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 ::selection { background: var(--accent); color: var(--surface); }
 button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
@@ -32,7 +34,7 @@ button { font: inherit; }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 section[id], article[id] { scroll-margin-top: 96px; }
 section#about, section#links, section#works { scroll-margin-top: 88px; }
-.site-container { width: min(1160px, calc(100% - 80px)); margin-inline: auto; }
+.site-container { width: min(1440px, calc(100% - 112px)); margin-inline: auto; }
 .art-icon { display: inline-block; flex: 0 0 auto; object-fit: contain; vertical-align: middle; }
 .art-icon--down { transform: rotate(90deg); }
 .art-icon--up { transform: rotate(-45deg); }
@@ -50,7 +52,7 @@ section#about, section#links, section#works { scroll-margin-top: 88px; }
 .work-tag + .work-tag::before { content: '/'; margin-right: 8px; color: var(--line); }
 
 @media (max-width: 760px) {
-  .site-container { width: calc(100% - 48px); }
+  .site-container { width: calc(100% - 40px); }
   section[id], article[id] { scroll-margin-top: 82px; }
 }
 

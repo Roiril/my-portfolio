@@ -113,7 +113,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
     return (
         <>
             <SiteHeader />
-            <main>
+            <main id="main-content" tabIndex={-1}>
             <article className="work-detail">
                 <div className="site-container">
                     {/* 戻る */}

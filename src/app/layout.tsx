@@ -1,6 +1,10 @@
 ﻿// src/app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import "./home-editorial.css";
+import { MotionProvider } from '@/components/motion/MotionProvider';
+import RevealObserver from '@/components/motion/RevealObserver';
+import ScrollChoreography from '@/components/motion/ScrollChoreography';
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ??
   "https://my-portfolio-ruby-delta-87.vercel.app").replace(/\/+$/, "");
@@ -127,14 +131,15 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ja">
+    <html lang="ja" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: "try{document.documentElement.dataset.motion=(!matchMedia('(prefers-reduced-motion: reduce)').matches&&localStorage.getItem('roil-motion')!=='off')?'on':'off'}catch{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'}" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </head>
-      <body>{children}</body>
+      <body><MotionProvider><RevealObserver /><ScrollChoreography />{children}</MotionProvider></body>
     </html>
   );
 }

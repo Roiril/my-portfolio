@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { contactMessage } from '@/content/contact';
 import { SITE_EMAIL, SOCIAL_LINKS } from '@/constants/site';
 import { copyToClipboard } from '@/lib/clipboard';
-import ArtIcon from '@/components/ui/ArtIcon';
+import GeometryMark from '@/components/ui/GeometryMark';
 
 type CopyStatus = 'idle' | 'success' | 'error';
 
@@ -35,23 +35,24 @@ export default function Links() {
     };
 
     return (
-        <section id="links" className="links-section">
+        <section id="links" className="links-section contact-editorial" aria-labelledby="contact-title" data-scroll-section>
             <div className="site-container links-section__inner">
-                <p className="section-kicker">03 / ELSEWHERE</p>
-                <h2 className="links-section__title">Links</h2>
-                <p className="section-subtitle">連絡先と発信</p>
+                <p className="section-kicker">03 / CONTACT</p>
+                <div className="contact-editorial__heading">
+                    <h2 id="contact-title" className="links-section__title" data-reveal data-scroll-rule>連絡先</h2>
+                    <GeometryMark variant="planes" />
+                </div>
                 <p className="links-section__message">{contactMessage}</p>
 
-                <div className="links-section__email-block">
+                <div className="links-section__email-block" data-reveal>
                     <button
                         type="button"
                         onClick={handleCopy}
                         className="links-section__email"
                         aria-describedby="copy-email-status"
                     >
-                        <ArtIcon name="mail" size={28} />
                         <span>{SITE_EMAIL}</span>
-                        <ArtIcon name="arrow" size={22} />
+                        <span className="contact-editorial__copy" aria-hidden="true">{copyStatus === 'success' ? '✓' : '⧉'}</span>
                     </button>
                     <p id="copy-email-status" className="links-section__copy-status" aria-live="polite">
                         {copyStatus === 'success'
@@ -60,10 +61,10 @@ export default function Links() {
                                 ? 'コピーできませんでした。メールを開くかアドレスを選択してください。'
                                 : 'クリックでメールアドレスをコピー'}
                     </p>
-                    <a className="links-section__mailto" href={'mailto:' + SITE_EMAIL}>メールを送る</a>
+                    <a className="links-section__mailto round-link" href={'mailto:' + SITE_EMAIL}><span>メールを送る</span><span className="round-link__arrow" aria-hidden="true">↗</span></a>
                 </div>
 
-                <nav className="links-section__nav" aria-label="外部リンク">
+                <nav className="links-section__nav" aria-label="外部リンク" data-scroll-rule>
                     {SOCIAL_LINKS.map((link) => (
                         <a
                             key={link.platform}
@@ -71,10 +72,10 @@ export default function Links() {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {link.platform} <ArtIcon name="arrow" size={16} />
+                            {link.platform} <span aria-hidden="true">↗</span>
                         </a>
                     ))}
-                    <a href="/resume">Resume <ArtIcon name="arrow" size={16} /></a>
+                    <a href="/resume">Resume <span aria-hidden="true">↗</span></a>
                 </nav>
             </div>
         </section>

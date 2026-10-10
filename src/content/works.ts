@@ -8,7 +8,7 @@ export const works: Work[] = [
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
     description:
-      '監視カメラに映る自分を見ながら現実空間を歩く，固定視点のホラー体験．HMDと複数のカメラで固定視点を現実空間に再構成する．体験者は、怪異調査員として呪われた壁の調査に向かう．IVRC2026優勝・DCEXPO賞．2026年11月，DCEXPO2026で展示予定．',
+      '監視カメラに映る自分を見ながら、現実空間を歩く固定視点のホラー体験です。HMDと複数のカメラで固定視点を現実空間に再構成しました。体験者は怪異調査員として呪われた壁を調査します。IVRC2026で優勝し、DCEXPO賞を受賞しました。2026年11月にDCEXPO2026で展示予定です。',
     image: '/images/works/mawarimi/key-visual.webp',
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
@@ -36,7 +36,7 @@ export const works: Work[] = [
     id: 'robot-collab',
     title: '人と機械の協働インタラクション設計',
     description:
-      '人と機械が同じ場で一緒に作業するときの，見た目・動き・関わり方をどう設計するかを探る研究．プロトタイプを作って人に試してもらいながら，協力が自然に生まれる条件を探っている（進行中）．',
+      '人と機械が同じ場所で協働するときの見た目と動きを研究しています。人との関わり方も対象です。プロトタイプを制作し、人に試してもらいます。自然な協力が生まれる条件を探る進行中の研究です。',
     image: '/images/robot-collab.png',
     tags: ['Research', 'HCI', 'Human-Agent Interaction'],
     links: [],
@@ -50,7 +50,7 @@ export const works: Work[] = [
     id: 'intentlayer',
     title: 'IntentLayer',
     description:
-      '対面で「いま話しかけてよいか」の判断を，人の意図を複合現実空間に配置して支援するMRシステム．卒業研究．HMD版とWeb版を実装し，1週間の運用と半構造化インタビューで評価した．',
+      '対面で「いま話しかけてよいか」を判断しやすくするMRシステムです。人の意図を複合現実空間に配置します。卒業研究としてHMD版とWeb版を実装しました。1週間運用し、半構造化インタビューで評価しました。',
     image: '/images/intentlayer.png',
     tags: ['Research', 'Mixed Reality', 'Unity', 'Next.js'],
     links: [
@@ -66,7 +66,7 @@ export const works: Work[] = [
     id: 'ai-business-tools',
     title: 'AI業務ツール開発',
     description:
-      '社内で実際に運用されるAI業務ツールを，要件定義から運用まで担当．商談内容から見積書の下書きを生成する機能や，社内マニュアルに自然言語で答えるチャットをRAG構成で開発し，回答の根拠を人が確認できる運用も整えた．',
+      '社内で運用するAI業務ツールを開発しました。要件定義から運用まで担当しました。商談内容から見積書の下書きを作る機能を実装しました。社内マニュアルを検索して質問に答えるRAGチャットも実装しました。回答の根拠を人が確認できる運用も整えました。',
     image: '/images/ai-business-tools.svg',
     imageFit: 'contain',
     tags: ['Internship', 'LLM', 'RAG'],
@@ -81,7 +81,7 @@ export const works: Work[] = [
     id: 'whiteout',
     title: 'WhiteOut — 塗りローグ',
     description:
-      '白いインクで9つの面を塗りつぶすローグライトゲーム。能力を組み合わせて速いクリアを目指す。unity1weekのお題「しろ」に向けて制作。2026年10月5日時点で閲覧14,170回。楽しさの評価は4.434/5。',
+      '白いインクで9つの面を塗りつぶすローグライトゲームです。能力を組み合わせて速いクリアを目指します。unity1weekのお題「しろ」に向けて制作しました。2026年10月5日時点で閲覧14,170回です。楽しさの評価は4.434/5です。',
     image: '/images/works/whiteout/title.webp',
     imageFit: 'cover',
     tags: ['Game', 'Unity', 'unity1week', 'ローグライト'],
@@ -124,7 +124,7 @@ export const works: Work[] = [
     id: 'cogni-storage',
     title: 'cogni-storage',
     description:
-      'React＋TypeScript製の研究ログPWA．読書・リサーチ・論文執筆・スライド生成を一つの流れで管理し，Supabaseとオフラインキャッシュで端末をまたいで同期する．AIエージェント連携の自動化基盤を備える．',
+      'ReactとTypeScriptで制作した研究ログPWAです。読書とリサーチを管理します。論文執筆からスライド生成までを一つの流れで扱えます。Supabaseとオフラインキャッシュを使い、端末間で同期します。AIエージェントと連携する自動化基盤も備えています。',
     image: '/images/cogni-storage.png',
     imageFit: 'cover',
     tags: ['Web App', 'React', 'TypeScript', 'Supabase', 'PWA'],
@@ -157,7 +157,7 @@ export const works: Work[] = [
     id: 'blender-works',
     title: 'Blender Works',
     description:
-      'Blenderで制作したモデリング・3Dの小作品集．',
+      'Blenderで制作した3D作品集です。モデリングを中心とした小作品を掲載しています。',
     image: '/images/works/blender-works/robot-game-01.png',
     tags: ['3D', 'Blender'],
     links: [],
@@ -217,7 +217,7 @@ export const works: Work[] = [
     id: 'meiji-3d',
     title: 'Meiji Univ 3F',
     description:
-      'いつも通っている明治大学中野キャンパス3Fのデジタル化．',
+      '普段通っている明治大学中野キャンパス3Fを測量し、3D空間として再現しました。現地で撮影した写真をテクスチャに使っています。',
     image: '/images/Meiji3fVideoCapture.png',
     tags: ['3D', 'Blender', 'Digital Twin'],
     links: [
@@ -276,7 +276,7 @@ export const works: Work[] = [
     id: 'uniqlo-future',
     title: 'UNIQLO: Imaginary Service',
     description:
-      'UNIQLOの架空のサービス「服自販機」を紹介する動画．',
+      'UNIQLOの架空サービス「服自販機」を紹介する動画です。BlenderとVFXで制作しました。',
     image: '/images/UniqloCap.png',
     tags: ['Video', 'Blender', 'VFX'],
     links: [
@@ -287,7 +287,7 @@ export const works: Work[] = [
     id: 'aquarium',
     title: 'Aquarium in Processing',
     description:
-      'かわいいデジ水槽の中を群れて泳ぐデジ魚たち．',
+      'Processingで制作したデジタル水槽です。コードで描いた魚が群れで泳ぎます。',
     image: '/images/AcuariumPrograming.png',
     tags: ['Creative Coding', 'Processing'],
     links: [
@@ -320,7 +320,7 @@ export const works: Work[] = [
   {
     id: 'ai-music-video',
     title: 'AI Generated MusicVideo',
-    description: '試行錯誤しながらAIを組み合わせてミュージックビデオ制作中',
+    description: '複数のAIツールを試しながら組み合わせ、ミュージックビデオを制作しています。',
     image: '/images/Ai-Generated-Mv.png',
     tags: ['SunoAI', 'ChatGPT', 'Gemini', 'Flow', 'Filmora'],
     links: [
@@ -340,7 +340,7 @@ export const works: Work[] = [
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
     description:
-      'レトロなテレビにポートフォリオを映し出す．',
+      'レトロなテレビにポートフォリオを表示するWeb作品です。Next.jsとThree.jsで制作しました。',
     image: '/images/retroTV-portfolio.png',
     tags: ['Web', 'Next.js', 'Three.js'],
     links: [
@@ -352,7 +352,7 @@ export const works: Work[] = [
     id: 'cube-diary',
     title: 'CubeDiary',
     description:
-      '真っ暗な世界に記憶をキューブで保存するアプリ．',
+      '真っ暗な空間に、記憶をキューブとして保存するWebアプリです。',
     image: '/images/CubeDiary.png',
     tags: ['Web App', 'Next.js', 'Supabase'],
     links: [
@@ -363,7 +363,7 @@ export const works: Work[] = [
   {
     id: 'metaquest-devs',
     title: 'MetaQuest Devs',
-    description: '卒論のためにQuestで試行錯誤した様々なプロトタイプ',
+    description: '卒業論文のためにMeta QuestとUnityで制作したプロトタイプ集です。',
     image: '/images/Mr-Devs.png',
     tags: ['MetaQuest', 'Unity'],
     links: [],
@@ -372,7 +372,7 @@ export const works: Work[] = [
     id: 'ai-composition',
     title: 'AI-Augmented Composition',
     description:
-      'Studio Oneで昔作った曲を，Suno AIで拡張．',
+      'Studio Oneで以前制作した楽曲を、Suno AIで拡張した作品です。',
     image: '/images/StudioOneCap.png',
     tags: ['Sound', 'Studio One', 'AI'],
     links: [
@@ -391,7 +391,7 @@ export const works: Work[] = [
   {
     id: 'portfolio',
     title: 'Portfolio',
-    description: 'このポートフォリオサイト．',
+    description: '現在のポートフォリオサイトです。Next.jsで制作しています。',
     image: '/images/MyPortfolio.png',
     tags: ['Web', 'Next.js', 'Antigravity'],
     links: [],
