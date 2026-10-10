@@ -98,8 +98,9 @@
 .works-section .work-group--internship .work-card:not(.work-card--lead) .work-content { padding-top: 20px; }
 
 .works-section .work-credits { grid-column: 1 / -1; margin-top: 4px; padding: 0; border: 0; border-top: 1px solid var(--works-line); border-bottom: 1px solid var(--works-line); background: transparent; }
-.works-section .work-credits summary { display: flex; min-height: 52px; align-items: center; justify-content: space-between; gap: 24px; color: var(--works-ink); font-size: 12px; font-weight: 700; cursor: pointer; list-style-position: inside; }
-.works-section .work-credits summary > span:last-child { margin-left: auto; color: var(--works-muted); font-size: 10px; font-weight: 400; font-variant-numeric: tabular-nums; }
+.works-section .work-credits__heading { display: flex; min-height: 52px; align-items: center; justify-content: space-between; gap: 24px; color: var(--works-ink); }
+.works-section .work-credits__heading h5 { margin: 0; font-size: 12px; font-weight: 700; }
+.works-section .work-credits__heading > span { margin-left: auto; color: var(--works-muted); font-size: 10px; font-variant-numeric: tabular-nums; }
 .works-section .work-credits ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px var(--grid-gap); margin: 0; padding: 4px 0 22px; color: var(--works-muted); font-size: 12px; line-height: 1.8; list-style: none; overflow-wrap: anywhere; }
 .works-section .work-placeholder { color: var(--works-muted); }
 
