@@ -3,6 +3,7 @@ import { works } from '@/content/works';
 import type { Work, WorkCategory } from '@/features/works/types';
 import { Tag, Link } from '@/components/ui';
 import ArtIcon from '@/components/ui/ArtIcon';
+import WireBundle from '@/components/ui/WireBundle';
 import { WorkCardMedia } from './WorkCardMedia';
 import { WorkFilters } from './WorkFilters';
 import WorkFrameInteraction from './WorkFrameInteraction';
@@ -94,7 +95,7 @@ export default function Works() {
         <section id="works" className="works-section" aria-labelledby="works-title" data-scroll-section>
             <WorkFrameInteraction />
             <WorkGridFlight />
-            <div className="works-launchpad" aria-hidden="true"><span className="works-launchpad__square" /></div>
+            <div className="works-launchpad" aria-hidden="true"><span className="works-launchpad__square"><WireBundle /></span></div>
             <div className="site-container">
                 <header className="works-heading" data-scroll-rule>
                     <span className="works-heading__frame" aria-hidden="true" />

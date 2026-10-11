@@ -30,9 +30,10 @@ type ProjectedFrame = {
 };
 
 const FRAME_COUNT = 30;
-const INK = '#242624';
 const MUTED = '#a5a6a0';
 const VERMILION = '#ac4838';
+const DARK_WIRE = [172, 72, 56];
+const LIGHT_WIRE = [36, 38, 36];
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 const mix = (from: number, to: number, amount: number) => from + (to - from) * amount;
@@ -165,14 +166,14 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
             for (let index = 0; index < FRAME_COUNT; index += 1) {
                 const t = index / (FRAME_COUNT - 1);
                 const center = {
-                    x: mix(0, (t - 0.5) * 4.5, morph),
-                    y: mix(0, (0.5 - t) * 1.8, morph),
-                    z: mix((t - 0.5) * 5.4, 0, morph),
+                    x: (t - .5) * .5 * morph,
+                    y: (.5 - t) * .2 * morph,
+                    z: mix((t - 0.5) * 5.4, (t - .5) * 2, morph),
                 };
                 const rotationX = 0;
                 const rotationY = 0;
-                const rotationZ = mix((t - .5) * Math.PI * .62, Math.PI * .25, morph);
-                const halfSize = mix(1.65, .8, morph);
+                const rotationZ = (t - .5) * Math.PI * .62 + morph * Math.PI * .25;
+                const halfSize = mix(1.65, 1.45, morph);
                 const localCorners = [
                     { x: -halfSize, y: -halfSize, z: 0 },
                     { x: halfSize, y: -halfSize, z: 0 },
@@ -215,6 +216,9 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
 
             const requestedProgress = activeMotion ? progressRef.current : 0;
             const progress = clamp01(Number.isFinite(requestedProgress) ? requestedProgress : 0);
+            const dark = easeInOut((progress - .27) / .26);
+            const gather = easeInOut((progress - .72) / .26);
+            const wireColor = `rgb(${LIGHT_WIRE.map((channel, index) => Math.round(mix(channel, DARK_WIRE[index], dark))).join(' ')})`;
             pointerX += (pointerTargetX - pointerX) * 0.04;
             pointerY += (pointerTargetY - pointerY) * 0.04;
 
@@ -236,9 +240,9 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
                 }
             }
 
-            context.globalAlpha = 0.28;
+            context.globalAlpha = mix(0.28, 0.06, gather);
             context.strokeStyle = MUTED;
-            context.lineWidth = 0.7;
+            context.lineWidth = mix(0.7, 4, gather);
             for (let index = 0; index < frames.length - 1; index += 1) {
                 const current = frames[index];
                 const next = frames[index + 1];
@@ -251,9 +255,9 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
             }
 
             for (const frame of sortedFrames) {
-                const depthAlpha = mix(0.34, 0.92, clamp01((frame.depth + 3.2) / 6.4));
+                const depthAlpha = mix(mix(0.34, 0.92, clamp01((frame.depth + 3.2) / 6.4)), .28, gather);
                 const accented = frame.index === 15;
-                drawFrame(frame, accented ? VERMILION : INK, accented ? 1.2 : 0.9, accented ? 0.95 : depthAlpha);
+                drawFrame(frame, accented ? VERMILION : wireColor, mix(accented ? 1.2 : 0.9, 5, gather), accented ? 0.95 : depthAlpha);
             }
 
             context.globalAlpha = 0.34;

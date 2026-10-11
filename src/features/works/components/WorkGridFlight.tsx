@@ -35,7 +35,11 @@ export default function WorkGridFlight() {
             const originY = origin.top + origin.height / 2;
             const viewport = window.innerHeight;
             const mobile = window.innerWidth <= 760;
-            let sourceOpacity = 0;
+            let activeFlight = 0;
+            const sectionRect = section.getBoundingClientRect();
+            const sectionTop = sectionRect.top + window.scrollY;
+            const turn = 180 + Math.max(0, window.scrollY - sectionTop) / viewport * 110;
+            source.style.setProperty('--bundle-turn', `${turn.toFixed(1)}deg`);
 
             cards.forEach((card, index) => {
                 const item = media[index];
@@ -54,8 +58,8 @@ export default function WorkGridFlight() {
                 const height = item.offsetHeight;
                 // The second image in each pair follows the first as the row arrives.
                 const stagger = !mobile && index % 2 ? viewport * .12 : 0;
-                const start = viewport * (mobile ? 1.06 : 1.13) - stagger;
-                const finish = viewport * (mobile ? .48 : .42) - stagger;
+                const start = viewport * (mobile ? .94 : .82) - stagger;
+                const finish = viewport * (mobile ? .62 : .42) - stagger;
                 const progress = clamp((start - top) / (start - finish));
 
                 // Far-off cards require no paint or image compositing work.
@@ -69,18 +73,22 @@ export default function WorkGridFlight() {
                 }
 
                 const arrival = smooth(progress);
-                sourceOpacity = Math.max(sourceOpacity, .72 * (1 - smooth(clamp(progress / .85))));
+                activeFlight = Math.max(activeFlight, 1 - smooth(clamp(progress / .9)));
                 const inverse = 1 - arrival;
                 const centerX = left + width / 2;
                 const centerY = top + height / 2;
-                const scale = (mobile ? 48 : 68) / Math.max(width, height);
+                const scale = origin.width / Math.max(width, height);
                 const currentScale = scale * inverse + arrival;
                 item.style.transform = `translate3d(${((originX - centerX) * inverse).toFixed(1)}px, ${((originY - centerY) * inverse).toFixed(1)}px, 0) scale(${currentScale.toFixed(4)})`;
                 item.style.opacity = String(smooth(clamp(progress / .16)));
-                card.style.setProperty('--flight-text-opacity', String(smooth(clamp((progress - .78) / .22))));
+                card.style.setProperty('--flight-text-opacity', String(smooth(clamp((progress - .3) / .45))));
                 card.dataset.flightActive = '';
             });
-            source.style.opacity = sourceOpacity.toFixed(3);
+            const handoff = smooth(clamp((viewport * .9 - sectionRect.top) / (viewport * .25)));
+            const heroProgress = Number(document.querySelector<HTMLElement>('.immersive-hero')?.dataset.progress ?? 0);
+            const sharedShape = smooth(clamp((heroProgress - .94) / .06));
+            const exit = smooth(clamp((sectionRect.bottom - 100) / 200));
+            source.style.opacity = ((.55 + activeFlight * .2) * handoff * sharedShape * exit).toFixed(3);
         };
 
         const schedule = () => {
@@ -96,6 +104,7 @@ export default function WorkGridFlight() {
         window.addEventListener('resize', schedule, { passive: true });
         window.addEventListener('load', schedule);
         window.addEventListener('pageshow', schedule);
+        document.addEventListener('portfolio-hero-progress', schedule);
         // Some browsers restore scroll after hydration without dispatching scroll.
         const restorationCheck = window.setTimeout(schedule, 500);
         document.fonts.ready.then(schedule);
@@ -110,8 +119,10 @@ export default function WorkGridFlight() {
             window.removeEventListener('resize', schedule);
             window.removeEventListener('load', schedule);
             window.removeEventListener('pageshow', schedule);
+            document.removeEventListener('portfolio-hero-progress', schedule);
             window.clearTimeout(restorationCheck);
             source.style.removeProperty('opacity');
+            source.style.removeProperty('--bundle-turn');
             cards.forEach((card, index) => { if (media[index]) reset(card, media[index]!); });
         };
     }, [enabled]);

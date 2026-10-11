@@ -1,0 +1,3 @@
+.wire-bundle { position: absolute; inset: 0; display: block; rotate: var(--bundle-turn, 0deg); transform-origin: center; }
+.wire-bundle > i { position: absolute; inset: 0; display: block; border: 1px solid currentColor; opacity: .35; }
+.wire-bundle > i:nth-child(5n + 1) { opacity: .7; }

@@ -4,16 +4,20 @@
     --works-orange: var(--orange);
     --works-muted: var(--muted);
     --works-line: var(--line);
-    padding: var(--section-space) 0;
+    padding: clamp(48px, 6vw, 80px) 0 var(--section-space);
     background: var(--works-paper);
     color: var(--works-ink);
     position: relative;
 }
+html[data-motion='on'] .works-section { margin-top: -35svh; }
+@media (max-height: 620px), (prefers-reduced-motion: reduce) {
+    html[data-motion='on'] .works-section { margin-top: 0; }
+}
 
 /* The same wire square stays in view as each real card image reaches its grid cell. */
-.works-launchpad { position: sticky; top: 136px; z-index: 4; height: 0; pointer-events: none; }
-.works-launchpad__square { position: absolute; top: 0; left: max(var(--page-gutter), calc((100vw - 1280px) / 2)); width: 68px; height: 68px; border: 1px solid var(--works-orange); translate: 0 -50%; rotate: 45deg; opacity: .75; }
-.works-launchpad__square::after { position: absolute; inset: 8px; border: 1px solid var(--works-line); content: ''; }
+.works-launchpad { position: fixed; top: 136px; right: 0; left: 0; z-index: 25; height: 0; pointer-events: none; }
+.works-section > .site-container { position: relative; z-index: 3; }
+.works-launchpad__square { position: absolute; top: 0; left: max(8px, calc(max(var(--page-gutter), (100vw - 1280px) / 2) - 70px)); width: 52px; height: 52px; color: var(--works-orange); translate: 0 -50%; opacity: 0; }
 html:not([data-motion='on']) .works-launchpad { display: none; }
 
 .works-section .works-heading {
@@ -138,9 +142,13 @@ html:not([data-motion='on']) .works-launchpad { display: none; }
     .works-section .works-filter__buttons { grid-column: 3 / 11; }
 }
 
+@media (min-width: 761px) and (max-width: 1100px) {
+    .works-launchpad__square { left: 8px; }
+}
+
 @media (max-width: 760px) {
     .works-launchpad { top: 104px; }
-    .works-launchpad__square { width: 48px; height: 48px; }
+    .works-launchpad__square { left: 6px; width: 40px; height: 40px; }
     .works-section .works-heading { margin-bottom: 48px; padding-bottom: 22px; }
     .works-section .works-heading__frame { top:-30px; width:48px; }
     .works-section .works-heading__title, .works-section .works-heading > p { grid-column: 1 / -1; }

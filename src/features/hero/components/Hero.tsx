@@ -25,26 +25,32 @@ export default function Hero() {
         let offset = 0;
         let width = root.clientWidth;
         let height = innerHeight;
+        let targetArtX = 0;
+        let targetArtY = 0;
 
         const paint = () => {
             const arrangement = smooth(clamp((current - .12) / .72));
             const intro = smooth(clamp((current - .32) / .21));
             const dark = smooth(clamp((current - .27) / .26));
-            const expansion = smooth(clamp((current - .73) / .18));
-            const settling = smooth(clamp((current - .91) / .09));
+            const gather = smooth(clamp((current - .50) / .48));
             root.style.setProperty('--hero-progress', String(current));
             root.style.setProperty('--opening-opacity', String(1 - smooth(clamp((current - .17) / .39))));
             root.style.setProperty('--opening-y', -current * 100 + 'px');
-            root.style.setProperty('--art-x', (width > 760 ? width * (.08 * arrangement - .28 * expansion - .13 * settling) : 0) + 'px');
-            root.style.setProperty('--art-y', (width <= 760 ? -height * (.28 * arrangement - .075 * expansion) : -height * .16 * (arrangement - expansion)) + 'px');
-            root.style.setProperty('--art-scale', String(width <= 760 ? 1 - .18 * arrangement + .18 * expansion : 1 - .25 * arrangement + 1.2 * expansion - .55 * settling));
-            root.style.setProperty('--intro-opacity', String(intro * (1 - smooth(clamp((current - .69) / .13)))));
-            root.style.setProperty('--intro-y', (1 - intro) * 40 + 'px');
+            const openingX = width > 760 ? width * .08 * arrangement : 0;
+            const openingY = width <= 760 ? -height * .28 * arrangement : -height * .16 * arrangement;
+            const openingScale = width <= 760 ? 1 - .18 * arrangement : 1 - .25 * arrangement;
+            root.style.setProperty('--art-x', (openingX * (1 - gather) + targetArtX * gather) + 'px');
+            root.style.setProperty('--art-y', (openingY * (1 - gather) + targetArtY * gather) + 'px');
+            root.style.setProperty('--art-scale', String(openingScale * (1 - gather) + (width <= 760 ? .2 : .15) * gather));
+            root.style.setProperty('--art-rotation', `${180 * gather}deg`);
+            root.style.setProperty('--intro-opacity', String(intro));
+            root.style.setProperty('--intro-y', ((1 - intro) * 40 - smooth(clamp((current - .70) / .3)) * (width <= 760 ? 280 : 140)) + 'px');
             root.style.setProperty('--paper-opacity', String(1 - dark));
-            const portal = smooth(clamp((current - .60) / .32));
-            root.style.setProperty('--wire-opacity', String(1 - .55 * portal));
-            root.style.setProperty('--portal-progress', String(portal));
+            const portal = smooth(clamp((current - .78) / .18));
+            root.style.setProperty('--wire-opacity', String(1 - smooth(clamp((current - .94) / .06))));
+            root.style.setProperty('--portal-progress', String(portal * (1 - smooth(clamp((current - .86) / .14)))));
             root.style.setProperty('--portal-scale', String(.64 + portal * .36));
+            root.style.setProperty('--bundle-turn', `${(current * 180).toFixed(1)}deg`);
             root.dataset.progress = current.toFixed(3);
             progressRef.current = current;
             document.dispatchEvent(new Event('portfolio-hero-progress'));
@@ -66,6 +72,12 @@ export default function Hero() {
         const measure = () => {
             width = root.clientWidth;
             height = root.querySelector<HTMLElement>('.immersive-hero__stage')?.clientHeight || innerHeight;
+            const art = root.querySelector<HTMLElement>('.immersive-hero__art');
+            const portal = root.querySelector<HTMLElement>('.immersive-hero__portal');
+            if (art && portal) {
+                targetArtX = portal.offsetLeft + portal.offsetWidth / 2 - art.offsetLeft - art.offsetWidth / 2;
+                targetArtY = portal.offsetTop + portal.offsetHeight / 2 - art.offsetTop - art.offsetHeight / 2;
+            }
             travel = Math.max(1, root.offsetHeight - height);
             offset = root.getBoundingClientRect().top + scrollY;
             update();
@@ -106,7 +118,7 @@ export default function Hero() {
                     <div className="immersive-hero__fallback">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ rotate: i * 3 + 'deg', scale: 1 - i * .035 }} />)}</div>
                     <InteractionScene progressRef={progressRef} motionEnabled={enabled} />
                     <span className="immersive-hero__figure-note">FORM STUDY — 01</span>
-                </div><div className="immersive-hero__portal" aria-hidden="true"><span>17 / EXPLORE WORKS</span></div></div>
+                </div><div className="immersive-hero__portal" aria-hidden="true" /></div>
                 <div className="immersive-hero__opening site-container">
                     <p className="immersive-hero__eyebrow">PORTFOLIO <span>2026</span></p>
                     <div className="immersive-hero__identity">
