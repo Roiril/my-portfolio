@@ -14,7 +14,7 @@ type DriftTarget = {
 
 type ProgressTarget = {
     element: HTMLElement;
-    kind: 'rule' | 'section';
+    kind: 'rule' | 'section' | 'frame';
     current: number;
     target: number;
 };
@@ -47,7 +47,15 @@ function sectionProgressFromRect(rect: DOMRectReadOnly) {
 }
 
 function progressFromRect(target: ProgressTarget, rect: DOMRectReadOnly) {
-    return target.kind === 'rule' ? ruleProgressFromRect(rect) : sectionProgressFromRect(rect);
+    return target.kind === 'section' ? sectionProgressFromRect(rect) : ruleProgressFromRect(rect);
+}
+
+function writeProgress(target: ProgressTarget, value: number) {
+    if (target.kind === 'frame') {
+        target.element.style.setProperty('--frame-clip', `${((1 - value) * 100).toFixed(2)}%`);
+        return;
+    }
+    target.element.style.setProperty(target.kind === 'rule' ? '--rule-progress' : '--section-progress', value.toFixed(4));
 }
 
 export default function ScrollChoreography() {
@@ -66,6 +74,8 @@ export default function ScrollChoreography() {
                 .map((element): ProgressTarget => ({ element, kind: 'rule', current: 0, target: 0 })),
             ...[...document.querySelectorAll<HTMLElement>('[data-scroll-section]')]
                 .map((element): ProgressTarget => ({ element, kind: 'section', current: 0, target: 0 })),
+            ...[...document.querySelectorAll<HTMLElement>('[data-scroll-frame]')]
+                .map((element): ProgressTarget => ({ element, kind: 'frame', current: 0, target: 0 })),
         ];
 
         if (!enabled || !('IntersectionObserver' in window)) return;
@@ -81,10 +91,7 @@ export default function ScrollChoreography() {
 
         progressTargets.forEach((target) => {
             target.element.dataset.scrollActive = '';
-            target.element.style.setProperty(
-                target.kind === 'rule' ? '--rule-progress' : '--section-progress',
-                '0',
-            );
+            writeProgress(target, 0);
         });
 
         const hasVisibleTargets = () => visibleDriftTargets.size > 0 || visibleProgressTargets.size > 0;
@@ -130,10 +137,7 @@ export default function ScrollChoreography() {
                     moving = true;
                 }
 
-                target.element.style.setProperty(
-                    target.kind === 'rule' ? '--rule-progress' : '--section-progress',
-                    target.current.toFixed(4),
-                );
+                writeProgress(target, target.current);
             });
 
             if (moving && document.visibilityState === 'visible') frame = requestAnimationFrame(tick);
@@ -176,7 +180,6 @@ export default function ScrollChoreography() {
                         visibleDriftTargets.delete(driftTarget);
                         delete driftTarget.media.dataset.drift;
                     }
-                    return;
                 }
 
                 const progressTarget = progressByElement.get(element);
@@ -189,10 +192,7 @@ export default function ScrollChoreography() {
                     const completed = entry.boundingClientRect.bottom <= 0 ? 1 : 0;
                     progressTarget.current = completed;
                     progressTarget.target = completed;
-                    progressTarget.element.style.setProperty(
-                        progressTarget.kind === 'rule' ? '--rule-progress' : '--section-progress',
-                        String(completed),
-                    );
+                    writeProgress(progressTarget, completed);
                 }
             });
 
@@ -224,6 +224,7 @@ export default function ScrollChoreography() {
             progressTargets.forEach((target) => {
                 target.element.style.removeProperty('--rule-progress');
                 target.element.style.removeProperty('--section-progress');
+                target.element.style.removeProperty('--frame-clip');
                 delete target.element.dataset.scrollActive;
             });
         };

@@ -109,7 +109,6 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
         let pointerTargetY = 0;
         let pointerX = 0;
         let pointerY = 0;
-        const startedAt = performance.now();
 
         canvas.setAttribute('aria-hidden', 'true');
         canvas.style.position = 'absolute';
@@ -156,12 +155,10 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
             };
         };
 
-        const buildFrames = (progress: number, elapsed: number) => {
+        const buildFrames = (progress: number) => {
             const morph = easeInOut(progress);
-            const driftYaw = activeMotion ? Math.sin(elapsed * 0.22) * 0.022 : 0;
-            const driftPitch = activeMotion ? Math.cos(elapsed * 0.18) * 0.016 : 0;
-            const viewYaw = mix(-0.48, 0.015, morph) + pointerX * 0.085 + driftYaw;
-            const viewPitch = mix(0.34, 0, morph) - pointerY * 0.065 + driftPitch;
+            const viewYaw = mix(-0.48, 0.015, morph) + pointerX * 0.22;
+            const viewPitch = mix(0.34, 0, morph) - pointerY * 0.14;
             const focalLength = Math.min(width, height) * 1.16;
             const frames: ProjectedFrame[] = [];
 
@@ -212,18 +209,17 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
             context.stroke();
         };
 
-        const renderFrame = (now: number) => {
+        const renderFrame = () => {
             frameRequest = 0;
             if (disposed || width < 1 || height < 1) return;
 
-            const requestedProgress = activeMotion ? progressRef.current : 0.76;
+            const requestedProgress = activeMotion ? progressRef.current : 0;
             const progress = clamp01(Number.isFinite(requestedProgress) ? requestedProgress : 0);
-            const elapsed = activeMotion ? (now - startedAt) / 1000 : 0;
             pointerX += (pointerTargetX - pointerX) * 0.04;
             pointerY += (pointerTargetY - pointerY) * 0.04;
 
             context.clearRect(0, 0, width, height);
-            const frames = buildFrames(progress, elapsed);
+            const frames = buildFrames(progress);
             const sortedFrames = [...frames].sort((a, b) => a.depth - b.depth);
 
             for (const frame of sortedFrames) {
@@ -271,7 +267,9 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
 
             frameCount += 1;
             root.dataset.frames = String(frameCount);
-            if (shouldAnimate()) frameRequest = requestAnimationFrame(renderFrame);
+            if (shouldAnimate() && (Math.abs(pointerTargetX - pointerX) > .002 || Math.abs(pointerTargetY - pointerY) > .002)) {
+                frameRequest = requestAnimationFrame(renderFrame);
+            }
         };
 
         const requestRender = () => {
@@ -287,6 +285,10 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
             if (!activeMotion || event.pointerType === 'touch') return;
             pointerTargetX = (event.clientX / Math.max(window.innerWidth, 1)) * 2 - 1;
             pointerTargetY = (event.clientY / Math.max(window.innerHeight, 1)) * 2 - 1;
+            if (shouldAnimate()) requestRender();
+        };
+        const handleProgress = () => {
+            if (shouldAnimate()) requestRender();
         };
         const handleVisibility = () => {
             pageVisible = document.visibilityState === 'visible';
@@ -295,6 +297,7 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
         };
 
         window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        document.addEventListener('portfolio-hero-progress', handleProgress);
         document.addEventListener('visibilitychange', handleVisibility);
 
         const bounds = root.getBoundingClientRect();
@@ -325,7 +328,7 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
             },
         };
 
-        if (resize()) renderFrame(performance.now());
+        if (resize()) renderFrame();
         root.dataset.sceneReady = 'true';
         root.classList.add('is-ready');
 
@@ -336,6 +339,7 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
             intersectionObserver.disconnect();
             resizeObserver.disconnect();
             window.removeEventListener('pointermove', handlePointerMove);
+            document.removeEventListener('portfolio-hero-progress', handleProgress);
             document.removeEventListener('visibilitychange', handleVisibility);
             canvas.remove();
             root.classList.remove('is-ready');

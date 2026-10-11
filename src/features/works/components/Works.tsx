@@ -5,6 +5,7 @@ import { Tag, Link } from '@/components/ui';
 import ArtIcon from '@/components/ui/ArtIcon';
 import { WorkCardMedia } from './WorkCardMedia';
 import { WorkFilters } from './WorkFilters';
+import WorkFrameInteraction from './WorkFrameInteraction';
 import './works-showcase.css';
 
 const CATEGORY_GROUPS: { key: WorkCategory; label: string; englishLabel: string; sublabel: string }[] = [
@@ -22,7 +23,7 @@ function WorkCard({ work }: { work: Work }) {
     const imageIsExternal = imageHref ? isExternalHref(imageHref) : false;
     const isLead = work.id === 'mawarimi' || work.id === 'whiteout';
     const media = work.image ? (
-        <WorkCardMedia src={work.image} alt={work.title} fit={work.imageFit} wide={isLead} />
+        <WorkCardMedia src={work.image} alt={work.title} fit={work.imageFit} wide={isLead} eager={work.id === 'mawarimi'} />
     ) : (
         <span className="work-placeholder">Image coming soon</span>
     );
@@ -31,13 +32,14 @@ function WorkCard({ work }: { work: Work }) {
         <article id={'work-' + work.id} className={'work-card' + (work.featured ? ' work-card--featured' : '') + (isLead ? ' work-card--lead' : '')}>
             {imageHref ? (
                 <a href={imageHref} className="work-media work-media--linked"
-                    data-reveal="media"
+                    data-reveal={work.id === 'mawarimi' ? undefined : isLead ? 'media' : undefined}
+                    data-scroll-frame={work.id === 'mawarimi' ? '' : undefined}
                     aria-label={detailHref ? work.title + ' の詳細を見る' : work.title}
                     target={imageIsExternal ? '_blank' : undefined} rel={imageIsExternal ? 'noopener noreferrer' : undefined}>
                     {media}
                     <span className="work-image-arrow" aria-hidden="true"><ArtIcon name="arrow" size={18} /></span>
                 </a>
-            ) : <div className="work-media" data-reveal="media">{media}</div>}
+            ) : <div className="work-media">{media}</div>}
             <div className="work-content">
                 <div className="work-meta">
                     {(work.period || work.role) && <p>{[work.period, work.role].filter(Boolean).join('　/　')}</p>}
@@ -90,8 +92,10 @@ export default function Works() {
 
     return (
         <section id="works" className="works-section" aria-labelledby="works-title" data-scroll-section>
+            <WorkFrameInteraction />
             <div className="site-container">
                 <header className="works-heading" data-scroll-rule>
+                    <span className="works-heading__frame" aria-hidden="true" />
                     <div className="works-heading__title">
                         <p className="section-kicker">01 / PROJECTS</p>
                         <h2 id="works-title">Works</h2>

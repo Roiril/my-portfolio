@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useMotion } from '@/components/motion/MotionProvider';
+import Image from 'next/image';
 import InteractionScene from './InteractionScene';
 import './hero-editorial.css';
 
@@ -27,18 +28,29 @@ export default function Hero() {
         let height = innerHeight;
 
         const paint = () => {
-            const arrangement = smooth(clamp((current - .12) / .74));
-            const intro = smooth(clamp((current - .42) / .38));
+            const arrangement = smooth(clamp((current - .12) / .72));
+            const intro = smooth(clamp((current - .32) / .21));
+            const dark = smooth(clamp((current - .27) / .26));
+            const expansion = smooth(clamp((current - .73) / .18));
+            const settling = smooth(clamp((current - .91) / .09));
             root.style.setProperty('--hero-progress', String(current));
-            root.style.setProperty('--opening-opacity', String(1 - smooth(clamp(current / .42))));
+            root.style.setProperty('--opening-opacity', String(1 - smooth(clamp((current - .17) / .39))));
             root.style.setProperty('--opening-y', -current * 100 + 'px');
-            root.style.setProperty('--art-x', (width > 760 ? width * .08 * arrangement : 0) + 'px');
-            root.style.setProperty('--art-y', (-arrangement * height * (width <= 760 ? .36 : .23)) + 'px');
-            root.style.setProperty('--art-scale', String(1 - arrangement * (width <= 760 ? .40 : .58)));
-            root.style.setProperty('--intro-opacity', String(intro));
+            root.style.setProperty('--art-x', (width > 760 ? width * (.08 * arrangement - .28 * expansion - .13 * settling) : 0) + 'px');
+            root.style.setProperty('--art-y', (width <= 760 ? -height * (.28 * arrangement - .075 * expansion) : -height * .16 * (arrangement - expansion)) + 'px');
+            root.style.setProperty('--art-scale', String(width <= 760 ? 1 - .18 * arrangement + .18 * expansion : 1 - .25 * arrangement + 1.2 * expansion - .55 * settling));
+            root.style.setProperty('--intro-opacity', String(intro * (1 - smooth(clamp((current - .69) / .13)))));
             root.style.setProperty('--intro-y', (1 - intro) * 40 + 'px');
+            root.style.setProperty('--paper-opacity', String(1 - dark));
+            const portal = smooth(clamp((current - .60) / .32));
+            root.style.setProperty('--wire-opacity', String(1 - portal));
+            root.style.setProperty('--portal-progress', String(portal));
+            root.style.setProperty('--portal-clip', `${(1 - portal) * 100}%`);
+            root.style.setProperty('--portal-rotation', `${(1 - portal) * 45}deg`);
+            root.style.setProperty('--portal-scale', String(.64 + portal * .36));
             root.dataset.progress = current.toFixed(3);
             progressRef.current = current;
+            document.dispatchEvent(new Event('portfolio-hero-progress'));
         };
         const tick = (now: number) => {
             const delta = lastTime ? Math.min(now - lastTime, 64) : 16;
@@ -96,6 +108,10 @@ export default function Hero() {
                 <div className="immersive-hero__visual site-container" aria-hidden="true"><div className="immersive-hero__art">
                     <div className="immersive-hero__fallback">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ rotate: i * 3 + 'deg', scale: 1 - i * .035 }} />)}</div>
                     <InteractionScene progressRef={progressRef} motionEnabled={enabled} />
+                    <div className="immersive-hero__portal" aria-hidden="true">
+                        <Image src="/images/works/mawarimi/key-visual.webp" alt="" fill unoptimized sizes="(max-width: 760px) 62vw, 320px" />
+                        <span>01 / EXPLORE WORK</span>
+                    </div>
                     <span className="immersive-hero__figure-note">FORM STUDY — 01</span>
                 </div></div>
                 <div className="immersive-hero__opening site-container">

@@ -33,6 +33,14 @@ html[data-motion='on'] .work-media[data-drift] .work-image:not(.work-image--cont
     --section-progress: 1;
 }
 
+html[data-motion='on'] [data-scroll-frame][data-scroll-active] .work-image {
+    clip-path: inset(0 var(--frame-clip, 0%) 0 0);
+}
+html[data-motion='on'] [data-scroll-frame]:focus-visible .work-image,
+html[data-motion='on'] [data-scroll-frame]:active .work-image {
+    clip-path: none;
+}
+
 .about-section[data-scroll-section],
 .links-section[data-scroll-section] {
     position: relative;
