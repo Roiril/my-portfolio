@@ -58,8 +58,8 @@ export default function WorkGridFlight() {
                 const height = item.offsetHeight;
                 // The second image in each pair follows the first as the row arrives.
                 const stagger = !mobile && index % 2 ? viewport * .12 : 0;
-                const start = viewport * (mobile ? .94 : .82) - stagger;
-                const finish = viewport * (mobile ? .62 : .42) - stagger;
+                const start = viewport * 1.2 - stagger;
+                const finish = viewport * .72 - stagger;
                 const progress = clamp((start - top) / (start - finish));
 
                 // Far-off cards require no paint or image compositing work.

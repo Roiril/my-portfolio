@@ -152,11 +152,12 @@ html:not([data-motion='on']) .works-launchpad { display: none; }
     .works-section .works-heading { margin-bottom: 48px; padding-bottom: 22px; }
     .works-section .works-heading__frame { top:-30px; width:48px; }
     .works-section .works-heading__title, .works-section .works-heading > p { grid-column: 1 / -1; }
+    .works-section .works-heading__title { padding-left: 40px; }
     .works-section .works-heading h2 { font-size: clamp(58px, 16vw, 80px); }
     .works-section .works-heading > p { margin-top: 24px; }
 
     .works-section .works-filter { scroll-margin-top: 72px; }
-    .works-section .works-filter__bar { position: static; display: block; min-height: 0; padding: 14px 0 18px; }
+    .works-section .works-filter__bar { position: relative; top: auto; display: block; min-height: 0; padding: 14px 0 18px; box-shadow: -20px 0 var(--works-paper); }
     .works-section .works-filter__label { margin-bottom: 9px; }
     .works-section .works-filter__buttons { justify-content: flex-start; gap: 2px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
     .works-section .works-filter__buttons::-webkit-scrollbar { display: none; }

@@ -157,7 +157,7 @@ export default function InteractionScene({ progressRef, motionEnabled }: Interac
         };
 
         const buildFrames = (progress: number) => {
-            const morph = easeInOut(progress);
+            const morph = easeInOut(progress / .65);
             const viewYaw = mix(-0.48, 0.015, morph) + pointerX * 0.22;
             const viewPitch = mix(0.34, 0, morph) - pointerY * 0.14;
             const focalLength = Math.min(width, height) * 1.16;

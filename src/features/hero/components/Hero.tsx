@@ -32,13 +32,14 @@ export default function Hero() {
             const arrangement = smooth(clamp((current - .12) / .72));
             const intro = smooth(clamp((current - .32) / .21));
             const dark = smooth(clamp((current - .27) / .26));
-            const gather = smooth(clamp((current - .50) / .48));
+            const prepare = smooth(clamp((current - .28) / .32));
+            const gather = smooth(clamp((current - .60) / .38));
             root.style.setProperty('--hero-progress', String(current));
             root.style.setProperty('--opening-opacity', String(1 - smooth(clamp((current - .17) / .39))));
             root.style.setProperty('--opening-y', -current * 100 + 'px');
             const openingX = width > 760 ? width * .08 * arrangement : 0;
             const openingY = width <= 760 ? -height * .28 * arrangement : -height * .16 * arrangement;
-            const openingScale = width <= 760 ? 1 - .18 * arrangement : 1 - .25 * arrangement;
+            const openingScale = (width <= 760 ? 1 - .18 * arrangement : 1 - .25 * arrangement) * (1 - .25 * prepare);
             root.style.setProperty('--art-x', (openingX * (1 - gather) + targetArtX * gather) + 'px');
             root.style.setProperty('--art-y', (openingY * (1 - gather) + targetArtY * gather) + 'px');
             root.style.setProperty('--art-scale', String(openingScale * (1 - gather) + (width <= 760 ? .2 : .15) * gather));
