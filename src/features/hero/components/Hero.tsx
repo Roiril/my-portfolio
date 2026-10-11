@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { useMotion } from '@/components/motion/MotionProvider';
-import Image from 'next/image';
 import InteractionScene from './InteractionScene';
 import './hero-editorial.css';
 
@@ -43,10 +42,8 @@ export default function Hero() {
             root.style.setProperty('--intro-y', (1 - intro) * 40 + 'px');
             root.style.setProperty('--paper-opacity', String(1 - dark));
             const portal = smooth(clamp((current - .60) / .32));
-            root.style.setProperty('--wire-opacity', String(1 - portal));
+            root.style.setProperty('--wire-opacity', String(1 - .55 * portal));
             root.style.setProperty('--portal-progress', String(portal));
-            root.style.setProperty('--portal-clip', `${(1 - portal) * 100}%`);
-            root.style.setProperty('--portal-rotation', `${(1 - portal) * 45}deg`);
             root.style.setProperty('--portal-scale', String(.64 + portal * .36));
             root.dataset.progress = current.toFixed(3);
             progressRef.current = current;
@@ -108,12 +105,8 @@ export default function Hero() {
                 <div className="immersive-hero__visual site-container" aria-hidden="true"><div className="immersive-hero__art">
                     <div className="immersive-hero__fallback">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ rotate: i * 3 + 'deg', scale: 1 - i * .035 }} />)}</div>
                     <InteractionScene progressRef={progressRef} motionEnabled={enabled} />
-                    <div className="immersive-hero__portal" aria-hidden="true">
-                        <Image src="/images/works/mawarimi/key-visual.webp" alt="" fill unoptimized sizes="(max-width: 760px) 62vw, 320px" />
-                        <span>01 / EXPLORE WORK</span>
-                    </div>
                     <span className="immersive-hero__figure-note">FORM STUDY — 01</span>
-                </div></div>
+                </div><div className="immersive-hero__portal" aria-hidden="true"><span>17 / EXPLORE WORKS</span></div></div>
                 <div className="immersive-hero__opening site-container">
                     <p className="immersive-hero__eyebrow">PORTFOLIO <span>2026</span></p>
                     <div className="immersive-hero__identity">

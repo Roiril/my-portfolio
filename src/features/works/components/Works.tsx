@@ -6,6 +6,7 @@ import ArtIcon from '@/components/ui/ArtIcon';
 import { WorkCardMedia } from './WorkCardMedia';
 import { WorkFilters } from './WorkFilters';
 import WorkFrameInteraction from './WorkFrameInteraction';
+import WorkGridFlight from './WorkGridFlight';
 import './works-showcase.css';
 
 const CATEGORY_GROUPS: { key: WorkCategory; label: string; englishLabel: string; sublabel: string }[] = [
@@ -33,7 +34,6 @@ function WorkCard({ work }: { work: Work }) {
             {imageHref ? (
                 <a href={imageHref} className="work-media work-media--linked"
                     data-reveal={work.id === 'mawarimi' ? undefined : isLead ? 'media' : undefined}
-                    data-scroll-frame={work.id === 'mawarimi' ? '' : undefined}
                     aria-label={detailHref ? work.title + ' の詳細を見る' : work.title}
                     target={imageIsExternal ? '_blank' : undefined} rel={imageIsExternal ? 'noopener noreferrer' : undefined}>
                     {media}
@@ -93,6 +93,8 @@ export default function Works() {
     return (
         <section id="works" className="works-section" aria-labelledby="works-title" data-scroll-section>
             <WorkFrameInteraction />
+            <WorkGridFlight />
+            <div className="works-launchpad" aria-hidden="true"><span className="works-launchpad__square" /></div>
             <div className="site-container">
                 <header className="works-heading" data-scroll-rule>
                     <span className="works-heading__frame" aria-hidden="true" />

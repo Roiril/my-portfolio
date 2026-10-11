@@ -7,7 +7,14 @@
     padding: var(--section-space) 0;
     background: var(--works-paper);
     color: var(--works-ink);
+    position: relative;
 }
+
+/* The same wire square stays in view as each real card image reaches its grid cell. */
+.works-launchpad { position: sticky; top: 136px; z-index: 4; height: 0; pointer-events: none; }
+.works-launchpad__square { position: absolute; top: 0; left: max(var(--page-gutter), calc((100vw - 1280px) / 2)); width: 68px; height: 68px; border: 1px solid var(--works-orange); translate: 0 -50%; rotate: 45deg; opacity: .75; }
+.works-launchpad__square::after { position: absolute; inset: 8px; border: 1px solid var(--works-line); content: ''; }
+html:not([data-motion='on']) .works-launchpad { display: none; }
 
 .works-section .works-heading {
     display: grid;
@@ -67,6 +74,10 @@
 
 .works-section .work-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(72px, 7vw, 96px) var(--grid-gap); }
 .works-section .work-card { position: relative; display: block; grid-column: span 6; min-width: 0; opacity: 1; }
+.works-section .work-card[data-flight-active] { z-index: 5; }
+.works-section .work-card[data-flight-active] .work-media { transform-origin: center; will-change: transform; }
+.works-section .work-card[data-flight-active] .work-content,
+.works-section .work-card[data-flight-active] .work-credits { opacity: var(--flight-text-opacity, 1); }
 .works-section .work-card::before { position: absolute; z-index: 2; inset: -9px; content: ''; border: 1px solid var(--works-orange); opacity: 0; pointer-events: none; transform: scale(.992); transform-origin: center; transition: opacity 180ms var(--ease-out), transform 260ms var(--ease-out); }
 .works-section .work-card:hover::before, .works-section .work-card:focus-within::before { opacity: .72; transform: scale(1); }
 .works-section .work-card--lead:hover:not(:focus-within)::before { opacity:0; }
@@ -128,6 +139,8 @@
 }
 
 @media (max-width: 760px) {
+    .works-launchpad { top: 104px; }
+    .works-launchpad__square { width: 48px; height: 48px; }
     .works-section .works-heading { margin-bottom: 48px; padding-bottom: 22px; }
     .works-section .works-heading__frame { top:-30px; width:48px; }
     .works-section .works-heading__title, .works-section .works-heading > p { grid-column: 1 / -1; }
@@ -164,6 +177,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .works-launchpad { display: none; }
     .works-filter[data-active-category] .work-group { animation: none; }
     .works-section .work-card::before, .works-section .work-image, .works-section .work-image-arrow, .works-section .works-filter__button, .works-section .works-filter__button::after { transition: none; }
 }
