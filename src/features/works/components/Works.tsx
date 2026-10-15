@@ -34,7 +34,6 @@ function WorkCard({ work }: { work: Work }) {
         <article id={'work-' + work.id} className={'work-card' + (work.featured ? ' work-card--featured' : '') + (isLead ? ' work-card--lead' : '')}>
             {imageHref ? (
                 <a href={imageHref} className="work-media work-media--linked"
-                    data-reveal={work.id === 'mawarimi' ? undefined : isLead ? 'media' : undefined}
                     aria-label={detailHref ? work.title + ' の詳細を見る' : work.title}
                     target={imageIsExternal ? '_blank' : undefined} rel={imageIsExternal ? 'noopener noreferrer' : undefined}>
                     {media}

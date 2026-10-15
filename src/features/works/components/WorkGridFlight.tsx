@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useMotion } from '@/components/motion/MotionProvider';
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
@@ -9,6 +9,7 @@ const smooth = (value: number) => value * value * (3 - 2 * value);
 /** Keep every image's destination in normal layout. Only its visual layer travels. */
 export default function WorkGridFlight() {
     const { enabled } = useMotion();
+    const reachedProgress = useRef(new WeakMap<HTMLElement, number>());
 
     useLayoutEffect(() => {
         const section = document.getElementById('works');
@@ -62,7 +63,12 @@ export default function WorkGridFlight() {
                 const card = cards[index];
                 const item = media[index];
                 if (!item) return;
-                if (!measurement || card.contains(document.activeElement)) {
+                if (!measurement) {
+                    reset(card, item);
+                    return;
+                }
+                if (card.contains(document.activeElement)) {
+                    reachedProgress.current.set(card, 1);
                     reset(card, item);
                     return;
                 }
@@ -74,7 +80,11 @@ export default function WorkGridFlight() {
                 const stagger = !mobile && index % 2 ? viewport * .12 : 0;
                 const start = viewport * 1.2 - stagger;
                 const finish = viewport * .72 - stagger;
-                const progress = clamp((start - top) / (start - finish));
+                // An image only advances: scrolling back or changing filters must
+                // not send an already revealed image back to the launch point.
+                const progress = Math.max(reachedProgress.current.get(card) ?? 0,
+                    clamp((start - top) / (start - finish)));
+                reachedProgress.current.set(card, progress);
 
                 // Far-off cards require no paint or image compositing work.
                 if (progress >= 1 || top + height < -viewport * .2) {
