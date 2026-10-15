@@ -4,7 +4,6 @@ import { useEffect, useRef, type RefObject } from 'react';
 
 type InteractionSceneProps = {
     progressRef: RefObject<number>;
-    renderRef: RefObject<(() => void) | null>;
     motionEnabled: boolean;
 };
 
@@ -25,13 +24,16 @@ type Point2 = {
 
 type ProjectedFrame = {
     corners: Point2[];
+    center: Point2;
     depth: number;
     index: number;
 };
 
 const FRAME_COUNT = 30;
-const INK = '#242624';
+const MUTED = '#a5a6a0';
 const VERMILION = '#ac4838';
+const DARK_WIRE = [172, 72, 56];
+const LIGHT_WIRE = [36, 38, 36];
 const POINTER_ROTATION = Math.PI / 60;
 const POINTER_EPSILON = 0.001;
 
@@ -76,7 +78,7 @@ function tracePolygon(context: CanvasRenderingContext2D, points: Point2[]) {
     context.closePath();
 }
 
-export default function InteractionScene({ progressRef, renderRef, motionEnabled }: InteractionSceneProps) {
+export default function InteractionScene({ progressRef, motionEnabled }: InteractionSceneProps) {
     const rootRef = useRef<HTMLDivElement>(null);
     const controllerRef = useRef<SceneController | null>(null);
     const motionEnabledRef = useRef(motionEnabled);
@@ -97,7 +99,6 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
             root.dataset.inputs = '0';
             root.dataset.sceneReady = 'fallback';
             return () => {
-                renderRef.current = null;
                 delete root.dataset.frames;
                 delete root.dataset.inputs;
                 delete root.dataset.sceneReady;
@@ -166,38 +167,38 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
             point: Point3,
             viewYaw: number,
             viewPitch: number,
+            focalLength: number,
         ): Point2 & { depth: number } => {
             const viewed = rotatePoint(point, viewPitch, viewYaw, 0);
             const cameraDistance = 10;
             const depth = Math.max(3, cameraDistance - viewed.z);
-            const scale = 1 / depth;
+            const scale = focalLength / depth;
             return {
-                x: viewed.x * scale,
-                y: -viewed.y * scale,
+                x: width * 0.5 + viewed.x * scale,
+                y: height * 0.5 - viewed.y * scale,
                 depth: viewed.z,
             };
         };
 
         const buildFrames = (progress: number) => {
-            const phase = clamp01((progress - 0.12) / 0.73);
-            const morph = easeInOut(phase);
-            const pointerWeight = activeMotion ? 1 - easeInOut(progress / 0.15) : 0;
-            const viewYaw = mix(-0.6, 0, morph) + pointerX * POINTER_ROTATION * pointerWeight;
-            const viewPitch = mix(0.38, 0, morph) - pointerY * POINTER_ROTATION * pointerWeight;
+            const morph = easeInOut(progress / .65);
+            const pointerWeight = activeMotion ? 1 - easeInOut(progress / .15) : 0;
+            const viewYaw = mix(-0.48, 0.015, morph) + pointerX * POINTER_ROTATION * pointerWeight;
+            const viewPitch = mix(0.34, 0, morph) - pointerY * POINTER_ROTATION * pointerWeight;
+            const focalLength = Math.min(width, height) * 1.16;
             const frames: ProjectedFrame[] = [];
 
             for (let index = 0; index < FRAME_COUNT; index += 1) {
                 const t = index / (FRAME_COUNT - 1);
-                const frameMorph = easeInOut((phase - t * 0.035) / 0.965);
                 const center = {
-                    x: mix(Math.sin(t * Math.PI * 2) * 0.22, (t - 0.5) * 6.1, frameMorph),
-                    y: mix(Math.sin(t * Math.PI) * 0.15, (0.5 - t) * 0.15, frameMorph),
-                    z: mix((t - 0.5) * 5.8, (t - 0.5) * 0.12, frameMorph),
+                    x: (t - .5) * .5 * morph,
+                    y: (.5 - t) * .2 * morph,
+                    z: mix((t - 0.5) * 5.4, (t - .5) * 2, morph),
                 };
-                const rotationX = (t - 0.5) * 0.16;
-                const rotationY = (t - 0.5) * 0.2;
-                const rotationZ = (t - 0.5) * Math.PI * 0.9;
-                const halfSize = 1.65;
+                const rotationX = 0;
+                const rotationY = 0;
+                const rotationZ = (t - .5) * Math.PI * .62 + morph * Math.PI * .25;
+                const halfSize = mix(1.65, 1.45, morph);
                 const localCorners = [
                     { x: -halfSize, y: -halfSize, z: 0 },
                     { x: halfSize, y: -halfSize, z: 0 },
@@ -207,39 +208,21 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
                 let depth = 0;
                 const corners = localCorners.map((corner) => {
                     const rotated = rotatePoint(corner, rotationX, rotationY, rotationZ);
-                    const aligned = {
-                        x: corner.x / halfSize + corner.y / halfSize * 0.52,
-                        y: corner.y / halfSize * 0.62,
-                        z: 0,
-                    };
                     const projected = project({
-                        x: mix(rotated.x, aligned.x, frameMorph) + center.x,
-                        y: mix(rotated.y, aligned.y, frameMorph) + center.y,
-                        z: mix(rotated.z, aligned.z, frameMorph) + center.z,
-                    }, viewYaw, viewPitch);
+                        x: rotated.x + center.x,
+                        y: rotated.y + center.y,
+                        z: rotated.z + center.z,
+                    }, viewYaw, viewPitch, focalLength);
                     depth += projected.depth;
                     return { x: projected.x, y: projected.y };
                 });
+                const projectedCenter = project(center, viewYaw, viewPitch, focalLength);
                 frames.push({
                     corners,
+                    center: projectedCenter,
                     depth: depth / 4,
                     index,
                 });
-            }
-
-            const points = frames.flatMap((frame) => frame.corners);
-            const left = Math.min(...points.map((point) => point.x));
-            const right = Math.max(...points.map((point) => point.x));
-            const top = Math.min(...points.map((point) => point.y));
-            const bottom = Math.max(...points.map((point) => point.y));
-            const scale = Math.min(width * 0.86 / (right - left), height * 0.86 / (bottom - top));
-            const centerX = (left + right) / 2;
-            const centerY = (top + bottom) / 2;
-            for (const frame of frames) {
-                for (const point of frame.corners) {
-                    point.x = width / 2 + (point.x - centerX) * scale;
-                    point.y = height / 2 + (point.y - centerY) * scale;
-                }
             }
             return frames;
         };
@@ -257,7 +240,10 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
             if (!canRender()) { lastTime = 0; return; }
 
             const progress = getProgress();
-            if (!activeMotion || progress >= 0.15) {
+            const dark = easeInOut((progress - .27) / .26);
+            const gather = easeInOut((progress - .72) / .26);
+            const wireColor = `rgb(${LIGHT_WIRE.map((channel, index) => Math.round(mix(channel, DARK_WIRE[index], dark))).join(' ')})`;
+            if (!activeMotion || progress >= .15) {
                 pointerTargetX = 0;
                 pointerTargetY = 0;
                 pointerX = 0;
@@ -274,21 +260,48 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
             context.clearRect(0, 0, width, height);
             const frames = buildFrames(progress);
             const sortedFrames = [...frames].sort((a, b) => a.depth - b.depth);
-            const farDepth = sortedFrames[0].depth;
-            const depthRange = Math.max(0.001, sortedFrames[sortedFrames.length - 1].depth - farDepth);
 
             for (const frame of sortedFrames) {
                 if (frame.index === 15) {
                     tracePolygon(context, frame.corners);
-                    context.globalAlpha = 0.24;
+                    context.globalAlpha = 0.16;
                     context.fillStyle = VERMILION;
                     context.fill();
+                } else if (frame.index === 7 || frame.index === 23) {
+                    tracePolygon(context, frame.corners);
+                    context.globalAlpha = 0.08;
+                    context.fillStyle = MUTED;
+                    context.fill();
                 }
-                const depth = clamp01((frame.depth - farDepth) / depthRange);
-                const depthAlpha = mix(0.18, 0.88, depth);
-                const accented = frame.index === 15;
-                drawFrame(frame, accented ? VERMILION : INK, accented ? 1.5 : mix(0.65, 1.25, depth), accented ? 1 : depthAlpha);
             }
+
+            context.globalAlpha = mix(0.28, 0.06, gather);
+            context.strokeStyle = MUTED;
+            context.lineWidth = mix(0.7, 4, gather);
+            for (let index = 0; index < frames.length - 1; index += 1) {
+                const current = frames[index];
+                const next = frames[index + 1];
+                for (let cornerIndex = 0; cornerIndex < 4; cornerIndex += 1) {
+                    context.beginPath();
+                    context.moveTo(current.corners[cornerIndex].x, current.corners[cornerIndex].y);
+                    context.lineTo(next.corners[cornerIndex].x, next.corners[cornerIndex].y);
+                    context.stroke();
+                }
+            }
+
+            for (const frame of sortedFrames) {
+                const depthAlpha = mix(mix(0.34, 0.92, clamp01((frame.depth + 3.2) / 6.4)), .28, gather);
+                const accented = frame.index === 15;
+                drawFrame(frame, accented ? VERMILION : wireColor, mix(accented ? 1.2 : 0.9, 5, gather), accented ? 0.95 : depthAlpha);
+            }
+
+            context.globalAlpha = 0.34;
+            context.strokeStyle = VERMILION;
+            context.lineWidth = 0.75;
+            context.beginPath();
+            context.moveTo(frames[13].center.x, frames[13].center.y);
+            context.lineTo(frames[17].center.x, frames[17].center.y);
+            context.stroke();
             context.globalAlpha = 1;
 
             frameCount += 1;
@@ -311,7 +324,7 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
             lastTime = 0;
         };
         const handlePointerMove = (event: PointerEvent) => {
-            if (!activeMotion || !canRender() || getProgress() >= 0.15 || event.pointerType === 'touch') return;
+            if (!activeMotion || !canRender() || getProgress() >= .15 || event.pointerType === 'touch') return;
             recordInput();
             pointerTargetX = clamp01(event.clientX / Math.max(window.innerWidth, 1)) * 2 - 1;
             pointerTargetY = clamp01(event.clientY / Math.max(window.innerHeight, 1)) * 2 - 1;
@@ -324,18 +337,19 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
             pointerTargetY = 0;
             requestRender();
         };
+        const handleProgress = () => {
+            recordInput();
+            if (activeMotion) requestRender();
+        };
         const handleVisibility = () => {
             pageVisible = document.visibilityState === 'visible';
             if (pageVisible) requestRender();
             else stopRendering();
         };
 
-        renderRef.current = () => {
-            recordInput();
-            if (activeMotion) requestRender();
-        };
         window.addEventListener('pointermove', handlePointerMove, { passive: true });
         document.documentElement.addEventListener('pointerleave', handlePointerLeave);
+        document.addEventListener('portfolio-hero-progress', handleProgress);
         document.addEventListener('visibilitychange', handleVisibility);
 
         const bounds = root.getBoundingClientRect();
@@ -372,12 +386,12 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
         return () => {
             disposed = true;
             controllerRef.current = null;
-            renderRef.current = null;
             stopRendering();
             intersectionObserver.disconnect();
             resizeObserver.disconnect();
             window.removeEventListener('pointermove', handlePointerMove);
             document.documentElement.removeEventListener('pointerleave', handlePointerLeave);
+            document.removeEventListener('portfolio-hero-progress', handleProgress);
             document.removeEventListener('visibilitychange', handleVisibility);
             canvas.remove();
             root.classList.remove('is-ready');
@@ -385,7 +399,7 @@ export default function InteractionScene({ progressRef, renderRef, motionEnabled
             delete root.dataset.frames;
             delete root.dataset.inputs;
         };
-    }, [progressRef, renderRef]);
+    }, [progressRef]);
 
     return <div ref={rootRef} className="interaction-scene" aria-hidden="true" />;
 }

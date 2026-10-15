@@ -12,7 +12,6 @@ export default function Hero() {
     const { enabled } = useMotion();
     const rootRef = useRef<HTMLElement>(null);
     const progressRef = useRef(0);
-    const renderRef = useRef<(() => void) | null>(null);
     const enteredRef = useRef(false);
 
     useEffect(() => {
@@ -37,6 +36,7 @@ export default function Hero() {
         };
     }, [enabled]);
 
+
     useEffect(() => {
         const root = rootRef.current;
         if (!root) return;
@@ -49,16 +49,36 @@ export default function Hero() {
         let offset = 0;
         let width = root.clientWidth;
         let height = innerHeight;
+        let targetArtX = 0;
+        let targetArtY = 0;
 
         const paint = () => {
-            const arrangement = smooth(clamp((current - .12) / .73));
+            const arrangement = smooth(clamp((current - .12) / .72));
+            const intro = smooth(clamp((current - .32) / .21));
+            const dark = smooth(clamp((current - .27) / .26));
+            const prepare = smooth(clamp((current - .28) / .32));
+            const gather = smooth(clamp((current - .60) / .38));
             root.style.setProperty('--hero-progress', String(current));
-            root.style.setProperty('--opening-y', -arrangement * (width <= 760 ? 20 : 48) + 'px');
-            root.style.setProperty('--art-y', arrangement * height * .035 + 'px');
-            root.style.setProperty('--art-scale', String(1 - arrangement * .08));
+            root.style.setProperty('--opening-opacity', String(1 - smooth(clamp((current - .17) / .39))));
+            root.style.setProperty('--opening-y', -current * 100 + 'px');
+            const openingX = width > 760 ? width * .08 * arrangement : 0;
+            const openingY = width <= 760 ? -height * .28 * arrangement : -height * .16 * arrangement;
+            const openingScale = (width <= 760 ? 1 - .18 * arrangement : 1 - .25 * arrangement) * (1 - .25 * prepare);
+            root.style.setProperty('--art-x', (openingX * (1 - gather) + targetArtX * gather) + 'px');
+            root.style.setProperty('--art-y', (openingY * (1 - gather) + targetArtY * gather) + 'px');
+            root.style.setProperty('--art-scale', String(openingScale * (1 - gather) + (width <= 760 ? .2 : .15) * gather));
+            root.style.setProperty('--art-rotation', `${180 * gather}deg`);
+            root.style.setProperty('--intro-opacity', String(intro));
+            root.style.setProperty('--intro-y', ((1 - intro) * 40 - smooth(clamp((current - .70) / .3)) * (width <= 760 ? 280 : 140)) + 'px');
+            root.style.setProperty('--paper-opacity', String(1 - dark));
+            const portal = smooth(clamp((current - .78) / .18));
+            root.style.setProperty('--wire-opacity', String(1 - smooth(clamp((current - .94) / .06))));
+            root.style.setProperty('--portal-progress', String(portal * (1 - smooth(clamp((current - .86) / .14)))));
+            root.style.setProperty('--portal-scale', String(.64 + portal * .36));
+            root.style.setProperty('--bundle-turn', `${(current * 180).toFixed(1)}deg`);
             root.dataset.progress = current.toFixed(3);
             progressRef.current = current;
-            renderRef.current?.();
+            document.dispatchEvent(new Event('portfolio-hero-progress'));
         };
         const tick = (now: number) => {
             const delta = lastTime ? Math.min(now - lastTime, 64) : 16;
@@ -70,15 +90,20 @@ export default function Hero() {
             else { frame = 0; lastTime = 0; }
         };
         const update = () => {
-            target = enabled ? clamp((scrollY - offset) / travel) : 0;
+            target = enabled && innerHeight > 620 ? clamp((scrollY - offset) / travel) : 0;
             if (!enabled) { current = 0; paint(); return; }
             if (!frame && visible && !document.hidden) frame = requestAnimationFrame(tick);
         };
         const measure = () => {
             width = root.clientWidth;
             height = root.querySelector<HTMLElement>('.immersive-hero__stage')?.clientHeight || innerHeight;
-            travel = width > 760 && innerHeight > 620
-                ? Math.max(1, root.offsetHeight - height) : height * .7;
+            const art = root.querySelector<HTMLElement>('.immersive-hero__art');
+            const portal = root.querySelector<HTMLElement>('.immersive-hero__portal');
+            if (art && portal) {
+                targetArtX = portal.offsetLeft + portal.offsetWidth / 2 - art.offsetLeft - art.offsetWidth / 2;
+                targetArtY = portal.offsetTop + portal.offsetHeight / 2 - art.offsetTop - art.offsetHeight / 2;
+            }
+            travel = Math.max(1, root.offsetHeight - height);
             offset = root.getBoundingClientRect().top + scrollY;
             update();
         };
@@ -116,8 +141,9 @@ export default function Hero() {
                 <div className="immersive-hero__guides site-container" aria-hidden="true"><span /><span /><span /></div>
                 <div className="immersive-hero__visual site-container" aria-hidden="true"><div className="immersive-hero__art">
                     <div className="immersive-hero__fallback">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ rotate: i * 3 + 'deg', scale: 1 - i * .035 }} />)}</div>
-                    <InteractionScene progressRef={progressRef} renderRef={renderRef} motionEnabled={enabled} />
-                </div></div>
+                    <InteractionScene progressRef={progressRef} motionEnabled={enabled} />
+                    <span className="immersive-hero__figure-note">FORM STUDY — 01</span>
+                </div><div className="immersive-hero__portal" aria-hidden="true" /></div>
                 <div className="immersive-hero__opening site-container">
                     <p className="immersive-hero__eyebrow">PORTFOLIO <span>2026</span></p>
                     <div className="immersive-hero__identity">
@@ -125,12 +151,16 @@ export default function Hero() {
                         <h1 id="hero-title" lang="en"><span className="immersive-hero__title-line"><span>Taisei</span></span><span className="immersive-hero__title-line"><span>Shiroishi<span className="immersive-hero__period" aria-hidden="true">.</span></span></span></h1>
                         <p className="immersive-hero__description">人とコンピュータの関わりを研究しています。<br />XRの体験やWebアプリを制作しています。</p>
                     </div>
-                    <div className="immersive-hero__bottom">
-                        <span>MEIJI UNIVERSITY / TOKYO</span>
-                        <a href="#works" className="immersive-hero__scroll"><span>作品を見る</span><span className="immersive-hero__scroll-arrow" aria-hidden="true">↓</span></a>
+                    <div className="immersive-hero__bottom"><span>MEIJI UNIVERSITY / TOKYO</span><span className="immersive-hero__scroll">SCROLL<span aria-hidden="true">↓</span></span></div>
+                </div>
+                <div className="immersive-hero__introduction site-container">
+                    <div className="immersive-hero__context">
+                        <p className="section-kicker">ENTERTAINMENT &amp; INTERACTION</p>
+                        <h2><span>新しいエンタメ体験</span><span>人とコンピューターの間を設計</span></h2>
+                        <p>XRの体験やWebアプリを制作しています。<br />人と機械の関わり方を、試作とユーザ評価を通じて研究しています。</p>
                     </div>
                 </div>
-                <div className="immersive-hero__track site-container" aria-hidden="true"><span /></div>
+                <div className="immersive-hero__index site-container" aria-hidden="true"><span>EXPLORE THE POSSIBILITIES</span><span>↓ SCROLL</span></div>
             </div>
         </section>
     );

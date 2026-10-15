@@ -1,7 +1,26 @@
-[data-scroll-rule] { --rule-progress: 1; position: relative; }
+[data-scroll-reveal='heading'] { --reveal-progress: 1; overflow: clip; padding-block: .08em; }
+[data-scroll-reveal='heading'] > span { display: block; }
+html[data-motion='on'] [data-scroll-reveal='heading'][data-scroll-active] > span {
+    transform: translateY(calc((1 - var(--reveal-progress)) * 105%));
+}
+html[data-motion='off'] [data-scroll-reveal='heading'] { --reveal-progress: 1 !important; }
+@media (prefers-reduced-motion: reduce) {
+    [data-scroll-reveal='heading'] { --reveal-progress: 1 !important; }
+}
+@media print {
+    [data-scroll-reveal='heading'] { --reveal-progress: 1 !important; }
+}
+
+[data-scroll-rule] {
+    --rule-progress: 1;
+    position: relative;
+}
+
 [data-scroll-rule]::after {
     position: absolute;
-    inset: auto 0 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     height: 1px;
     content: '';
     background: currentColor;
@@ -10,50 +29,63 @@
     transform: scaleX(var(--rule-progress));
     transform-origin: left;
 }
+
 .about-section__fact[data-scroll-rule]::after,
-.links-section__nav[data-scroll-rule]::after { top: 0; bottom: auto; }
+.links-section__nav[data-scroll-rule]::after {
+    top: 0;
+    bottom: auto;
+}
 
-[data-scroll-section] { --section-progress: 1; }
-.about-section[data-scroll-section], .links-section[data-scroll-section] { position: relative; isolation: isolate; }
+[data-scroll-section] {
+    --section-progress: 1;
+}
+
+html[data-motion='on'] [data-scroll-frame][data-scroll-active] .work-image {
+    clip-path: inset(0 var(--frame-clip, 0%) 0 0);
+}
+html[data-motion='on'] [data-scroll-frame]:focus-visible .work-image,
+html[data-motion='on'] [data-scroll-frame]:active .work-image {
+    clip-path: none;
+}
+
+.about-section[data-scroll-section],
+.links-section[data-scroll-section] {
+    position: relative;
+    isolation: isolate;
+}
+
 .about-section[data-scroll-section] > .site-container,
-.links-section[data-scroll-section] > .site-container { position: relative; z-index: 1; }
+.links-section[data-scroll-section] > .site-container {
+    position: relative;
+    z-index: 1;
+}
 
-[data-scroll-reveal] { --reveal-progress: 1; }
-[data-scroll-reveal='heading'] { overflow: clip; padding-block: .08em; }
-[data-scroll-reveal='heading'] > span { display: block; }
-html[data-motion='on'] [data-scroll-reveal='heading'][data-scroll-active] > span {
-    transform: translateY(calc((1 - var(--reveal-progress)) * 105%));
+html[data-motion='off'] .work-media .work-image,
+html[data-motion='off'] .work-media[data-drift] .work-image {
+    translate: none;
+    scale: none;
 }
-html[data-motion='on'] .work-media[data-scroll-active]::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    z-index: 2;
-    background: var(--background);
-    transform: scaleY(calc(1 - var(--reveal-progress)));
-    transform-origin: bottom;
-    pointer-events: none;
-}
-html[data-motion='on'] .work-media[data-scroll-active] .work-image {
-    scale: calc(1 + (1 - var(--reveal-progress)) * .045);
-}
-html[data-motion='on'] .work-card--lead .work-media[data-scroll-active] .work-image:not(.work-image--contain) {
-    translate: 0 var(--media-drift,0px);
-    scale: calc(1.04 + (1 - var(--reveal-progress)) * .025);
-}
-html[data-motion='on'] .work-media[data-scroll-active]:focus-within::after { transform: scaleY(0); }
 
-html[data-motion='off'] [data-scroll-rule]::after { transform: scaleX(1); }
-html[data-motion='off'] [data-scroll-section] { --section-progress: 1 !important; }
-html[data-motion='off'] [data-scroll-reveal] { --reveal-progress: 1 !important; }
+html[data-motion='off'] [data-scroll-rule]::after {
+    transform: scaleX(1);
+}
+
+html[data-motion='off'] [data-scroll-section] {
+    --section-progress: 1 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    [data-scroll-rule]::after { transform: scaleX(1); }
-    [data-scroll-section] { --section-progress: 1 !important; }
-    [data-scroll-reveal] { --reveal-progress: 1 !important; }
-    .work-media .work-image { translate: none !important; scale: none !important; }
-}
-@media print {
-    [data-scroll-rule]::after { transform: scaleX(1); }
-    [data-scroll-reveal] { --reveal-progress: 1 !important; }
-    .work-media::after { display: none; }
+    .work-media .work-image,
+    .work-media[data-drift] .work-image {
+        translate: none;
+        scale: none;
+    }
+
+    [data-scroll-rule]::after {
+        transform: scaleX(1);
+    }
+
+    [data-scroll-section] {
+        --section-progress: 1 !important;
+    }
 }
