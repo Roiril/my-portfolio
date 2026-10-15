@@ -38,9 +38,9 @@ export default function Links() {
         <section id="links" className="links-section contact-editorial" aria-labelledby="contact-title" data-scroll-section>
             <div className="site-container links-section__inner">
                 <div className="section-heading contact-editorial__heading" data-scroll-rule>
-                    <div className="section-heading__title" data-reveal>
+                    <div className="section-heading__title">
                         <p className="section-kicker">03 / ELSEWHERE</p>
-                        <h2 id="contact-title" className="links-section__title">Links</h2>
+                        <h2 id="contact-title" className="links-section__title" data-scroll-reveal="heading"><span>Links</span></h2>
                     </div>
                     <p className="section-heading__aside links-section__message">{contactMessage}</p>
                 </div>

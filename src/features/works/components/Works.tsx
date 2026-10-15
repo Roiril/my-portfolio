@@ -31,13 +31,13 @@ function WorkCard({ work }: { work: Work }) {
         <article id={'work-' + work.id} className={'work-card' + (work.featured ? ' work-card--featured' : '') + (isLead ? ' work-card--lead' : '')}>
             {imageHref ? (
                 <a href={imageHref} className="work-media work-media--linked"
-                    data-reveal="media"
+                    data-scroll-reveal="media"
                     aria-label={detailHref ? work.title + ' の詳細を見る' : work.title}
                     target={imageIsExternal ? '_blank' : undefined} rel={imageIsExternal ? 'noopener noreferrer' : undefined}>
                     {media}
                     <span className="work-image-arrow" aria-hidden="true"><ArtIcon name="arrow" size={18} /></span>
                 </a>
-            ) : <div className="work-media" data-reveal="media">{media}</div>}
+            ) : <div className="work-media" data-scroll-reveal="media">{media}</div>}
             <div className="work-content">
                 <div className="work-meta">
                     {(work.period || work.role) && <p>{[work.period, work.role].filter(Boolean).join('　/　')}</p>}
@@ -94,7 +94,7 @@ export default function Works() {
                 <header className="works-heading" data-scroll-rule>
                     <div className="works-heading__title">
                         <p className="section-kicker">01 / PROJECTS</p>
-                        <h2 id="works-title">Works</h2>
+                        <h2 id="works-title" data-scroll-reveal="heading"><span>Works</span></h2>
                     </div>
                     <p>研究のプロトタイプからWebアプリやゲームまで。{workCount}件の制作を掲載しています。</p>
                 </header>

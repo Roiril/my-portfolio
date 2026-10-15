@@ -5,49 +5,26 @@ import { usePathname } from 'next/navigation';
 import { useMotion } from './MotionProvider';
 import './scroll-choreography.css';
 
-type DriftTarget = {
-    media: HTMLElement;
-    image: HTMLImageElement;
-    current: number;
-    target: number;
-};
-
-type ProgressTarget = {
+type Target = {
     element: HTMLElement;
-    kind: 'rule' | 'section';
-    current: number;
-    target: number;
+    kind: 'rule' | 'section' | 'media' | 'heading';
+    progress: number;
+    complete: boolean;
+    image: HTMLImageElement | null;
 };
 
-const MAX_DRIFT = 18;
-const IMAGE_SCALE = 1.04;
-const TIME_CONSTANT = 80;
+const clamp = (value: number, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 
-function clamp(value: number, min = 0, max = 1) {
-    return Math.max(min, Math.min(max, value));
+function progressAt(target: Target, rect: DOMRectReadOnly, viewport: number) {
+    if (target.kind === 'section') return clamp((viewport - rect.top) / (viewport + rect.height));
+    const start = target.kind === 'heading' ? .96 : .98;
+    const end = target.kind === 'heading' ? .7 : .54;
+    return clamp((viewport * start - rect.top) / (viewport * (start - end)));
 }
 
-function driftFromRect(rect: DOMRectReadOnly) {
-    const viewportCenter = window.innerHeight / 2;
-    const travel = viewportCenter + rect.height / 2;
-    const progress = travel > 0 ? (viewportCenter - (rect.top + rect.height / 2)) / travel : 0;
-    const gapSafeDrift = Math.max(0, rect.height * (IMAGE_SCALE - 1) / 2 - 1);
-    const amplitude = Math.min(MAX_DRIFT, gapSafeDrift);
-    return clamp(progress, -1, 1) * amplitude;
-}
-
-function ruleProgressFromRect(rect: DOMRectReadOnly) {
-    const start = window.innerHeight * .92;
-    const end = window.innerHeight * .38;
-    return clamp((start - rect.top) / (start - end));
-}
-
-function sectionProgressFromRect(rect: DOMRectReadOnly) {
-    return clamp((window.innerHeight - rect.top) / (window.innerHeight + rect.height));
-}
-
-function progressFromRect(target: ProgressTarget, rect: DOMRectReadOnly) {
-    return target.kind === 'rule' ? ruleProgressFromRect(rect) : sectionProgressFromRect(rect);
+function propertyFor(target: Target) {
+    return target.kind === 'rule' ? '--rule-progress'
+        : target.kind === 'section' ? '--section-progress' : '--reveal-progress';
 }
 
 export default function ScrollChoreography() {
@@ -55,177 +32,130 @@ export default function ScrollChoreography() {
     const pathname = usePathname();
 
     useEffect(() => {
-        const driftTargets = [...document.querySelectorAll<HTMLElement>('.work-media')]
-            .map((media): DriftTarget | null => {
-                const image = media.querySelector<HTMLImageElement>('.work-image:not(.work-image--contain)');
-                return image ? { media, image, current: 0, target: 0 } : null;
-            })
-            .filter((target): target is DriftTarget => target !== null);
-        const progressTargets: ProgressTarget[] = [
-            ...[...document.querySelectorAll<HTMLElement>('[data-scroll-rule]')]
-                .map((element): ProgressTarget => ({ element, kind: 'rule', current: 0, target: 0 })),
-            ...[...document.querySelectorAll<HTMLElement>('[data-scroll-section]')]
-                .map((element): ProgressTarget => ({ element, kind: 'section', current: 0, target: 0 })),
-        ];
-
         if (!enabled || !('IntersectionObserver' in window)) return;
-        if (driftTargets.length === 0 && progressTargets.length === 0) return;
 
-        const driftByElement = new Map(driftTargets.map((target) => [target.media, target]));
-        const progressByElement = new Map(progressTargets.map((target) => [target.element, target]));
-        const visibleDriftTargets = new Set<DriftTarget>();
-        const visibleProgressTargets = new Set<ProgressTarget>();
+        const targets: Target[] = [
+            ...document.querySelectorAll<HTMLElement>('[data-scroll-rule], [data-scroll-section], [data-scroll-reveal]'),
+        ].map((element) => ({
+            element,
+            kind: element.hasAttribute('data-scroll-rule') ? 'rule'
+                : element.hasAttribute('data-scroll-section') ? 'section'
+                    : element.dataset.scrollReveal === 'heading' ? 'heading' : 'media',
+            progress: -1,
+            complete: false,
+            image: element.closest('.work-card--lead')
+                ? element.querySelector<HTMLImageElement>('.work-image:not(.work-image--contain)') : null,
+        }));
+
+        const byElement = new Map(targets.map(target => [target.element, target]));
+        const visible = new Set<Target>();
         let frame = 0;
-        let measureFrame = 0;
-        let previousTime = 0;
 
-        progressTargets.forEach((target) => {
-            target.element.dataset.scrollActive = '';
-            target.element.style.setProperty(
-                target.kind === 'rule' ? '--rule-progress' : '--section-progress',
-                '0',
-            );
-        });
+        const paint = (target: Target, progress: number) => {
+            if (target.progress === progress) return;
+            target.progress = progress;
+            target.element.style.setProperty(propertyFor(target), progress.toFixed(4));
+        };
 
-        const hasVisibleTargets = () => visibleDriftTargets.size > 0 || visibleProgressTargets.size > 0;
-
-        const halt = () => {
-            if (frame) cancelAnimationFrame(frame);
-            if (measureFrame) cancelAnimationFrame(measureFrame);
+        const measure = () => {
             frame = 0;
-            measureFrame = 0;
-            previousTime = 0;
-        };
-
-        const tick = (time: number) => {
-            frame = 0;
-            if (!hasVisibleTargets()) {
-                previousTime = 0;
-                return;
-            }
-
-            const elapsed = previousTime ? Math.min(64, time - previousTime) : 16;
-            const easing = 1 - Math.exp(-elapsed / TIME_CONSTANT);
-            let moving = false;
-            previousTime = time;
-
-            visibleDriftTargets.forEach((target) => {
-                const distance = target.target - target.current;
-                if (Math.abs(distance) < .05) target.current = target.target;
-                else {
-                    target.current += distance * easing;
-                    moving = true;
+            // Read every rectangle before changing styles. No work runs between inputs.
+            const viewport = window.innerHeight;
+            const measurements = [...visible].map(target => ({
+                target, rect: target.element.getBoundingClientRect(),
+            }));
+            for (const { target, rect } of measurements) {
+                if (rect.width === 0 || rect.height === 0) continue;
+                const progress = target.complete ? 1 : progressAt(target, rect, viewport);
+                paint(target, progress);
+                if ((target.kind === 'media' || target.kind === 'heading') && progress >= 1) {
+                    target.complete = true;
+                    target.element.dataset.scrollComplete = '';
                 }
-
-                const drift = `${target.current.toFixed(2)}px`;
-                target.image.style.setProperty('--media-drift', drift);
-                target.media.dataset.drift = drift;
-            });
-
-            visibleProgressTargets.forEach((target) => {
-                const distance = target.target - target.current;
-                if (Math.abs(distance) < .002) target.current = target.target;
-                else {
-                    target.current += distance * easing;
-                    moving = true;
+                if (target.image) {
+                    const travel = viewport / 2 + rect.height / 2;
+                    const amplitude = Math.min(8, Math.max(0, rect.height * .02 - 1));
+                    const drift = clamp((viewport / 2 - rect.top - rect.height / 2) / travel, -1, 1) * amplitude;
+                    target.image.style.setProperty('--media-drift', drift.toFixed(2) + 'px');
                 }
-
-                target.element.style.setProperty(
-                    target.kind === 'rule' ? '--rule-progress' : '--section-progress',
-                    target.current.toFixed(4),
-                );
-            });
-
-            if (moving && document.visibilityState === 'visible') frame = requestAnimationFrame(tick);
-            else previousTime = 0;
-        };
-
-        const start = () => {
-            if (!frame && hasVisibleTargets() && document.visibilityState === 'visible') {
-                frame = requestAnimationFrame(tick);
             }
         };
-
-        const measureVisibleTargets = () => {
-            measureFrame = 0;
-            visibleDriftTargets.forEach((target) => {
-                target.target = driftFromRect(target.media.getBoundingClientRect());
-            });
-            visibleProgressTargets.forEach((target) => {
-                target.target = progressFromRect(target, target.element.getBoundingClientRect());
-            });
-            start();
+        const schedule = () => {
+            if (!frame && visible.size && !document.hidden) frame = requestAnimationFrame(measure);
         };
 
-        const scheduleMeasurement = () => {
-            if (!measureFrame && hasVisibleTargets() && document.visibilityState === 'visible') {
-                measureFrame = requestAnimationFrame(measureVisibleTargets);
-            }
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                const element = entry.target as HTMLElement;
-                const driftTarget = driftByElement.get(element);
-                if (driftTarget) {
-                    if (entry.isIntersecting) {
-                        driftTarget.target = driftFromRect(entry.boundingClientRect);
-                        visibleDriftTargets.add(driftTarget);
-                        driftTarget.media.dataset.drift = `${driftTarget.current.toFixed(2)}px`;
-                    } else {
-                        visibleDriftTargets.delete(driftTarget);
-                        delete driftTarget.media.dataset.drift;
-                    }
-                    return;
-                }
-
-                const progressTarget = progressByElement.get(element);
-                if (!progressTarget) return;
+        const observer = new IntersectionObserver(entries => {
+            for (const entry of entries) {
+                const target = byElement.get(entry.target as HTMLElement);
+                if (!target) continue;
                 if (entry.isIntersecting) {
-                    progressTarget.target = progressFromRect(progressTarget, entry.boundingClientRect);
-                    visibleProgressTargets.add(progressTarget);
+                    visible.add(target);
                 } else {
-                    visibleProgressTargets.delete(progressTarget);
-                    const completed = entry.boundingClientRect.bottom <= 0 ? 1 : 0;
-                    progressTarget.current = completed;
-                    progressTarget.target = completed;
-                    progressTarget.element.style.setProperty(
-                        progressTarget.kind === 'rule' ? '--rule-progress' : '--section-progress',
-                        String(completed),
-                    );
+                    visible.delete(target);
+                    // A fast scroll or an anchor jump may skip the entry interval entirely.
+                    if (entry.boundingClientRect.height > 0 && entry.boundingClientRect.bottom < 0) {
+                        paint(target, 1);
+                        if (target.kind === 'media' || target.kind === 'heading') {
+                            target.complete = true;
+                            target.element.dataset.scrollComplete = '';
+                        }
+                    }
                 }
-            });
+            }
+            schedule();
+        }, { rootMargin: '12% 0px' });
 
-            if (!hasVisibleTargets()) halt();
-            else start();
-        }, { rootMargin: '8% 0px' });
+        // Enhanced states are opt-in: no JS, reduced motion and cleanup remain readable.
+        // A restored scroll position must start in its final visible state.
+        const initial = targets.map(target => ({ target, rect: target.element.getBoundingClientRect() }));
+        for (const { target, rect } of initial) {
+            target.element.dataset.scrollActive = '';
+            const progress = rect.width && rect.height ? progressAt(target, rect, innerHeight) : 0;
+            paint(target, progress);
+            if ((target.kind === 'media' || target.kind === 'heading') && progress >= 1) {
+                target.complete = true;
+                target.element.dataset.scrollComplete = '';
+            }
+            observer.observe(target.element);
+        }
 
-        const handleVisibility = () => {
-            if (document.visibilityState === 'hidden') halt();
-            else start();
+        const onFocus = (event: FocusEvent) => {
+            const focused = event.target;
+            if (!(focused instanceof Element)) return;
+            for (const target of targets) {
+                if (target.kind !== 'media' && target.kind !== 'heading') continue;
+                if (target.element.contains(focused)) {
+                    target.complete = true;
+                    target.element.dataset.scrollComplete = '';
+                    paint(target, 1);
+                }
+            }
         };
-
-        driftTargets.forEach((target) => observer.observe(target.media));
-        progressTargets.forEach((target) => observer.observe(target.element));
-        window.addEventListener('scroll', scheduleMeasurement, { passive: true });
-        window.addEventListener('resize', scheduleMeasurement, { passive: true });
-        document.addEventListener('visibilitychange', handleVisibility);
+        const onVisibility = () => {
+            if (document.hidden) { cancelAnimationFrame(frame); frame = 0; }
+            else schedule();
+        };
+        const resizeObserver = new ResizeObserver(schedule);
+        resizeObserver.observe(document.body);
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule, { passive: true });
+        document.addEventListener('visibilitychange', onVisibility);
+        document.addEventListener('focusin', onFocus);
 
         return () => {
-            halt();
+            cancelAnimationFrame(frame);
             observer.disconnect();
-            window.removeEventListener('scroll', scheduleMeasurement);
-            window.removeEventListener('resize', scheduleMeasurement);
-            document.removeEventListener('visibilitychange', handleVisibility);
-            driftTargets.forEach((target) => {
-                target.image.style.removeProperty('--media-drift');
-                delete target.media.dataset.drift;
-            });
-            progressTargets.forEach((target) => {
-                target.element.style.removeProperty('--rule-progress');
-                target.element.style.removeProperty('--section-progress');
+            resizeObserver.disconnect();
+            window.removeEventListener('scroll', schedule);
+            window.removeEventListener('resize', schedule);
+            document.removeEventListener('visibilitychange', onVisibility);
+            document.removeEventListener('focusin', onFocus);
+            for (const target of targets) {
+                target.element.style.removeProperty(propertyFor(target));
+                target.image?.style.removeProperty('--media-drift');
                 delete target.element.dataset.scrollActive;
-            });
+                delete target.element.dataset.scrollComplete;
+            }
         };
     }, [enabled, pathname]);
 

@@ -8,9 +8,9 @@ export default function About() {
         <section id="about" className="about-section about-editorial" aria-labelledby="about-title" data-scroll-section>
             <div className="site-container">
                 <div className="section-heading about-editorial__heading" data-scroll-rule>
-                    <div className="section-heading__title" data-reveal>
+                    <div className="section-heading__title">
                         <p className="section-kicker">02 / PROFILE</p>
-                        <h2 id="about-title" className="about-section__title">About</h2>
+                        <h2 id="about-title" className="about-section__title" data-scroll-reveal="heading"><span>About</span></h2>
                     </div>
                     <p className="section-heading__aside">明治大学大学院で<br />HCIを研究しています。</p>
                 </div>
