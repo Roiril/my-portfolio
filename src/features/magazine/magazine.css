@@ -337,8 +337,6 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 .mag-contents__side { display: grid; align-content: start; gap: 2rem; }
 .mag-contents__spot { width: min(100%, 22rem); }
 
-.mag-gallery__head { position: relative; }
-.mag-gallery__spot { position: absolute; right: 0; top: -5.5rem; width: min(30%, 20rem); pointer-events: none; }
 
 .mag-profile__art { width: min(100%, 30rem); margin-bottom: 2.5rem; }
 
@@ -347,7 +345,6 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 
 @media (max-width: 960px) {
   .mag-cover__photo { width: min(100%, 36rem); }
-  .mag-gallery__spot { position: static; width: min(60%, 18rem); }
   .mag-back__art { position: static; width: min(70%, 18rem); margin-bottom: 2rem; }
 }
 @media (max-width: 600px) {

@@ -210,7 +210,6 @@ function Gallery({ items }: { items: Work[] }) {
             <header className="mag-gallery__head">
                 <h2 id="gallery-title">作品のページ</h2>
                 <p>映像、3D、サウンド、コードで描いたもの。実務の仕事もここに置きました。</p>
-                <Image src={art.spotGallery.src} alt="" width={art.spotGallery.width} height={art.spotGallery.height} sizes="(max-width: 600px) 70vw, 22vw" className="mag-spot mag-gallery__spot" />
             </header>
             <ul className="mag-gallery__grid">
                 {items.map((work, index) => {
