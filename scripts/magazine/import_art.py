@@ -4,16 +4,19 @@
 #   py -3.11 scripts/magazine/import_art.py
 import hashlib, io, os, re, sys
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageDraw
 
 sys.stdout.reconfigure(encoding='utf-8')
 SRC = Path(r'G:\マイドライブ\shubie\design-study\2026-10-19\codex')
 ROOT = Path(r'C:\Users\kouga\Projects\Web\my-portfolio')
 PUB = ROOT / 'public'
 
-# key: (生成ファイル名, 置き場（public からの相対）, 最大幅, alt)
+# key: (生成ファイル名, 置き場（public からの相対）, 最大幅, alt[, 背景を透明に抜くか])
+# 表紙の盤・駒・手は重ねて動かすので、絵の外側の白だけを透明に抜く（輪郭の内側の白は残す）
 ITEMS = {
-    'cover': ('cover-v2', 'images/magazine/cover.webp', 1600, 'ロボットの手がゲームの駒を 1 つつまみ上げている。手前に盤の角と、立っている駒が 3 つ'),
+    'coverBoard': ('layer-board-v1', 'images/magazine/cover-board.webp', 1200, '', True),
+    'coverPiece': ('layer-piece-v1', 'images/magazine/cover-piece.webp', 300, '', True),
+    'coverHand': ('layer-hand-v1', 'images/magazine/cover-hand.webp', 900, '', True),
     'profile': ('profile-v2', 'images/magazine/profile.webp', 1200, '研究で使う道具。Meta Quest 3 とロボットの手'),
     'spotContents': ('spot-contents-v2', 'images/magazine/spot-contents.webp', 900, ''),
     'spotContact': ('spot-contact-v2', 'images/magazine/spot-contact.webp', 900, ''),
@@ -29,18 +32,42 @@ THUMBS = {
     'thumb-ai-music-v2': 'images/works/ai-composition/illust.webp',
 }
 
-missing = [n for n, *_ in ITEMS.values() if not (SRC / f'{n}.png').exists()] + [n for n in THUMBS if not (SRC / f'{n}.png').exists()]
+missing = [v[0] for v in ITEMS.values() if not (SRC / f'{v[0]}.png').exists()] + [n for n in THUMBS if not (SRC / f'{n}.png').exists()]
 if missing:
     sys.exit('欠けている画像: ' + ', '.join(missing))
 
 # ファイル名に中身のハッシュを入れる。同じ URL のまま中身を差し替えると、
 # Next.js の画像最適化と CDN が古い絵を返し続けるため（2026-10-19 に実際に起きた）
-def save(name, rel, max_w):
-    im = Image.open(SRC / f'{name}.png').convert('RGB')
+def cutout(im):
+    """画像の縁につながった白だけを透明にし、絵の範囲で切り詰める"""
+    rgb = im.convert('RGB')
+    w, h = rgb.size
+    near_white = rgb.convert('L').point(lambda v: 255 if v >= 236 else 0)
+    # 縁から塗りつぶして、外側の白（128）と内側の白（255 のまま）を分ける
+    for x in range(w):
+        for y in (0, h - 1):
+            if near_white.getpixel((x, y)) == 255:
+                ImageDraw.floodfill(near_white, (x, y), 128)
+    for y in range(h):
+        for x in (0, w - 1):
+            if near_white.getpixel((x, y)) == 255:
+                ImageDraw.floodfill(near_white, (x, y), 128)
+    alpha = near_white.point(lambda v: 0 if v == 128 else 255)
+    out = rgb.convert('RGBA')
+    out.putalpha(alpha)
+    box = alpha.getbbox()
+    pad = 4
+    box = (max(0, box[0] - pad), max(0, box[1] - pad), min(w, box[2] + pad), min(h, box[3] + pad))
+    return out.crop(box)
+
+
+def save(name, rel, max_w, transparent=False):
+    im = Image.open(SRC / f'{name}.png')
+    im = cutout(im) if transparent else im.convert('RGB')
     if im.width > max_w:
         im = im.resize((max_w, round(im.height * max_w / im.width)), Image.LANCZOS)
     buf = io.BytesIO()
-    im.save(buf, 'WEBP', quality=86, method=6)
+    im.save(buf, 'WEBP', quality=86, method=6, exact=transparent)
     data = buf.getvalue()
     stem, ext = os.path.splitext(rel)
     rel = f'{stem}-{hashlib.sha1(data).hexdigest()[:8]}{ext}'
@@ -59,8 +86,8 @@ def save(name, rel, max_w):
 lines = ["// scripts/magazine/import_art.py が書き出す。手で書き換えない（寸法を画像と一致させるため）",
          "export type ArtImage = { src: string; width: number; height: number; alt: string };", "",
          "export const art = {"]
-for key, (name, rel, max_w, alt) in ITEMS.items():
-    rel, (w, h), size = save(name, rel, max_w)
+for key, (name, rel, max_w, alt, *opt) in ITEMS.items():
+    rel, (w, h), size = save(name, rel, max_w, transparent=bool(opt and opt[0]))
     lines.append(f"    {key}: {{ src: '/{rel}', width: {w}, height: {h}, alt: '{alt}' }},")
     print(key, rel, w, h, size)
 lines += ["} satisfies Record<string, ArtImage>;", ""]

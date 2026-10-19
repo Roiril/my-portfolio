@@ -4,67 +4,14 @@ import type { CSSProperties } from 'react';
 import { works } from '@/content/works';
 import { aboutData } from '@/content/about';
 import { features, issue, profile, type FeatureSpread } from '@/content/magazine';
-import { art, type ArtImage } from '@/content/magazine-art';
-import type { Work, WorkCategory, WorkLink } from '@/features/works/types';
+import { art } from '@/content/magazine-art';
+import type { Work } from '@/features/works/types';
 import BackCover from './BackCover';
+import CoverBoard from './CoverBoard';
+import GalleryGrid from './GalleryGrid';
+import Sticker from './Sticker';
+import { CategoryMark, SmartLink, linkLabel, splitTitle, titleClass, workHref } from './parts';
 import '../magazine.css';
-
-const CATEGORY_LABEL: Record<WorkCategory, string> = {
-    research: '研究',
-    personal: '個人開発',
-    internship: '実務',
-    creative: '制作',
-};
-
-// 分類ごとの小さな挿絵（2 色刷りのアイコン）
-const CATEGORY_ICON: Record<WorkCategory, ArtImage> = {
-    research: art.iconResearch,
-    personal: art.iconPersonal,
-    internship: art.iconInternship,
-    creative: art.iconCreative,
-};
-
-function CategoryMark({ category }: { category: WorkCategory }) {
-    const icon = CATEGORY_ICON[category];
-    return (
-        <span className="mag-cat">
-            <Image src={icon.src} alt="" width={icon.width} height={icon.height} sizes="32px" className="mag-cat__icon" />
-            {CATEGORY_LABEL[category]}
-        </span>
-    );
-}
-
-const isExternal = (href: string) => /^https?:\/\//.test(href);
-
-// 作品の行き先。詳細ページがあればそちら、無ければ最初のリンク
-function workHref(work: Work): string | undefined {
-    return work.detail ? '/works/' + work.id : work.links[0]?.url;
-}
-
-function linkLabel(link: WorkLink): string {
-    if (link.label) return link.label;
-    return link.type === 'launch' ? 'サイトを開く' : link.type === 'paper' ? '論文を読む' : '動画を見る';
-}
-
-function SmartLink({ href, className, children, ariaLabel }: { href: string; className?: string; children: React.ReactNode; ariaLabel?: string }) {
-    if (isExternal(href) || href.endsWith('.pdf') || href.startsWith('/demos/')) {
-        return <a href={href} className={className} aria-label={ariaLabel} target="_blank" rel="noopener noreferrer">{children}</a>;
-    }
-    return <NextLink href={href} className={className} aria-label={ariaLabel}>{children}</NextLink>;
-}
-
-// 「廻リ視 — Mawarimi」のような題を、日本語の題と英語の副題に分ける
-function splitTitle(title: string): { main: string; sub?: string } {
-    const [main, sub] = title.split(' — ');
-    return { main, sub };
-}
-
-// 英字だけの題は詰まった英字書体で、日本語を含む題は日本語の極太で組む
-const isLatin = (text: string) => !/[\u3040-\u30ff\u3400-\u9fff]/.test(text);
-
-function titleClass(main: string): string {
-    return [isLatin(main) ? 'is-latin' : 'is-ja', main.length > 9 ? 'is-long' : ''].filter(Boolean).join(' ');
-}
 
 function MagazineNav() {
     return (
@@ -95,9 +42,9 @@ function Cover() {
             <h1 className="mag-cover__masthead" aria-label={issue.masthead + '　白石大晴のポートフォリオ'}>
                 {issue.masthead}
             </h1>
-            <figure className="mag-cover__photo">
-                <Image src={art.cover.src} alt={art.cover.alt} width={art.cover.width} height={art.cover.height} priority sizes="(max-width: 760px) 100vw, 720px" />
-            </figure>
+            <div className="mag-cover__photo">
+                <CoverBoard />
+            </div>
             <ul className="mag-cover__lines">
                 {issue.coverLines.map((line) => (
                     <li key={line.text}>
@@ -111,7 +58,7 @@ function Cover() {
                 <span lang="en">Taisei Shiroishi</span>
                 <span className="mag-cover__role">明治大学大学院　HCI 研究</span>
             </p>
-            <span className="mag-sticker mag-cover__sticker">{issue.coverSticker}</span>
+            <Sticker front={issue.coverSticker} back={issue.coverStickerBack} className="mag-cover__sticker" />
             <a href="#contents" className="mag-cover__next">
                 <Image src={art.arrow.src} alt="" width={art.arrow.width} height={art.arrow.height} sizes="48px" />
                 <span>目次へ</span>
@@ -172,7 +119,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
         <article id={'feature-' + work.id} className={'mag-spread mag-spread--' + spread.layout} style={style} aria-labelledby={'title-' + work.id}>
             <figure className="mag-spread__photo">
                 {href ? <SmartLink href={href} ariaLabel={work.title + ' を見る'}>{photo}</SmartLink> : photo}
-                {spread.sticker && <span className="mag-sticker mag-spread__sticker">{spread.sticker}</span>}
+                {spread.sticker && <Sticker front={spread.sticker} back={spread.stickerBack} className="mag-spread__sticker" />}
                 {spread.inset && (
                     <span className="mag-spread__inset">
                         <Image src={spread.inset.src} alt={spread.inset.alt} width={402} height={880} sizes="200px" />
@@ -211,27 +158,7 @@ function Gallery({ items }: { items: Work[] }) {
                 <h2 id="gallery-title">作品のページ</h2>
                 <p>映像、3D、サウンド、コードで描いたもの。実務の仕事もここに置きました。</p>
             </header>
-            <ul className="mag-gallery__grid">
-                {items.map((work, index) => {
-                    const href = workHref(work);
-                    const body = (
-                        <>
-                            <span className="mag-tile__photo">
-                                <Image src={work.image} alt="" width={900} height={600} sizes="(max-width: 760px) 100vw, 40vw" className={work.imageFit === 'contain' ? 'is-contain' : undefined} />
-                            </span>
-                            <span className="mag-tile__caption">
-                                <span className="mag-tile__title">{work.title}</span>
-                                <span className="mag-tile__note"><CategoryMark category={work.category ?? 'creative'} />{work.description}</span>
-                            </span>
-                        </>
-                    );
-                    return (
-                        <li key={work.id} className={'mag-tile mag-tile--' + (index % 7)}>
-                            {href ? <SmartLink href={href} className="mag-tile__link">{body}</SmartLink> : <div className="mag-tile__link">{body}</div>}
-                        </li>
-                    );
-                })}
-            </ul>
+            <GalleryGrid items={items} />
         </section>
     );
 }

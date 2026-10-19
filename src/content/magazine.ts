@@ -15,6 +15,8 @@ export type FeatureSpread = {
     theme: { paper: string; ink: string; accent: string };
     // 写真の上に貼るステッカー（事実だけを書く）
     sticker?: string;
+    // ステッカーを押すと裏返って出る、もう 1 つの事実
+    stickerBack?: string;
     // 斜めに貼る 2 枚目の写真
     inset?: { src: string; alt: string };
 };
@@ -31,6 +33,7 @@ export const issue = {
         { label: '制作', text: '映像・3D・サウンド・コードの小作品' },
     ],
     coverSticker: 'IVRC2026 優勝',
+    coverStickerBack: 'DCEXPO賞 受賞',
 };
 
 export const features: FeatureSpread[] = [
@@ -41,6 +44,7 @@ export const features: FeatureSpread[] = [
         layout: 'bleed',
         theme: { paper: '#0c0a09', ink: '#efe9e1', accent: '#d3271c' },
         sticker: 'IVRC2026 優勝',
+        stickerBack: 'DCEXPO2026 で展示予定',
     },
     {
         workId: 'robot-collab',
@@ -49,6 +53,7 @@ export const features: FeatureSpread[] = [
         layout: 'left',
         theme: { paper: '#ffffff', ink: '#121212', accent: '#2433ff' },
         sticker: '進行中',
+        stickerBack: '修士研究',
     },
     {
         workId: 'whiteout',
@@ -57,6 +62,7 @@ export const features: FeatureSpread[] = [
         layout: 'right',
         theme: { paper: '#111111', ink: '#ffffff', accent: '#ff5a1f' },
         sticker: '楽しさ 4.434/5',
+        stickerBack: '評価の高い作品に選出',
     },
     {
         workId: 'couple-sync',
