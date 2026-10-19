@@ -31,7 +31,7 @@ export default function BackCover() {
 
     return (
         <footer id="contact" className="mag-back" aria-labelledby="contact-title">
-            <figure className="mag-print mag-back__art">
+            <figure className={'mag-print mag-back__art' + (copyStatus === 'success' ? ' is-sent' : '')}>
                 <Image src={art.spotContact.src} alt="" width={art.spotContact.width} height={art.spotContact.height} sizes="(max-width: 600px) 60vw, 24vw" />
             </figure>
             <h2 id="contact-title" className="mag-back__title">連絡先</h2>
