@@ -1,0 +1,313 @@
+/* ============================================================
+ * 誌面（トップページ）。写真が主役の雑誌として組む。
+ * 地は白、文字は黒、差し色はコバルト 1 色。特集の見開きだけは
+ * 作品の写真から取った色（--spread-*）に着替える。
+ * ============================================================ */
+
+.mag {
+  --paper: #ffffff;
+  --ink: #121212;
+  --gray: #5f5f5f;
+  --rule: #e2e2e2;
+  --cobalt: #2433ff;
+  --display: var(--font-anton), var(--font-jp), 'Yu Gothic', sans-serif;
+  --text: var(--font-jp), 'Yu Gothic Medium', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+  --gutter: clamp(20px, 4vw, 56px);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  overflow-x: clip;
+}
+.mag a { color: inherit; }
+.mag :focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+.mag img { display: block; max-width: 100%; height: auto; }
+
+/* --- ステッカー（丸いシール。事実だけを書く） ---------------- */
+.mag-sticker {
+  display: grid; place-items: center; text-align: center;
+  width: 7.5rem; aspect-ratio: 1; border-radius: 50%;
+  padding: .75rem; font-family: var(--text); font-weight: 900;
+  font-size: 1rem; line-height: 1.25;
+  background: var(--sticker-bg, var(--cobalt)); color: var(--sticker-ink, #fff);
+  transform: rotate(-12deg);
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1);
+}
+.mag-sticker:hover { transform: rotate(6deg) scale(1.06); }
+
+/* --- ナビ ----------------------------------------------------- */
+.mag-nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .625rem var(--gutter);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.mag-nav__brand { font-family: var(--display); font-size: 1.75rem; line-height: 1; text-decoration: none; letter-spacing: .01em; }
+.mag-nav__links { display: flex; gap: clamp(.75rem, 2vw, 1.75rem); font-size: .9375rem; font-weight: 700; overflow-x: auto; scrollbar-width: none; }
+.mag-nav__links a { text-decoration: none; white-space: nowrap; padding: .25rem 0; }
+.mag-nav__links a:hover { color: var(--cobalt); }
+
+/* --- 表紙 ----------------------------------------------------- */
+.mag-cover {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  min-height: calc(100svh - 3.25rem);
+  padding: 1.25rem var(--gutter) 2rem;
+  column-gap: 2rem;
+}
+.mag-cover__issue {
+  grid-column: 1 / -1; display: flex; justify-content: space-between;
+  margin: 0; font-size: 1rem; font-weight: 700;
+  border-bottom: 3px solid var(--ink); padding-bottom: .5rem;
+}
+.mag-cover__masthead {
+  grid-column: 1 / -1; grid-row: 2;
+  margin: 0; font-family: var(--display); font-weight: 400;
+  font-size: clamp(9rem, 44vw, 44rem); line-height: .78; letter-spacing: -.01em;
+  color: var(--cobalt); text-align: center; position: relative; z-index: 1;
+  padding-top: .06em;
+}
+/* 写真は誌名に重ねる（雑誌の表紙の定番の重ね方） */
+.mag-cover__photo {
+  grid-column: 2; grid-row: 2 / 4; align-self: end; justify-self: center;
+  margin: 0; width: min(100%, 26rem); position: relative; z-index: 2;
+  margin-top: clamp(4rem, 13vw, 13rem);
+}
+.mag-cover__photo img { width: 100%; aspect-ratio: 480 / 579; object-fit: cover; filter: contrast(1.05) saturate(1.05); }
+.mag-cover__lines {
+  grid-column: 1; grid-row: 3; align-self: center;
+  list-style: none; margin: 2rem 0 0; padding: 0;
+  display: grid; gap: 1.25rem; position: relative; z-index: 3;
+}
+.mag-cover__lines li { font-size: clamp(1rem, 1.4vw, 1.25rem); font-weight: 700; line-height: 1.45; }
+.mag-cover__line-label { display: inline-block; margin-right: .5rem; padding: .05rem .5rem; background: var(--ink); color: var(--paper); font-size: .8125rem; vertical-align: .15em; }
+.mag-cover__name {
+  grid-column: 3; grid-row: 3; align-self: end; justify-self: end; text-align: right;
+  margin: 0; display: grid; gap: .25rem; position: relative; z-index: 3;
+}
+.mag-cover__name span[lang="ja"] { font-size: clamp(2rem, 4.4vw, 3.75rem); font-weight: 900; line-height: 1.1; }
+.mag-cover__name span[lang="en"] { font-family: var(--display); font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1; }
+.mag-cover__role { font-size: 1rem; font-weight: 700; color: var(--gray); margin-top: .5rem; }
+.mag-cover__sticker { position: absolute; z-index: 4; right: calc(var(--gutter) + 22%); top: 52%; }
+
+/* --- 目次 ----------------------------------------------------- */
+.mag-contents {
+  display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 2rem;
+  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
+  border-top: 3px solid var(--ink);
+}
+.mag-contents__title { margin: 0; font-size: clamp(4rem, 11vw, 10rem); font-weight: 900; line-height: .9; }
+.mag-contents__list { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+.mag-contents__list li { counter-increment: toc; border-bottom: 1px solid var(--rule); }
+.mag-contents__list a {
+  display: grid; grid-template-columns: 3.5rem 7.5rem minmax(0, 1fr); align-items: center; gap: 1.25rem;
+  padding: .875rem 0; text-decoration: none;
+}
+.mag-contents__list a::before { content: counter(toc, decimal-leading-zero); font-family: var(--display); font-size: 2.5rem; line-height: 1; color: var(--cobalt); }
+.mag-contents__list li:nth-last-child(-n+3) a { grid-template-columns: 3.5rem minmax(0, 1fr); }
+.mag-contents__thumb { overflow: hidden; }
+.mag-contents__thumb img { width: 7.5rem; height: 4.75rem; object-fit: cover; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
+.mag-contents__list a:hover img { transform: scale(1.08); }
+.mag-contents__text { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.mag-contents__name { font-size: clamp(1.125rem, 2vw, 1.625rem); font-weight: 900; line-height: 1.35; }
+.mag-contents__list a:hover .mag-contents__name { color: var(--cobalt); }
+.mag-contents__cat { font-size: .875rem; font-weight: 700; color: var(--gray); white-space: nowrap; }
+
+/* --- 特集の見開き ---------------------------------------------- */
+.mag-spread {
+  position: relative;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem;
+  padding: clamp(4rem, 8vw, 7.5rem) var(--gutter);
+  background: var(--spread-paper); color: var(--spread-ink);
+  --sticker-bg: var(--spread-accent); --sticker-ink: var(--spread-paper);
+}
+.mag-spread__photo { position: relative; margin: 0; isolation: isolate; }
+/* 写真の後ろに差し色の板をずらして敷く（切り抜きを台紙に貼ったように見せる） */
+.mag-spread--left .mag-spread__photo::before,
+.mag-spread--right .mag-spread__photo::before {
+  content: ''; position: absolute; z-index: -1; inset: 1.25rem -1.25rem -1.25rem 1.25rem;
+  background: var(--spread-accent);
+}
+.mag-spread--right .mag-spread__photo::before { inset: 1.25rem 1.25rem -1.25rem -1.25rem; }
+.mag-spread__photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.mag-spread__photo img.is-contain { object-fit: contain; background: #fff; }
+.mag-spread__photo a { display: block; overflow: hidden; }
+.mag-spread__photo a:hover img { transform: scale(1.03); }
+.mag-spread__sticker { position: absolute; right: -1rem; top: -2.5rem; }
+.mag-spread__text { position: relative; z-index: 2; }
+.mag-spread__kicker { margin: 0 0 1rem; font-size: 1rem; font-weight: 700; color: var(--spread-accent); }
+.mag-spread__title { margin: 0; line-height: 1.02; }
+/* 英字だけの題は Anton（太さは 1 種類しかないので 400 のまま） */
+.mag-spread__title.is-latin { font-family: var(--display); font-weight: 400; font-size: clamp(3.25rem, 7.2vw, 7rem); letter-spacing: -.005em; }
+/* 日本語を含む題は Noto Sans JP の 900 */
+.mag-spread__title.is-ja { font-family: var(--text); font-weight: 900; font-size: clamp(2.5rem, 5.6vw, 5.5rem); letter-spacing: -.02em; }
+.mag-spread__title.is-ja.is-long { font-size: clamp(2rem, 3.6vw, 3.5rem); line-height: 1.2; }
+.mag-spread__sub { display: block; font-size: .42em; line-height: 1.2; margin-top: .35em; opacity: .75; }
+.mag-spread__quote {
+  margin: 1.75rem 0 1.25rem; font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 900; line-height: 1.5;
+  padding-left: 1rem; border-left: 6px solid var(--spread-accent);
+}
+.mag-spread__body { margin: 0; font-size: 1rem; line-height: 1.95; max-width: 34em; }
+.mag-spread__meta { margin: 1rem 0 0; font-size: .875rem; font-weight: 700; opacity: .75; }
+.mag-spread__links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: 1.25rem; font-size: 1rem; font-weight: 700; }
+.mag-spread__links a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--spread-accent); }
+.mag-spread__links a:hover { color: var(--spread-accent); }
+.mag-spread__credits { list-style: none; margin: 1.5rem 0 0; padding: 1rem 0 0; border-top: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); columns: 2; column-gap: 1.5rem; font-size: .875rem; line-height: 1.9; opacity: .85; }
+
+/* 写真を横幅いっぱいに敷き、題を写真の下端に食い込ませる */
+.mag-spread--bleed .mag-spread__photo { grid-column: 1 / -1; margin-inline: calc(var(--gutter) * -1); }
+.mag-spread--bleed .mag-spread__photo img { aspect-ratio: 16 / 8; }
+.mag-spread--bleed .mag-spread__sticker { right: calc(var(--gutter) + 2rem); top: auto; bottom: -3.5rem; }
+.mag-spread--bleed .mag-spread__text { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem; margin-top: clamp(-7.5rem, -7vw, -2rem); }
+.mag-spread--bleed .mag-spread__title { grid-column: 1 / -1; order: -1; font-size: clamp(3.5rem, 11vw, 11rem); line-height: 1; }
+.mag-spread--bleed .mag-spread__sub { font-family: var(--display); font-weight: 400; font-size: .32em; letter-spacing: 0; }
+.mag-spread--bleed .mag-spread__kicker { grid-column: 1 / -1; margin: 1.5rem 0 0; }
+.mag-spread--bleed .mag-spread__quote { grid-column: 1 / 6; }
+.mag-spread--bleed .mag-spread__body,
+.mag-spread--bleed .mag-spread__meta,
+.mag-spread--bleed .mag-spread__links,
+.mag-spread--bleed .mag-spread__credits { grid-column: 7 / -1; }
+.mag-spread--bleed .mag-spread__body { margin-top: 1.75rem; }
+
+/* 写真を左 7 列、文を右 4 列。写真と文は重ねない（作品画像の中の文字と題がぶつかるため） */
+.mag-spread--left .mag-spread__photo { grid-column: 1 / 8; grid-row: 1; align-self: center; }
+.mag-spread--left .mag-spread__text { grid-column: 9 / -1; grid-row: 1; align-self: center; }
+.mag-spread--right .mag-spread__photo { grid-column: 6 / -1; grid-row: 1; align-self: center; }
+.mag-spread--right .mag-spread__text { grid-column: 1 / 5; grid-row: 1; align-self: center; }
+.mag-spread--right .mag-spread__sticker { right: auto; left: -1rem; }
+/* 横に並べる見開きでは文の列が 4 列しかないので、英字の題も一段小さく */
+.mag-spread--left .mag-spread__title.is-latin, .mag-spread--right .mag-spread__title.is-latin { font-size: clamp(3rem, 5.2vw, 5.25rem); overflow-wrap: anywhere; }
+
+/* 斜めに貼った 2 枚目の写真（スマホの画面など）。写真の外側の角に貼る */
+.mag-spread__inset {
+  position: absolute; z-index: 3; bottom: -2.5rem; width: clamp(6.5rem, 11vw, 10.5rem);
+  border: .5rem solid #fff; box-shadow: 0 1rem 2rem rgb(0 0 0 / .25);
+  transform: rotate(5deg);
+}
+.mag-spread--left .mag-spread__inset { right: -2rem; }
+.mag-spread--right .mag-spread__inset { left: -2rem; transform: rotate(-6deg); }
+.mag-spread__inset img { width: 100%; }
+
+/* --- 作品のページ ---------------------------------------------- */
+.mag-gallery { padding: clamp(4rem, 9vw, 8rem) var(--gutter); border-top: 3px solid var(--ink); }
+.mag-gallery__head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem; align-items: end; margin-bottom: 3rem; }
+.mag-gallery__head h2 { margin: 0; font-size: clamp(2.75rem, 7vw, 6.5rem); font-weight: 900; line-height: 1; white-space: nowrap; }
+.mag-gallery__head p { margin: 0; font-size: 1.0625rem; line-height: 1.8; font-weight: 700; }
+/* 7 枚で 3 段が埋まる並び：4+2 ／ 2+2+2 ／ 3+3 */
+.mag-gallery__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3rem 1.5rem; align-items: start; }
+.mag-tile { grid-column: span 2; }
+.mag-tile--0 { grid-column: span 4; }
+.mag-tile--5, .mag-tile--6 { grid-column: span 3; }
+/* 段の頭（0・2・5 番）で終わったら、その 1 枚を横幅いっぱいにする */
+.mag-tile--0:last-child, .mag-tile--2:last-child, .mag-tile--5:last-child { grid-column: span 6; }
+.mag-tile__link { display: block; text-decoration: none; }
+.mag-tile__photo { display: block; overflow: hidden; position: relative; background: var(--ink); }
+.mag-tile__photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .5s cubic-bezier(.22, 1, .36, 1), filter .5s; }
+.mag-tile__photo img.is-contain { object-fit: contain; background: #fff; }
+.mag-tile--0 .mag-tile__photo img { aspect-ratio: 16 / 9; }
+.mag-tile--2 .mag-tile__photo { transform: rotate(-1.5deg); }
+.mag-tile--6 .mag-tile__photo { transform: rotate(1.2deg); }
+.mag-tile__link:hover .mag-tile__photo img { transform: scale(1.05); }
+.mag-tile__caption { display: grid; gap: .25rem; margin-top: .875rem; }
+.mag-tile__title { font-size: 1.25rem; font-weight: 900; line-height: 1.35; }
+.mag-tile__link:hover .mag-tile__title { color: var(--cobalt); }
+.mag-tile__note { font-size: .9375rem; line-height: 1.75; color: var(--gray); }
+
+/* --- インタビュー ---------------------------------------------- */
+.mag-interview {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem);
+  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
+  background: var(--cobalt); color: #fff;
+}
+.mag-interview__art { margin: 0; align-self: start; position: sticky; top: 5rem; }
+.mag-interview__art img { width: 100%; transform: rotate(-2deg); border: .5rem solid #fff; }
+.mag-interview__kicker { margin: 0 0 .75rem; font-size: 1rem; font-weight: 700; }
+.mag-interview h2 { margin: 0 0 2.5rem; font-size: clamp(2.75rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.05; }
+.mag-interview__qa { margin: 0; display: grid; gap: 2rem; }
+.mag-interview__qa dt { font-size: 1.25rem; font-weight: 900; }
+.mag-interview__qa dt::before { content: 'Q. '; font-family: var(--display); }
+.mag-interview__qa dd { margin: .5rem 0 0; font-size: 1.0625rem; line-height: 2; }
+.mag-interview__facts { margin: 3rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; border-top: 2px solid #fff; padding-top: 1.5rem; }
+.mag-interview__facts dt { font-size: .875rem; font-weight: 700; opacity: .8; }
+.mag-interview__facts dd { margin: .25rem 0 0; font-size: 1rem; font-weight: 700; line-height: 1.6; }
+.mag-interview__resume { display: inline-block; margin-top: 2.5rem; padding: .875rem 1.5rem; background: #fff; color: var(--cobalt) !important; font-weight: 900; text-decoration: none; }
+.mag-interview__resume:hover { background: var(--ink); color: #fff !important; }
+.mag-interview :focus-visible { outline-color: #fff; }
+
+/* --- 裏表紙 ---------------------------------------------------- */
+.mag-back { padding: clamp(4rem, 9vw, 8rem) var(--gutter) 2rem; background: var(--ink); color: #fff; }
+.mag-back__title { margin: 0; font-weight: 900; font-size: clamp(4rem, 14vw, 13rem); line-height: 1; letter-spacing: -.03em; color: var(--cobalt); }
+.mag-back__message { margin: 1.5rem 0 2.5rem; font-size: 1.125rem; font-weight: 700; }
+.mag-back__email {
+  display: block; padding: 0; border: 0; background: none; color: #fff; cursor: pointer; text-align: left;
+  font-family: var(--display); font-size: clamp(2rem, 6.4vw, 6rem); line-height: 1.05; word-break: break-all;
+  text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .12em; text-decoration-color: var(--cobalt);
+}
+.mag-back__email:hover { color: #9aa2ff; }
+.mag-back__status { margin: .75rem 0 0; font-size: .9375rem; opacity: .8; }
+.mag-back__links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 3rem; font-size: 1.125rem; font-weight: 700; }
+.mag-back__links a { text-decoration: none; border-bottom: 2px solid var(--cobalt); padding-bottom: .125rem; }
+.mag-back__links a:hover { color: #9aa2ff; }
+.mag-back__colophon { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 5rem 0 0; padding-top: 1rem; border-top: 1px solid #444; font-size: .875rem; opacity: .85; }
+.mag-back :focus-visible { outline-color: #9aa2ff; }
+
+/* --- タブレット以下 -------------------------------------------- */
+@media (max-width: 960px) {
+  .mag-cover { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto auto auto; row-gap: 1.5rem; }
+  .mag-cover__photo { grid-column: 1 / -1; grid-row: 3; width: min(78%, 24rem); margin-top: -12vw; }
+  .mag-cover__lines { grid-column: 1; grid-row: 4; margin: 0; align-self: start; }
+  .mag-cover__name { grid-column: 2; grid-row: 4; align-self: start; }
+  .mag-cover__sticker { right: var(--gutter); top: auto; bottom: 46%; }
+
+  .mag-spread--left .mag-spread__photo, .mag-spread--right .mag-spread__photo,
+  .mag-spread--left .mag-spread__text, .mag-spread--right .mag-spread__text { grid-column: 1 / -1; grid-row: auto; }
+  .mag-spread--left .mag-spread__text, .mag-spread--right .mag-spread__text { margin-top: 3rem; }
+  .mag-spread__inset { width: 6.5rem; bottom: -1.5rem; }
+  .mag-spread--left .mag-spread__inset { right: -.5rem; }
+  .mag-spread--right .mag-spread__inset { left: auto; right: -.5rem; }
+  .mag-spread--left .mag-spread__photo::before { inset: .75rem -.75rem -.75rem .75rem; }
+  .mag-spread--right .mag-spread__photo::before { inset: .75rem .75rem -.75rem -.75rem; }
+  .mag-spread--bleed .mag-spread__quote, .mag-spread--bleed .mag-spread__body,
+  .mag-spread--bleed .mag-spread__meta, .mag-spread--bleed .mag-spread__links,
+  .mag-spread--bleed .mag-spread__credits { grid-column: 1 / -1; }
+
+  .mag-gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mag-tile, .mag-tile--5, .mag-tile--6 { grid-column: span 1; }
+  .mag-tile--0, .mag-tile:last-child:nth-child(odd) { grid-column: span 2; }
+  .mag-interview { grid-template-columns: minmax(0, 1fr); }
+  .mag-interview__art { position: static; max-width: 28rem; }
+}
+
+/* --- スマホ ---------------------------------------------------- */
+@media (max-width: 600px) {
+  .mag-nav__brand { font-size: 1.5rem; }
+  .mag-nav__links { font-size: .875rem; }
+  .mag-cover { grid-template-columns: minmax(0, 1fr); }
+  .mag-cover__issue { font-size: .875rem; }
+  .mag-cover__photo { width: 82%; margin-top: -14vw; }
+  .mag-cover__lines, .mag-cover__name { grid-column: 1; }
+  .mag-cover__name { grid-row: 5; justify-self: start; text-align: left; }
+  .mag-cover__sticker { width: 6rem; font-size: .875rem; bottom: auto; top: 40vw; right: 1rem; }
+  .mag-contents { grid-template-columns: minmax(0, 1fr); }
+  .mag-contents__list a { grid-template-columns: 2.5rem 5rem minmax(0, 1fr); gap: .875rem; }
+  .mag-contents__list li:nth-last-child(-n+3) a { grid-template-columns: 2.5rem minmax(0, 1fr); }
+  .mag-contents__list a::before { font-size: 1.75rem; }
+  .mag-contents__thumb img { width: 5rem; height: 3.25rem; }
+  .mag-contents__text { flex-direction: column; gap: .125rem; }
+  .mag-spread__sticker { width: 5.5rem; font-size: .8125rem; right: .5rem; top: -1.75rem; }
+  .mag-spread--bleed .mag-spread__sticker { bottom: -2.5rem; right: 1rem; }
+  .mag-spread__credits { columns: 1; }
+  .mag-gallery__head { grid-template-columns: minmax(0, 1fr); }
+  .mag-gallery__grid { grid-template-columns: minmax(0, 1fr); }
+  .mag-tile, .mag-tile--0, .mag-tile:last-child:nth-child(odd) { grid-column: span 1; }
+  .mag-gallery__head h2 { white-space: normal; }
+  .mag-interview__facts { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mag *, .mag *::before, .mag *::after { transition: none !important; }
+}
+html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[data-motion="off"] .mag *::after { transition: none !important; }

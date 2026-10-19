@@ -1,10 +1,14 @@
-﻿// src/app/layout.tsx
+// src/app/layout.tsx
 import type { Metadata } from "next";
+import { Anton, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
-import "./home-editorial.css";
 import { MotionProvider } from '@/components/motion/MotionProvider';
 import RevealObserver from '@/components/motion/RevealObserver';
 import ScrollChoreography from '@/components/motion/ScrollChoreography';
+
+// 誌面の見出し用（英字の詰まった太字）と、日本語の本文・見出し用
+const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton", display: "swap" });
+const notoSansJp = Noto_Sans_JP({ weight: ["400", "700", "900"], subsets: ["latin"], variable: "--font-jp", display: "swap", preload: false });
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ??
   "https://my-portfolio-ruby-delta-87.vercel.app").replace(/\/+$/, "");
@@ -131,7 +135,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ja" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="ja" data-scroll-behavior="smooth" className={`${anton.variable} ${notoSansJp.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "try{document.documentElement.dataset.motion=(!matchMedia('(prefers-reduced-motion: reduce)').matches&&localStorage.getItem('roil-motion')!=='off')?'on':'off'}catch{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'}" }} />
         <script
