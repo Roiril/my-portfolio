@@ -56,7 +56,7 @@ export const features: FeatureSpread[] = [
         pullQuote: '白いインクで、9 つの面を塗りつぶす。',
         layout: 'right',
         theme: { paper: '#111111', ink: '#ffffff', accent: '#ff5a1f' },
-        sticker: '閲覧 14,170 回',
+        sticker: '楽しさ 4.434/5',
     },
     {
         workId: 'couple-sync',

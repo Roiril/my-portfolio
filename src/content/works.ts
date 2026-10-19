@@ -80,7 +80,7 @@ export const works: Work[] = [
     id: 'whiteout',
     title: 'WhiteOut — 塗りローグ',
     description:
-      '白いインクで9つの面を塗りつぶすローグライトゲームです。能力を組み合わせて速いクリアを目指します。unity1weekのお題「しろ」に向けて制作しました。2026年10月5日時点で閲覧14,170回です。楽しさの評価は4.434/5です。',
+      '白いインクで9つの面を塗りつぶすローグライトゲームです。能力を組み合わせて速いクリアを目指します。unity1weekのお題「しろ」に向けて制作しました。楽しさの評価4.434/5を得て、評価の高い作品に選出されました。',
     image: '/images/works/whiteout/title.webp',
     imageFit: 'cover',
     tags: ['Game', 'Unity', 'unity1week', 'ローグライト'],
