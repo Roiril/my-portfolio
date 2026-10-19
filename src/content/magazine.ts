@@ -23,12 +23,12 @@ export const issue = {
     masthead: 'ROIL',
     issueLine: '2026 年 秋号',
     theme: 'HCI と ものづくり',
-    coverImage: { src: '/images/MyFace.png', alt: '桜の前で笑う白石大晴' },
+    // 顔写真は使わない方針。表紙の絵は magazine-art.ts の cover
     coverLines: [
         { label: '特集', text: '廻リ視 ― 監視カメラの自分を見ながら歩くホラー' },
         { label: '研究', text: '人と機械が同じ場所で働くとき' },
         { label: '遊び', text: 'WhiteOut ― 白いインクで塗りつぶすローグライト' },
-        { label: 'インタビュー', text: '白石大晴に聞く' },
+        { label: '制作', text: '映像・3D・サウンド・コードの小作品' },
     ],
     coverSticker: 'IVRC2026 優勝',
 };
@@ -83,8 +83,6 @@ export const features: FeatureSpread[] = [
     },
 ];
 
-export const interview = {
-    title: '白石大晴に聞く',
-    image: { src: '/images/identity/hero.webp', alt: '机で本を読む恐竜のイラスト（Roil のマスコット）' },
-    questions: ['何を研究していますか', 'インターンでは何をしていますか'],
+export const profile = {
+    title: 'プロフィール',
 };

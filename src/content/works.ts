@@ -67,8 +67,7 @@ export const works: Work[] = [
     title: 'AI業務ツール開発',
     description:
       '社内で運用するAI業務ツールを開発しました。要件定義から運用まで担当しました。商談内容から見積書の下書きを作る機能を実装しました。社内マニュアルを検索して質問に答えるRAGチャットも実装しました。回答の根拠を人が確認できる運用も整えました。',
-    image: '/images/ai-business-tools.svg',
-    imageFit: 'contain',
+    image: '/images/works/ai-business-tools/illust.webp',
     tags: ['Internship', 'LLM', 'RAG'],
     links: [],
     category: 'internship',
@@ -373,7 +372,7 @@ export const works: Work[] = [
     title: 'AI-Augmented Composition',
     description:
       'Studio Oneで以前制作した楽曲を、Suno AIで拡張した作品です。',
-    image: '/images/StudioOneCap.png',
+    image: '/images/works/ai-composition/illust.webp',
     tags: ['Sound', 'Studio One', 'AI'],
     links: [
       {

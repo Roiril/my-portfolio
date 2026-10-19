@@ -114,7 +114,6 @@ export default function RootLayout({
           "Next.js",
           "Blender",
         ],
-        image: `${SITE_URL}/images/MyFace.png`,
         sameAs: [
           "https://x.com/Roil_HCI",
           "https://www.youtube.com/@Roil_HCI",

@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import NextLink from 'next/link';
 import { contactMessage } from '@/content/contact';
 import { SITE_EMAIL, SOCIAL_LINKS } from '@/constants/site';
+import Image from 'next/image';
 import { copyToClipboard } from '@/lib/clipboard';
+import { art } from '@/content/magazine-art';
 
 type CopyStatus = 'idle' | 'success' | 'error';
 
@@ -29,6 +31,9 @@ export default function BackCover() {
 
     return (
         <footer id="contact" className="mag-back" aria-labelledby="contact-title">
+            <figure className="mag-print mag-back__art">
+                <Image src={art.spotContact.src} alt="" width={art.spotContact.width} height={art.spotContact.height} sizes="(max-width: 600px) 60vw, 24vw" />
+            </figure>
             <h2 id="contact-title" className="mag-back__title">連絡先</h2>
             <p className="mag-back__message">{contactMessage}</p>
             <button type="button" className="mag-back__email" onClick={handleCopy} aria-describedby="copy-email-status">

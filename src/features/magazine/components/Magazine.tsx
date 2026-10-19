@@ -3,7 +3,8 @@ import NextLink from 'next/link';
 import type { CSSProperties } from 'react';
 import { works } from '@/content/works';
 import { aboutData } from '@/content/about';
-import { features, interview, issue, type FeatureSpread } from '@/content/magazine';
+import { features, issue, profile, type FeatureSpread } from '@/content/magazine';
+import { art, type ArtImage } from '@/content/magazine-art';
 import type { Work, WorkCategory, WorkLink } from '@/features/works/types';
 import BackCover from './BackCover';
 import '../magazine.css';
@@ -14,6 +15,24 @@ const CATEGORY_LABEL: Record<WorkCategory, string> = {
     internship: '実務',
     creative: '制作',
 };
+
+// 分類ごとの小さな挿絵（2 色刷りのアイコン）
+const CATEGORY_ICON: Record<WorkCategory, ArtImage> = {
+    research: art.iconResearch,
+    personal: art.iconPersonal,
+    internship: art.iconInternship,
+    creative: art.iconCreative,
+};
+
+function CategoryMark({ category }: { category: WorkCategory }) {
+    const icon = CATEGORY_ICON[category];
+    return (
+        <span className="mag-cat">
+            <Image src={icon.src} alt="" width={icon.width} height={icon.height} sizes="32px" className="mag-cat__icon" />
+            {CATEGORY_LABEL[category]}
+        </span>
+    );
+}
 
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 
@@ -50,12 +69,15 @@ function titleClass(main: string): string {
 function MagazineNav() {
     return (
         <nav className="mag-nav" aria-label="誌面の目次">
-            <NextLink href="/#top" className="mag-nav__brand">{issue.masthead}</NextLink>
+            <NextLink href="/#top" className="mag-nav__brand">
+                <Image src={art.logoMark.src} alt="" width={art.logoMark.width} height={art.logoMark.height} sizes="40px" className="mag-nav__mark" />
+                {issue.masthead}
+            </NextLink>
             <div className="mag-nav__links">
                 <a href="#contents">目次</a>
                 <a href="#features">特集</a>
                 <a href="#gallery">作品</a>
-                <a href="#interview">インタビュー</a>
+                <a href="#profile">プロフィール</a>
                 <a href="#contact">連絡</a>
                 <NextLink href="/resume">経歴 ↗</NextLink>
             </div>
@@ -74,7 +96,7 @@ function Cover() {
                 {issue.masthead}
             </h1>
             <figure className="mag-cover__photo">
-                <Image src={issue.coverImage.src} alt={issue.coverImage.alt} width={480} height={579} priority sizes="(max-width: 760px) 70vw, 420px" />
+                <Image src={art.cover.src} alt={art.cover.alt} width={art.cover.width} height={art.cover.height} priority sizes="(max-width: 760px) 100vw, 720px" />
             </figure>
             <ul className="mag-cover__lines">
                 {issue.coverLines.map((line) => (
@@ -90,6 +112,10 @@ function Cover() {
                 <span className="mag-cover__role">明治大学大学院　HCI 研究</span>
             </p>
             <span className="mag-sticker mag-cover__sticker">{issue.coverSticker}</span>
+            <a href="#contents" className="mag-cover__next">
+                <Image src={art.arrow.src} alt="" width={art.arrow.width} height={art.arrow.height} sizes="48px" />
+                <span>目次へ</span>
+            </a>
         </header>
     );
 }
@@ -98,7 +124,10 @@ function Contents({ gallery }: { gallery: Work[] }) {
     const featured = features.map((f) => works.find((w) => w.id === f.workId)).filter((w): w is Work => Boolean(w));
     return (
         <section id="contents" className="mag-contents" aria-labelledby="contents-title">
-            <h2 id="contents-title" className="mag-contents__title">目次</h2>
+            <div className="mag-contents__side">
+                <h2 id="contents-title" className="mag-contents__title">目次</h2>
+                <Image src={art.spotContents.src} alt="" width={art.spotContents.width} height={art.spotContents.height} sizes="(max-width: 600px) 60vw, 26vw" className="mag-spot mag-contents__spot" />
+            </div>
             <ol className="mag-contents__list">
                 {featured.map((work) => (
                     <li key={work.id}>
@@ -106,13 +135,13 @@ function Contents({ gallery }: { gallery: Work[] }) {
                             <span className="mag-contents__thumb"><Image src={work.image} alt="" width={160} height={100} sizes="160px" /></span>
                             <span className="mag-contents__text">
                                 <span className="mag-contents__name">{splitTitle(work.title).main}</span>
-                                <span className="mag-contents__cat">{CATEGORY_LABEL[work.category ?? 'creative']}</span>
+                                <span className="mag-contents__cat"><CategoryMark category={work.category ?? 'creative'} /></span>
                             </span>
                         </a>
                     </li>
                 ))}
                 <li><a href="#gallery"><span className="mag-contents__text"><span className="mag-contents__name">作品のページ</span><span className="mag-contents__cat">{gallery.length} 点</span></span></a></li>
-                <li><a href="#interview"><span className="mag-contents__text"><span className="mag-contents__name">{interview.title}</span><span className="mag-contents__cat">インタビュー</span></span></a></li>
+                <li><a href="#profile"><span className="mag-contents__text"><span className="mag-contents__name">{profile.title}</span><span className="mag-contents__cat">経歴と道具</span></span></a></li>
                 <li><a href="#contact"><span className="mag-contents__text"><span className="mag-contents__name">連絡先</span><span className="mag-contents__cat">裏表紙</span></span></a></li>
             </ol>
         </section>
@@ -181,6 +210,7 @@ function Gallery({ items }: { items: Work[] }) {
             <header className="mag-gallery__head">
                 <h2 id="gallery-title">作品のページ</h2>
                 <p>映像、3D、サウンド、コードで描いたもの。実務の仕事もここに置きました。</p>
+                <Image src={art.spotGallery.src} alt="" width={art.spotGallery.width} height={art.spotGallery.height} sizes="(max-width: 600px) 70vw, 22vw" className="mag-spot mag-gallery__spot" />
             </header>
             <ul className="mag-gallery__grid">
                 {items.map((work, index) => {
@@ -192,7 +222,7 @@ function Gallery({ items }: { items: Work[] }) {
                             </span>
                             <span className="mag-tile__caption">
                                 <span className="mag-tile__title">{work.title}</span>
-                                <span className="mag-tile__note">{CATEGORY_LABEL[work.category ?? 'creative']}　{work.description}</span>
+                                <span className="mag-tile__note"><CategoryMark category={work.category ?? 'creative'} />{work.description}</span>
                             </span>
                         </>
                     );
@@ -207,24 +237,22 @@ function Gallery({ items }: { items: Work[] }) {
     );
 }
 
-function Interview() {
+function Profile() {
     return (
-        <section id="interview" className="mag-interview" aria-labelledby="interview-title">
-            <figure className="mag-interview__art">
-                <Image src={interview.image.src} alt={interview.image.alt} width={1200} height={900} sizes="(max-width: 760px) 100vw, 45vw" />
-            </figure>
-            <div className="mag-interview__text">
-                <p className="mag-interview__kicker">インタビュー</p>
-                <h2 id="interview-title">{interview.title}</h2>
-                <dl className="mag-interview__qa">
-                    {aboutData.bio.map((answer, i) => (
-                        <div key={answer}>
-                            <dt>{interview.questions[i] ?? '最近は'}</dt>
-                            <dd>{answer}</dd>
-                        </div>
-                    ))}
-                </dl>
-                <dl className="mag-interview__facts">
+        <section id="profile" className="mag-profile" aria-labelledby="profile-title">
+            <div className="mag-profile__head">
+                <figure className="mag-print mag-profile__art">
+                    <Image src={art.profile.src} alt={art.profile.alt} width={art.profile.width} height={art.profile.height} sizes="(max-width: 960px) 90vw, 40vw" />
+                </figure>
+                <h2 id="profile-title">{profile.title}</h2>
+                <p className="mag-profile__name">
+                    <span lang="ja">白石 大晴</span>
+                    <span lang="en">Taisei Shiroishi</span>
+                </p>
+            </div>
+            <div className="mag-profile__text">
+                {aboutData.bio.map((paragraph) => <p key={paragraph} className="mag-profile__bio">{paragraph}</p>)}
+                <dl className="mag-profile__facts">
                     {aboutData.keyFacts?.map((fact) => (
                         <div key={fact.title}>
                             <dt>{fact.title}</dt>
@@ -232,7 +260,7 @@ function Interview() {
                         </div>
                     ))}
                 </dl>
-                <NextLink href="/resume" className="mag-interview__resume">経歴と実績を見る ↗</NextLink>
+                <NextLink href="/resume" className="mag-profile__resume">経歴と実績を見る ↗</NextLink>
             </div>
         </section>
     );
@@ -255,7 +283,7 @@ export default function Magazine() {
                     })}
                 </div>
                 <Gallery items={gallery} />
-                <Interview />
+                <Profile />
                 <BackCover />
             </main>
         </div>
