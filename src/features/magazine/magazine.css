@@ -17,7 +17,11 @@
   color: var(--ink);
   font-family: var(--text);
   overflow-x: clip;
+  /* 日本語を文節で折り返す（「手だ／け」のような切れ方を防ぐ）。未対応のブラウザでは通常の折り返し */
+  word-break: auto-phrase;
 }
+.mag p, .mag li, .mag dd { text-wrap: pretty; }
+.mag-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .mag a { color: inherit; }
 .mag :focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
 .mag img { display: block; max-width: 100%; height: auto; }
@@ -27,7 +31,7 @@
   display: grid; place-items: center; text-align: center;
   width: 7.5rem; aspect-ratio: 1; border-radius: 50%;
   padding: .75rem; font-family: var(--text); font-weight: 900;
-  font-size: 1rem; line-height: 1.25;
+  font-size: 1rem; line-height: 1.25; white-space: pre-line; word-break: keep-all;
   background: var(--sticker-bg, var(--cobalt)); color: var(--sticker-ink, #fff);
   transform: rotate(-12deg);
   transition: transform .3s cubic-bezier(.22, 1, .36, 1);
@@ -383,8 +387,8 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 }
 .mag-filter__chip:hover { transform: translateY(-2px); }
 .mag-filter__chip[aria-pressed="true"] { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
-.mag-filter__count { font-family: var(--display); font-weight: 400; font-size: 1.125rem; }
-.mag-filter__status { margin: 0 0 2rem; font-size: .9375rem; font-weight: 700; color: var(--gray); }
+.mag-filter__count { font-weight: 700; font-size: .875rem; opacity: .65; font-variant-numeric: tabular-nums; }
+.mag-filter { margin-bottom: 2.5rem; }
 /* 絞り込んだあと、作品を順に差し込む */
 .mag-gallery__grid .mag-tile { animation: mag-tile-in .45s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i, 0) * 40ms); }
 @keyframes mag-tile-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }

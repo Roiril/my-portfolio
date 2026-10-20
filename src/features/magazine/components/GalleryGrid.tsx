@@ -34,7 +34,7 @@ export default function GalleryGrid({ items }: { items: Work[] }) {
                     </button>
                 ))}
             </div>
-            <p className="mag-filter__status" aria-live="polite">{active === 'all' ? `${items.length} 点の作品` : `${filters.find((f) => f.key === active)?.label}：${visible.length} 点`}</p>
+            <p className="mag-filter__status mag-sr-only" aria-live="polite">{active === 'all' ? `${items.length} 点の作品` : `${filters.find((f) => f.key === active)?.label}：${visible.length} 点`}</p>
             {/* 並びの型（4+2 ／ 2+2+2 ／ 3+3）は、表示中の作品の順番で決め直す */}
             <ul className="mag-gallery__grid" key={active}>
                 {visible.map((work, index) => {

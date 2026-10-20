@@ -32,8 +32,9 @@ export const issue = {
         { label: '遊び', text: 'WhiteOut ― 白いインクで塗りつぶすローグライト' },
         { label: '制作', text: '映像・3D・サウンド・コードの小作品' },
     ],
-    coverSticker: 'IVRC2026 優勝',
-    coverStickerBack: 'DCEXPO賞 受賞',
+    // ステッカーは丸の中で 2 行に収める。改行の位置は \n で決める（語の途中で切らないため）
+    coverSticker: 'IVRC2026\n優勝',
+    coverStickerBack: 'DCEXPO賞\n受賞',
 };
 
 export const features: FeatureSpread[] = [
@@ -43,8 +44,8 @@ export const features: FeatureSpread[] = [
         pullQuote: '監視カメラに映る自分を見ながら、現実空間を歩く。',
         layout: 'bleed',
         theme: { paper: '#0c0a09', ink: '#efe9e1', accent: '#d3271c' },
-        sticker: 'IVRC2026 優勝',
-        stickerBack: 'DCEXPO2026 で展示予定',
+        sticker: 'IVRC2026\n優勝',
+        stickerBack: 'DCEXPO\n2026 に出展',
     },
     {
         workId: 'robot-collab',
@@ -61,8 +62,8 @@ export const features: FeatureSpread[] = [
         pullQuote: '白いインクで、9 つの面を塗りつぶす。',
         layout: 'right',
         theme: { paper: '#111111', ink: '#ffffff', accent: '#ff5a1f' },
-        sticker: '楽しさ 4.434/5',
-        stickerBack: '評価の高い作品に選出',
+        sticker: '楽しさ\n4.434/5',
+        stickerBack: '評価の高い\n作品に選出',
     },
     {
         workId: 'couple-sync',
