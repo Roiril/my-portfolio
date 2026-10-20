@@ -28,7 +28,7 @@ export const issue = {
     // 顔写真は使わない方針。表紙の絵は magazine-art.ts の cover
     coverLines: [
         { label: '特集', text: '廻リ視 ― 監視カメラの自分を見ながら歩くホラー' },
-        { label: '研究', text: '人と機械が同じ場所で働くとき' },
+        { label: '研究', text: 'Play with a Hand ― 手だけのエージェントと遊ぶ' },
         { label: '遊び', text: 'WhiteOut ― 白いインクで塗りつぶすローグライト' },
         { label: '制作', text: '映像・3D・サウンド・コードの小作品' },
     ],
@@ -49,7 +49,7 @@ export const features: FeatureSpread[] = [
     {
         workId: 'robot-collab',
         kicker: '研究　修士研究・進行中',
-        pullQuote: '自然な協力が生まれる条件を探る。',
+        pullQuote: '手だけの相手と、ボードゲームを遊ぶ。',
         layout: 'left',
         theme: { paper: '#ffffff', ink: '#121212', accent: '#2433ff' },
         sticker: '進行中',
