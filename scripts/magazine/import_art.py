@@ -12,11 +12,10 @@ ROOT = Path(r'C:\Users\kouga\Projects\Web\my-portfolio')
 PUB = ROOT / 'public'
 
 # key: (生成ファイル名, 置き場（public からの相対）, 最大幅, alt[, 背景を透明に抜くか])
-# 表紙の盤・駒・手は重ねて動かすので、絵の外側の白だけを透明に抜く（輪郭の内側の白は残す）
+# 表紙の絵に重ねる駒は、絵の外側の白だけを透明に抜く（輪郭の内側の白は残す）
 ITEMS = {
-    'coverBoard': ('layer-board-v1', 'images/magazine/cover-board.webp', 1200, '', True),
+    'cover': ('cover-v2', 'images/magazine/cover.webp', 1600, 'ロボットの手がゲームの駒をつまんでいる。手前の盤には駒が立っている'),
     'coverPiece': ('layer-piece-v1', 'images/magazine/cover-piece.webp', 300, '', True),
-    'coverHand': ('layer-hand-v1', 'images/magazine/cover-hand.webp', 900, '', True),
     'profile': ('profile-v2', 'images/magazine/profile.webp', 1200, '研究で使う道具。Meta Quest 3 とロボットの手'),
     'spotContents': ('spot-contents-v2', 'images/magazine/spot-contents.webp', 900, ''),
     'spotContact': ('spot-contact-v2', 'images/magazine/spot-contact.webp', 900, ''),
@@ -74,8 +73,10 @@ def save(name, rel, max_w, transparent=False):
     dst = PUB / rel
     dst.parent.mkdir(parents=True, exist_ok=True)
     # 同じ置き場の古い版（ハッシュ違い）を消す
-    for old in dst.parent.glob(f'{Path(stem).name}-*{ext}'):
-        if old != dst:
+    # 「cover-」で前方一致させると cover-piece まで消えるので、ハッシュ 8 桁の版だけに絞る
+    own = re.compile(re.escape(Path(stem).name) + r'-[0-9a-f]{8}' + re.escape(ext) + '$')
+    for old in dst.parent.iterdir():
+        if old != dst and own.match(old.name):
             old.unlink()
     plain = PUB / f'{stem}{ext}'
     if plain.exists():

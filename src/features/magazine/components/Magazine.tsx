@@ -7,7 +7,7 @@ import { features, issue, profile, type FeatureSpread } from '@/content/magazine
 import { art } from '@/content/magazine-art';
 import type { Work } from '@/features/works/types';
 import BackCover from './BackCover';
-import CoverBoard from './CoverBoard';
+import CoverArt from './CoverArt';
 import GalleryGrid from './GalleryGrid';
 import Sticker from './Sticker';
 import { CategoryMark, SmartLink, linkLabel, splitTitle, titleClass, workHref } from './parts';
@@ -43,7 +43,7 @@ function Cover() {
                 {issue.masthead}
             </h1>
             <div className="mag-cover__photo">
-                <CoverBoard />
+                <CoverArt />
             </div>
             <ul className="mag-cover__lines">
                 {issue.coverLines.map((line) => (

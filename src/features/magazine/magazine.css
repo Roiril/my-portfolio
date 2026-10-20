@@ -406,30 +406,13 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 html[data-motion="off"] .mag-gallery__grid .mag-tile, html[data-motion="off"] .mag-back__art.is-sent { animation: none; }
 html[data-motion="off"] .mag-sticker__face { transition: none; }
 
-/* --- 表紙の盤（手が駒を置く） ------------------------------------ */
-.cover-board__stage { position: relative; aspect-ratio: 4 / 3; container-type: inline-size; }
-.cover-board__stage img { position: absolute; height: auto; max-width: none; user-select: none; -webkit-user-drag: none; }
-.cover-board__board { z-index: 1; }
-.cover-board__piece { z-index: 3; }
-.cover-board__piece.is-placed { animation: cover-piece-drop .35s cubic-bezier(.22, 1, .36, 1); }
-@keyframes cover-piece-drop { from { transform: translateY(-1.2cqw); } to { transform: none; } }
-.cover-board__piece.is-held { transition: opacity .25s; }
-.cover-board__piece.is-hidden { opacity: 0; }
-.cover-board__arm { position: absolute; inset: 0; z-index: 6; pointer-events: none; transition: transform .5s cubic-bezier(.22, 1, .36, 1); }
-.cover-board__arm.is-placing { transition-duration: .45s; }
-.cover-board__hand { z-index: 2; }
-.cover-board__cell { position: absolute; z-index: 8; padding: 0; border: 0; background: transparent; cursor: pointer; }
-.cover-board__cell[aria-disabled="true"] { cursor: default; }
-.cover-board__cell:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
-.cover-board { position: relative; }
-/* 案内は盤の左の空いた所に置く（表紙の下の「目次へ」と重ねない） */
-.cover-board__hint { position: absolute; left: 0; bottom: 3%; width: 29%; margin: 0; text-align: right; font-size: .8125rem; line-height: 1.5; font-weight: 700; color: var(--gray); z-index: 9; }
-.cover-board__reset { margin-left: .5rem; padding: .25rem .75rem; border: 2px solid var(--ink); background: var(--paper); font: inherit; font-weight: 900; color: var(--ink); cursor: pointer; }
-.cover-board__reset:hover { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
-
-@media (prefers-reduced-motion: reduce) {
-  .cover-board__arm, .cover-board__piece.is-held { transition: none; }
-  .cover-board__piece.is-placed { animation: none; }
+/* --- 表紙の絵に駒を 1 つ置く（スクロールに合わせて上から下りる） ------ */
+.cover-art { position: relative; }
+.cover-art > img { width: 100%; height: auto; }
+.cover-art__piece {
+  position: absolute; display: block; pointer-events: none;
+  --drop: 1;
+  opacity: min(1, calc(var(--drop) * 3));
+  transform: translateY(calc((1 - var(--drop)) * -55%));
 }
-html[data-motion="off"] .cover-board__arm, html[data-motion="off"] .cover-board__piece.is-held { transition: none; }
-html[data-motion="off"] .cover-board__piece.is-placed { animation: none; }
+.cover-art__piece img { display: block; width: 100%; height: auto; }
