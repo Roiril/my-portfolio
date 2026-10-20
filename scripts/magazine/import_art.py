@@ -11,11 +11,13 @@ SRC = Path(r'G:\マイドライブ\shubie\design-study\2026-10-19\codex')
 ROOT = Path(r'C:\Users\kouga\Projects\Web\my-portfolio')
 PUB = ROOT / 'public'
 
-# key: (生成ファイル名, 置き場（public からの相対）, 最大幅, alt[, 背景を透明に抜くか])
-# 表紙の絵に重ねる駒は、絵の外側の白だけを透明に抜く（輪郭の内側の白は残す）
+# key: (生成ファイル名, 置き場（public からの相対）, 最大幅, alt[, 透明の扱い])
+# 透明の扱い：'cutout' は絵の外側の白だけを透明に抜いて切り詰める。
+#            'layer' は split_cover.py が作った透明つきの層を、キャンバスの大きさのまま使う（重ねて位置をそろえるため）
 ITEMS = {
-    'cover': ('cover-v2', 'images/magazine/cover.webp', 1600, 'ロボットの手がゲームの駒をつまんでいる。手前の盤には駒が立っている'),
-    'coverPiece': ('layer-piece-v1', 'images/magazine/cover-piece.webp', 300, '', True),
+    'coverBoard': ('layer-cover-board', 'images/magazine/cover-board.webp', 1600, '盤の上に駒が立っている。ロボットの手が駒をつまんで、空いたマスへ置こうとしている'),
+    'coverHand': ('layer-cover-hand', 'images/magazine/cover-hand.webp', 1600, '', 'layer'),
+    'coverFront': ('layer-cover-front', 'images/magazine/cover-front.webp', 1600, '', 'layer'),
     'profile': ('profile-v2', 'images/magazine/profile.webp', 1200, '研究で使う道具。Meta Quest 3 とロボットの手'),
     'spotContents': ('spot-contents-v2', 'images/magazine/spot-contents.webp', 900, ''),
     'spotContact': ('spot-contact-v2', 'images/magazine/spot-contact.webp', 900, ''),
@@ -60,13 +62,18 @@ def cutout(im):
     return out.crop(box)
 
 
-def save(name, rel, max_w, transparent=False):
+def save(name, rel, max_w, transparent=None):
     im = Image.open(SRC / f'{name}.png')
-    im = cutout(im) if transparent else im.convert('RGB')
+    if transparent == 'cutout':
+        im = cutout(im)
+    elif transparent == 'layer':
+        im = im.convert('RGBA')
+    else:
+        im = im.convert('RGB')
     if im.width > max_w:
         im = im.resize((max_w, round(im.height * max_w / im.width)), Image.LANCZOS)
     buf = io.BytesIO()
-    im.save(buf, 'WEBP', quality=86, method=6, exact=transparent)
+    im.save(buf, 'WEBP', quality=86, method=6, exact=bool(transparent))
     data = buf.getvalue()
     stem, ext = os.path.splitext(rel)
     rel = f'{stem}-{hashlib.sha1(data).hexdigest()[:8]}{ext}'
@@ -88,7 +95,7 @@ lines = ["// scripts/magazine/import_art.py が書き出す。手で書き換え
          "export type ArtImage = { src: string; width: number; height: number; alt: string };", "",
          "export const art = {"]
 for key, (name, rel, max_w, alt, *opt) in ITEMS.items():
-    rel, (w, h), size = save(name, rel, max_w, transparent=bool(opt and opt[0]))
+    rel, (w, h), size = save(name, rel, max_w, transparent=opt[0] if opt else None)
     lines.append(f"    {key}: {{ src: '/{rel}', width: {w}, height: {h}, alt: '{alt}' }},")
     print(key, rel, w, h, size)
 lines += ["} satisfies Record<string, ArtImage>;", ""]

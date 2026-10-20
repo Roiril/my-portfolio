@@ -28,10 +28,9 @@
 
 /* --- ステッカー（丸いシール。事実だけを書く） ---------------- */
 .mag-sticker {
-  display: grid; place-items: center; text-align: center;
+  position: relative; display: block; container-type: inline-size;
   width: 7.5rem; aspect-ratio: 1; border-radius: 50%;
-  padding: .75rem; font-family: var(--text); font-weight: 900;
-  font-size: 1rem; line-height: 1.25; white-space: pre-line; word-break: keep-all;
+  padding: 0; font-family: var(--text); font-weight: 900; text-align: center;
   background: var(--sticker-bg, var(--cobalt)); color: var(--sticker-ink, #fff);
   transform: rotate(-12deg);
   transition: transform .3s cubic-bezier(.22, 1, .36, 1);
@@ -293,14 +292,14 @@
   .mag-cover__photo { width: 100%; margin-top: -16vw; }
   .mag-cover__lines, .mag-cover__name { grid-column: 1; }
   .mag-cover__name { grid-row: 5; justify-self: start; text-align: left; }
-  .mag-cover__sticker { width: 6rem; font-size: .875rem; bottom: auto; top: 40vw; right: 1rem; }
+  .mag-cover__sticker { width: 6rem; bottom: auto; top: 40vw; right: 1rem; }
   .mag-contents { grid-template-columns: minmax(0, 1fr); }
   .mag-contents__list a { grid-template-columns: 2.5rem 5rem minmax(0, 1fr); gap: .875rem; }
   .mag-contents__list li:nth-last-child(-n+3) a { grid-template-columns: 2.5rem minmax(0, 1fr); }
   .mag-contents__list a::before { font-size: 1.75rem; }
   .mag-contents__thumb img { width: 5rem; height: 3.25rem; }
   .mag-contents__text { flex-direction: column; gap: .125rem; }
-  .mag-spread__sticker { width: 5.5rem; font-size: .8125rem; right: .5rem; top: -1.75rem; }
+  .mag-spread__sticker { width: 5.5rem; right: .5rem; top: -1.75rem; }
   .mag-spread--bleed .mag-spread__sticker { bottom: -2.5rem; right: 1rem; }
   .mag-spread__credits { columns: 1; }
   .mag-gallery__head { grid-template-columns: minmax(0, 1fr); }
@@ -368,8 +367,10 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 /* --- 裏返るステッカー ------------------------------------------- */
 .mag-sticker--flip { border: 0; cursor: pointer; font: inherit; font-weight: 900; padding: 0; perspective: 40rem; background: none; }
 .mag-sticker--flip:hover { transform: rotate(-12deg) scale(1.06); }
+/* 丸の幅を 100cqi として、文字は 13%、左右の余白は 9%。2 行目までで丸の中に収まる */
 .mag-sticker__face {
-  position: absolute; inset: 0; display: grid; place-items: center; padding: .75rem; border-radius: 50%;
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 0 9cqi; border-radius: 50%;
+  font-size: 13cqi; line-height: 1.25; white-space: pre-line; word-break: keep-all; text-align: center;
   background: var(--sticker-bg, var(--cobalt)); color: var(--sticker-ink, #fff);
   backface-visibility: hidden; transition: transform .5s cubic-bezier(.22, 1, .36, 1);
 }
@@ -410,13 +411,9 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 html[data-motion="off"] .mag-gallery__grid .mag-tile, html[data-motion="off"] .mag-back__art.is-sent { animation: none; }
 html[data-motion="off"] .mag-sticker__face { transition: none; }
 
-/* --- 表紙の絵に駒を 1 つ置く（スクロールに合わせて上から下りる） ------ */
+/* --- 表紙の絵（盤・手・手前の駒の 3 層。スクロールで手が駒を置く） ------ */
 .cover-art { position: relative; }
-.cover-art > img { width: 100%; height: auto; }
-.cover-art__piece {
-  position: absolute; display: block; pointer-events: none;
-  --drop: 1;
-  opacity: min(1, calc(var(--drop) * 3));
-  transform: translateY(calc((1 - var(--drop)) * -55%));
-}
-.cover-art__piece img { display: block; width: 100%; height: auto; }
+.cover-art > img { display: block; width: 100%; height: auto; }
+.cover-art__hand, .cover-art__front { position: absolute; inset: 0; pointer-events: none; }
+.cover-art__hand { will-change: transform; }
+.cover-art__hand img, .cover-art__front img { display: block; width: 100%; height: auto; }

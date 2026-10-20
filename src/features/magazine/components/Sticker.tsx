@@ -6,7 +6,13 @@ import { useState } from 'react';
 export default function Sticker({ front, back, className }: { front: string; back?: string; className?: string }) {
     const [flipped, setFlipped] = useState(false);
     const spoken = (text: string) => text.replace(/\n/g, ' ');
-    if (!back) return <span className={'mag-sticker ' + (className ?? '')}>{front}</span>;
+    if (!back) {
+        return (
+            <span className={'mag-sticker ' + (className ?? '')}>
+                <span className="mag-sticker__face">{front}</span>
+            </span>
+        );
+    }
 
     return (
         <button
