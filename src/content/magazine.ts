@@ -50,7 +50,7 @@ export const features: FeatureSpread[] = [
     {
         workId: 'robot-collab',
         kicker: '研究　修士研究・進行中',
-        pullQuote: '手だけの相手と、ボードゲームを遊ぶ。',
+        pullQuote: '手のインタラクションデザイン',
         layout: 'left',
         theme: { paper: '#ffffff', ink: '#121212', accent: '#2433ff' },
         sticker: '進行中',
