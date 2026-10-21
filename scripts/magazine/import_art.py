@@ -16,7 +16,9 @@ PUB = ROOT / 'public'
 #            'layer' は split_cover.py が作った透明つきの層を、キャンバスの大きさのまま使う（重ねて位置をそろえるため）
 ITEMS = {
     'coverBoard': ('layer-cover-board', 'images/magazine/cover-board.webp', 1600, '盤の上に駒が立っている。ロボットの手が駒をつまんで、空いたマスへ置こうとしている'),
-    'coverHand': ('layer-cover-hand', 'images/magazine/cover-hand.webp', 1600, '', 'layer'),
+    # 手と、手に持った駒は別の層（split_hand.py）。駒を盤に置いたあと、手だけが離れて案内役になる
+    'coverHand': ('layer-cover-hand-only', 'images/magazine/cover-hand.webp', 1600, '', 'layer'),
+    'coverPiece': ('layer-cover-piece', 'images/magazine/cover-piece.webp', 1600, '', 'layer'),
     'coverFront': ('layer-cover-front', 'images/magazine/cover-front.webp', 1600, '', 'layer'),
     'profile': ('profile-v2', 'images/magazine/profile.webp', 1200, '研究で使う道具。Meta Quest 3 とロボットの手'),
     'spotContents': ('spot-contents-v2', 'images/magazine/spot-contents.webp', 900, ''),
@@ -27,6 +29,13 @@ ITEMS = {
     'iconCreative': ('icon-creative', 'images/magazine/icon-creative.webp', 160, ''),
     'logoMark': ('logo-mark-v2', 'images/magazine/logo-mark.webp', 160, ''),
     'arrow': ('ui-arrow', 'images/magazine/arrow.webp', 160, ''),
+    # 案内役の手。guideLift は表紙の手を切り詰めたもの（表紙から飛び立つ間だけ使う）。
+    # ほかは表紙の手を参照に Codex で描いたポーズ（プロンプトは prompts/guide-hand/）
+    'guideLift': ('guide-lift', 'images/magazine/guide-lift.webp', 1000, '', 'layer'),
+    'guidePoint': ('guide-point', 'images/magazine/guide-point.webp', 400, '', 'cutout'),
+    'guideThumbsUp': ('guide-thumbsup', 'images/magazine/guide-thumbsup.webp', 400, '', 'cutout'),
+    'guideDozo': ('guide-dozo', 'images/magazine/guide-dozo.webp', 400, '', 'cutout'),
+    'guideWave': ('guide-wave', 'images/magazine/guide-wave.webp', 400, '', 'cutout'),
 }
 THUMBS = {
     'thumb-ai-tools-v2': 'images/works/ai-business-tools/illust.webp',

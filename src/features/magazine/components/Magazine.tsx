@@ -9,6 +9,7 @@ import type { Work } from '@/features/works/types';
 import BackCover from './BackCover';
 import CoverArt from './CoverArt';
 import GalleryGrid from './GalleryGrid';
+import GuideHand from './GuideHand';
 import Sticker from './Sticker';
 import { CategoryMark, SmartLink, linkLabel, splitTitle, titleClass, workHref } from './parts';
 import '../magazine.css';
@@ -212,6 +213,7 @@ export default function Magazine() {
                 <Profile />
                 <BackCover />
             </main>
+            <GuideHand />
         </div>
     );
 }

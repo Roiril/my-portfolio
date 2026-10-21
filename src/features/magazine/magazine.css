@@ -414,6 +414,31 @@ html[data-motion="off"] .mag-sticker__face { transition: none; }
 /* --- 表紙の絵（盤・手・手前の駒の 3 層。スクロールで手が駒を置く） ------ */
 .cover-art { position: relative; }
 .cover-art > img { display: block; width: 100%; height: auto; }
-.cover-art__hand, .cover-art__front { position: absolute; inset: 0; pointer-events: none; }
-.cover-art__hand { will-change: transform; }
-.cover-art__hand img, .cover-art__front img { display: block; width: 100%; height: auto; }
+.cover-art__hand, .cover-art__piece, .cover-art__front { position: absolute; inset: 0; pointer-events: none; }
+.cover-art__hand, .cover-art__piece { will-change: transform; }
+.cover-art__hand img, .cover-art__piece img, .cover-art__front img { display: block; width: 100%; height: auto; }
+
+/* --- 案内役の手（GuideHand）。位置・大きさ・傾きは JS が毎コマ書く ------------------ */
+.mag-guide {
+  position: fixed; left: 0; top: 0; z-index: 45;
+  display: block; padding: 0; border: 0; background: none; cursor: pointer;
+  will-change: transform; -webkit-tap-highlight-color: transparent;
+  transition: opacity .25s;
+}
+.mag-guide[data-state="hidden"] { opacity: 0; pointer-events: none; }
+/* 表紙から飛び立つあいだは、表紙の絵と同じく紙に刷った見え方（重ね刷り）のまま */
+.mag-guide[data-state="flight"] { mix-blend-mode: multiply; pointer-events: none; }
+.mag-guide__pop, .mag-guide__bob { display: block; }
+.mag-guide img { display: none; width: 100%; height: auto; user-select: none; }
+.mag-guide img[data-on] { display: block; }
+.mag-guide[data-flip] img { transform: scaleX(-1); }
+/* 着地したら白い縁取りを付けて、ステッカーのように色のある地の上でも読めるようにする */
+.mag-guide[data-state="free"] .mag-guide__bob {
+  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)
+          drop-shadow(0 .5rem .75rem rgb(0 0 0 / .18));
+  animation: mag-guide-bob 2.6s ease-in-out infinite alternate;
+}
+@keyframes mag-guide-bob { from { translate: 0 0; } to { translate: 0 -5px; } }
+.mag-guide:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 4px; border-radius: 8px; }
+@media (prefers-reduced-motion: reduce) { .mag-guide { display: none; } }
+html[data-motion="off"] .mag-guide { display: none; }

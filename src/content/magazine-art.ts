@@ -3,7 +3,8 @@ export type ArtImage = { src: string; width: number; height: number; alt: string
 
 export const art = {
     coverBoard: { src: '/images/magazine/cover-board-938b5dea.webp', width: 1448, height: 1086, alt: '盤の上に駒が立っている。ロボットの手が駒をつまんで、空いたマスへ置こうとしている' },
-    coverHand: { src: '/images/magazine/cover-hand-640c0934.webp', width: 1448, height: 1086, alt: '' },
+    coverHand: { src: '/images/magazine/cover-hand-f4a79659.webp', width: 1448, height: 1086, alt: '' },
+    coverPiece: { src: '/images/magazine/cover-piece-cfcc7bc7.webp', width: 1448, height: 1086, alt: '' },
     coverFront: { src: '/images/magazine/cover-front-76fe15ef.webp', width: 1448, height: 1086, alt: '' },
     profile: { src: '/images/magazine/profile-d395a7e4.webp', width: 1200, height: 900, alt: '研究で使う道具。Meta Quest 3 とロボットの手' },
     spotContents: { src: '/images/magazine/spot-contents-8c7153f7.webp', width: 900, height: 1200, alt: '' },
@@ -14,4 +15,9 @@ export const art = {
     iconCreative: { src: '/images/magazine/icon-creative-68e7bc4c.webp', width: 160, height: 160, alt: '' },
     logoMark: { src: '/images/magazine/logo-mark-6a00c583.webp', width: 160, height: 160, alt: '' },
     arrow: { src: '/images/magazine/arrow-0f402ef3.webp', width: 160, height: 320, alt: '' },
+    guideLift: { src: '/images/magazine/guide-lift-49c78b39.webp', width: 925, height: 609, alt: '' },
+    guidePoint: { src: '/images/magazine/guide-point-c55b939c.webp', width: 400, height: 194, alt: '' },
+    guideThumbsUp: { src: '/images/magazine/guide-thumbsup-6f741cee.webp', width: 400, height: 527, alt: '' },
+    guideDozo: { src: '/images/magazine/guide-dozo-d38e94b2.webp', width: 400, height: 258, alt: '' },
+    guideWave: { src: '/images/magazine/guide-wave-c4395cb8.webp', width: 400, height: 550, alt: '' },
 } satisfies Record<string, ArtImage>;
