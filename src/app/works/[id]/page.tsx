@@ -45,9 +45,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         referrer: work.media?.some((m) => m.type === 'x') ? 'no-referrer' : undefined,
         title: `${work.title} | 白石大晴 Portfolio`,
         description,
+        alternates: { canonical: '/works/' + work.id },
         openGraph: {
             title: `${work.title} | 白石大晴 Portfolio`,
             description,
+            url: '/works/' + work.id,
             images: work.image ? [{ url: work.image }] : undefined,
         },
     };
