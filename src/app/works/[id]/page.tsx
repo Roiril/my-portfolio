@@ -6,7 +6,7 @@ import { hasDetailPage } from '@/features/works';
 import Footer from '@/components/layout/Footer';
 import SiteHeader from '@/components/layout/SiteHeader';
 import CoupleSyncDetail from '@/features/works/components/CoupleSyncDetail';
-import WorkCaseStudy, { type CaseTheme } from '@/features/works/components/WorkCaseStudy';
+import WorkCaseStudy, { type CaseBack, type CaseTheme } from '@/features/works/components/WorkCaseStudy';
 
 type Params = { id: string };
 
@@ -60,14 +60,19 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
     const work = pages[index];
 
     if (id === 'couple-sync') {
-        return <><SiteHeader skipHref="#couple-content" /><CoupleSyncDetail tech={work.tech} /><Footer /></>;
+        return <><SiteHeader skipHref="#couple-content" /><CoupleSyncDetail tech={work.tech} /><Footer topHref="#couple-content" /></>;
     }
 
-    const theme = features.find((f) => f.workId === id)?.theme ?? ART[id] ?? DEFAULT_THEME;
+    const feature = features.find((f) => f.workId === id);
+    const theme = feature?.theme ?? ART[id] ?? DEFAULT_THEME;
+    // 特集の作品は見開きへ、そのほかは作品のページのその作品の位置へ戻す
+    const back: CaseBack = feature
+        ? { href: '/#feature-' + id, label: '特集へ戻る' }
+        : { href: '/#work-' + id, label: '作品のページへ戻る' };
     return (
         <>
             <SiteHeader />
-            <WorkCaseStudy work={work} theme={theme} prev={pages[index - 1]} next={pages[index + 1]} />
+            <WorkCaseStudy work={work} theme={theme} back={back} prev={pages[index - 1]} next={pages[index + 1]} />
             <Footer />
         </>
     );

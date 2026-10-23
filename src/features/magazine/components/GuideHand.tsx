@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { art, type ArtImage } from '@/content/magazine-art';
+import { COPIED_EVENT } from './BackCover';
 import { HAND_BOX, HANDOFF, SRC_H, SRC_W, easeInOut, handOffset } from './cover-hand';
 
 // 案内役の手。表紙で駒を置いた手が、小さくなって読む人について来る。
@@ -14,6 +15,12 @@ import { HAND_BOX, HANDOFF, SRC_H, SRC_W, easeInOut, handOffset } from './cover-
 //   連絡先    … メールアドレスを指さす。コピーするとグッジョブ、いちばん下では手を振る
 // しぐさは修士研究で「伝わった」動き（指さし・どうぞ・ガッツポーズ・ハイタッチ）から選んだ。
 // 押すとハイタッチを返す。動き OFF と「視差効果を減らす」では出さない（表紙の手もその場に残る）。
+//
+// 読む邪魔をしないための決まり：
+//   ・行き先が画面の外にあるあいだは、身を引いて消える（画面の縁に残ると本文に重なるため）。
+//     行き先が画面に入ると、縁から飛んできて現れる
+//   ・スマホでは右下の隅に、指先だけ出して控えている。節が変わったときと、操作に応えるときだけ
+//     全身を出し、少したつとまた引っ込む
 
 type PoseKey = 'lift' | 'point' | 'dozo' | 'thumbsUp' | 'wave';
 type Pose = {
@@ -35,15 +42,22 @@ const POSES: Record<PoseKey, Pose> = {
 };
 const POSE_KEYS = Object.keys(POSES) as PoseKey[];
 
-type Aim = { pose: Exclude<PoseKey, 'lift'>; flip: boolean; x: number; y: number };
+// none：この節には指す物が無い（リンクの無い見開きなど）。そのときは身を引く
+type Aim = { pose: Exclude<PoseKey, 'lift'>; flip: boolean; x: number; y: number; none?: boolean };
 
 // スマホと狭い画面では行き先を追わず、右下の隅に座ってしぐさだけ変える（本文に重ならないように）
 const NARROW = 960;
 const NARROW_SCALE = 0.6;
 // 表紙から最初の行き先まで飛ぶあいだのスクロール量（画面の高さに対する割合）
 const FLIGHT = 0.5;
-// 固定のナビ（.mag-nav）の下端より少し下。案内役はここより上へ出ない
-const NAV_BOTTOM = 64;
+// 固定のナビ（.site-nav）の下端から、これだけ下までしか上がらない
+const NAV_GAP = 12;
+// 行き先が画面の上下の縁からこれ以上外へ出たら身を引き、これ以上内へ入ったら戻る（境目でちらつかないように差を付ける）
+const AWAY_OUT = 0;
+const AWAY_IN = 24;
+// スマホで全身を出している時間（ms）と、引っ込んだときに隠れる割合（絵の高さに対して）
+const PRESENT_MS = 2400;
+const TUCK = 0.58;
 // ばね（少しだけ行き過ぎて戻る）
 const STIFFNESS = 170;
 const DAMPING = 2 * Math.sqrt(STIFFNESS) * 0.72;
@@ -91,7 +105,7 @@ export default function GuideHand() {
         const still = () =>
             matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
 
-        let mode: 'hidden' | 'flight' | 'free' = 'hidden';
+        let mode: 'hidden' | 'flight' | 'free' | 'away' = 'hidden';
         let shown: PoseKey | null = null;
         let shownFlip = false;
         const pos = { x: 0, y: 0 };
@@ -100,6 +114,16 @@ export default function GuideHand() {
         let hoveredRow: Element | null = null;
         let frame = 0;
         let last = 0;
+        // スマホ：いま全身を出しているしぐさと、引っ込むまでの時刻
+        let presented = '';
+        let presentUntil = 0;
+        const timers = new Set<number>();
+        const navBottom = () => (document.querySelector('.site-nav')?.getBoundingClientRect().bottom ?? 52) + NAV_GAP;
+        // 指定の時刻にもう一度コマを回す（引っ込む・しぐさを戻す時刻に、スクロールが無くても動くように）
+        const wakeAt = (time: number) => {
+            const id = window.setTimeout(() => { timers.delete(id); kick(); }, Math.max(0, time - performance.now()) + 20);
+            timers.add(id);
+        };
 
         const show = (key: PoseKey, flip: boolean, popScale = 0.82) => {
             if (key === shown && flip === shownFlip) return;
@@ -128,7 +152,7 @@ export default function GuideHand() {
             if (mode === next) return;
             mode = next;
             root.dataset.state = next;
-            const hidden = next === 'hidden';
+            const hidden = next === 'hidden' || next === 'away';
             root.tabIndex = hidden ? -1 : 0;
             root.setAttribute('aria-hidden', String(hidden));
         };
@@ -164,6 +188,7 @@ export default function GuideHand() {
 
             let x = vw - 40;
             let y = vh * 0.5;
+            let found = false;
             if (id === 'contents') {
                 const list = active.querySelector('.mag-contents__list');
                 const rows = Array.from(active.querySelectorAll('.mag-contents__list li'));
@@ -180,26 +205,29 @@ export default function GuideHand() {
                     const b = row.getBoundingClientRect();
                     x = list.getBoundingClientRect().left - 10;
                     y = b.top + b.height / 2;
+                    found = true;
                 }
             } else if (active?.classList.contains('mag-spread')) {
                 const links = active.querySelector('.mag-spread__links');
                 const end = links && firstLineEnd(links);
-                if (end) { x = end.x + 14; y = end.y; }
+                if (end) { x = end.x + 14; y = end.y; found = true; }
             } else if (id === 'gallery') {
-                const end = firstLineEnd(active.querySelector('.mag-filter') ?? active);
-                if (end) { x = end.x + 14; y = end.y; }
+                const filter = active.querySelector('.mag-filter');
+                const end = filter && firstLineEnd(filter);
+                if (end) { x = end.x + 14; y = end.y; found = true; }
             } else if (id === 'profile') {
                 const b = active.querySelector('.mag-profile__resume')?.getBoundingClientRect();
-                if (b) { x = b.right + 18; y = b.top + b.height / 2; }
+                if (b) { x = b.right + 18; y = b.top + b.height / 2; found = true; }
             } else if (id === 'contact') {
                 const email = active.querySelector('.mag-back__email');
                 if (email) {
                     const b = textEnd(email);
                     x = b.right + 16;
                     y = b.top + b.height / 2;
+                    found = true;
                 }
             }
-            return { pose, flip, x, y };
+            return { pose, flip, x, y, none: !found };
         };
 
         // --- 1 コマ ----------------------------------------------------------
@@ -238,7 +266,7 @@ export default function GuideHand() {
                 const h = (w * HAND_BOX.h) / HAND_BOX.w;
                 const cx = lerp(heroCx, endCx, e);
                 // 表紙は上へ流れていくので、手はナビの下より上へは行かせない
-                const cy = Math.max(lerp(heroCy, endCy, e), NAV_BOTTOM + h / 2);
+                const cy = Math.max(lerp(heroCy, endCy, e), navBottom() + h / 2);
                 setMode('flight');
                 show('lift', false);
                 place(cx - w / 2, cy - h / 2, w, w / 2, h / 2, -Math.sin(Math.PI * e) * 14);
@@ -249,13 +277,31 @@ export default function GuideHand() {
                 return;
             }
 
+            const top0 = navBottom();
+            if (narrow) {
+                // 節が変わったとき（しぐさが変わったとき）に全身を出し、PRESENT_MS たったら引っ込む
+                const key = target.pose + (target.flip ? '-flip' : '');
+                if (key !== presented || mode === 'hidden') {
+                    presented = key;
+                    presentUntil = now + PRESENT_MS;
+                    wakeAt(presentUntil);
+                }
+                if (now >= presentUntil) target.y += size.h * TUCK;
+            }
+            // 行き先が画面の外なら身を引く。押そうとしている（フォーカスがある）あいだは引かない
+            const margin = mode === 'away' ? AWAY_IN : AWAY_OUT;
+            const outside = !narrow && (Boolean(target.none) || target.y < top0 + margin || target.y > vh - margin);
+            const away = outside && document.activeElement !== root;
+            // ばねの行き先は画面の中に収める（外の行き先まで追って、戻るときに遠くから飛んでこないように）
+            target.x = clamp(target.x, 0, vw);
+            target.y = clamp(target.y, top0, narrow ? vh + size.h : vh);
             if (mode === 'hidden') {
                 // 途中から読み込んだとき（再読み込み・リンクで飛んできた）は、行き先にそのまま現れる
                 pos.x = target.x;
                 pos.y = target.y;
                 vel.x = vel.y = 0;
             }
-            setMode('free');
+            setMode(away ? 'away' : 'free');
             show(target.pose, target.flip);
 
             const ax = STIFFNESS * (target.x - pos.x) - DAMPING * vel.x;
@@ -269,23 +315,25 @@ export default function GuideHand() {
             const rot = clamp(vel.x * 0.012, -12, 12);
             const ox = tip.fx * size.w;
             const oy = tip.fy * size.h;
-            // 絵が画面からはみ出さないように（行き先が画面の外でも、縁で待つ）
+            // 絵が画面からはみ出さないように。スマホで引っ込んでいるときだけ、下の縁より下へ沈んでよい
+            const sink = narrow ? size.h * TUCK : 0;
             const left = clamp(pos.x - ox, 8, vw - size.w - 8);
-            const top = clamp(pos.y - oy, NAV_BOTTOM, vh - size.h - 8);
+            const top = clamp(pos.y - oy, top0, vh - size.h - 8 + sink);
             place(left, top, size.w, ox, oy, rot);
 
             const settled = Math.hypot(target.x - pos.x, target.y - pos.y) < 0.3 && Math.hypot(vel.x, vel.y) < 4;
-            const waiting = override && override.until > now;
-            if (!settled || waiting) frame = requestAnimationFrame(tick);
+            if (!settled) frame = requestAnimationFrame(tick);
             else last = 0;
         };
         const kick = () => { if (!frame) frame = requestAnimationFrame(tick); };
 
         const react = (pose: Aim['pose'], ms: number) => {
             override = { pose, until: performance.now() + ms };
+            // しぐさを元に戻す時刻に起こす（スマホでは、しぐさが変わるので全身を出し直す）
+            wakeAt(override.until);
             if (shown === pose) shown = null; // 同じしぐさでも、もう一度跳ねさせる
+            presented = ''; // スマホでは引っ込んでいても全身を出す
             kick();
-            window.setTimeout(kick, ms + 20);
         };
 
         // --- 読む人の操作に応える ---------------------------------------------
@@ -297,16 +345,16 @@ export default function GuideHand() {
             const row = (e.target as Element).closest?.('.mag-contents__list li');
             if (row) { hoveredRow = row; kick(); }
         };
-        const onClick = (e: MouseEvent) => {
-            const t = e.target as Element;
-            if (t.closest?.('.mag-filter__chip')) react('thumbsUp', 1300);
-            if (t.closest?.('.mag-back__email')) {
-                // コピーに成功したら封筒が飛ぶ（BackCover が is-sent を付ける）。それを見てからグッジョブ
-                window.setTimeout(() => {
-                    if (document.querySelector('.mag-back__art.is-sent')) react('thumbsUp', 2200);
-                }, 120);
-            }
+        // キーボードで目次の一覧から出たら、読んでいる行（画面の中央の行）を指す動きに戻す
+        const onFocusOut = (e: FocusEvent) => {
+            const next = e.relatedTarget as Element | null;
+            if (!next?.closest?.('.mag-contents__list')) { hoveredRow = null; kick(); }
         };
+        const onClick = (e: MouseEvent) => {
+            if ((e.target as Element).closest?.('.mag-filter__chip')) react('thumbsUp', 1300);
+        };
+        // メールアドレスのコピーに成功したとき（BackCover が知らせる）
+        const onCopied = () => react('thumbsUp', 2200);
         const onHighFive = () => react('wave', 1100);
         const onPointerLeave = () => { hoveredRow = null; kick(); };
 
@@ -314,7 +362,9 @@ export default function GuideHand() {
         list?.addEventListener('pointerover', onPointerOver as EventListener);
         list?.addEventListener('pointerleave', onPointerLeave);
         list?.addEventListener('focusin', onFocusIn as EventListener);
+        list?.addEventListener('focusout', onFocusOut as EventListener);
         document.addEventListener('click', onClick);
+        window.addEventListener(COPIED_EVENT, onCopied);
         root.addEventListener('click', onHighFive);
         window.addEventListener('scroll', kick, { passive: true });
         window.addEventListener('resize', kick);
@@ -328,7 +378,10 @@ export default function GuideHand() {
             list?.removeEventListener('pointerover', onPointerOver as EventListener);
             list?.removeEventListener('pointerleave', onPointerLeave);
             list?.removeEventListener('focusin', onFocusIn as EventListener);
+            list?.removeEventListener('focusout', onFocusOut as EventListener);
             document.removeEventListener('click', onClick);
+            window.removeEventListener(COPIED_EVENT, onCopied);
+            timers.forEach((id) => window.clearTimeout(id));
             root.removeEventListener('click', onHighFive);
             window.removeEventListener('scroll', kick);
             window.removeEventListener('resize', kick);

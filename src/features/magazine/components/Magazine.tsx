@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import NextLink from 'next/link';
 import type { CSSProperties } from 'react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { works } from '@/content/works';
 import { aboutData } from '@/content/about';
 import { features, issue, profile, type FeatureSpread } from '@/content/magazine';
@@ -14,25 +15,6 @@ import GuideHand from './GuideHand';
 import Sticker from './Sticker';
 import { CategoryMark, SmartLink, linkLabel, splitTitle, titleClass, workHref } from './parts';
 import '../magazine.css';
-
-function MagazineNav() {
-    return (
-        <nav className="mag-nav" aria-label="誌面の目次">
-            <NextLink href="/#top" className="mag-nav__brand">
-                <Image src={art.logoMark.src} alt="" width={art.logoMark.width} height={art.logoMark.height} sizes="40px" className="mag-nav__mark" />
-                {issue.masthead}
-            </NextLink>
-            <div className="mag-nav__links">
-                <a href="#contents">目次</a>
-                <a href="#features">特集</a>
-                <a href="#gallery">作品</a>
-                <a href="#profile">プロフィール</a>
-                <a href="#contact">連絡</a>
-                <NextLink href="/resume">経歴 ↗</NextLink>
-            </div>
-        </nav>
-    );
-}
 
 function Cover() {
     return (
@@ -120,7 +102,8 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
     return (
         <article id={'feature-' + work.id} className={'mag-spread mag-spread--' + spread.layout} style={style} aria-labelledby={'title-' + work.id}>
             <figure className="mag-spread__photo">
-                {href ? <SmartLink href={href} ariaLabel={work.title + ' を見る'}>{photo}</SmartLink> : photo}
+                {/* 写真のリンクは下の「詳細」と同じ行き先。キーボードと読み上げでは 2 回出さない */}
+                {href ? <SmartLink href={href} hidden>{photo}</SmartLink> : photo}
                 {spread.sticker && <Sticker front={spread.sticker} back={spread.stickerBack} className="mag-spread__sticker" />}
                 {spread.inset && (
                     <span className="mag-spread__inset">
@@ -138,9 +121,13 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
                 <p className="mag-spread__body">{work.description}</p>
                 <p className="mag-spread__meta">{[work.period, work.role].filter(Boolean).join('　')}</p>
                 <div className="mag-spread__links">
-                    {hasDetailPage(work) && <NextLink href={detailHref(work)} className="mag-spread__more">詳細 →</NextLink>}
+                    {hasDetailPage(work) && (
+                        <NextLink href={detailHref(work)} className="mag-spread__more">
+                            詳細<span className="mag-sr-only">：{main}</span><span aria-hidden="true"> →</span>
+                        </NextLink>
+                    )}
                     {work.links.map((link) => (
-                        <SmartLink key={link.url} href={link.url}>{linkLabel(link)} ↗</SmartLink>
+                        <SmartLink key={link.url} href={link.url} arrow>{linkLabel(link)}</SmartLink>
                     ))}
                 </div>
                 {work.credits && (
@@ -188,7 +175,7 @@ function Profile() {
                         </div>
                     ))}
                 </dl>
-                <NextLink href="/resume" className="mag-profile__resume">経歴と実績を見る ↗</NextLink>
+                <NextLink href="/resume" className="mag-profile__resume">経歴と実績を見る<span aria-hidden="true"> ↗</span></NextLink>
             </div>
         </section>
     );
@@ -200,7 +187,7 @@ export default function Magazine() {
 
     return (
         <div className="mag">
-            <MagazineNav />
+            <SiteHeader />
             <main id="main-content" tabIndex={-1}>
                 <Cover />
                 <Contents gallery={gallery} />

@@ -21,6 +21,8 @@
   --section-space: clamp(88px, 11vw, 160px);
   --space-section: var(--section-space);
   --body-ink: #3a3a3a;
+  /* 共通のナビ（SiteHeader）の高さ。節へ飛んだとき、見出しがこの下にぴったり来る */
+  --nav-h: 3.5rem;
 }
 
 @theme inline {
@@ -30,14 +32,12 @@
   --font-mono: Consolas, "Courier New", monospace;
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 1px); }
 body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 ::selection { background: var(--accent); color: var(--surface); }
 button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 button { font: inherit; }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
-section[id], article[id] { scroll-margin-top: 96px; }
-section#about, section#links, section#works { scroll-margin-top: 88px; }
 .site-container { width: min(1280px, calc(100% - var(--page-gutter) * 2)); margin-inline: auto; }
 .section-heading { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--grid-gap); align-items: end; text-align: left; }
 .section-heading__title { grid-column: 1 / 8; }
@@ -59,12 +59,15 @@ section#about, section#links, section#works { scroll-margin-top: 88px; }
 .work-tag { display: inline-block; color: var(--muted); font-size: 11px; letter-spacing: .025em; line-height: 1.5; padding: 4px 0; overflow-wrap: anywhere; }
 .work-tag + .work-tag::before { content: '/'; margin-right: 8px; color: var(--line); }
 
+@media (max-width: 600px) {
+  :root { --nav-h: 5.375rem; }
+}
+
 @media (max-width: 760px) {
   :root { --page-gutter: 20px; --grid-gap: 16px; }
   .section-heading { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 16px; }
   .section-heading__title, .section-heading__aside { grid-column: 1 / -1; }
   .section-heading h2 { font-size: clamp(58px, 16vw, 80px); }
-  section[id], article[id] { scroll-margin-top: 82px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -43,11 +43,22 @@ export function linkLabel(link: WorkLink): string {
     return link.type === 'launch' ? 'サイトを開く' : link.type === 'paper' ? '論文を読む' : '動画を見る';
 }
 
-export function SmartLink({ href, className, children, ariaLabel }: { href: string; className?: string; children: React.ReactNode; ariaLabel?: string }) {
-    if (isExternal(href) || href.endsWith('.pdf') || href.startsWith('/demos/')) {
-        return <a href={href} className={className} aria-label={ariaLabel} target="_blank" rel="noopener noreferrer">{children}</a>;
+// hidden：同じ行き先のリンクがすぐ近くにあるとき、キーボードと読み上げから外す（マウスでは押せる）
+// arrow：文の後ろに ↗ を付ける（読み上げには出さない）
+export function SmartLink({ href, className, children, hidden, arrow }: { href: string; className?: string; children: React.ReactNode; hidden?: boolean; arrow?: boolean }) {
+    const newTab = isExternal(href) || href.endsWith('.pdf') || href.startsWith('/demos/');
+    const a11y = hidden ? { tabIndex: -1, 'aria-hidden': true } : {};
+    const body = (
+        <>
+            {children}
+            {arrow && <span aria-hidden="true"> ↗</span>}
+            {newTab && !hidden && <span className="mag-sr-only">（新しいタブで開きます）</span>}
+        </>
+    );
+    if (newTab) {
+        return <a href={href} className={className} target="_blank" rel="noopener noreferrer" {...a11y}>{body}</a>;
     }
-    return <NextLink href={href} className={className} aria-label={ariaLabel}>{children}</NextLink>;
+    return <NextLink href={href} className={className} {...a11y}>{body}</NextLink>;
 }
 
 export { splitTitle, titleClass } from '@/lib/work-title';

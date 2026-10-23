@@ -10,6 +10,8 @@ import { art } from '@/content/magazine-art';
 
 type CopyStatus = 'idle' | 'success' | 'error';
 
+export const COPIED_EVENT = 'roil:email-copied';
+
 export default function BackCover() {
     const [copyStatus, setCopyStatus] = useState<CopyStatus>('idle');
     const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -26,6 +28,8 @@ export default function BackCover() {
             return;
         }
         setCopyStatus('success');
+        // 案内役の手がグッジョブを返す（GuideHand が聞いている）
+        window.dispatchEvent(new CustomEvent(COPIED_EVENT));
         resetTimerRef.current = setTimeout(() => setCopyStatus('idle'), 2000);
     };
 
@@ -47,16 +51,18 @@ export default function BackCover() {
                         : '押すとメールアドレスをコピーします'}
             </p>
             <div className="mag-back__links">
-                <a href={'mailto:' + SITE_EMAIL}>メールを送る ↗</a>
+                <a href={'mailto:' + SITE_EMAIL}>メールを送る<span aria-hidden="true"> ↗</span></a>
                 {SOCIAL_LINKS.map((link) => (
-                    <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer">{link.platform} ↗</a>
+                    <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer">
+                        {link.platform}<span aria-hidden="true"> ↗</span><span className="mag-sr-only">（新しいタブで開きます）</span>
+                    </a>
                 ))}
-                <NextLink href="/resume">経歴 ↗</NextLink>
+                <NextLink href="/resume">経歴<span aria-hidden="true"> ↗</span></NextLink>
             </div>
             <p className="mag-back__colophon">
                 <span>ROIL　{new Date().getFullYear()}</span>
                 <span>白石大晴のポートフォリオ</span>
-                <a href="#top">表紙へ戻る ↑</a>
+                <a href="#top">表紙へ戻る<span aria-hidden="true"> ↑</span></a>
             </p>
         </footer>
     );

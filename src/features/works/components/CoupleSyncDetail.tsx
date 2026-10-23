@@ -32,7 +32,7 @@ export default function CoupleSyncDetail({ tech }: { tech?: WorkTech }) {
     <main id="couple-content" className="couple-case" tabIndex={-1}>
       <article>
         <header className="couple-hero couple-wrap">
-          <Link href="/#works" className="couple-back"><ArtIcon name="arrow" size={16} className="art-icon--back" /> 作品一覧に戻る</Link>
+          <Link href="/#feature-couple-sync" className="couple-back"><ArtIcon name="arrow" size={16} className="art-icon--back" /> 特集へ戻る</Link>
           <div className="couple-hero-grid">
             <div className="couple-hero-copy">
               <p className="couple-eyebrow">個人開発 <span aria-hidden="true">/</span> Web application</p>

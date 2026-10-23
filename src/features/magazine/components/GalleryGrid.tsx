@@ -20,6 +20,9 @@ const inMedium = (work: Work, key: string) => MEDIA.find((m) => m.key === key)?.
 
 export default function GalleryGrid({ items }: { items: Work[] }) {
     const [active, setActive] = useState<string>('all');
+    // 作品を順に差し込む動きは、絞り込みを押したあとだけ。読み込んだ直後に動かすと、
+    // 詳細ページから「戻る」で作品の位置へ飛んだとき、動いている途中の位置に合わせてずれる
+    const [touched, setTouched] = useState(false);
     const filters = useMemo(() => [
         { key: 'all', label: 'すべて', count: items.length },
         ...MEDIA.map((m) => ({ key: m.key, label: m.label, count: items.filter((w) => inMedium(w, m.key)).length })).filter((f) => f.count > 0),
@@ -30,14 +33,14 @@ export default function GalleryGrid({ items }: { items: Work[] }) {
         <>
             <div className="mag-filter" role="group" aria-label="作品を媒体で絞り込む">
                 {filters.map((f) => (
-                    <button key={f.key} type="button" className="mag-filter__chip" aria-pressed={active === f.key} onClick={() => setActive(f.key)}>
+                    <button key={f.key} type="button" className="mag-filter__chip" aria-pressed={active === f.key} onClick={() => { setActive(f.key); setTouched(true); }}>
                         {f.label}<span className="mag-filter__count">{f.count}</span>
                     </button>
                 ))}
             </div>
             <p className="mag-filter__status mag-sr-only" aria-live="polite">{active === 'all' ? `${items.length} 点の作品` : `${filters.find((f) => f.key === active)?.label}：${visible.length} 点`}</p>
             {/* 並びの型（4+2 ／ 2+2+2 ／ 3+3）は、表示中の作品の順番で決め直す */}
-            <ul className="mag-gallery__grid" key={active}>
+            <ul className="mag-gallery__grid" key={active} data-filtered={touched || undefined}>
                 {visible.map((work, index) => {
                     const href = workHref(work);
                     const body = (
@@ -53,7 +56,7 @@ export default function GalleryGrid({ items }: { items: Work[] }) {
                         </>
                     );
                     return (
-                        <li key={work.id} className={'mag-tile mag-tile--' + (index % 7)} style={{ '--i': index } as React.CSSProperties}>
+                        <li key={work.id} id={'work-' + work.id} className={'mag-tile mag-tile--' + (index % 7)} style={{ '--i': index } as React.CSSProperties}>
                             {href ? <SmartLink href={href} className="mag-tile__link">{body}</SmartLink> : <div className="mag-tile__link">{body}</div>}
                         </li>
                     );

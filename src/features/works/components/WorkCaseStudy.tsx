@@ -8,6 +8,8 @@ import XPost from './XPost';
 
 // 作品ごとの誌面の色。paper＝地、ink＝文字、accent＝差し色（題の副題・頭文字・番号だけに使う）
 export type CaseTheme = { paper: string; ink: string; accent: string };
+// 誌面へ戻るリンク。来た場所（特集の見開き、または作品のページのその作品）へ戻す
+export type CaseBack = { href: string; label: string };
 
 const CATEGORY_LABEL = { research: '研究', personal: '個人開発', internship: '実務', creative: '制作' } as const;
 
@@ -75,7 +77,7 @@ function Media({ items }: { items: WorkMedia[] }) {
     );
 }
 
-export default function WorkCaseStudy({ work, theme, prev, next }: { work: Work; theme: CaseTheme; prev?: Work; next?: Work }) {
+export default function WorkCaseStudy({ work, theme, back, prev, next }: { work: Work; theme: CaseTheme; back: CaseBack; prev?: Work; next?: Work }) {
     const { main, sub } = splitTitle(work.title);
     const { detail, tech } = work;
     const hasStory = Boolean(detail && (detail.body?.length || detail.gallery?.length || detail.sections?.length));
@@ -93,7 +95,7 @@ export default function WorkCaseStudy({ work, theme, prev, next }: { work: Work;
             <article>
                 <header className="case-hero">
                     <div className="case-hero__bar">
-                        <Link href="/#gallery" className="case-back"><span aria-hidden="true">←</span> 作品のページへ</Link>
+                        <Link href={back.href} className="case-back"><span aria-hidden="true">←</span> {back.label}</Link>
                         <p>{[CATEGORY_LABEL[work.category ?? 'creative'], work.period, work.role].filter(Boolean).join('　／　')}</p>
                     </div>
                     <h1 className={'case-hero__title ' + titleClass(main)}>
@@ -166,8 +168,8 @@ export default function WorkCaseStudy({ work, theme, prev, next }: { work: Work;
                 )}
 
                 <nav className="case-pager" aria-label="ほかの作品">
-                    {prev ? <Link href={'/works/' + prev.id} className="case-pager__prev"><span>← 前の作品</span>{prev.title}</Link> : <span />}
-                    {next ? <Link href={'/works/' + next.id} className="case-pager__next"><span>次の作品 →</span>{next.title}</Link> : <span />}
+                    {prev ? <Link href={'/works/' + prev.id} className="case-pager__prev"><span><span aria-hidden="true">← </span>前の作品</span>{prev.title}</Link> : <span />}
+                    {next ? <Link href={'/works/' + next.id} className="case-pager__next"><span>次の作品<span aria-hidden="true"> →</span></span>{next.title}</Link> : <span />}
                 </nav>
             </article>
         </main>

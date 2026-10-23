@@ -1,17 +1,25 @@
 'use client';
 
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import ArtIcon from '@/components/ui/ArtIcon';
 import { useMotion } from '@/components/motion/MotionProvider';
+import { art } from '@/content/magazine-art';
+import { issue } from '@/content/magazine';
 import './site-navigation.css';
 
-const SECTION_LINKS = [
-    { href: '/#works', id: 'works', label: 'Works' },
-    { href: '/#about', id: 'about', label: 'About' },
-    { href: '/#links', id: 'links', label: 'Links' },
+// 誌面（トップ）と作品の詳細ページで共通のナビ。
+// 行き先はトップの節。トップでは、いま読んでいる節に印を付ける
+const SECTIONS = [
+    { id: 'contents', label: '目次' },
+    { id: 'features', label: '特集' },
+    { id: 'gallery', label: '作品' },
+    { id: 'profile', label: 'プロフィール' },
+    { id: 'contact', label: '連絡' },
 ] as const;
+
+type SectionId = (typeof SECTIONS)[number]['id'];
 
 function MotionControl() {
     const { enabled, reducedMotion, toggleMotion } = useMotion();
@@ -20,227 +28,85 @@ function MotionControl() {
     return (
         <>
             <button
-                className="site-header__motion"
+                className="site-nav__motion"
                 type="button"
                 aria-pressed={enabled}
                 aria-describedby={reducedMotion ? descriptionId : undefined}
                 disabled={reducedMotion}
                 onClick={toggleMotion}
             >
-                動き {enabled ? 'ON' : 'OFF'}
+                {/* 見える文字は <html data-motion>（描画前に head のスクリプトが決める）から CSS で選ぶ。
+                    React の状態から出すと、読み込みのたびに一瞬「OFF」と出てから「ON」に変わる */}
+                動き <span className="site-nav__on">ON</span><span className="site-nav__off">OFF</span>
             </button>
             {reducedMotion && (
-                <span className="site-header__visually-hidden" id={descriptionId}>
-                    端末の設定に合わせて動きを停止しています
+                <span className="site-nav__sr-only" id={descriptionId}>
+                    端末の設定に合わせて動きを止めています
                 </span>
             )}
         </>
     );
 }
 
-function NavigationLinks({ activeId, onNavigate }: { activeId: string | null; onNavigate?: () => void }) {
-    return (
-        <>
-            {SECTION_LINKS.map((item) => (
-                <Link
-                    key={item.id}
-                    href={item.href}
-                    aria-current={activeId === item.id ? 'location' : undefined}
-                    onClick={onNavigate}
-                >
-                    {item.label}
-                </Link>
-            ))}
-            <Link
-                href="/resume"
-                aria-current={activeId === 'resume' ? 'location' : undefined}
-                onClick={onNavigate}
-            >
-                Resume <ArtIcon name="arrow" size={14} />
-            </Link>
-        </>
-    );
-}
-
 export default function SiteHeader({ skipHref = '#main-content' }: { skipHref?: string }) {
     const pathname = usePathname();
-    const [visibleSectionId, setVisibleSectionId] = useState<string | null>(null);
-    const [menuOpen, setMenuOpen] = useState(false);
-    const menuButtonRef = useRef<HTMLButtonElement>(null);
-    const dialogRef = useRef<HTMLDialogElement>(null);
-    const firstMenuLinkRef = useRef<HTMLAnchorElement>(null);
+    const onTop = pathname === '/';
+    const [current, setCurrent] = useState<SectionId | null>(null);
     const progressRef = useRef<HTMLDivElement>(null);
-    const activeId = pathname === '/resume' ? 'resume' : pathname === '/' ? visibleSectionId : null;
-
-    const closeMenu = useCallback(() => {
-        setMenuOpen(false);
-        requestAnimationFrame(() => menuButtonRef.current?.focus());
-    }, []);
+    const navRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        if (pathname !== '/') return;
-
-        const sections = SECTION_LINKS.map(({ id }) => document.getElementById(id)).filter(
-            (section): section is HTMLElement => section instanceof HTMLElement,
-        );
-        const visibleSections = new Map<string, number>();
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) visibleSections.set(entry.target.id, entry.intersectionRatio);
-                    else visibleSections.delete(entry.target.id);
-                }
-
-                const current = [...visibleSections.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
-                setVisibleSectionId(current);
-            },
-            {
-                rootMargin: '-88px 0px -55% 0px',
-                threshold: [0, 0.15, 0.35, 0.6],
-            },
-        );
-
-        sections.forEach((section) => observer.observe(section));
-        return () => observer.disconnect();
-    }, [pathname]);
-
-    useEffect(() => {
-        const dialog = dialogRef.current;
-        if (!dialog) return;
-
-        if (!menuOpen) {
-            if (dialog.open) dialog.close();
-            return;
-        }
-
-        if (!dialog.open) dialog.showModal();
-        const previousOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
-        requestAnimationFrame(() => firstMenuLinkRef.current?.focus());
-
-        return () => {
-            document.body.style.overflow = previousOverflow;
-            if (dialog.open) dialog.close();
-        };
-    }, [menuOpen]);
-
-    useEffect(() => {
-        const wideScreen = window.matchMedia('(min-width: 761px)');
-        const closeOnDesktop = (event: MediaQueryListEvent) => {
-            if (event.matches) closeMenu();
-        };
-
-        wideScreen.addEventListener('change', closeOnDesktop);
-        return () => wideScreen.removeEventListener('change', closeOnDesktop);
-    }, [closeMenu]);
-
-    useEffect(() => {
-        const updateProgress = () => {
+        let frame = 0;
+        const update = () => {
+            frame = 0;
             const scrollable = document.documentElement.scrollHeight - window.innerHeight;
             const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
-            progressRef.current?.style.setProperty('--scroll-progress', String(progress));
-            frame = 0;
+            progressRef.current?.style.setProperty('--scroll-progress', progress.toFixed(4));
+            if (!onTop) return;
+            // ナビの下端から画面の 3 分の 1 までに頭が入った節を「いま読んでいる節」とする。
+            // いちばん下まで来たら、短い裏表紙（連絡）でも印が付くようにする
+            const line = (navRef.current?.getBoundingClientRect().bottom ?? 0) + window.innerHeight / 3;
+            let next: SectionId | null = null;
+            for (const { id } of SECTIONS) {
+                const el = document.getElementById(id);
+                if (el && el.getBoundingClientRect().top <= line) next = id;
+            }
+            if (scrollable > 0 && window.scrollY >= scrollable - 2) next = 'contact';
+            setCurrent(next);
         };
-        const scheduleUpdate = () => {
-            if (!frame) frame = requestAnimationFrame(updateProgress);
-        };
-        let frame = requestAnimationFrame(updateProgress);
-        const resizeObserver = 'ResizeObserver' in window
-            ? new ResizeObserver(scheduleUpdate)
-            : null;
-
-        window.addEventListener('scroll', scheduleUpdate, { passive: true });
-        window.addEventListener('resize', scheduleUpdate, { passive: true });
-        if (resizeObserver) {
-            resizeObserver.observe(document.documentElement);
-            resizeObserver.observe(document.body);
-        }
+        const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+        update();
+        const resizeObserver = new ResizeObserver(schedule);
+        resizeObserver.observe(document.body);
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule, { passive: true });
         return () => {
-            window.removeEventListener('scroll', scheduleUpdate);
-            window.removeEventListener('resize', scheduleUpdate);
-            resizeObserver?.disconnect();
-            cancelAnimationFrame(frame);
+            window.removeEventListener('scroll', schedule);
+            window.removeEventListener('resize', schedule);
+            resizeObserver.disconnect();
+            if (frame) cancelAnimationFrame(frame);
         };
-    }, []);
+    }, [onTop]);
 
     return (
-        <header className="site-header">
-            <Link className="site-header__skip" href={skipHref}>本文へ移動</Link>
-            <div className="site-container site-header__inner">
-                <Link className="site-header__brand" href="/#top" aria-label="Roil ホーム">
-                    <ArtIcon name="brand" size={40} />
-                    <span className="site-header__brand-text" translate="no">Roil</span>
-                    <span className="site-header__note">RESEARCH &amp; MAKING</span>
+        <header ref={navRef} className="site-nav">
+            <a className="site-nav__skip" href={skipHref}>本文へ移動</a>
+            <div className="site-nav__bar">
+                <Link href="/#top" className="site-nav__brand" aria-label={issue.masthead + '　表紙へ'}>
+                    <Image src={art.logoMark.src} alt="" width={art.logoMark.width} height={art.logoMark.height} sizes="40px" className="site-nav__mark" />
+                    <span aria-hidden="true">{issue.masthead}</span>
                 </Link>
-
-                <div className="site-header__desktop-actions">
-                    <nav className="site-header__nav" aria-label="サイト内ナビゲーション">
-                        <NavigationLinks activeId={activeId} />
-                    </nav>
-                    <MotionControl />
-                </div>
-
-                <div className="site-header__mobile-actions">
-                    <MotionControl />
-                    <button
-                        ref={menuButtonRef}
-                        className="site-header__menu-button"
-                        type="button"
-                        aria-expanded={menuOpen}
-                        aria-controls="site-navigation-menu"
-                        aria-haspopup="dialog"
-                        onClick={() => setMenuOpen(true)}
-                    >
-                        Menu
-                    </button>
-                </div>
-            </div>
-
-            <dialog
-                ref={dialogRef}
-                className="site-header__menu-dialog"
-                id="site-navigation-menu"
-                aria-label="サイト内ナビゲーション"
-                onCancel={(event) => {
-                    event.preventDefault();
-                    closeMenu();
-                }}
-                onClose={() => setMenuOpen(false)}
-                onClick={(event) => {
-                    if (event.target === event.currentTarget) closeMenu();
-                }}
-            >
-                <div className="site-header__menu-panel">
-                    <div className="site-header__menu-heading">
-                        <span>Navigation</span>
-                        <button type="button" onClick={closeMenu}>閉じる</button>
-                    </div>
-                    <nav className="site-header__menu-nav" aria-label="モバイルナビゲーション">
-                        {SECTION_LINKS.map((item, index) => (
-                            <Link
-                                key={item.id}
-                                ref={index === 0 ? firstMenuLinkRef : undefined}
-                                href={item.href}
-                                aria-current={activeId === item.id ? 'location' : undefined}
-                                onClick={closeMenu}
-                            >
-                                <span>{String(index + 1).padStart(2, '0')}</span>
-                                {item.label}
-                            </Link>
-                        ))}
-                        <Link
-                            href="/resume"
-                            aria-current={activeId === 'resume' ? 'location' : undefined}
-                            onClick={closeMenu}
-                        >
-                            <span>04</span>
-                            Resume <ArtIcon name="arrow" size={18} />
+                <nav className="site-nav__links" aria-label="誌面の目次">
+                    {SECTIONS.map((s) => (
+                        <Link key={s.id} href={'/#' + s.id} aria-current={onTop && current === s.id ? 'location' : undefined}>
+                            {s.label}
                         </Link>
-                    </nav>
-                </div>
-            </dialog>
-
-            <div className="site-header__progress" ref={progressRef} aria-hidden="true" />
+                    ))}
+                    <Link href="/resume">経歴<span aria-hidden="true"> ↗</span></Link>
+                </nav>
+                <MotionControl />
+            </div>
+            <div className="site-nav__progress" ref={progressRef} aria-hidden="true" />
         </header>
     );
 }
