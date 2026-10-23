@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ArtIcon from '@/components/ui/ArtIcon';
 import { coupleSync as content } from '@/content/couple-sync';
+import type { WorkTech } from '../types';
+import WorkTechSection from './WorkTechSection';
 import './couple-sync.css';
 
 const demoUrl = '/demos/couple-sync/index.html';
@@ -22,7 +24,10 @@ function Phone({ src, alt, priority = false }: { src: string; alt: string; prior
   );
 }
 
-export default function CoupleSyncDetail() {
+// 技術の章は汎用の詳細ページと同じ部品を、この作品の色で使う
+const techTheme = { '--case-paper': '#fbf7ef', '--case-ink': '#29473c', '--case-accent': '#f1cbbb' } as React.CSSProperties;
+
+export default function CoupleSyncDetail({ tech }: { tech?: WorkTech }) {
   return (
     <main id="couple-content" className="couple-case" tabIndex={-1}>
       <article>
@@ -46,7 +51,7 @@ export default function CoupleSyncDetail() {
           <nav className="couple-chapters" aria-label="このページの内容">
             <a href="#couple-daily"><span>01</span> 日々の共有</a>
             <a href="#couple-play"><span>02</span> 遊びと模様替え</a>
-            <a href="#couple-development"><span>03</span> 開発について</a>
+            <a href="#couple-development"><span>03</span> 技術</a>
           </nav>
         </header>
 
@@ -102,21 +107,11 @@ export default function CoupleSyncDetail() {
           </div>
         </section>
 
-        <section id="couple-development" className="couple-development couple-wrap" aria-labelledby="couple-development-title">
-          <div className="couple-section-heading">
-            <p className="couple-eyebrow">03 <span aria-hidden="true">/</span> Development</p>
-            <h2 id="couple-development-title">開発について</h2>
-            <p>通信が不安定なときも使えるようにしました。<br className="couple-desktop-break" />記録の保存と端末間の同期を分けて設計しています。</p>
-          </div>
-          <div className="couple-engineering">
-            {content.engineering.map(item => (
-              <section key={item.technology}>
-                <p className="couple-technology" translate="no">{item.technology}</p>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </section>
-            ))}
-          </div>
+        {tech ? (
+          <div style={techTheme}><WorkTechSection tech={tech} id="couple-development" index="03" /></div>
+        ) : null}
+
+        <section className="couple-development couple-wrap" aria-label="デザインの更新">
           <aside className="couple-legacy" aria-labelledby="couple-legacy-title">
             <div>
               <p className="couple-small-label">デザインの更新</p>

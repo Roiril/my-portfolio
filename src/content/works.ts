@@ -1,8 +1,9 @@
 ﻿import { Work } from '@/features/works/types';
 
 import { coupleSync } from './couple-sync';
+import { workTech } from './works-tech';
 
-export const works: Work[] = [
+const baseWorks: Work[] = [
   // ===== 研究 / Research =====
   {
     id: 'mawarimi',
@@ -436,3 +437,6 @@ export const works: Work[] = [
     isCurrent: true,
   },
 ];
+
+// 技術説明（works-tech.ts）を作品に合わせる
+export const works: Work[] = baseWorks.map((work) => (workTech[work.id] ? { ...work, tech: workTech[work.id] } : work));

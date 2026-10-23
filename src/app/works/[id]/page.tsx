@@ -1,91 +1,28 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import { works } from '@/content/works';
-import { WorkGalleryImage } from '@/features/works/types';
-import { Tag, Link as ExternalLink } from '@/components/ui';
+import { features } from '@/content/magazine';
+import { hasDetailPage } from '@/features/works';
 import Footer from '@/components/layout/Footer';
 import SiteHeader from '@/components/layout/SiteHeader';
-import ArtIcon from '@/components/ui/ArtIcon';
 import CoupleSyncDetail from '@/features/works/components/CoupleSyncDetail';
+import WorkCaseStudy, { type CaseTheme } from '@/features/works/components/WorkCaseStudy';
 
 type Params = { id: string };
 
-// sm以上の列数に応じたグリッドクラス（Tailwindに拾わせるため静的に列挙）
-const GRID_COLS: Record<number, string> = {
-    2: 'grid-cols-1 sm:grid-cols-2',
-    3: 'grid-cols-2 sm:grid-cols-3',
-    4: 'grid-cols-2 sm:grid-cols-4',
-};
+// 特集でない作品の色。誌面の地と同じ白・黒・コバルト
+const DEFAULT_THEME: CaseTheme = { paper: '#ffffff', ink: '#121212', accent: '#2433ff' };
 
-// 列数ごとの画像の高さ（縦幅を揃えるため固定し、はみ出しは object-cover で切り取る）
-const CELL_HEIGHT: Record<number, string> = {
-    2: 'h-60 sm:h-80',
-    3: 'h-44 sm:h-56',
-    4: 'h-36 sm:h-44',
-};
+// 詳細ページを持つ作品（一覧に出しているものだけ）。前後の作品への送りもこの順
+const pages = works.filter((w) => !w.hidden && hasDetailPage(w));
 
-function Gallery({
-    images,
-    fallbackAlt,
-    columns = 2,
-}: {
-    images: WorkGalleryImage[];
-    fallbackAlt: string;
-    columns?: 2 | 3 | 4;
-}) {
-    return (
-        <div className={`grid ${GRID_COLS[columns]} gap-4 sm:gap-5`}>
-            {images.map((img) => (
-                <div
-                    key={img.src}
-                    className={`bg-gray-100 overflow-hidden border border-gray-200 ${CELL_HEIGHT[columns]} ${
-                        img.wide ? 'sm:col-span-2 sm:h-96' : ''
-                    }`}
-                >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src={img.src}
-                        loading="lazy"
-                        alt={img.alt ?? fallbackAlt}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-            ))}
-        </div>
-    );
-}
-
-// 縦長スマホ画面のスクショ用ギャラリー（アスペクト比を保ち切り取らずに並べる）
-function PhoneGallery({ images, fallbackAlt }: { images: WorkGalleryImage[]; fallbackAlt: string }) {
-    return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
-            {images.map((img) => (
-                <div
-                    key={img.src}
-                    className="bg-gray-50 overflow-hidden border border-gray-200 aspect-[402/880]"
-                >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src={img.src}
-                        loading="lazy"
-                        alt={img.alt ?? fallbackAlt}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-            ))}
-        </div>
-    );
-}
-
-// detail を持つ作品だけ静的に書き出す
 export function generateStaticParams(): Params[] {
-    return works.filter((w) => w.detail).map((w) => ({ id: w.id }));
+    return pages.map((w) => ({ id: w.id }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
     const { id } = await params;
-    const work = works.find((w) => w.id === id && w.detail);
+    const work = pages.find((w) => w.id === id);
     if (!work) return {};
     const description = work.detail?.lead ?? work.description;
     return {
@@ -101,128 +38,19 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function WorkDetailPage({ params }: { params: Promise<Params> }) {
     const { id } = await params;
-    const work = works.find((w) => w.id === id && w.detail);
-    if (!work || !work.detail) notFound();
-
-    const { detail } = work;
+    const index = pages.findIndex((w) => w.id === id);
+    if (index < 0) notFound();
+    const work = pages[index];
 
     if (id === 'couple-sync') {
-        return <><SiteHeader skipHref="#couple-content" /><CoupleSyncDetail /><Footer /></>;
+        return <><SiteHeader skipHref="#couple-content" /><CoupleSyncDetail tech={work.tech} /><Footer /></>;
     }
 
+    const theme = features.find((f) => f.workId === id)?.theme ?? DEFAULT_THEME;
     return (
         <>
             <SiteHeader />
-            <main id="main-content" tabIndex={-1}>
-            <article className="work-detail">
-                <div className="site-container">
-                    {/* 戻る */}
-                    <Link
-                        href="/#works"
-                        className="text-link text-link--sm"
-                    >
-                        <ArtIcon name="arrow" size={16} className="art-icon--back" /> Works
-                    </Link>
-
-                    {/* ヘッダー */}
-                    <header className="detail-header">
-                        {(work.period || work.role) && (
-                            <p className="text-xs text-gray-500 mb-3">
-                                {[work.period, work.role].filter(Boolean).join('　/　')}
-                            </p>
-                        )}
-                        <h1>
-                            {work.title}
-                        </h1>
-                        {detail.lead && (
-                            <p className="detail-lead">
-                                {detail.lead}
-                            </p>
-                        )}
-                        <div className="flex flex-wrap gap-3 mt-6">
-                            {work.tags.map((tag) => (
-                                <Tag key={tag}>{tag}</Tag>
-                            ))}
-                        </div>
-                        {work.links.length > 0 && (
-                            <div className="flex flex-row flex-wrap gap-8 mt-6">
-                                {work.links.map((link) => (
-                                    <ExternalLink key={link.url} href={link.url} isExternal size="sm">
-                                        {link.type === 'launch'
-                                            ? link.label || 'Launch'
-                                            : link.type === 'paper'
-                                              ? link.label || 'Paper'
-                                              : link.label || 'Video'}
-                                    </ExternalLink>
-                                ))}
-                            </div>
-                        )}
-                    </header>
-
-                    {/* 本文 */}
-                    {detail.body && detail.body.length > 0 && (
-                        <div className="mb-12 max-w-2xl flex flex-col gap-5">
-                            {detail.body.map((paragraph, i) => (
-                                <p key={i} className="text-sm sm:text-base text-gray-800 leading-8">
-                                    {paragraph}
-                                </p>
-                            ))}
-                        </div>
-                    )}
-
-                    {/* 単一ギャラリー（phone 指定時は縦長スマホ表示） */}
-                    {detail.gallery && detail.gallery.length > 0 && (
-                        detail.phone
-                            ? <PhoneGallery images={detail.gallery} fallbackAlt={work.title} />
-                            : <Gallery images={detail.gallery} fallbackAlt={work.title} />
-                    )}
-
-                    {/* セクション（小作品集など） */}
-                    {detail.sections && detail.sections.length > 0 && (
-                        <div className="flex flex-col gap-14">
-                            {detail.sections.map((section, i) => (
-                                <section key={section.title ?? i}>
-                                    {section.title && (
-                                        <h2 className="detail-section-title">
-                                            {section.title}
-                                        </h2>
-                                    )}
-                                    {section.body && section.body.length > 0 && (
-                                        <div className="mb-5 max-w-2xl flex flex-col gap-3">
-                                            {section.body.map((paragraph, j) => (
-                                                <p key={j} className="text-sm sm:text-base text-gray-800 leading-8">
-                                                    {paragraph}
-                                                </p>
-                                            ))}
-                                        </div>
-                                    )}
-                                    {section.gallery && section.gallery.length > 0 && (
-                                        <Gallery
-                                            images={section.gallery}
-                                            fallbackAlt={section.title ?? work.title}
-                                            columns={section.columns}
-                                        />
-                                    )}
-                                    {section.links && section.links.length > 0 && (
-                                        <div className="flex flex-row flex-wrap gap-8 mt-5">
-                                            {section.links.map((link) => (
-                                                <ExternalLink key={link.url} href={link.url} isExternal size="sm">
-                                                    {link.type === 'launch'
-                                                        ? link.label || 'Launch'
-                                                        : link.type === 'paper'
-                                                          ? link.label || 'Paper'
-                                                          : link.label || 'Video'}
-                                                </ExternalLink>
-                                            ))}
-                                        </div>
-                                    )}
-                                </section>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </article>
-            </main>
+            <WorkCaseStudy work={work} theme={theme} prev={pages[index - 1]} next={pages[index + 1]} />
             <Footer />
         </>
     );

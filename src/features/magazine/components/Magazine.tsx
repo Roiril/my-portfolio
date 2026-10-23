@@ -5,6 +5,7 @@ import { works } from '@/content/works';
 import { aboutData } from '@/content/about';
 import { features, issue, profile, type FeatureSpread } from '@/content/magazine';
 import { art } from '@/content/magazine-art';
+import { detailHref, hasDetailPage } from '@/features/works';
 import type { Work } from '@/features/works/types';
 import BackCover from './BackCover';
 import CoverArt from './CoverArt';
@@ -137,7 +138,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
                 <p className="mag-spread__body">{work.description}</p>
                 <p className="mag-spread__meta">{[work.period, work.role].filter(Boolean).join('　')}</p>
                 <div className="mag-spread__links">
-                    {work.detail && <NextLink href={'/works/' + work.id}>詳しく読む →</NextLink>}
+                    {hasDetailPage(work) && <NextLink href={detailHref(work)} className="mag-spread__more">詳細 →</NextLink>}
                     {work.links.map((link) => (
                         <SmartLink key={link.url} href={link.url}>{linkLabel(link)} ↗</SmartLink>
                     ))}

@@ -218,6 +218,9 @@
 .mag-tile__title { font-size: 1.25rem; font-weight: 900; line-height: 1.35; }
 .mag-tile__link:hover .mag-tile__title { color: var(--cobalt); }
 .mag-tile__note { font-size: .9375rem; line-height: 1.75; color: var(--gray); }
+/* 詳細ページへの送り。誌面の見開きの「詳細 →」と同じ下線の付け方 */
+.mag-tile__more { justify-self: start; margin-top: .375rem; font-size: 1rem; font-weight: 900; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--cobalt); }
+.mag-tile__link:hover .mag-tile__more { color: var(--cobalt); }
 
 /* --- プロフィール ---------------------------------------------- */
 .mag-profile {

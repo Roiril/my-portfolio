@@ -41,6 +41,20 @@ export type WorkDetail = {
     sections?: WorkSection[];
 };
 
+// 技術説明（詳細ページの「技術」の章）。資料やリポジトリで確かめた事実だけを書く
+export type WorkTech = {
+    // 章の冒頭に置く要約（1〜2 文）
+    summary: string;
+    // 使った技術。label は「エンジン」「言語」のような分類
+    stack: { label: string; items: string[] }[];
+    // しくみ。入力から出力までを順に並べる（3〜6 段）
+    flow?: { title: string; body: string }[];
+    // 工夫した点
+    points: { title: string; body: string }[];
+    // 大きく見せる数値（資料にある値だけ）
+    numbers?: { value: string; unit?: string; label: string }[];
+};
+
 // 作品データ
 export type Work = {
     id: string;
@@ -61,4 +75,6 @@ export type Work = {
     hidden?: boolean;
     // 専用の詳細ページを持つ作品だけ設定する
     detail?: WorkDetail;
+    // 技術説明。detail か tech のどちらかがあれば詳細ページを持つ
+    tech?: WorkTech;
 };

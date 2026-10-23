@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
+import { hasDetailPage } from '@/features/works';
 import type { Work } from '@/features/works/types';
 import { CategoryMark, SmartLink, workHref } from './parts';
 
@@ -47,6 +48,7 @@ export default function GalleryGrid({ items }: { items: Work[] }) {
                             <span className="mag-tile__caption">
                                 <span className="mag-tile__title">{work.title}</span>
                                 <span className="mag-tile__note"><CategoryMark category={work.category ?? 'creative'} />{work.description}</span>
+                                {hasDetailPage(work) && <span className="mag-tile__more" aria-hidden="true">詳細 →</span>}
                             </span>
                         </>
                     );
