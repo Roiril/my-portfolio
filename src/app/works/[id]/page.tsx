@@ -18,7 +18,7 @@ const ART: Record<string, CaseTheme> = {
     'blender-works': { paper: '#f2efe9', ink: '#1d1b18', accent: '#b4441c' },
     'meiji-3d': { paper: '#eef1ee', ink: '#18211c', accent: '#2f6b4a' },
     'uniqlo-future': { paper: '#ffffff', ink: '#111111', accent: '#d7000f' },
-    aquarium: { paper: '#fff6ec', ink: '#1f160e', accent: '#c4520a' },
+    aquarium: { paper: '#fff6ec', ink: '#1f160e', accent: '#b34b09' },
     'ai-music-video': { paper: '#14121c', ink: '#efeaf7', accent: '#b69cff' },
     'retroTV-portfolio': { paper: '#f3ead8', ink: '#2a1f12', accent: '#a5520f' },
     'cube-diary': { paper: '#0c0d12', ink: '#e8eaf2', accent: '#8fd3ff' },
@@ -66,7 +66,9 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
     }
 
     const feature = features.find((f) => f.workId === id);
-    const theme = feature?.theme ?? ART[id] ?? DEFAULT_THEME;
+    // 詳細ページの差し色は小さな番号や副題に使うので、文字用の色（accentText）があればそちらを使う
+    const base: CaseTheme & { accentText?: string } = feature?.theme ?? ART[id] ?? DEFAULT_THEME;
+    const theme: CaseTheme = { paper: base.paper, ink: base.ink, accent: base.accentText ?? base.accent };
     // 特集の作品は見開きへ、そのほかは作品のページのその作品の位置へ戻す
     const back: CaseBack = feature
         ? { href: '/#feature-' + id, label: '特集へ戻る' }

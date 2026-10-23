@@ -98,6 +98,16 @@ export type WorkMedia = {
     title: string;
     caption?: string;
     size?: 'large' | 'small';
+    // 投稿の数字（表示回数・いいね など）。いつ数えたかは Work.reception.asOf に書く
+    stats?: { label: string; value: string }[];
+};
+
+// 反響（公開後に外で数えた数字）。詳細ページの頭に帯で出す。数えた日を必ず添える
+export type WorkReception = {
+    // 帯の見出し（既定は「反響」）
+    title?: string;
+    asOf: string;
+    items: { value: string; unit?: string; label: string }[];
 };
 
 // 作品データ
@@ -124,4 +134,5 @@ export type Work = {
     tech?: WorkTech;
     // 詳細ページの動画・投稿
     media?: WorkMedia[];
+    reception?: WorkReception;
 };

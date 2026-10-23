@@ -126,7 +126,7 @@
 .mag-spread__photo a { display: block; overflow: hidden; }
 .mag-spread__sticker { position: absolute; right: -1rem; top: -2.5rem; }
 .mag-spread__text { position: relative; z-index: 2; }
-.mag-spread__kicker { margin: 0 0 1rem; font-size: 1rem; font-weight: 700; color: var(--spread-accent); }
+.mag-spread__kicker { margin: 0 0 1rem; font-size: 1rem; font-weight: 700; color: var(--spread-accent-text, var(--spread-accent)); }
 .mag-spread__title { margin: 0; line-height: 1.02; }
 /* 英字だけの題は Anton（太さは 1 種類しかないので 400 のまま） */
 .mag-spread__title.is-latin { font-family: var(--display); font-weight: 400; font-size: clamp(3.25rem, 7.2vw, 7rem); letter-spacing: -.005em; }
@@ -142,7 +142,7 @@
 .mag-spread__meta { margin: 1rem 0 0; font-size: .875rem; font-weight: 700; opacity: .75; }
 .mag-spread__links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: 1.25rem; font-size: 1rem; font-weight: 700; }
 .mag-spread__links a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--spread-accent); }
-.mag-spread__links a:hover { color: var(--spread-accent); }
+.mag-spread__links a:hover { color: var(--spread-accent-text, var(--spread-accent)); }
 .mag-spread__credits { list-style: none; margin: 1.5rem 0 0; padding: 1rem 0 0; border-top: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); columns: 2; column-gap: 1.5rem; font-size: .875rem; line-height: 1.9; opacity: .85; }
 
 /* 写真を横幅いっぱいに敷き、題を写真の下端に食い込ませる */
@@ -222,11 +222,35 @@
 .mag-profile__facts dd { margin: .25rem 0 0; font-size: 1rem; font-weight: 700; line-height: 1.6; }
 .mag-profile__resume { display: inline-block; margin-top: 2.5rem; padding: .875rem 1.5rem; background: #fff; color: var(--cobalt) !important; font-weight: 900; text-decoration: none; }
 .mag-profile__resume:hover { background: var(--ink); color: #fff !important; }
+
+/* --- 見つからないページ（乱丁のページ） ------------------------- */
+.mag-404 {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-content: start; column-gap: 2rem;
+  min-height: calc(100svh - var(--nav-h)); padding: 1.25rem var(--gutter) 4rem;
+}
+.mag-404 .mag-cover__issue { grid-column: 1 / -1; }
+.mag-404__title {
+  grid-column: 1 / -1; margin: 0; font-family: var(--display); font-weight: 400;
+  font-size: clamp(9rem, 34vw, 30rem); line-height: .8; color: var(--cobalt); padding-top: .08em; --plate: var(--ink);
+}
+.mag-404__body { grid-column: 1; margin-top: 2rem; max-width: 30rem; font-size: 1rem; line-height: 1.9; }
+.mag-404__body p { margin: 0 0 .75rem; }
+.mag-404__lead { font-size: clamp(1.25rem, 2vw, 1.625rem); font-weight: 900; line-height: 1.5; }
+.mag-404__links { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; align-items: center; margin-top: 1.75rem; font-weight: 900; }
+.mag-404__links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--cobalt); }
+.mag-404__links .mag-404__primary { padding: .75rem 1.5rem; background: var(--cobalt); color: #fff; text-decoration: none; }
+.mag-404__links .mag-404__primary:hover { background: var(--ink); }
+.mag-404__hand { grid-column: 2; align-self: end; justify-self: start; width: min(100%, 20rem); margin-top: 2rem; transform: rotate(-6deg); }
+@media (max-width: 600px) {
+  .mag-404 { grid-template-columns: minmax(0, 1fr); }
+  .mag-404__hand { grid-column: 1; width: 55%; justify-self: end; }
+}
 .mag-profile :focus-visible { outline-color: #fff; }
 
 /* --- 裏表紙 ---------------------------------------------------- */
 .mag-back { padding: clamp(4rem, 9vw, 8rem) var(--gutter) 2rem; background: var(--ink); color: #fff; }
-.mag-back__title { margin: 0; font-weight: 900; font-size: clamp(4rem, 14vw, 13rem); line-height: 1; letter-spacing: -.03em; color: var(--cobalt); }
+/* 黒地の上のコバルトは 2.7:1 で大見出しの基準（3:1）に届かないので、少しだけ明るくする */
+.mag-back__title { margin: 0; font-weight: 900; font-size: clamp(4rem, 14vw, 13rem); line-height: 1; letter-spacing: -.03em; color: #3b4bff; }
 .mag-back__message { margin: 1.5rem 0 2.5rem; font-size: 1.125rem; font-weight: 700; }
 .mag-back__email {
   display: block; padding: 0; border: 0; background: none; color: #fff; cursor: pointer; text-align: left;

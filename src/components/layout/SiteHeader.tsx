@@ -102,7 +102,7 @@ export default function SiteHeader({ skipHref = '#main-content' }: { skipHref?: 
                             {s.label}
                         </Link>
                     ))}
-                    <Link href="/resume">経歴<span aria-hidden="true"> ↗</span></Link>
+                    <Link href="/resume">経歴</Link>
                 </nav>
                 <MotionControl />
             </div>

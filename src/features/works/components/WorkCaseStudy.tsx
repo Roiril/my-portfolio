@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import { splitTitle, titleClass } from '@/lib/work-title';
-import type { Work, WorkGalleryImage, WorkLink, WorkMedia } from '../types';
+import type { Work, WorkGalleryImage, WorkLink, WorkMedia, WorkReception } from '../types';
 import WorkTechSection from './WorkTechSection';
 import XPost from './XPost';
 
@@ -33,12 +33,16 @@ function OutLink({ link }: { link: WorkLink }) {
 function Gallery({ images, fallbackAlt, columns = 2, phone = false }: { images: WorkGalleryImage[]; fallbackAlt: string; columns?: 2 | 3 | 4; phone?: boolean }) {
     return (
         <ul className={'case-gallery' + (phone ? ' case-gallery--phone' : '')} style={{ '--cols': phone ? 3 : columns } as CSSProperties}>
-            {images.map((img) => (
-                <li key={img.src} className={img.wide ? 'is-wide' : undefined}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img.src} alt={img.alt ?? fallbackAlt} loading="lazy" />
-                </li>
-            ))}
+            {images.map((img) => {
+                // 枠の縦横比は CSS（work-case.css の .case-gallery img）が決める。width と height はその比にそろえる
+                const [w, h] = phone ? [402, 880] : img.wide ? [1600, 800] : [1200, 800];
+                const sizes = phone ? '(max-width: 960px) 50vw, 280px' : img.wide ? '(max-width: 960px) 100vw, 1200px' : `(max-width: 960px) 50vw, ${Math.round(1200 / (columns ?? 2))}px`;
+                return (
+                    <li key={img.src} className={img.wide ? 'is-wide' : undefined}>
+                        <Image src={img.src} alt={img.alt ?? fallbackAlt} width={w} height={h} sizes={sizes} />
+                    </li>
+                );
+            })}
         </ul>
     );
 }
@@ -70,9 +74,27 @@ function Media({ items }: { items: WorkMedia[] }) {
             )}
             {xposts.length > 0 && (
                 <div className="case-media__posts">
-                    {xposts.map((m) => <XPost key={m.src} url={m.src} title={m.title} caption={m.caption} />)}
+                    {xposts.map((m) => <XPost key={m.src} url={m.src} title={m.title} caption={m.caption} stats={m.stats} />)}
                 </div>
             )}
+        </section>
+    );
+}
+
+// 反響の帯。公開後に外で数えた数字を、題のすぐ下に大きく置く
+function Reception({ reception }: { reception: WorkReception }) {
+    return (
+        <section className="case-reception" aria-labelledby="reception-title">
+            <h2 id="reception-title" className="case-label">{reception.title ?? '反響'}</h2>
+            <dl className="case-reception__list">
+                {reception.items.map((item) => (
+                    <div key={item.label}>
+                        <dt>{item.label}</dt>
+                        <dd>{item.value}{item.unit && <small>{item.unit}</small>}</dd>
+                    </div>
+                ))}
+            </dl>
+            <p className="case-reception__note">{reception.asOf}</p>
         </section>
     );
 }
@@ -124,6 +146,8 @@ export default function WorkCaseStudy({ work, theme, back, prev, next }: { work:
                         </div>
                     </div>
                 </header>
+
+                {work.reception && <Reception reception={work.reception} />}
 
                 {work.media && work.media.length > 0 && <Media items={work.media} />}
 

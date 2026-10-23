@@ -86,6 +86,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
         '--spread-paper': spread.theme.paper,
         '--spread-ink': spread.theme.ink,
         '--spread-accent': spread.theme.accent,
+        '--spread-accent-text': spread.theme.accentText ?? spread.theme.accent,
     } as CSSProperties;
 
     const photo = (
@@ -145,7 +146,7 @@ function Gallery({ items }: { items: Work[] }) {
         <section id="gallery" className="mag-gallery" aria-labelledby="gallery-title" data-rule>
             <header className="mag-gallery__head">
                 <h2 id="gallery-title" data-plate="作品のページ">作品のページ</h2>
-                <p>インターンでの開発と、映像・3D・サウンド・コードで作った作品です。</p>
+                <p>映像・3D・サウンド・コードで作った作品です。</p>
             </header>
             <GalleryGrid items={items} />
         </section>

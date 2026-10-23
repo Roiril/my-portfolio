@@ -23,7 +23,7 @@ async function fetchTweet(id: string): Promise<TweetData | null> {
     }
 }
 
-export default async function XPost({ url, title, caption }: { url: string; title: string; caption?: string }) {
+export default async function XPost({ url, title, caption, stats }: { url: string; title: string; caption?: string; stats?: { label: string; value: string }[] }) {
     const id = url.match(/status\/(\d+)/)?.[1];
     const tweet = id ? await fetchTweet(id) : null;
     const media = tweet?.mediaDetails?.[0];
@@ -45,6 +45,13 @@ export default async function XPost({ url, title, caption }: { url: string; titl
                 <strong>{title}</strong>
                 {caption && <span>{caption}</span>}
                 {text && <q className="case-post__text">{text}</q>}
+                {stats && stats.length > 0 && (
+                    <dl className="case-post__stats">
+                        {stats.map((s) => (
+                            <div key={s.label}><dt>{s.label}</dt><dd>{s.value}</dd></div>
+                        ))}
+                    </dl>
+                )}
                 <a href={url} target="_blank" rel="noopener noreferrer">X で投稿を見る<span aria-hidden="true"> ↗</span><span className="case-sr-only">（新しいタブで開きます）</span></a>
             </figcaption>
         </figure>

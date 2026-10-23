@@ -21,6 +21,16 @@ const baseWorks: Work[] = [
       { type: 'youtube', src: 'uWf51qRwbhA', title: '廻リ視(MAWARIMI) トレイラー', caption: '最新のトレイラー', size: 'large' },
       { type: 'youtube', src: 'ipoU4gU9G4k', title: '廻り視トレイラー (IVRC2026 ver)', caption: 'IVRC2026 のときのトレイラー', size: 'small' },
     ],
+    reception: {
+      title: '受賞と展示',
+      asOf: '2026 年 10 月 24 日時点。',
+      items: [
+        { value: '総合優勝', label: 'IVRC2026' },
+        { value: 'DCEXPO賞', label: 'IVRC2026' },
+        { value: '体験展示', label: '第31回日本VR学会大会' },
+        { value: '2026.11', label: 'DCEXPO2026 で展示予定' },
+      ],
+    },
     category: 'research',
     period: '2026（M1）',
     role: 'チーム制作（企画・監督・ソフトウェア開発を担当）',
@@ -72,9 +82,9 @@ const baseWorks: Work[] = [
   // ===== インターン / Internship =====
   {
     id: 'ai-business-tools',
-    title: 'AI業務ツール開発',
+    title: 'AI業務ツール — 見積書の下書きと社内検索チャット',
     description:
-      '社内で運用するAI業務ツールを開発しました。要件定義から運用まで担当しました。商談内容から見積書の下書きを作る機能を実装しました。社内マニュアルを検索して質問に答えるRAGチャットも実装しました。回答の根拠を人が確認できる運用も整えました。',
+      '長期インターンで、社内で運用するAI業務ツールを要件定義から運用まで担当しています。商談の内容から見積書の下書きを作る機能と、社内マニュアルを検索して質問に答えるRAGチャットを実装しました。回答には根拠の箇所を添え、人が確かめてから使う運用にしています。',
     image: '/images/works/ai-business-tools/illust-bcd1d002.webp',
     tags: ['Internship', 'LLM', 'RAG'],
     links: [],
@@ -88,7 +98,7 @@ const baseWorks: Work[] = [
     id: 'whiteout',
     title: 'WhiteOut — 塗りローグ',
     description:
-      '白いインクで9つの面を塗りつぶすローグライトゲームです。能力を組み合わせて速いクリアを目指します。unity1weekのお題「しろ」に向けて制作しました。楽しさの評価4.434/5を得て、評価の高い作品に選出されました。',
+      '白いインクで9つの面を塗りつぶすローグライトゲームです。能力を組み合わせて速いクリアを目指します。unity1weekのお題「しろ」に向けて制作し、楽しさの評価4.434/5で評価の高い作品に選出されました。公開時のPVはXで6万回以上表示され、unityroomのページは1.5万回閲覧されています（2026年10月時点）。',
     image: '/images/works/whiteout/title.webp',
     imageFit: 'cover',
     tags: ['Game', 'Unity', 'unity1week', 'ローグライト'],
@@ -96,9 +106,26 @@ const baseWorks: Work[] = [
       { type: 'launch', url: 'https://unityroom.com/games/whiteout-rogue', label: 'unityroomで遊ぶ' },
     ],
     media: [
-      { type: 'x', src: 'https://x.com/Roil_HCI/status/2084600134781096411', title: '公開時の PV', caption: '2026 年 8 月 4 日　unityroom での公開に合わせた PV' },
-      { type: 'x', src: 'https://x.com/Roil_HCI/status/2086271168156467599', title: 'アップデートの紹介', caption: '2026 年 8 月 9 日　無限撃ち・実績・スマホ対応を加えた版' },
+      {
+        type: 'x', src: 'https://x.com/Roil_HCI/status/2084600134781096411', title: '公開時の PV', caption: '2026 年 8 月 4 日　unityroom での公開に合わせた PV',
+        stats: [{ label: '表示', value: '61,774' }, { label: 'いいね', value: '868' }, { label: 'リポスト', value: '108' }, { label: 'ブックマーク', value: '341' }],
+      },
+      {
+        type: 'x', src: 'https://x.com/Roil_HCI/status/2086271168156467599', title: 'アップデートの紹介', caption: '2026 年 8 月 9 日　無限撃ち・実績・スマホ対応を加えた版',
+        stats: [{ label: '表示', value: '41,966' }, { label: 'いいね', value: '309' }, { label: 'リポスト', value: '33' }, { label: 'ブックマーク', value: '145' }],
+      },
     ],
+    // 数字は 2026-10-24 に取得。X は投稿の公開データ、unityroom はゲームのページの表示
+    reception: {
+      asOf: '2026 年 10 月 24 日時点。X は公開時の PV の投稿、unityroom はゲームのページの数字です。',
+      items: [
+        { value: '61,774', unit: '回', label: 'X で PV が表示された回数' },
+        { value: '868', label: 'PV へのいいね' },
+        { value: '15,047', unit: '回', label: 'unityroom での閲覧' },
+        { value: '189', unit: '件', label: 'unityroom での評価' },
+        { value: '4.434', unit: '/ 5', label: 'unity1week の楽しさの評価' },
+      ],
+    },
     category: 'personal',
     period: '2026.08',
   },
@@ -170,7 +197,7 @@ const baseWorks: Work[] = [
     id: 'blender-works',
     title: 'Blender Works',
     description:
-      'Blenderで制作した3D作品集です。モデリングを中心とした小作品を掲載しています。',
+      'Blenderで作った小作品集です。キャラクターのモデリング・ジオメトリノード・VFXを試しています。',
     image: '/images/works/blender-works/robot-game-01.png',
     tags: ['3D', 'Blender'],
     links: [],
@@ -230,7 +257,7 @@ const baseWorks: Work[] = [
     id: 'meiji-3d',
     title: 'Meiji Univ 3F',
     description:
-      '普段通っている明治大学中野キャンパス3Fを測量し、3D空間として再現しました。現地で撮影した写真をテクスチャに使っています。',
+      '明治大学中野キャンパス3Fを歩幅で測り、Blenderで3D空間に再現しました。現地で撮った写真をテクスチャに使い、VRに持ち込んで議論の場にもしました。',
     image: '/images/Meiji3fVideoCapture.png',
     tags: ['3D', 'Blender', 'Digital Twin'],
     links: [
@@ -300,7 +327,7 @@ const baseWorks: Work[] = [
     id: 'aquarium',
     title: 'Aquarium in Processing',
     description:
-      'Processingで制作したデジタル水槽です。コードで描いた魚が群れで泳ぎます。',
+      'Processingで作ったデジタル水槽です。コードで描いた魚が、3つの単純な決まりだけで群れになって泳ぎます。',
     image: '/images/AcuariumPrograming.png',
     tags: ['Creative Coding', 'Processing'],
     links: [
@@ -332,8 +359,8 @@ const baseWorks: Work[] = [
   },
   {
     id: 'ai-music-video',
-    title: 'AI Generated MusicVideo',
-    description: '複数のAIツールを試しながら組み合わせ、ミュージックビデオを制作しています。',
+    title: 'AI Generated Music Video',
+    description: '工程ごとにAIツールを使い分けて作ったミュージックビデオです。曲はSuno AIで作り、編集はFilmoraで仕上げました。',
     image: '/images/Ai-Generated-Mv.png',
     tags: ['SunoAI', 'ChatGPT', 'Gemini', 'Flow', 'Filmora'],
     links: [
@@ -353,7 +380,7 @@ const baseWorks: Work[] = [
     id: 'retroTV-portfolio',
     title: 'Portfolio: Retro TV version',
     description:
-      'レトロなテレビにポートフォリオを表示するWeb作品です。Next.jsとThree.jsで制作しました。',
+      'ブラウン管テレビの画面にポートフォリオを映すWeb作品です。Canvasに描いた画面をthree.jsの湾曲した画面に貼り、つまみでチャンネルを変えられます。',
     image: '/images/retroTV-portfolio.png',
     tags: ['Web', 'Next.js', 'Three.js'],
     period: '2025.12',
@@ -366,9 +393,11 @@ const baseWorks: Work[] = [
     id: 'cube-diary',
     title: 'CubeDiary',
     description:
-      '真っ暗な空間に、記憶をキューブとして保存するWebアプリです。',
+      '写真を6面に貼ったキューブを、暗い空間に並べていく日記アプリです。Next.jsとReact Three Fiberで作り、写真はSupabaseに保存します。',
     image: '/images/CubeDiary.png',
     tags: ['Web App', 'Next.js', 'Supabase'],
+    category: 'personal',
+    role: '単独（企画・設計・実装）',
     period: '2025.11',
     links: [
       { type: 'launch', url: 'https://cube-diary.vercel.app/' },
@@ -378,7 +407,7 @@ const baseWorks: Work[] = [
   {
     id: 'metaquest-devs',
     title: 'MetaQuest Devs',
-    description: '卒業論文のためにMeta QuestとUnityで制作したプロトタイプ集です。',
+    description: '卒業研究のためにMeta QuestとUnityで作った試作集です。通路で人とすれ違う場面など、現実の空間に情報を重ねる表現を試しました。',
     image: '/images/Mr-Devs.png',
     tags: ['MetaQuest', 'Unity'],
     links: [],
@@ -387,7 +416,7 @@ const baseWorks: Work[] = [
     id: 'ai-composition',
     title: 'AI-Augmented Composition',
     description:
-      'Studio Oneで以前制作した楽曲を、Suno AIで拡張した作品です。',
+      'Studio Oneで以前作った自分の曲を、Suno AIで広げた作品です。元の曲とAI版を聞き比べられます。',
     image: '/images/works/ai-composition/illust-f9e5771d.webp',
     tags: ['Sound', 'Studio One', 'AI'],
     links: [

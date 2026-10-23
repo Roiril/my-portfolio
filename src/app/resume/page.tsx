@@ -23,7 +23,7 @@ const personal = works.filter((w) => w.category === 'personal');
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
     return (
-        <h2 className="text-[12px] font-bold tracking-widest text-gray-900 border-b border-gray-300 pb-1 mb-2.5 uppercase">
+        <h2 className="text-[12px] font-bold tracking-widest text-gray-900 border-b border-gray-300 pb-1 mb-2.5 uppercase break-after-avoid-page">
             {children}
         </h2>
     );
@@ -131,8 +131,8 @@ export default function ResumePage() {
                     ))}
                 </section>
 
-                {/* インターン・職務経験 */}
-                <section className="mb-5">
+                {/* インターン・職務経験（短いので、見出しだけが前のページに残らないよう 1 塊にする） */}
+                <section className="mb-5 break-inside-avoid">
                     <SectionTitle>インターン / Experience</SectionTitle>
                     {internship.map((w) => (
                         <WorkRow key={w.id} work={w} />

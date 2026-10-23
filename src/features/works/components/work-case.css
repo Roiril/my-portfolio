@@ -99,7 +99,21 @@
 .case-media figcaption span { color: var(--case-muted); }
 .case-media__posts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 3rem); align-items: start; }
 .case-media__posts + .case-media__videos, .case-media__videos + .case-media__posts { margin-top: 2.5rem; }
+/* 反響の帯。太い罫の上に、数字を誌名と同じ書体で大きく並べる。数字の意味（dt）は数字の下に小さく */
+.case-reception { padding: 0 var(--case-gutter) clamp(3rem, 6vw, 5rem); }
+.case-reception__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); margin: 0; border-top: 3px solid var(--case-ink); }
+.case-reception__list > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: .5rem; padding: 1.25rem 1.25rem 1.25rem 0; border-bottom: 1px solid var(--case-rule); }
+.case-reception__list dt { font-size: .8125rem; font-weight: 700; line-height: 1.6; color: var(--case-muted); }
+.case-reception__list dd { margin: 0; font-family: var(--case-display); font-size: clamp(2.25rem, 4.4vw, 3.5rem); line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.case-reception__list small { margin-left: .25rem; font-family: var(--case-text); font-size: .875rem; font-weight: 900; color: var(--case-accent); }
+.case-reception__note { margin: .75rem 0 0; font-size: .75rem; line-height: 1.7; color: var(--case-muted); }
+
 .case-post { margin: 0; }
+/* 投稿の数字。表示・いいね…を 1 行に並べる */
+.case-post__stats { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin: .625rem 0 0; padding-top: .5rem; border-top: 1px solid var(--case-rule); }
+.case-post__stats > div { display: flex; align-items: baseline; gap: .375rem; }
+.case-post__stats dt { font-size: .75rem; font-weight: 700; color: var(--case-muted); }
+.case-post__stats dd { margin: 0; font-family: var(--case-display); font-size: 1.25rem; line-height: 1.2; font-variant-numeric: tabular-nums; color: var(--case-ink); }
 .case-post__frame { position: relative; background: #000; }
 .case-post__frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 /* 投稿の本文は引用として、差し色の細い罫を左に付けて置く */
