@@ -276,7 +276,9 @@
   .mag-cover__issue { font-size: .875rem; }
   .mag-cover__photo { width: 100%; margin-top: -16vw; }
   .mag-cover__lines, .mag-cover__name { grid-column: 1; }
-  .mag-cover__name { grid-row: 5; justify-self: start; text-align: left; }
+  /* 1 列のときは名前を見出しの直後に置く。最初の画面で誰の誌面かが分かるように */
+  .mag-cover__name { grid-row: 4; justify-self: start; text-align: left; }
+  .mag-cover__lines { grid-row: 5; }
   .mag-cover__sticker { width: 6rem; bottom: auto; top: 40vw; right: 1rem; }
   .mag-contents { grid-template-columns: minmax(0, 1fr); }
   .mag-contents__list a { grid-template-columns: 2.5rem 5rem minmax(0, 1fr); gap: .875rem; }
