@@ -1,8 +1,13 @@
 /* ============================================================
- * 作品の詳細ページ。トップの誌面（magazine.css）と同じ組み方で、
- * 1 作品を 1 冊の特集記事として読ませる。
- * 色は作品ごとに --case-paper / --case-ink / --case-accent で着替える。
- * 特集の作品は誌面の見開きと同じ色、そのほかは白地・黒・コバルト。
+ * 作品の詳細ページ。雑誌の中ページ（特集記事）として組む。
+ *
+ * 参考にした誌面（design-study/2026-10-19/user-pins）から取ったこと：
+ *   ・大きく組むのは 1 語の題だけ。本文は小さく、段に組んで読ませる
+ *   ・数字や仕様は細い罫の囲み記事に入れる。本文より一段大きい程度
+ *   ・差し色は題の副題・頭文字・小さな番号の 3 か所だけ
+ *   ・区切りは囲みではなく罫（太い罫で章、細い罫で項目）
+ *
+ * 色は作品ごとに --case-paper / --case-ink / --case-accent で着替える（page.tsx の ART）。
  * ============================================================ */
 
 .case,
@@ -10,8 +15,10 @@
   --case-display: var(--font-anton), var(--font-jp), 'Yu Gothic', sans-serif;
   --case-text: var(--font-jp), 'Yu Gothic Medium', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
   --case-gutter: clamp(20px, 4vw, 56px);
-  --case-rule: color-mix(in srgb, var(--case-ink) 18%, transparent);
-  --case-muted: color-mix(in srgb, var(--case-ink) 68%, var(--case-paper));
+}
+.case, .case-tech {
+  --case-rule: color-mix(in srgb, var(--case-ink) 22%, transparent);
+  --case-muted: color-mix(in srgb, var(--case-ink) 66%, var(--case-paper));
 }
 .case {
   display: block;
@@ -21,180 +28,179 @@
   overflow-x: clip;
   word-break: auto-phrase;
 }
-.case :is(p, li, dd) { text-wrap: pretty; }
+.case :is(p, li, dd, figcaption) { text-wrap: pretty; }
 .case a { color: inherit; }
-.case :focus-visible { outline: 3px solid var(--case-accent); outline-offset: 3px; }
+.case :focus-visible, .case-tech :focus-visible { outline: 3px solid var(--case-accent); outline-offset: 3px; }
 .case img { display: block; max-width: 100%; height: auto; }
 .case-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-/* --- 扉 --------------------------------------------------------- */
-.case-hero { padding: 1.25rem var(--case-gutter) clamp(3rem, 6vw, 5rem); }
-.case-back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; font-size: .9375rem; font-weight: 700; text-decoration: none; }
-.case-back:hover { color: var(--case-accent); }
-.case-hero__kicker {
-  margin: 1.5rem 0 0; padding-bottom: .5rem; border-bottom: 3px solid var(--case-ink);
-  font-size: 1rem; font-weight: 700;
+/* 小見出し（項目名）。細い罫の上に小さな太字で置く */
+.case-label {
+  margin: 0 0 1.25rem; padding-top: .5rem; border-top: 1px solid var(--case-ink);
+  font-size: .8125rem; font-weight: 900; letter-spacing: .08em;
 }
-.case-hero__title { margin: clamp(1.5rem, 3vw, 2.5rem) 0 0; line-height: 1; overflow-wrap: anywhere; }
-.case-hero__title.is-latin { font-family: var(--case-display); font-weight: 400; font-size: clamp(3.5rem, 11vw, 10rem); letter-spacing: -.005em; }
-.case-hero__title.is-ja { font-family: var(--case-text); font-weight: 900; font-size: clamp(2.75rem, 8vw, 7.5rem); letter-spacing: -.03em; }
-.case-hero__title.is-ja.is-long, .case-hero__title.is-latin.is-long { font-size: clamp(2.5rem, 6.4vw, 6rem); line-height: 1.08; }
-.case-hero__sub { display: block; margin-top: .4em; font-family: var(--case-display); font-weight: 400; font-size: .34em; letter-spacing: 0; color: var(--case-accent); }
+
+/* --- 扉 --------------------------------------------------------- */
+.case-hero { padding: 0 var(--case-gutter) clamp(3rem, 6vw, 5rem); }
+.case-hero__bar {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 2rem;
+  border-bottom: 1px solid var(--case-ink); font-size: .875rem; font-weight: 700;
+}
+.case-hero__bar p { margin: 0; color: var(--case-muted); }
+.case-back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; text-decoration: none; }
+.case-back:hover { color: var(--case-accent); }
+.case-hero__title { margin: clamp(1.5rem, 3vw, 2.5rem) 0 0; line-height: .95; overflow-wrap: anywhere; }
+.case-hero__title.is-latin { font-family: var(--case-display); font-weight: 400; font-size: clamp(3.5rem, 10vw, 9rem); letter-spacing: -.005em; }
+.case-hero__title.is-ja { font-family: var(--case-text); font-weight: 900; font-size: clamp(2.75rem, 7.5vw, 7rem); letter-spacing: -.03em; }
+.case-hero__title.is-long { font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.05; }
+.case-hero__sub { display: block; margin-top: .5em; font-family: var(--case-text); font-weight: 700; font-size: clamp(1rem, 1.6vw, 1.375rem); letter-spacing: .02em; color: var(--case-accent); }
 
 .case-hero__grid {
-  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 4vw, 4rem);
-  align-items: start; margin-top: clamp(2rem, 4vw, 3.5rem);
+  display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start; margin-top: clamp(1.5rem, 3vw, 2.5rem); padding-top: 1.25rem; border-top: 4px solid var(--case-ink);
 }
-.case-hero__photo { position: relative; margin: 0; isolation: isolate; }
-/* 写真の後ろに差し色の板をずらして敷く（誌面の見開きと同じ） */
-.case-hero__photo::before { content: ''; position: absolute; z-index: -1; inset: 1.25rem -1.25rem -1.25rem 1.25rem; background: var(--case-accent); }
+.case-hero__photo { margin: 0; }
 .case-hero__photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 .case-hero__photo img.is-contain { object-fit: contain; background: #fff; }
-.case-hero__lead {
-  margin: 0; padding-left: 1rem; border-left: 6px solid var(--case-accent);
-  font-size: clamp(1.25rem, 2vw, 1.625rem); font-weight: 900; line-height: 1.6;
-}
-.case-hero__desc { margin: 1.5rem 0 0; font-size: 1rem; line-height: 1.95; }
-.case-hero__tags { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.75rem 0 0; padding: 0; }
-.case-hero__tags li { padding: .25rem .625rem; border: 2px solid var(--case-ink); font-size: .875rem; font-weight: 700; line-height: 1.4; }
-.case-hero__links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: 1.5rem; font-size: 1rem; font-weight: 700; }
+.case-hero__lead { margin: 0; font-size: clamp(1.125rem, 1.6vw, 1.375rem); font-weight: 900; line-height: 1.7; }
+.case-hero__desc { margin: 1.25rem 0 0; font-size: .9375rem; line-height: 2; }
+.case-hero__tags { margin: 1.25rem 0 0; padding-top: .75rem; border-top: 1px solid var(--case-rule); font-size: .8125rem; font-weight: 700; line-height: 1.9; color: var(--case-muted); }
+.case-hero__links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin-top: 1rem; font-size: .9375rem; font-weight: 900; }
 .case-hero__links a {
-  display: inline-flex; align-items: center; gap: .25rem; min-height: 44px;
+  display: inline-flex; align-items: center; min-height: 44px;
   text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--case-accent);
 }
 .case-hero__links a:hover { color: var(--case-accent); }
 
-/* 章の目次 */
-.case-chapters { display: flex; flex-wrap: wrap; gap: 0; margin-top: clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--case-rule); border-bottom: 1px solid var(--case-rule); }
-.case-chapters a { flex: 1 1 14rem; display: flex; align-items: baseline; gap: 1rem; min-height: 44px; padding: 1rem 0; font-size: 1.125rem; font-weight: 900; text-decoration: none; }
-.case-chapters a + a { border-left: 1px solid var(--case-rule); padding-left: 1.5rem; }
-.case-chapters a span { font-family: var(--case-display); font-weight: 400; font-size: 2rem; line-height: 1; color: var(--case-accent); }
-.case-chapters a:hover { color: var(--case-accent); }
+/* 目次（このページの章） */
+.case-toc { display: grid; margin-top: 1.75rem; border-top: 1px solid var(--case-ink); }
+.case-toc a { display: flex; align-items: baseline; gap: .75rem; min-height: 44px; padding: .625rem 0; border-bottom: 1px solid var(--case-rule); font-size: 1rem; font-weight: 900; text-decoration: none; }
+.case-toc a span { font-size: .8125rem; color: var(--case-accent); font-variant-numeric: tabular-nums; }
+.case-toc a:hover { color: var(--case-accent); }
 
-/* --- 章の見出し（大きな番号＋題） ----------------------------------- */
-.case-chapter-no { margin: 0; font-family: var(--case-display); font-size: clamp(4rem, 10vw, 8rem); line-height: .85; color: var(--case-accent); }
-.case-chapter-title { margin: .75rem 0 0; font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em; }
+/* --- 章の扉（番号は小さく、題を大きく） ------------------------------ */
+.case-chapter {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(1.5rem, 4vw, 4rem); align-items: end;
+  padding-top: .75rem; border-top: 4px solid var(--case-ink); margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.case-chapter__no { grid-column: 1; margin: 0; font-size: .875rem; font-weight: 900; color: var(--case-accent); font-variant-numeric: tabular-nums; }
+.case-chapter__title { grid-column: 1; margin: .25rem 0 0; font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em; }
+.case-chapter__standfirst { grid-column: 2; grid-row: 1 / span 2; align-self: end; margin: 0; font-size: clamp(1rem, 1.4vw, 1.1875rem); font-weight: 700; line-height: 1.9; }
+
+/* --- 映像 -------------------------------------------------------- */
+.case-media { padding: 0 var(--case-gutter) clamp(3rem, 6vw, 5rem); }
+.case-media__videos { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: clamp(1.5rem, 3vw, 3rem); align-items: start; }
+.case-video { margin: 0; }
+.case-video--large:only-child { grid-column: 1 / -1; }
+.case-video__frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.case-video__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.case-media figcaption { display: grid; gap: .125rem; margin-top: .625rem; font-size: .8125rem; line-height: 1.7; }
+.case-media figcaption span { color: var(--case-muted); }
+.case-media__posts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 3rem); align-items: start; }
+.case-media__posts + .case-media__videos, .case-media__videos + .case-media__posts { margin-top: 2.5rem; }
+.case-post { margin: 0; }
+.case-post__frame { position: relative; background: #000; }
+.case-post__frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+/* 投稿の本文は引用として、差し色の細い罫を左に付けて置く */
+.case-post__text { display: block; margin-top: .5rem; padding-left: .75rem; border-left: 2px solid var(--case-accent); font-size: .875rem; line-height: 1.85; color: var(--case-ink); white-space: pre-line; quotes: none; }
+.case-post figcaption a { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; font-weight: 900; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--case-accent); }
 
 /* --- 作品について ------------------------------------------------ */
-.case-story { padding: clamp(4rem, 8vw, 7rem) var(--case-gutter); border-top: 3px solid var(--case-ink); }
-.case-prose { max-width: 38em; margin: 2rem 0 2.5rem; display: grid; gap: 1.25rem; }
-.case-prose p { margin: 0; font-size: 1.0625rem; line-height: 2; }
-.case-subsection { margin-top: clamp(3rem, 6vw, 4.5rem); }
-.case-subsection h3 { margin: 0; padding-bottom: .5rem; border-bottom: 1px solid var(--case-rule); font-size: clamp(1.375rem, 2.4vw, 1.875rem); font-weight: 900; }
-.case-subsection .case-prose { margin: 1.25rem 0 1.75rem; }
+.case-story { padding: 0 var(--case-gutter) clamp(4rem, 8vw, 6rem); }
+/* 本文は 2 段組み。段の間に細い罫 */
+.case-prose { columns: 2 22rem; column-gap: clamp(2rem, 4vw, 3.5rem); column-rule: 1px solid var(--case-rule); margin: 0 0 2.5rem; }
+.case-prose p { margin: 0 0 1em; font-size: 1rem; line-height: 2; break-inside: avoid-column; }
+/* 1 段落目の頭文字を 3 行ぶん落とす（誌面の定番） */
+.case-prose--dropcap > p:first-child::first-letter {
+  float: left; margin: .1em .15em 0 0; font-size: 3.6em; line-height: .9; font-weight: 900; color: var(--case-accent);
+}
+.case-subsection { margin-top: clamp(2.5rem, 5vw, 4rem); }
+.case-subsection h3 { margin: 0 0 1.25rem; padding-top: .5rem; border-top: 1px solid var(--case-ink); font-size: clamp(1.25rem, 2vw, 1.625rem); font-weight: 900; }
 
-.case-gallery { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 1.25rem; }
+.case-gallery { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 1rem; }
 .case-gallery li { overflow: hidden; background: color-mix(in srgb, var(--case-ink) 8%, var(--case-paper)); }
 .case-gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 .case-gallery li.is-wide { grid-column: span 2; }
 .case-gallery li.is-wide img { aspect-ratio: 16 / 8; }
-.case-gallery--phone { gap: 1.5rem; max-width: 52rem; }
+.case-gallery--phone { gap: 1.25rem; max-width: 52rem; }
 .case-gallery--phone img { aspect-ratio: 402 / 880; }
 
 /* --- 技術 -------------------------------------------------------- */
-.case-tech {
-  padding: clamp(4rem, 8vw, 7rem) var(--case-gutter);
-  /* 技術の章は地と文字を入れ替えて、作品の話から切り替わったことを見せる */
-  background: var(--case-ink); color: var(--case-paper);
-  --tech-rule: color-mix(in srgb, var(--case-paper) 22%, transparent);
-}
-.case-tech :focus-visible { outline-color: var(--case-accent); }
-/* couple-sync の専用ページ（.couple-case の h2・h3・p の指定）に差し込んでも同じ組みになるよう、章の中では指定を一段強くする */
-.case-tech { font-family: var(--case-text); word-break: auto-phrase; }
-.case-tech .case-chapter-no { margin: 0; line-height: .85; }
-.case-tech .case-chapter-title { margin: .75rem 0 0; font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em; }
-.case-tech .case-tech__label { font-size: 1rem; font-weight: 900; line-height: 1.6; letter-spacing: 0; }
-.case-tech .case-tech__summary { line-height: 1.8; }
-.case-tech :is(.case-tech__flow, .case-tech__points) p { line-height: 1.9; }
-.case-tech__head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(2rem, 5vw, 5rem); align-items: end; }
-.case-tech__head .case-chapter-no, .case-tech__head .case-chapter-title { grid-column: 1; }
-.case-tech__summary {
-  grid-column: 2; grid-row: 1 / span 2; align-self: end; margin: 0;
-  font-size: clamp(1.125rem, 1.8vw, 1.5rem); font-weight: 700; line-height: 1.8;
-}
+.case-tech { padding: 0 var(--case-gutter) clamp(4rem, 8vw, 6rem); font-family: var(--case-text); word-break: auto-phrase; }
 
-/* 数値の帯 */
-.case-tech__numbers {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0;
-  margin: clamp(2.5rem, 5vw, 4rem) 0 0; border-top: 3px solid var(--case-paper);
-}
-.case-tech__numbers > div { padding: 1.25rem 1.25rem 1.25rem 0; border-bottom: 1px solid var(--tech-rule); }
-.case-tech__numbers dt { font-size: .875rem; font-weight: 700; opacity: .8; }
-.case-tech__numbers dd { margin: .5rem 0 0; display: flex; align-items: baseline; gap: .375rem; }
-.case-tech__value { font-family: var(--case-display); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; color: var(--case-accent); font-variant-numeric: tabular-nums; }
-.case-tech__unit { font-size: 1rem; font-weight: 700; }
+/* 構成図。白い紙に刷った図版として置く（ページの色に関係なく白地） */
+.case-diagram { margin: 0 0 clamp(2.5rem, 5vw, 4rem); }
+.case-diagram__scroll { overflow-x: auto; background: #fff; border: 1px solid var(--case-rule); }
+.case-diagram__svg { display: block; width: 100%; height: auto; min-width: 40rem; margin: 0 auto; }
+.case-diagram figcaption { margin-top: .75rem; max-width: 46rem; font-size: .8125rem; line-height: 1.8; color: var(--case-muted); }
+.case-diagram figcaption::before { content: '図　'; font-weight: 900; color: var(--case-ink); }
 
-.case-tech__block { margin-top: clamp(3rem, 6vw, 4.5rem); }
-.case-tech__label {
-  display: inline-block; margin: 0 0 1.5rem; padding: .125rem .625rem;
-  background: var(--case-accent); color: var(--case-ink);
-  font-size: 1rem; font-weight: 900; line-height: 1.6;
-}
+.case-tech__body { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+.case-tech__main { display: grid; gap: clamp(2.5rem, 5vw, 3.5rem); }
 
-/* 使った技術：左に分類、右に道具 */
-.case-tech__stack { margin: 0; border-top: 1px solid var(--tech-rule); }
-.case-tech__stack > div { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--tech-rule); }
-.case-tech__stack dt { font-size: 1rem; font-weight: 900; }
-.case-tech__stack dd { margin: 0; }
-.case-tech__stack ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
-.case-tech__stack li { padding: .25rem .625rem; border: 1px solid color-mix(in srgb, var(--case-paper) 55%, transparent); font-size: .9375rem; font-weight: 700; line-height: 1.5; }
+/* しくみ：1 段ずつ細い罫で区切った表。番号・段の名前・説明の 3 列 */
+.case-flow { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--case-rule); }
+.case-flow li { display: grid; grid-template-columns: 2.25rem 10rem minmax(0, 1fr); column-gap: 1rem; align-items: baseline; padding: .75rem 0; border-bottom: 1px solid var(--case-rule); }
+.case-flow__no { font-size: .8125rem; font-weight: 900; color: var(--case-accent); font-variant-numeric: tabular-nums; }
+.case-flow h4 { margin: 0; font-size: 1rem; font-weight: 900; line-height: 1.6; }
+.case-flow p { margin: 0; font-size: .9375rem; line-height: 1.9; }
 
-/* しくみ：段を横に並べ、段の間を矢印でつなぐ */
-.case-tech__flow {
-  list-style: none; margin: 0; padding: 0; counter-reset: flow;
-  display: grid; grid-template-columns: repeat(var(--steps, 4), minmax(0, 1fr)); gap: 2.25rem;
-}
-.case-tech__flow li { position: relative; counter-increment: flow; padding-top: 1rem; border-top: 3px solid var(--case-paper); }
-.case-tech__flow li::before { content: counter(flow, decimal-leading-zero); display: block; font-family: var(--case-display); font-size: 2.25rem; line-height: 1; color: var(--case-accent); }
-.case-tech__flow li:not(:last-child)::after {
-  content: '→'; position: absolute; top: 1.125rem; right: -1.75rem;
-  font-size: 1.5rem; font-weight: 900; line-height: 1; color: var(--case-accent);
-}
-.case-tech__flow h4 { margin: .75rem 0 0; font-size: 1.125rem; font-weight: 900; line-height: 1.45; }
-.case-tech__flow p { margin: .5rem 0 0; font-size: .9375rem; line-height: 1.85; opacity: .88; }
+/* 工夫したところ：2 段組みの本文。各項は小さな番号＋太字の見出しから始める */
+.case-points { columns: 2 20rem; column-gap: clamp(2rem, 4vw, 3rem); column-rule: 1px solid var(--case-rule); }
+.case-point { break-inside: avoid; margin: 0 0 1.75rem; }
+.case-point h4 { margin: 0; font-size: 1.0625rem; font-weight: 900; line-height: 1.55; }
+.case-point__no { margin-right: .5rem; font-size: .8125rem; color: var(--case-accent); font-variant-numeric: tabular-nums; }
+.case-point p { margin: .375rem 0 0; font-size: .9375rem; line-height: 2; }
 
-/* 工夫したところ：大きな番号の付いた 2 列 */
-.case-tech__points { list-style: none; margin: 0; padding: 0; counter-reset: point; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem clamp(2rem, 4vw, 4rem); }
-.case-tech__points li { counter-increment: point; display: grid; grid-template-columns: 4rem minmax(0, 1fr); column-gap: 1rem; }
-.case-tech__points li::before { content: counter(point, decimal-leading-zero); grid-row: 1 / span 2; font-family: var(--case-display); font-size: 3.25rem; line-height: .9; color: var(--case-accent); }
-.case-tech__points h4 { margin: 0; font-size: 1.25rem; font-weight: 900; line-height: 1.5; }
-.case-tech__points p { margin: .5rem 0 0; font-size: 1rem; line-height: 1.95; opacity: .9; }
+/* 脇の囲み記事（数字・使った技術） */
+.case-tech__side { display: grid; gap: 2rem; }
+.case-box { border-top: 4px solid var(--case-ink); }
+.case-box__title { margin: 0; padding: .5rem 0; border-bottom: 1px solid var(--case-ink); font-size: .8125rem; font-weight: 900; letter-spacing: .08em; }
+.case-numbers { margin: 0; }
+.case-numbers > div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: .625rem 0; border-bottom: 1px solid var(--case-rule); }
+.case-numbers dt { font-size: .8125rem; font-weight: 700; line-height: 1.6; }
+.case-numbers dd { margin: 0; font-family: var(--case-display); font-size: 1.75rem; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.case-numbers small { margin-left: .2rem; font-family: var(--case-text); font-size: .75rem; font-weight: 700; }
+.case-spec { margin: 0; }
+.case-spec > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); column-gap: .75rem; padding: .625rem 0; border-bottom: 1px solid var(--case-rule); }
+.case-spec dt { grid-row: 1 / span 20; font-size: .8125rem; font-weight: 900; line-height: 1.7; }
+.case-spec dd { grid-column: 2; margin: 0; font-size: .875rem; line-height: 1.7; }
 
 /* --- クレジット・前後の作品 ------------------------------------------- */
-.case-credits { padding: clamp(3rem, 6vw, 5rem) var(--case-gutter) 0; }
-.case-credits h2 { margin: 0 0 1rem; font-size: 1.25rem; font-weight: 900; }
-.case-credits ul { list-style: none; margin: 0; padding: 1rem 0 0; border-top: 1px solid var(--case-rule); columns: 3 14rem; column-gap: 2rem; font-size: .9375rem; line-height: 2; }
-
-.case-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: clamp(3rem, 6vw, 5rem) var(--case-gutter); }
-.case-pager a { display: grid; gap: .375rem; padding-top: 1rem; border-top: 3px solid var(--case-ink); font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 900; line-height: 1.4; text-decoration: none; }
-.case-pager a span { font-size: .875rem; font-weight: 700; color: var(--case-muted); }
+.case-credits { padding: 0 var(--case-gutter) clamp(3rem, 6vw, 4rem); }
+.case-credits ul { list-style: none; margin: 0; padding: 0; columns: 3 14rem; column-gap: 2rem; font-size: .875rem; line-height: 2; }
+.case-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 0 var(--case-gutter) clamp(3rem, 6vw, 5rem); }
+.case-pager a { display: grid; gap: .25rem; padding-top: .75rem; border-top: 4px solid var(--case-ink); font-size: clamp(1rem, 1.6vw, 1.25rem); font-weight: 900; line-height: 1.45; text-decoration: none; }
+.case-pager a span { font-size: .8125rem; font-weight: 700; color: var(--case-muted); }
 .case-pager a:hover { color: var(--case-accent); }
 .case-pager__next { text-align: right; }
 
 /* --- タブレット以下 -------------------------------------------- */
 @media (max-width: 960px) {
-  .case-hero__grid { grid-template-columns: minmax(0, 1fr); }
-  .case-hero__photo::before { inset: .75rem -.75rem -.75rem .75rem; }
-  .case-tech__head { grid-template-columns: minmax(0, 1fr); }
-  .case-tech__summary { grid-column: 1; grid-row: auto; margin-top: 1.5rem; }
-  /* しくみは縦に積む。矢印は下向き */
-  .case-tech__flow { grid-template-columns: minmax(0, 1fr); gap: 2.75rem; }
-  .case-tech__flow li { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); column-gap: 1rem; }
-  .case-tech__flow li::before { grid-row: 1 / span 2; }
-  .case-tech__flow h4 { margin-top: 0; }
-  .case-tech__flow li:not(:last-child)::after { content: '↓'; top: auto; bottom: -2.25rem; right: auto; left: .75rem; }
-  .case-tech__points { grid-template-columns: minmax(0, 1fr); }
+  .case-hero__grid, .case-media__videos, .case-tech__body { grid-template-columns: minmax(0, 1fr); }
+  .case-chapter { grid-template-columns: minmax(0, 1fr); }
+  .case-chapter__standfirst { grid-column: 1; grid-row: auto; margin-top: 1rem; }
+  .case-tech__side { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 }
 
 /* --- スマホ ---------------------------------------------------- */
 @media (max-width: 600px) {
-  .case-hero__kicker { font-size: .875rem; }
-  .case-tech__stack > div { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
-  .case-tech__points li { grid-template-columns: 3rem minmax(0, 1fr); }
-  .case-tech__points li::before { font-size: 2.5rem; }
+  .case-hero__bar p { font-size: .8125rem; }
+  .case-media__posts { grid-template-columns: minmax(0, 1fr); }
+  .case-flow li { grid-template-columns: 2rem minmax(0, 1fr); }
+  .case-flow p { grid-column: 2; margin-top: .25rem; }
   .case-gallery, .case-gallery--phone { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
   .case-gallery li.is-wide { grid-column: 1 / -1; }
-  .case-chapters a + a { border-left: 0; padding-left: 0; border-top: 1px solid var(--case-rule); }
   .case-pager { grid-template-columns: minmax(0, 1fr); }
   .case-pager__next { text-align: left; }
 }
+
+/* --- couple-sync の専用ページに技術の章を差し込むとき ---------------------
+ * .couple-case の h2・h3・p の指定に負けないよう、章の中だけ一段強く書く */
+.couple-case .case-tech { color: var(--case-ink); background: var(--case-paper); padding-inline: 0; }
+.couple-case .case-tech .case-chapter__title { margin: .25rem 0 0; font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em; }
+.couple-case .case-tech .case-label, .couple-case .case-tech .case-box__title { font-size: .8125rem; font-weight: 900; line-height: 1.6; letter-spacing: .08em; }
+.couple-case .case-tech :is(h4) { letter-spacing: 0; }
+.couple-case .case-tech .case-chapter__no { line-height: 1.4; }
+.couple-case .case-tech .case-chapter__standfirst { line-height: 1.9; }
+.couple-case .case-tech :is(.case-flow, .case-point) p { line-height: 1.9; }

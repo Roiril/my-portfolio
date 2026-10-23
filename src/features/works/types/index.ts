@@ -41,8 +41,43 @@ export type WorkDetail = {
     sections?: WorkSection[];
 };
 
+// 構成図。座標は格子の升目（x は列、y は段。0.5 刻みも可）
+export type DiagramIcon = 'hmd' | 'phone' | 'laptop' | 'pc' | 'cloud' | 'db' | 'browser' | 'camera' | 'person';
+export type DiagramNode = {
+    id: string;
+    x: number;
+    y: number;
+    // icon を持つノードは「モノ」（絵＋太字の名前＋小さな仕様）。持たないノードは「ソフト」（点線の枠＋斜体の名前＋機能）
+    icon?: DiagramIcon;
+    label?: string;
+    note?: string;
+};
+export type DiagramEdge = {
+    from: string;
+    to: string;
+    label?: string;
+    // 無線・通知など、物理的につながっていない流れは破線
+    wireless?: boolean;
+    // 双方向
+    both?: boolean;
+    // ラベルを線のどこに置くか（0＝始点、1＝終点。既定 0.5）。囲みの罫とぶつかるときにずらす
+    labelAt?: number;
+};
+export type Diagram = {
+    // 図の大きさ（升目の数）
+    cols: number;
+    rows: number;
+    nodes: DiagramNode[];
+    edges: DiagramEdge[];
+    // 場所や系のまとまり（点線で囲み、左上に灰色の太字）
+    groups?: { x: number; y: number; w: number; h: number; label: string }[];
+    caption: string;
+};
+
 // 技術説明（詳細ページの「技術」の章）。資料やリポジトリで確かめた事実だけを書く
 export type WorkTech = {
+    // 構成図
+    diagram?: Diagram;
     // 章の冒頭に置く要約（1〜2 文）
     summary: string;
     // 使った技術。label は「エンジン」「言語」のような分類
@@ -53,6 +88,16 @@ export type WorkTech = {
     points: { title: string; body: string }[];
     // 大きく見せる数値（資料にある値だけ）
     numbers?: { value: string; unit?: string; label: string }[];
+};
+
+// 詳細ページに埋め込む動画・投稿。large は大きく、small は脇に小さく置く
+export type WorkMedia = {
+    type: 'youtube' | 'x';
+    // YouTube は動画 ID、X は投稿の URL
+    src: string;
+    title: string;
+    caption?: string;
+    size?: 'large' | 'small';
 };
 
 // 作品データ
@@ -77,4 +122,6 @@ export type Work = {
     detail?: WorkDetail;
     // 技術説明。detail か tech のどちらかがあれば詳細ページを持つ
     tech?: WorkTech;
+    // 詳細ページの動画・投稿
+    media?: WorkMedia[];
 };

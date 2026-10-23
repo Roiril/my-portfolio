@@ -11,7 +11,6 @@ export const workTech: Record<string, WorkTech> = {
       { value: '3', unit: '台', label: '固定カメラ' },
       { value: '3', unit: '周', label: '1 回の体験で歩く周回' },
       { value: '30', unit: '秒', label: '1 周のおよその時間' },
-      { value: '90', unit: 'Hz', label: 'HMD の表示' },
     ],
     stack: [
       { label: 'エンジン', items: ['Unity 2022.3', 'URP 14', 'Meta XR SDK'] },
@@ -32,34 +31,6 @@ export const workTech: Record<string, WorkTech> = {
       { title: '映像になじむ CG の人形', body: '実際のカメラを映像から較正し、姿勢・画角・レンズの歪みを求めました。部屋の簡単な 3D モデルを使って、人形に影と隠れを付けています。人形の腕はハンドトラッキングで動かします。' },
       { title: '固定画角を生かした合成', body: 'カメラが動かないので、合成用のマスクをカメラごとに前もって用意できます。境界はぼかしと多重帯域ブレンドでつなぎ、素材の色は映像の色の統計に合わせました。' },
       { title: 'Web と Unity で同じ判定', body: '区画の判定などのロジックは Web の運用卓と Unity で共有しています。歩いた記録を両方に流し、判定が一致することをテストで確かめています。' },
-    ],
-  },
-
-  'robot-collab': {
-    summary: '手を演じる人の Quest 3 が手の形を読み取り、もう 1 台の Quest 3 に送ります。PC がサーバーとして通信を仲介し、プレイの記録も保存します。クラウドは使わず、専用の Wi-Fi で直接つないでいます。',
-    numbers: [
-      { value: '60', unit: 'Hz', label: '手の姿勢を送る頻度' },
-      { value: '489', unit: 'B', label: '手の姿勢 1 回分のデータ' },
-      { value: '5', unit: '種', label: '遊べるボードゲーム' },
-      { value: '4', unit: '種', label: '手の見た目' },
-    ],
-    stack: [
-      { label: 'エンジン', items: ['Unity 2022.3', 'Meta XR SDK'] },
-      { label: '通信', items: ['Netcode for GameObjects 1.12', '専用 Wi-Fi の LAN'] },
-      { label: '機材', items: ['Meta Quest 3 × 2', 'Windows PC'] },
-      { label: '言語', items: ['C#'] },
-    ],
-    flow: [
-      { title: '手を読み取る', body: '手を演じる人の Quest 3 が、ハンドトラッキングで手首と指の姿勢を取ります。' },
-      { title: '小さくまとめて送る', body: '姿勢を 1 回約 489 バイトにまとめ、毎秒 60 回送ります。届く順が前後した古いデータは捨てます。' },
-      { title: 'PC が仲介する', body: 'PC がサーバーとして状態を持ち、2 台の Quest の間をつなぎます。' },
-      { title: '手を描く', body: '遊ぶ人の Quest 3 が、卓の向こうに手を描きます。' },
-      { title: '記録する', body: 'PC が手の動き・音声・盤面を保存し、あとから自由な視点で見返せます。' },
-    ],
-    points: [
-      { title: '手だけの相手にする', body: '手を演じる人は右手だけを使い、話しません。頭の位置も見せません。手の動きだけで伝わるかを観察するためです。' },
-      { title: 'プレイ中に条件を変える', body: 'PC の操作画面から、ゲームの種類・手の見た目・盤面のリセットをプレイ中に切り替えられます。手の見た目は白い手・リアルな手・ロボットの手など 4 種類です。' },
-      { title: '見返せる記録', body: '記録は決めた形式で保存し、自由視点のリプレイと解析用のスクリプトまで用意しました。インタビューで「あのときの動き」を一緒に見返せます。' },
     ],
   },
 
@@ -110,9 +81,8 @@ export const workTech: Record<string, WorkTech> = {
     summary: '塗った場所を整数の配列で持ち、画面の表示はその配列から作ります。ゲームの判定は Unity に依存しない層に分けたので、800 件を超える自動テストで確かめられます。',
     numbers: [
       { value: '9', unit: '面', label: '紙（3 × 3）' },
-      { value: '512', unit: '²', label: '1 面のセル数' },
       { value: '12', unit: '種', label: '能力' },
-      { value: '2,697', unit: '発', label: '負荷試験で同時に飛んだ弾' },
+      { value: '800', unit: '件超', label: '判定の自動テスト' },
     ],
     stack: [
       { label: 'エンジン', items: ['Unity 6000.3', 'URP 17'] },
@@ -265,7 +235,6 @@ export const workTech: Record<string, WorkTech> = {
     summary: '画面の中身を 2D の Canvas に描き、それをテクスチャとして three.js のブラウン管に貼っています。ブラウン管らしい走査線やノイズも Canvas の上で重ねています。',
     numbers: [
       { value: '5', label: 'チャンネル' },
-      { value: '2', label: 'つまみ' },
       { value: '32', label: '画面の分割数' },
     ],
     stack: [

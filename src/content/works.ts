@@ -1,6 +1,7 @@
 ﻿import { Work } from '@/features/works/types';
 
 import { coupleSync } from './couple-sync';
+import { workDiagrams } from './works-diagrams';
 import { workTech } from './works-tech';
 
 const baseWorks: Work[] = [
@@ -15,6 +16,10 @@ const baseWorks: Work[] = [
     links: [
       { type: 'launch', url: 'https://mawarimi.vercel.app/', label: '公式サイト' },
       { type: 'paper', url: 'https://www.conference.vrsj.org/ac2026/program/doc/IVRC-15.pdf', label: 'Publication（日本VR学会）' },
+    ],
+    media: [
+      { type: 'youtube', src: 'uWf51qRwbhA', title: '廻リ視(MAWARIMI) トレイラー', caption: '最新のトレイラー', size: 'large' },
+      { type: 'youtube', src: 'ipoU4gU9G4k', title: '廻り視トレイラー (IVRC2026 ver)', caption: 'IVRC2026 のときのトレイラー', size: 'small' },
     ],
     category: 'research',
     period: '2026（M1）',
@@ -46,45 +51,7 @@ const baseWorks: Work[] = [
     role: '単独',
     featured: true,
     isCurrent: true,
-    detail: {
-      lead: '手だけのエージェントと、VRの卓上でボードゲームを遊びます。駒を動かす手と気持ちを伝える手が同じとき、人はその動きをどう読むのかを調べています。',
-      sections: [
-        {
-          title: 'なぜ手なのか',
-          body: [
-            '人は手で物を動かし、手で相手に意思を伝えます。指さしで相手の注意を向けたり、親指を立てて賛成を示したりします。',
-            '手の動きは日常で見慣れています。手だけの身体でも、見慣れた身振りなら意味を読み取れるかもしれません。物を扱えて意思も伝えられるなら、一緒に遊ぶ相手になれるのではないかと考えました。',
-          ],
-        },
-        {
-          title: '遊ぶ場をつくる',
-          body: [
-            'VR空間に、人と手エージェントが向かい合って遊ぶ卓上のボードゲームを作りました。ボードゲームには駒やカードを動かす場面があります。手番を譲ったり、勝ち負けに喜んだり悔しがったりする場面もあります。ゲームを進める操作と気持ちの表現を、ひと続きのプレイの中で見られます。',
-            '手エージェントは話しません。一緒に遊ぶ人は話しかけられます。手の動きは、裏で人が操作するWizard-of-Oz方式で動かしました。',
-          ],
-        },
-        {
-          title: '予備調査',
-          body: [
-            '研究室のメンバー4名に参加してもらいました。参加者はまず手エージェントと遊びます。次に自分が手を操作して、著者と遊びます。それぞれの体験のあとにインタビューを行いました。',
-          ],
-        },
-        {
-          title: '見えてきたこと',
-          body: [
-            '動きの意味は手の形だけでは決まりませんでした。駒を取ったあとのガッツポーズは喜びとして読まれました。駒を取られたあとに指で床をいじる動きは悲しみとして読まれました。直前の出来事が手がかりになっています。一方で、じゃんけんへの誘いやハイタッチが伝わらない場面もありました。',
-            '人が言葉で確かめるやり取りも生まれました。じゃんけんをしたいのかと参加者が尋ね、手がOKの合図で応じてからじゃんけんが始まりました。手を操作した側からは、問いかけには答えやすかったという声がありました。自分から疑問やルールの誤りを伝えるのは難しかったそうです。',
-            '手エージェントを一人の対戦相手として捉えた人もいました。遊ぶうちに親近感が増したという人もいます。ただ、全体では通じ合えたと感じた人も、分からなかった動きを挙げています。話さない手には声も聞こえていないと思い込んでいた人もいました。',
-          ],
-        },
-        {
-          title: 'これから',
-          body: [
-            '次は、手の側から働きかける表現を考えます。相手の注意を引く表現や、分からないと知らせる表現です。手に何が見えて何が聞こえているかを、人に伝える方法も検討します。',
-          ],
-        },
-      ],
-    },
+    // 論文が未公開なので、詳細ページは作らない
   },
   {
     id: 'intentlayer',
@@ -126,6 +93,10 @@ const baseWorks: Work[] = [
     tags: ['Game', 'Unity', 'unity1week', 'ローグライト'],
     links: [
       { type: 'launch', url: 'https://unityroom.com/games/whiteout-rogue', label: 'unityroomで遊ぶ' },
+    ],
+    media: [
+      { type: 'x', src: 'https://x.com/Roil_HCI/status/2084600134781096411', title: '公開時の PV', caption: '2026 年 8 月 4 日　unityroom での公開に合わせた PV' },
+      { type: 'x', src: 'https://x.com/Roil_HCI/status/2086271168156467599', title: 'アップデートの紹介', caption: '2026 年 8 月 9 日　無限撃ち・実績・スマホ対応を加えた版' },
     ],
     category: 'personal',
     period: '2026.08',
@@ -438,5 +409,7 @@ const baseWorks: Work[] = [
   },
 ];
 
-// 技術説明（works-tech.ts）を作品に合わせる
-export const works: Work[] = baseWorks.map((work) => (workTech[work.id] ? { ...work, tech: workTech[work.id] } : work));
+// 技術説明（works-tech.ts）と構成図（works-diagrams.ts）を作品に合わせる
+export const works: Work[] = baseWorks.map((work) =>
+  workTech[work.id] ? { ...work, tech: { ...workTech[work.id], diagram: workDiagrams[work.id] } } : work,
+);

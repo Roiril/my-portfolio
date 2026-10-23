@@ -25,7 +25,7 @@ function Phone({ src, alt, priority = false }: { src: string; alt: string; prior
 }
 
 // 技術の章は汎用の詳細ページと同じ部品を、この作品の色で使う
-const techTheme = { '--case-paper': '#fbf7ef', '--case-ink': '#29473c', '--case-accent': '#f1cbbb' } as React.CSSProperties;
+const techTheme = { '--case-paper': '#fbf7ef', '--case-ink': '#29473c', '--case-accent': '#ab4434' } as React.CSSProperties;
 
 export default function CoupleSyncDetail({ tech }: { tech?: WorkTech }) {
   return (
@@ -108,7 +108,7 @@ export default function CoupleSyncDetail({ tech }: { tech?: WorkTech }) {
         </section>
 
         {tech ? (
-          <div style={techTheme}><WorkTechSection tech={tech} id="couple-development" index="03" /></div>
+          <div className="couple-wrap" style={techTheme}><WorkTechSection tech={tech} id="couple-development" index="03" figureId="couple-sync" /></div>
         ) : null}
 
         <section className="couple-development couple-wrap" aria-label="デザインの更新">
