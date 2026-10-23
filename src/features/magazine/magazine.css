@@ -85,7 +85,7 @@
 .mag-contents {
   display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 2rem;
   padding: clamp(4rem, 9vw, 8rem) var(--gutter);
-  border-top: 3px solid var(--ink);
+  border-top: 3px solid var(--ink); --rule-w: 3px; --rule-c: var(--ink);
 }
 .mag-contents__title { margin: 0; font-size: clamp(4rem, 11vw, 10rem); font-weight: 900; line-height: .9; }
 .mag-contents__list { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
@@ -180,7 +180,7 @@
 .mag-spread__inset img { width: 100%; }
 
 /* --- 作品のページ ---------------------------------------------- */
-.mag-gallery { padding: clamp(4rem, 9vw, 8rem) var(--gutter); border-top: 3px solid var(--ink); }
+.mag-gallery { padding: clamp(4rem, 9vw, 8rem) var(--gutter); border-top: 3px solid var(--ink); --rule-w: 3px; --rule-c: var(--ink); }
 .mag-gallery__head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem; align-items: end; margin-bottom: 3rem; }
 .mag-gallery__head h2 { margin: 0; font-size: clamp(2.75rem, 7vw, 6.5rem); font-weight: 900; line-height: 1; white-space: nowrap; }
 .mag-gallery__head p { margin: 0; font-size: 1.0625rem; line-height: 1.8; font-weight: 700; }
@@ -438,4 +438,50 @@ html[data-motion="off"] .mag-guide { display: none; }
   /* 押した瞬間は沈む（後に書いて :hover より優先する） */
   .mag-sticker--flip:active { transform: rotate(-12deg) scale(.96); }
   .mag-filter__chip:active { transform: translateY(1px); }
+}
+
+/* ============================================================
+ * 出現（刷る・貼る・罫を引く）。文法と keyframes は components/motion/appear.css
+ * ============================================================ */
+
+/* 刷る：もう 1 版の色。地の上で見えて、墨版と取り違えない色にする */
+.mag-cover__masthead { --plate: var(--ink); }
+.mag-spread { --plate: var(--spread-accent); }
+.mag-profile { --plate: var(--ink); }
+.mag-back { --plate: #fff; }
+
+/* 貼る：見開きの写真。台紙・写真・斜めの 2 枚目は 1 枚の図版として一緒に貼られるので、
+ * 図版（figure）が画面に入る量 1 本で順番を組む（台紙 → 写真 → 2 枚目） */
+.mag-spread__photo { view-timeline: --paste block; }
+.mag-spread--left .mag-spread__photo { --board-x: .75rem; --board-y: .75rem; }
+.mag-spread--right .mag-spread__photo { --board-x: -.75rem; --board-y: .75rem; --lift-x: .4rem; --lift-r: 1.5deg; }
+/* 全幅の写真は傾けない（画面の端に三角の隙間が出る）。真上から置く */
+.mag-spread--bleed .mag-spread__photo { --lift-x: 0rem; --lift-y: -1rem; --lift-r: 0deg; }
+.mag-spread__inset { --lift-x: .5rem; --lift-y: -1rem; --lift-r: 6deg; }
+.mag-print { --lift-r: -2deg; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-motion='on'] :is(.mag-spread--left, .mag-spread--right) .mag-spread__photo::before {
+      animation: appear-board cubic-bezier(.35, .1, .25, 1) both;
+      animation-timeline: --paste;
+      animation-range: cover 0vh cover 30vh;
+    }
+    html[data-motion='on'] .mag-spread__photo > :is(a, img) {
+      animation: appear-lift cubic-bezier(.35, .1, .25, 1) both;
+      animation-timeline: --paste;
+      animation-range: cover 5vh cover 45vh;
+    }
+    html[data-motion='on'] .mag-spread__inset {
+      animation: appear-lift cubic-bezier(.35, .1, .25, 1) both;
+      animation-timeline: --paste;
+      animation-range: cover 20vh cover 55vh;
+    }
+    /* 白枠の挿絵（青と黒の地の上）。封筒が飛ぶあいだは、そちらの動きに譲る */
+    html[data-motion='on'] .mag-print:not(.is-sent) {
+      animation: appear-lift cubic-bezier(.35, .1, .25, 1) both;
+      animation-timeline: view();
+      animation-range: cover 5vh cover 45vh;
+    }
+  }
 }

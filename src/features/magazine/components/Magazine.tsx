@@ -23,7 +23,7 @@ function Cover() {
                 <span>{issue.issueLine}</span>
                 <span>{issue.theme}</span>
             </p>
-            <h1 className="mag-cover__masthead" aria-label={issue.masthead + '　白石大晴のポートフォリオ'}>
+            <h1 className="mag-cover__masthead" aria-label={issue.masthead + '　白石大晴のポートフォリオ'} data-plate={issue.masthead}>
                 {issue.masthead}
             </h1>
             <div className="mag-cover__photo">
@@ -54,9 +54,9 @@ function Cover() {
 function Contents({ gallery }: { gallery: Work[] }) {
     const featured = features.map((f) => works.find((w) => w.id === f.workId)).filter((w): w is Work => Boolean(w));
     return (
-        <section id="contents" className="mag-contents" aria-labelledby="contents-title">
+        <section id="contents" className="mag-contents" aria-labelledby="contents-title" data-rule>
             <div className="mag-contents__side">
-                <h2 id="contents-title" className="mag-contents__title">目次</h2>
+                <h2 id="contents-title" className="mag-contents__title" data-plate="目次">目次</h2>
                 <Image src={art.spotContents.src} alt="" width={art.spotContents.width} height={art.spotContents.height} sizes="(max-width: 600px) 60vw, 26vw" className="mag-spot mag-contents__spot" />
             </div>
             <ol className="mag-contents__list">
@@ -113,7 +113,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
             </figure>
             <div className="mag-spread__text">
                 <p className="mag-spread__kicker">{spread.kicker}</p>
-                <h3 id={'title-' + work.id} className={'mag-spread__title ' + titleClass(main)}>
+                <h3 id={'title-' + work.id} className={'mag-spread__title ' + titleClass(main)} data-plate={main}>
                     {main}
                     {sub && <span className="mag-spread__sub">{sub}</span>}
                 </h3>
@@ -142,9 +142,9 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
 
 function Gallery({ items }: { items: Work[] }) {
     return (
-        <section id="gallery" className="mag-gallery" aria-labelledby="gallery-title">
+        <section id="gallery" className="mag-gallery" aria-labelledby="gallery-title" data-rule>
             <header className="mag-gallery__head">
-                <h2 id="gallery-title">作品のページ</h2>
+                <h2 id="gallery-title" data-plate="作品のページ">作品のページ</h2>
                 <p>映像、3D、サウンド、コードで描いたもの。実務の仕事もここに置きました。</p>
             </header>
             <GalleryGrid items={items} />
@@ -159,7 +159,7 @@ function Profile() {
                 <figure className="mag-print mag-profile__art">
                     <Image src={art.profile.src} alt={art.profile.alt} width={art.profile.width} height={art.profile.height} sizes="(max-width: 960px) 90vw, 40vw" />
                 </figure>
-                <h2 id="profile-title">{profile.title}</h2>
+                <h2 id="profile-title" data-plate={profile.title}>{profile.title}</h2>
                 <p className="mag-profile__name">
                     <span lang="ja">白石 大晴</span>
                     <span lang="en">Taisei Shiroishi</span>

@@ -38,7 +38,7 @@ export default function BackCover() {
             <figure className={'mag-print mag-back__art' + (copyStatus === 'success' ? ' is-sent' : '')}>
                 <Image src={art.spotContact.src} alt="" width={art.spotContact.width} height={art.spotContact.height} sizes="(max-width: 600px) 60vw, 24vw" />
             </figure>
-            <h2 id="contact-title" className="mag-back__title">連絡先</h2>
+            <h2 id="contact-title" className="mag-back__title" data-plate="連絡先">連絡先</h2>
             <p className="mag-back__message">{contactMessage}</p>
             <button type="button" className="mag-back__email" onClick={handleCopy} aria-describedby="copy-email-status">
                 {SITE_EMAIL}

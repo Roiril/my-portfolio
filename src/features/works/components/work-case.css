@@ -82,6 +82,7 @@
 .case-chapter {
   display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(1.5rem, 4vw, 4rem); align-items: end;
   padding-top: .75rem; border-top: 4px solid var(--case-ink); margin-bottom: clamp(2rem, 4vw, 3rem);
+  --rule-w: 4px; --rule-c: var(--case-ink);
 }
 .case-chapter__no { grid-column: 1; margin: 0; font-size: .875rem; font-weight: 900; color: var(--case-accent); font-variant-numeric: tabular-nums; }
 .case-chapter__title { grid-column: 1; margin: .25rem 0 0; font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em; }
@@ -204,3 +205,16 @@
 .couple-case .case-tech .case-chapter__no { line-height: 1.4; }
 .couple-case .case-tech .case-chapter__standfirst { line-height: 1.9; }
 .couple-case .case-tech :is(.case-flow, .case-point) p { line-height: 1.9; }
+
+/* --- 出現（刷る・貼る・罫を引く）。文法と keyframes は components/motion/appear.css ---- */
+.case, .case-tech { --plate: var(--case-accent); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* 本文の図版は 1 枚ずつ、浮いた紙が誌面に押し付けられる */
+    html[data-motion='on'] .case-gallery li {
+      animation: appear-lift cubic-bezier(.35, .1, .25, 1) both;
+      animation-timeline: view();
+      animation-range: cover 5vh cover 45vh;
+    }
+  }
+}

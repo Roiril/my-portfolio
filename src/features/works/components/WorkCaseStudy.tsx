@@ -129,9 +129,9 @@ export default function WorkCaseStudy({ work, theme, back, prev, next }: { work:
 
                 {hasStory && detail && (
                     <section id="story" className="case-story" aria-labelledby="story-title">
-                        <header className="case-chapter">
+                        <header className="case-chapter" data-rule>
                             <p className="case-chapter__no">{storyNo}</p>
-                            <h2 id="story-title" className="case-chapter__title">作品について</h2>
+                            <h2 id="story-title" className="case-chapter__title" data-plate="作品について">作品について</h2>
                         </header>
                         {detail.body && detail.body.length > 0 && (
                             <div className="case-prose case-prose--dropcap">

@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useSyncExternalStore } from 'react';
 import './motion.css';
+import './appear.css';
 
 type MotionContextValue = {
     enabled: boolean;

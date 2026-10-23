@@ -10,9 +10,9 @@ export default function WorkTechSection({ tech, id = 'tech', index = '02', figur
     const titleId = id + '-title';
     return (
         <section id={id} className="case-tech" aria-labelledby={titleId}>
-            <header className="case-chapter">
+            <header className="case-chapter" data-rule>
                 <p className="case-chapter__no">{index}</p>
-                <h2 id={titleId} className="case-chapter__title">技術</h2>
+                <h2 id={titleId} className="case-chapter__title" data-plate="技術">技術</h2>
                 <p className="case-chapter__standfirst">{tech.summary}</p>
             </header>
 

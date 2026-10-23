@@ -1,0 +1,79 @@
+/* ============================================================
+ * 出現の文法：雑誌を作る工程（刷る・貼る・罫を引く）で物が現れる。
+ *
+ *   刷る  [data-plate]   大見出し。2 版刷りの見当合わせ。本物の文字（墨版）は動かさず、
+ *                        同じ文字の「もう 1 版」がずれた位置から見当へ寄り、重なって消える
+ *   罫    [data-rule]    節の頭の太い罫。左から右へ、一定の速さで引く
+ *   貼る  （各 CSS）      写真・白枠の挿絵。浮いた紙が台紙に押し付けられる
+ *   叩く  [data-slap]    ステッカー。時間で一度だけ（Sticker.tsx）
+ *
+ * 刷る・罫・貼るはスクロール量で進む（animation-timeline: view()）。戻せば逆に戻り、
+ * どこで止めても誌面の一状態として読める。範囲は要素の高さではなく画面の長さ（vh）で
+ * そろえ、小さい物も大きい物も同じテンポで進むようにしている。
+ * 対応していないブラウザ・動き OFF・視差効果を減らす では、すべて刷り上がった状態のまま。
+ * ============================================================ */
+
+/* --- 刷る ------------------------------------------------------------------
+ * もう 1 版は、見出しと同じ箱・同じ余白・同じ文字で重ねるので、折り返しも一致する。
+ * 色は --plate（地ごとに決める。既定はコバルト）。読み上げには出さない（content の代替文字を空に） */
+[data-plate] { position: relative; isolation: isolate; }
+[data-plate]::after {
+  content: attr(data-plate);
+  content: attr(data-plate) / '';
+  position: absolute; inset: 0; z-index: -1; box-sizing: border-box;
+  padding: inherit; color: var(--plate, #2433ff);
+  pointer-events: none; opacity: 0;
+}
+
+/* --- 罫 ---------------------------------------------------------------------
+ * 罫は border ではなく疑似要素で引く（border は伸び縮みできない）。
+ * 太さと色は --rule-w / --rule-c で、それぞれの節が決める */
+/* 節の側は border-top を透明にして幅だけ残し（組みが動かないように）、その上に重ねて引く */
+[data-rule] { position: relative; border-top-color: transparent !important; }
+[data-rule]::before {
+  content: ''; position: absolute; left: 0; right: 0; top: calc(var(--rule-w, 3px) * -1);
+  height: var(--rule-w, 3px); background: var(--rule-c, currentColor);
+  transform-origin: left center; pointer-events: none;
+}
+
+@keyframes appear-plate {
+  /* 見当の位置へ寄る（75% で合う）。合ったら墨版の下に沈んで消える。
+     寄る動きは前半をゆっくりにして、ずれた姿が画面の下半分で読めるようにする */
+  0% { translate: -.1em .06em; opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .2, 1); }
+  75% { translate: 0 0; opacity: 1; animation-timing-function: linear; }
+  100% { translate: 0 0; opacity: 0; }
+}
+@keyframes appear-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* 貼る：紙が浮いて少し傾いた状態から、台紙に押し付けられる。紙は透けないので不透明度は動かさない */
+@keyframes appear-lift { from { translate: var(--lift-x, -.4rem) var(--lift-y, -.6rem); rotate: var(--lift-r, -1.5deg); } to { translate: 0 0; rotate: 0deg; } }
+/* 台紙（差し色の板）は影の代わり。写真より遠くにずれた位置から寄ってくる */
+@keyframes appear-board { from { translate: var(--board-x, .75rem) var(--board-y, .75rem); } to { translate: 0 0; } }
+/* 叩く：面に向かって加速して当たり、少しつぶれて戻る */
+@keyframes appear-slap {
+  0% { scale: 1.4; rotate: 22deg; opacity: 0; animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+  60% { scale: .93; rotate: 0deg; opacity: 1; animation-timing-function: ease-out; }
+  80% { scale: 1.03; }
+  100% { scale: 1; rotate: 0deg; opacity: 1; }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-motion='on'] [data-plate]::after {
+      animation: appear-plate linear both;
+      animation-timeline: view();
+      /* 見出しが画面の下端から 10vh 入ったところで始まり、画面の中ほど（下から 60vh）で刷り上がる */
+      animation-range: cover 10vh cover 60vh;
+    }
+    html[data-motion='on'] [data-rule]::before {
+      animation: appear-rule linear both;
+      animation-timeline: view();
+      animation-range: cover 0vh cover 20vh;
+    }
+  }
+}
+
+/* 叩く前は見せない（JS が data-slap="ready" を付けたものだけ。JS が動かなければ普通に見える） */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion='on'] [data-slap='ready'] { opacity: 0; }
+  html[data-motion='on'] [data-slap='go'] { animation: appear-slap 340ms both; }
+}
