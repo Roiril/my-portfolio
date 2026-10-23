@@ -10,7 +10,7 @@ const baseWorks: Work[] = [
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
     description:
-      '監視カメラに映る自分を見ながら、現実空間を歩く固定視点のホラー体験です。HMDと複数のカメラで固定視点を現実空間に再構成しました。体験者は怪異調査員として呪われた壁を調査します。IVRC2026で優勝し、DCEXPO賞を受賞しました。2026年11月にDCEXPO2026で展示予定です。',
+      '監視カメラに映る自分を見ながら、現実空間を歩く固定視点のホラー体験です。HMDと複数のカメラで固定視点を現実空間に再構成しました。体験者は怪異調査員として呪われた壁を調査します。IVRC2026で総合優勝し、DCEXPO賞を受賞しました。2026年11月にDCEXPO2026で展示予定です。',
     image: '/images/works/mawarimi/key-visual.webp',
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
@@ -23,6 +23,7 @@ const baseWorks: Work[] = [
     ],
     category: 'research',
     period: '2026（M1）',
+    role: 'チーム制作（企画・監督・ソフトウェア開発を担当）',
     credits: [
       '企画/監督　白石',
       '企画書/動画制作　白石',
@@ -113,7 +114,8 @@ const baseWorks: Work[] = [
       { type: 'launch', url: '/demos/couple-sync/index.html', label: 'アプリのデモを見る' },
     ],
     category: 'personal',
-    period: '個人開発',
+    period: '2026.03 –',
+    role: '単独（企画・設計・実装）',
     detail: {
       lead: coupleSync.lead,
       body: [coupleSync.introduction, ...coupleSync.play.body, ...coupleSync.engineering.map(item => item.body)],
@@ -134,22 +136,23 @@ const baseWorks: Work[] = [
     id: 'cogni-storage',
     title: 'cogni-storage',
     description:
-      'ReactとTypeScriptで制作した研究ログPWAです。読書とリサーチを管理します。論文執筆からスライド生成までを一つの流れで扱えます。Supabaseとオフラインキャッシュを使い、端末間で同期します。AIエージェントと連携する自動化基盤も備えています。',
+      '研究のアイデア・テーマ・論文・文献をひとつにまとめて管理する、自分用の研究ログアプリ（PWA）です。オフラインでも使え、Supabaseで端末間を同期します。Claude Codeと連携し、文献の取り込みや整理を半自動で進められます。',
     image: '/images/cogni-storage.png',
     imageFit: 'cover',
     tags: ['Web App', 'React', 'TypeScript', 'Supabase', 'PWA'],
     links: [
-      { type: 'launch', url: '/demos/cogni-storage/index.html', label: 'UIデモ' },
+      { type: 'launch', url: '/demos/cogni-storage/index.html', label: 'アプリのデモを見る' },
     ],
     category: 'personal',
-    period: '個人開発',
+    period: '2026.03 –',
+    role: '単独（企画・設計・実装）',
     detail: {
-      lead: '研究の「読む・考える・書く」を一本の流れに．思いつき（Ideas）からテーマ・論文・文献までを一元管理し，オフラインでも動く自分のための研究ログ．',
+      lead: '研究の「読む・考える・書く」を、一本の流れにまとめるアプリです。',
       body: [
-        '公開デモは現行の画面を使う。研究資料と記録は架空の見本に置き換える。変更はこの端末内に保存する。',
-        '断片的な思いつきをカードとして貯め，確度を添えて育てていく Ideas を中心に，研究テーマ・執筆中の論文・読んだ文献を横断して管理する．スライド生成まで一つの流れに収め，散らばりがちな研究の営みを一箇所に束ねることを狙った．',
-        '技術的には，端末内の IndexedDB を単一の表示ソースとし，Supabase とは差分同期する構成．永続キューによる送信管理とサーバー採番のカーソルで，オフライン編集と端末間同期を両立している．',
-        'AIコーディングエージェント（Claude Code）と連携した自動化基盤を組み込み，文献の取り込みや翻訳・整理を半自動で回せるようにしている．視覚言語は黒×クリーム×ウォームアクセントのフラット・レトロで統一した．',
+        '研究では、思いつき・読んだ文献・書きかけの論文が別々の場所に散らばりがちです。そこで思いつきをカード（Ideas）として貯め、確からしさを書き添えて育てる画面を中心に置きました。研究テーマ・執筆中の論文・読んだ文献もここから行き来でき、発表スライドの生成まで同じアプリで扱えます。',
+        '画面は常に端末内のデータから表示し、サーバー（Supabase）とは変わった分だけをやり取りします。通信が切れている間も書き続けられ、つながると別の端末に追いつきます。',
+        'Claude Code と連携し、文献の取り込み・翻訳・整理を半自動で進められます。見た目は黒とクリームを基調にしたレトロな配色でそろえました。',
+        '公開デモは実際の画面を使っています。研究資料と記録は架空の見本に置き換え、変更はこの端末内にだけ保存します。',
       ],
       phone: true,
       gallery: [
@@ -172,18 +175,18 @@ const baseWorks: Work[] = [
     tags: ['3D', 'Blender'],
     links: [],
     detail: {
-      lead: 'Blenderで手を動かしながら作ってきた，モデリングからジオメトリノード，VFXまでの小さな実験たち．',
+      lead: 'Blenderで作ってきた小さな作品です。モデリング・ジオメトリノード・VFXをそれぞれ試しています。',
       sections: [
         {
           title: 'ロボット製造ゲームのキービジュアル',
-          body: ['ロボットを製造するゲームのために制作したキービジュアル．'],
+          body: ['ロボットを製造するゲームのために制作したキービジュアルです。'],
           gallery: [
             { src: '/images/works/blender-works/robot-game-01.png', alt: 'ロボット製造ゲームのキービジュアル', wide: true },
           ],
         },
         {
           title: '地下鉄の通路',
-          body: ['「8番出口」のような，どこか不穏で見覚えのある地下鉄通路の空間．'],
+          body: ['「8番出口」のような、どこか不穏で見覚えのある地下鉄の通路を作りました。'],
           gallery: [
             { src: '/images/works/blender-works/subway-01.png', alt: '地下鉄の通路の3Dモデル' },
             { src: '/images/works/blender-works/subway-02.png', alt: '地下鉄の通路の別アングル' },
@@ -191,7 +194,7 @@ const baseWorks: Work[] = [
         },
         {
           title: '好きなキャラクターのモデリング',
-          body: ['好きなキャラクターを，表情差分をつけながらモデリング．'],
+          body: ['好きなキャラクターをモデリングし、表情を何種類か作り分けました。'],
           columns: 4,
           gallery: [
             { src: '/images/works/blender-works/character-01.jpg', alt: 'キャラクターモデル（通常）' },
@@ -204,7 +207,7 @@ const baseWorks: Work[] = [
         {
           title: 'ジオメトリノード工作',
           body: [
-            '恐竜と文字が切り替わるアニメーションや，動く壁にメモ帳を張り付ける表現など，ジオメトリノードを使った実験．',
+            'ジオメトリノードを使った実験です。恐竜と文字が切り替わるアニメーションや、動く壁にメモ帳が張り付く表現を作りました。',
           ],
           gallery: [
             { src: '/images/works/blender-works/geo-dino-01.png', alt: '恐竜と文字が切り替わるジオメトリノード' },
@@ -214,7 +217,7 @@ const baseWorks: Work[] = [
         },
         {
           title: 'VFX工作',
-          body: ['Blender上でのエフェクト表現の実験．'],
+          body: ['Blenderでエフェクトの表現を試しました。'],
           gallery: [
             { src: '/images/works/blender-works/vfx-01.png', alt: 'VFXの実験' },
             { src: '/images/works/blender-works/vfx-02.png', alt: 'VFXの実験（別カット）' },
@@ -234,10 +237,10 @@ const baseWorks: Work[] = [
       { type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' },
     ],
     detail: {
-      lead: 'いつも通っている明治大学中野キャンパス3Fを，できるだけ実空間に忠実にデジタル化したプロジェクト．',
+      lead: 'いつも通っている明治大学中野キャンパス3Fを、できるだけ実際の空間に忠実にデジタル化しました。',
       body: [
-        '実際に自分の足で歩き，歩幅を基準に各所の寸法を測りながら測量することで，空間全体のスケール感を現実に合わせて再現しました．',
-        'テクスチャは現地で撮影した写真をそのまま貼り込み，柱や什器など写真だけでは表現しきれない部分はモデリングで補うことで，遠目には成立しても近づくと粗が出る“張りぼて”ではなく，近くで見てもリアルに感じられる質感を目指しました．',
+        '自分の足で歩き、歩幅を基準に各所の寸法を測りました。そのため空間全体の広さが現実とそろっています。',
+        'テクスチャには現地で撮った写真を貼り、柱や什器など写真だけでは表せない部分はモデリングで補いました。遠くから見たときだけ成り立つ「張りぼて」ではなく、近くで見ても本物らしく感じられることを目指しています。',
       ],
       gallery: [
         { src: '/images/works/meiji-3d/meiji-3d-01.png', alt: '明治大学中野キャンパス3Fの3Dモデル', wide: true },
@@ -250,13 +253,13 @@ const baseWorks: Work[] = [
         {
           title: 'モデルの活用',
           body: [
-            '作ったモデルは，ただ眺めるためのものではなく，いろいろな形で活用しています．',
+            '作ったモデルは眺めるだけでなく、ほかの用途にも使っています。',
           ],
         },
         {
           title: '未来の姿をVRで議論する',
           body: [
-            'デジタル化した空間をVRに持ち込み，この世界が将来どうあるべきかを議論するための場として活用しました．実寸で再現された空間に入り込むことで，図面や言葉だけでは伝わりにくい未来の姿を，みんなで体感しながら検討できます．',
+            'デジタル化した空間をVRに持ち込み、この場所が将来どうあるべきかを議論する場にしました。実寸の空間に入り込めるので、図面や言葉だけでは伝わりにくい将来の姿を、その場にいる感覚で検討できます。',
           ],
           columns: 2,
           gallery: [
@@ -269,7 +272,7 @@ const baseWorks: Work[] = [
         {
           title: 'シェーダーグラフで遊ぶ',
           body: [
-            'シェーダーグラフを使って，空間の見え方そのものを変えて遊んだりもしています．',
+            'シェーダーグラフを使い、空間の見え方そのものを変える表現も試しています。',
           ],
           columns: 2,
           gallery: [
@@ -304,10 +307,10 @@ const baseWorks: Work[] = [
       { type: 'video', url: 'https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN' },
     ],
     detail: {
-      lead: 'プログラムされた環境，プログラムされた魚，プログラムされた動き．Processingで一から組み上げたデジタル水槽．',
+      lead: 'Processingで一から組んだデジタル水槽です。水槽も魚も、群れの動きもすべてコードで描いています。',
       body: [
-        '水槽そのものも，泳ぎ回る魚も，群れとして揺らぐその動きも，すべてコードで記述しています．',
-        '個々の魚に「近くの仲間に寄る・ぶつからない・向きを揃える」といった単純なルールを与えるだけで，群れ全体としては生き物のように自然なまとまりが生まれます．かわいさと，アルゴリズムが生む有機的な動きの両立を目指しました．',
+        '1匹ずつの魚には「近くの仲間に寄る」「ぶつからない」「向きを揃える」という単純な決まりだけを与えています。それでも群れ全体は、生き物のように自然にまとまって泳ぎます。',
+        '魚のかわいさと、アルゴリズムから生まれる生き物らしい動きの両立を目指しました。',
       ],
       gallery: [
         { src: '/images/works/aquarium/aquarium-01.png', alt: 'Processingで描いたデジタル水槽' },
@@ -321,7 +324,7 @@ const baseWorks: Work[] = [
     id: 'ai-anime',
     title: 'AI Generated Anime',
     description:
-      'AIを組み合わせて制作したアニメーション作品集．',
+      'AIを組み合わせて制作したアニメーション作品集です。',
     image: '/images/placeholder.png',
     tags: ['AI', 'Animation'],
     links: [],
@@ -353,6 +356,7 @@ const baseWorks: Work[] = [
       'レトロなテレビにポートフォリオを表示するWeb作品です。Next.jsとThree.jsで制作しました。',
     image: '/images/retroTV-portfolio.png',
     tags: ['Web', 'Next.js', 'Three.js'],
+    period: '2025.12',
     links: [
       { type: 'launch', url: 'https://my-retro-portfolio-rust.vercel.app/' },
       { type: 'video', url: 'https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS' },
@@ -365,6 +369,7 @@ const baseWorks: Work[] = [
       '真っ暗な空間に、記憶をキューブとして保存するWebアプリです。',
     image: '/images/CubeDiary.png',
     tags: ['Web App', 'Next.js', 'Supabase'],
+    period: '2025.11',
     links: [
       { type: 'launch', url: 'https://cube-diary.vercel.app/' },
       { type: 'video', url: 'https://youtube.com/shorts/UY0FlFT1WY8?si=Hm70ycGAHvYiZp20' },

@@ -1,8 +1,11 @@
 import { SocialLink } from '@/features/links/types';
 
+// 公開 URL。メタデータ・サイトマップ・robots・履歴書の印刷版で使う（末尾のスラッシュは付けない）
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://my-portfolio-ruby-delta-87.vercel.app').replace(/\/+$/, '');
+
 export const SITE_EMAIL = 'rinkyouaoi@gmail.com';
 
-export const YOUTUBE_CHANNEL_URL = 'https://youtube.com/@roil_hci?si=t24UTcQBG_dz1vSf';
+export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@roil_hci';
 export const NOTE_URL = 'https://note.com/roils';
 export const X_URL = 'https://x.com/Roil_HCI';
 export const GITHUB_URL = 'https://github.com/Roiril';

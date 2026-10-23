@@ -25,6 +25,8 @@ export const issue = {
     masthead: 'ROIL',
     issueLine: '2026 年 秋号',
     theme: 'HCI と ものづくり',
+    // 表紙の名前の下に出す。採用の方が最初に知りたい「いつ卒業か」
+    graduation: '2028 年 3 月 修了予定',
     // 顔写真は使わない方針。表紙の絵は magazine-art.ts の cover
     coverLines: [
         { label: '特集', text: '廻リ視 ― 監視カメラの自分を見ながら歩くホラー' },
@@ -33,7 +35,7 @@ export const issue = {
         { label: '制作', text: '映像・3D・サウンド・コードの小作品' },
     ],
     // ステッカーは丸の中で 2 行に収める。改行の位置は \n で決める（語の途中で切らないため）
-    coverSticker: 'IVRC2026\n優勝',
+    coverSticker: 'IVRC2026\n総合優勝',
     coverStickerBack: 'DCEXPO賞\n受賞',
 };
 
@@ -44,13 +46,13 @@ export const features: FeatureSpread[] = [
         pullQuote: '監視カメラに映る自分を見ながら、現実空間を歩く。',
         layout: 'bleed',
         theme: { paper: '#0c0a09', ink: '#efe9e1', accent: '#d3271c' },
-        sticker: 'IVRC2026\n優勝',
-        stickerBack: 'DCEXPO\n2026 に出展',
+        sticker: 'IVRC2026\n総合優勝',
+        stickerBack: 'DCEXPO\n11月に出展',
     },
     {
         workId: 'robot-collab',
         kicker: '研究　修士研究・進行中',
-        pullQuote: '手のインタラクションデザイン',
+        pullQuote: '話さない手と、ボードゲームを遊ぶ。',
         layout: 'left',
         theme: { paper: '#ffffff', ink: '#121212', accent: '#2433ff' },
         sticker: '進行中',

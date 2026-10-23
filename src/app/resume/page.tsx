@@ -1,7 +1,7 @@
-"use client";
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import ArtIcon from '@/components/ui/ArtIcon';
+import PrintButton from '@/components/ui/PrintButton';
 import { works } from '@/content/works';
 import {
     resumeProfile,
@@ -10,6 +10,12 @@ import {
     resumeAwards,
 } from '@/content/resume';
 import type { Work } from '@/features/works/types';
+
+export const metadata: Metadata = {
+    title: `経歴 | ${resumeProfile.name.replace(' ', '')} Portfolio`,
+    description: `${resumeProfile.name.replace(' ', '')}の経歴。学歴・受賞・研究・インターン・個人開発・スキルをまとめています。`,
+    alternates: { canonical: '/resume' },
+};
 
 const research = works.filter((w) => w.category === 'research');
 const internship = works.filter((w) => w.category === 'internship');
@@ -58,12 +64,9 @@ export default function ResumePage() {
                 <Link href="/" className="text-sm text-gray-600 hover:text-black underline">
                     <ArtIcon name="arrow" size={16} className="art-icon--back" /> サイトに戻る
                 </Link>
-                <button
-                    onClick={() => window.print()}
-                    className="text-sm font-semibold bg-black text-white px-5 py-2 hover:bg-gray-800"
-                >
+                <PrintButton className="text-sm font-semibold bg-black text-white px-5 py-2 hover:bg-gray-800">
                     PDFで保存 / 印刷
-                </button>
+                </PrintButton>
             </div>
 
             {/* A4シート */}
@@ -81,6 +84,7 @@ export default function ResumePage() {
                     <div className="flex flex-wrap gap-x-5 gap-y-1 text-[10.5px] text-gray-600 mt-2.5">
                         <span>{resumeProfile.email}</span>
                         <span>{resumeProfile.location}</span>
+                        <span>Portfolio: {resumeProfile.portfolio.replace(/^https?:\/\//, '')}</span>
                         {resumeProfile.links.map((l) => (
                             <span key={l.platform}>
                                 {l.platform}: {l.url.replace(/^https?:\/\//, '')}
@@ -109,6 +113,16 @@ export default function ResumePage() {
                     ))}
                 </section>
 
+                {/* 受賞・活動 */}
+                <section className="mb-5 break-inside-avoid">
+                    <SectionTitle>受賞・活動 / Awards</SectionTitle>
+                    {resumeAwards.map((a) => (
+                        <div key={a.text} className="grid grid-cols-[8.5rem_1fr] gap-x-4 py-1">
+                            <div className="text-[10.5px] text-gray-500 pt-0.5">{a.period}</div>
+                            <p className="text-[11.5px] text-gray-800">{a.text}</p>
+                        </div>
+                    ))}
+                </section>
                 {/* 研究 */}
                 <section className="mb-5">
                     <SectionTitle>研究 / Research</SectionTitle>
@@ -132,7 +146,7 @@ export default function ResumePage() {
                         <WorkRow key={w.id} work={w} />
                     ))}
                     <p className="text-[10.5px] text-gray-500 mt-1.5">
-                        ほか，映像・3D・クリエイティブコーディング作品はポートフォリオサイトに掲載．
+                        ほか、映像・3D・クリエイティブコーディングの作品はポートフォリオサイトに掲載しています。
                     </p>
                 </section>
 
@@ -158,16 +172,6 @@ export default function ResumePage() {
                     </div>
                 </section>
 
-                {/* 受賞・活動 */}
-                <section className="break-inside-avoid">
-                    <SectionTitle>受賞・活動 / Awards</SectionTitle>
-                    {resumeAwards.map((a) => (
-                        <div key={a.text} className="grid grid-cols-[8.5rem_1fr] gap-x-4 py-1">
-                            <div className="text-[10.5px] text-gray-500 pt-0.5">{a.period}</div>
-                            <p className="text-[11.5px] text-gray-800">{a.text}</p>
-                        </div>
-                    ))}
-                </section>
             </article>
         </main>
     );

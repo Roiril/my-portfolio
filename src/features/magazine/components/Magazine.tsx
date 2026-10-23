@@ -40,7 +40,7 @@ function Cover() {
             <p className="mag-cover__name">
                 <span lang="ja">白石 大晴</span>
                 <span lang="en">Taisei Shiroishi</span>
-                <span className="mag-cover__role">明治大学大学院　HCI 研究</span>
+                <span className="mag-cover__role">明治大学大学院 修士 1 年　HCI 研究<br />{issue.graduation}</span>
             </p>
             <Sticker front={issue.coverSticker} back={issue.coverStickerBack} className="mag-cover__sticker" />
             <a href="#contents" className="mag-cover__next">
@@ -72,7 +72,7 @@ function Contents({ gallery }: { gallery: Work[] }) {
                     </li>
                 ))}
                 <li><a href="#gallery"><span className="mag-contents__text"><span className="mag-contents__name">作品のページ</span><span className="mag-contents__cat">{gallery.length} 点</span></span></a></li>
-                <li><a href="#profile"><span className="mag-contents__text"><span className="mag-contents__name">{profile.title}</span><span className="mag-contents__cat">経歴と道具</span></span></a></li>
+                <li><a href="#profile"><span className="mag-contents__text"><span className="mag-contents__name">{profile.title}</span><span className="mag-contents__cat">経歴と技術</span></span></a></li>
                 <li><a href="#contact"><span className="mag-contents__text"><span className="mag-contents__name">連絡先</span><span className="mag-contents__cat">裏表紙</span></span></a></li>
             </ol>
         </section>
@@ -145,7 +145,7 @@ function Gallery({ items }: { items: Work[] }) {
         <section id="gallery" className="mag-gallery" aria-labelledby="gallery-title" data-rule>
             <header className="mag-gallery__head">
                 <h2 id="gallery-title" data-plate="作品のページ">作品のページ</h2>
-                <p>映像、3D、サウンド、コードで描いたもの。実務の仕事もここに置きました。</p>
+                <p>インターンでの開発と、映像・3D・サウンド・コードで作った作品です。</p>
             </header>
             <GalleryGrid items={items} />
         </section>
@@ -175,7 +175,7 @@ function Profile() {
                         </div>
                     ))}
                 </dl>
-                <NextLink href="/resume" className="mag-profile__resume">経歴と実績を見る<span aria-hidden="true"> ↗</span></NextLink>
+                <NextLink href="/resume" className="mag-profile__resume">経歴と実績を見る<span aria-hidden="true"> →</span></NextLink>
             </div>
         </section>
     );

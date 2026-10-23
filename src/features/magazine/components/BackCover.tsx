@@ -57,7 +57,7 @@ export default function BackCover() {
                         {link.platform}<span aria-hidden="true"> ↗</span><span className="mag-sr-only">（新しいタブで開きます）</span>
                     </a>
                 ))}
-                <NextLink href="/resume">経歴<span aria-hidden="true"> ↗</span></NextLink>
+                <NextLink href="/resume">経歴<span aria-hidden="true"> →</span></NextLink>
             </div>
             <p className="mag-back__colophon">
                 <span>ROIL　{new Date().getFullYear()}</span>
