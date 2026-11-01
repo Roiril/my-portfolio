@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { art, type ArtImage } from '@/content/magazine-art';
 import { COPIED_EVENT } from './BackCover';
-import { HAND_BOX, HANDOFF, SRC_H, SRC_W, easeInOut, handOffset } from './cover-hand';
+import { HAND_BOX, HANDOFF, SRC_H, SRC_W, coverMotion, easeInOut, handOffset } from './cover-hand';
 
 // 案内役の手。表紙で駒を置いた手が、小さくなって読む人について来る。
 // 節ごとに行き先としぐさを決めてあり、そこへばねで飛んでいく：
@@ -45,11 +45,9 @@ const POSE_KEYS = Object.keys(POSES) as PoseKey[];
 // none：この節には指す物が無い（リンクの無い見開きなど）。そのときは身を引く
 type Aim = { pose: Exclude<PoseKey, 'lift'>; flip: boolean; x: number; y: number; none?: boolean };
 
-// スマホと狭い画面では行き先を追わず、右下の隅に座ってしぐさだけ変える（本文に重ならないように）
-const NARROW = 960;
+// 1列のスマホだけ隅に控える。タブレット・通常のPCウィンドウでも行き先を追う。
+const NARROW = 600;
 const NARROW_SCALE = 0.6;
-// 表紙から最初の行き先まで飛ぶあいだのスクロール量（画面の高さに対する割合）
-const FLIGHT = 0.5;
 // 固定のナビ（.site-nav）の下端から、これだけ下までしか上がらない
 const NAV_GAP = 12;
 // 行き先が画面の上下の縁からこれ以上外へ出たら身を引き、これ以上内へ入ったら戻る（境目でちらつかないように差を付ける）
@@ -67,7 +65,8 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 function poseSize(key: PoseKey, narrow: boolean) {
     const p = POSES[key];
-    const w = p.width * (narrow ? NARROW_SCALE : 1);
+    const scale = narrow ? NARROW_SCALE : clamp(document.documentElement.clientWidth / 1100, 0.72, 1);
+    const w = p.width * scale;
     return { w, h: (w * p.img.height) / p.img.width };
 }
 
@@ -90,7 +89,7 @@ function firstLineEnd(container: Element) {
     if (!items.length) return null;
     const top = items[0].top;
     const line = items.filter((r) => Math.abs(r.top - top) < 6);
-    return { x: Math.max(...line.map((r) => r.right)), y: top + items[0].height / 2 };
+    return { left: Math.min(...line.map((r) => r.left)), right: Math.max(...line.map((r) => r.right)), y: top + items[0].height / 2 };
 }
 
 export default function GuideHand() {
@@ -101,6 +100,8 @@ export default function GuideHand() {
         const root = rootRef.current;
         const pop = popRef.current;
         if (!root || !pop) return;
+        const coverElement = document.querySelector('.cover-art');
+        if (!coverElement) return;
         const imgs = new Map(POSE_KEYS.map((k) => [k, root.querySelector<HTMLImageElement>(`img[data-pose="${k}"]`)]));
         const still = () =>
             matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
@@ -159,7 +160,7 @@ export default function GuideHand() {
 
         // --- いま読んでいる節から、行き先としぐさを決める ---------------------
         const aim = (vw: number, vh: number): Aim => {
-            const narrow = vw <= NARROW;
+            const narrow = matchMedia(`(max-width: ${NARROW}px)`).matches;
             const line = vh * 0.6;
             const sections = Array.from(document.querySelectorAll('#contents, .mag-spread, #gallery, #profile, #contact'));
             let active = sections[0];
@@ -189,6 +190,14 @@ export default function GuideHand() {
             let x = vw - 40;
             let y = vh * 0.5;
             let found = false;
+            const beside = (left: number, right: number, cy: number, preferLeft = false) => {
+                const { w } = poseSize(pose, false);
+                const fromLeft = preferLeft ? left >= w + 22 : right + w + 22 > vw && left >= w + 22;
+                flip = (pose === 'point' || pose === 'dozo') ? !fromLeft : fromLeft;
+                x = fromLeft ? left - 14 : right + 14;
+                y = cy;
+                found = true;
+            };
             if (id === 'contents') {
                 const list = active.querySelector('.mag-contents__list');
                 const rows = Array.from(active.querySelectorAll('.mag-contents__list li'));
@@ -203,28 +212,24 @@ export default function GuideHand() {
                 }
                 if (list && row) {
                     const b = row.getBoundingClientRect();
-                    x = list.getBoundingClientRect().left - 10;
-                    y = b.top + b.height / 2;
-                    found = true;
+                    beside(list.getBoundingClientRect().left, b.right, b.top + b.height / 2, true);
                 }
             } else if (active?.classList.contains('mag-spread')) {
                 const links = active.querySelector('.mag-spread__links');
                 const end = links && firstLineEnd(links);
-                if (end) { x = end.x + 14; y = end.y; found = true; }
+                if (end) beside(end.left, end.right, end.y);
             } else if (id === 'gallery') {
                 const filter = active.querySelector('.mag-filter');
                 const end = filter && firstLineEnd(filter);
-                if (end) { x = end.x + 14; y = end.y; found = true; }
+                if (end) beside(end.left, end.right, end.y);
             } else if (id === 'profile') {
                 const b = active.querySelector('.mag-profile__resume')?.getBoundingClientRect();
-                if (b) { x = b.right + 18; y = b.top + b.height / 2; found = true; }
+                if (b) beside(b.left, b.right, b.top + b.height / 2);
             } else if (id === 'contact') {
                 const email = active.querySelector('.mag-back__email');
                 if (email) {
                     const b = textEnd(email);
-                    x = b.right + 16;
-                    y = b.top + b.height / 2;
-                    found = true;
+                    beside(b.left, b.right, b.top + b.height / 2);
                 }
             }
             return { pose, flip, x, y, none: !found };
@@ -235,7 +240,8 @@ export default function GuideHand() {
             frame = 0;
             const dt = Math.min(0.05, last ? (now - last) / 1000 : 1 / 60);
             last = now;
-            const s = window.scrollY;
+            const motion = coverMotion(coverElement);
+            const s = motion.scroll;
             if (still() || s < HANDOFF) {
                 setMode('hidden');
                 last = 0;
@@ -243,11 +249,11 @@ export default function GuideHand() {
             }
             const vw = document.documentElement.clientWidth;
             const vh = window.innerHeight;
-            const narrow = vw <= NARROW;
+            const narrow = matchMedia(`(max-width: ${NARROW}px)`).matches;
             const target = aim(vw, vh);
             const size = poseSize(target.pose, narrow);
             const tip = tipOf(target.pose, target.flip);
-            const p = (s - HANDOFF) / (vh * FLIGHT);
+            const p = motion.flight;
 
             if (p < 1) {
                 // 表紙の手が離れた位置から、最初の行き先まで。スクロールの量で決める（戻せば戻る）
@@ -266,7 +272,8 @@ export default function GuideHand() {
                 const h = (w * HAND_BOX.h) / HAND_BOX.w;
                 const cx = lerp(heroCx, endCx, e);
                 // 表紙は上へ流れていくので、手はナビの下より上へは行かせない
-                const cy = Math.max(lerp(heroCy, endCy, e), navBottom() + h / 2);
+                const cy0 = lerp(heroCy, endCy, e);
+                const cy = lerp(cy0, Math.max(cy0, navBottom() + h / 2), e);
                 setMode('flight');
                 show('lift', false);
                 place(cx - w / 2, cy - h / 2, w, w / 2, h / 2, -Math.sin(Math.PI * e) * 14);
@@ -368,6 +375,9 @@ export default function GuideHand() {
         root.addEventListener('click', onHighFive);
         window.addEventListener('scroll', kick, { passive: true });
         window.addEventListener('resize', kick);
+        const resizeObserver = new ResizeObserver(kick);
+        resizeObserver.observe(coverElement);
+        resizeObserver.observe(document.querySelector('.mag-cover') ?? coverElement);
         const observer = new MutationObserver(kick);
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
         root.dataset.state = 'hidden';
@@ -385,6 +395,7 @@ export default function GuideHand() {
             root.removeEventListener('click', onHighFive);
             window.removeEventListener('scroll', kick);
             window.removeEventListener('resize', kick);
+            resizeObserver.disconnect();
             observer.disconnect();
             if (frame) cancelAnimationFrame(frame);
         };

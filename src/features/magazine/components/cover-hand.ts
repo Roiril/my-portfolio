@@ -24,6 +24,20 @@ export const HANDOFF = 460;
 // 手だけの層（cover-hand）の中で、手が描かれている範囲（split_hand.py の出力を測った値）
 export const HAND_BOX = { x: 45, y: 57, w: 925, h: 609 };
 
+/** 表紙の手がナビに隠れる前に離す。両コンポーネントで同じ座標系を使う。 */
+export function coverMotion(cover: Element) {
+    const rect = cover.getBoundingClientRect();
+    const nav = document.querySelector('.site-nav')?.getBoundingClientRect().bottom ?? 52;
+    const released = handOffset(HANDOFF);
+    const handTop = rect.top + window.scrollY + (HAND_BOX.y / SRC_H + released.y / 100) * rect.height;
+    const handoff = Math.max(120, handTop - nav - 36);
+    return {
+        scroll: window.scrollY * HANDOFF / handoff,
+        // 絵の大きさに合わせる。ウィンドウの高さだけ変えても飛行距離は変えない。
+        flight: (window.scrollY - handoff) / Math.max(180, rect.width * 0.85),
+    };
+}
+
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 export const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 const easeOut = (t: number) => 1 - (1 - t) ** 3;

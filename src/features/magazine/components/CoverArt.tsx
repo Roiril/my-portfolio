@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { art } from '@/content/magazine-art';
-import { HANDOFF, handOffset, pieceOffset } from './cover-hand';
+import { HANDOFF, coverMotion, handOffset, pieceOffset } from './cover-hand';
 
 // 表紙の絵。スクロールに合わせて、ロボットの手が持っている駒を盤の空いたマスへ下ろして置き、
 // 駒を放して持ち上がる。さらに進むと、手はこの絵を離れて案内役（GuideHand）になる。
@@ -21,13 +21,14 @@ export default function CoverArt() {
         const hand = handRef.current;
         const piece = pieceRef.current;
         if (!hand || !piece) return;
+        const cover = hand.parentElement!;
         const still = () =>
             matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
         let frame = 0;
         const update = () => {
             frame = 0;
             // 動き OFF では、手は元の絵の位置のまま（駒を持っている姿がこの絵の本来の姿）
-            const s = still() ? 0 : window.scrollY;
+            const s = still() ? 0 : coverMotion(cover).scroll;
             const h = handOffset(s);
             const p = pieceOffset(s);
             hand.style.transform = `translate(${h.x.toFixed(3)}%, ${h.y.toFixed(3)}%)`;
@@ -38,11 +39,17 @@ export default function CoverArt() {
         const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
         update();
         window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        const resizeObserver = new ResizeObserver(onScroll);
+        resizeObserver.observe(cover);
+        resizeObserver.observe(document.querySelector('.mag-cover') ?? cover);
         // 動きの ON/OFF を切り替えたら、スクロールを待たずに置き直す
         const observer = new MutationObserver(onScroll);
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
         return () => {
             window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', onScroll);
+            resizeObserver.disconnect();
             observer.disconnect();
             if (frame) cancelAnimationFrame(frame);
         };
