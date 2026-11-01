@@ -403,6 +403,18 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 @media (min-width: 601px) and (max-width: 1100px) {
   .mag-filter, .mag-spread__links { padding-right: 8.5rem; }
 }
+@media (max-width: 600px) {
+  /* 本文の幅は保ち、案内する操作部にだけ手の居場所を作る。 */
+  .mag-filter, .mag-spread__links { padding-right: 6rem; }
+  .mag-contents__list a { grid-template-columns: 2.5rem 3rem minmax(0, 1fr); gap: .625rem; padding-right: 5.75rem; }
+  .mag-contents__thumb img { width: 3rem; height: 2.5rem; }
+  .mag-contents__text { min-width: 0; align-items: flex-start; }
+  .mag-contents__name, .mag-contents__cat { max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+  .mag-contents__cat .mag-cat { margin-right: 0; white-space: normal; }
+  .mag-profile__resume { max-width: calc(100% - 4.5rem); }
+  .mag-back__email { max-width: calc(100% - 6rem); }
+  .mag-guide { min-height: 44px; touch-action: manipulation; }
+}
 /* 絞り込んだあと、作品を順に差し込む */
 .mag-gallery__grid[data-filtered] .mag-tile { animation: mag-tile-in .45s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i, 0) * 40ms); }
 @keyframes mag-tile-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }

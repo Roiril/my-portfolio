@@ -19,8 +19,7 @@ import { HAND_BOX, HANDOFF, SRC_H, SRC_W, coverMotion, easeInOut, handOffset } f
 // 読む邪魔をしないための決まり：
 //   ・行き先が画面の外にあるあいだは、身を引いて消える（画面の縁に残ると本文に重なるため）。
 //     行き先が画面に入ると、縁から飛んできて現れる
-//   ・スマホでは右下の隅に、指先だけ出して控えている。節が変わったときと、操作に応えるときだけ
-//     全身を出し、少したつとまた引っ込む
+//   ・スマホでも同じ対象を追う。手を小さくし、操作部の横に確保した余白から案内する
 
 type PoseKey = 'lift' | 'point' | 'dozo' | 'thumbsUp' | 'wave';
 type Pose = {
@@ -45,7 +44,7 @@ const POSE_KEYS = Object.keys(POSES) as PoseKey[];
 // none：この節には指す物が無い（リンクの無い見開きなど）。そのときは身を引く
 type Aim = { pose: Exclude<PoseKey, 'lift'>; flip: boolean; x: number; y: number; none?: boolean };
 
-// 1列のスマホだけ隅に控える。タブレット・通常のPCウィンドウでも行き先を追う。
+// スマホでも対象を追い、手の大きさだけ画面に合わせる。
 const NARROW = 600;
 const NARROW_SCALE = 0.6;
 // 固定のナビ（.site-nav）の下端から、これだけ下までしか上がらない
@@ -53,9 +52,6 @@ const NAV_GAP = 12;
 // 行き先が画面の上下の縁からこれ以上外へ出たら身を引き、これ以上内へ入ったら戻る（境目でちらつかないように差を付ける）
 const AWAY_OUT = 0;
 const AWAY_IN = 24;
-// スマホで全身を出している時間（ms）と、引っ込んだときに隠れる割合（絵の高さに対して）
-const PRESENT_MS = 2400;
-const TUCK = 0.58;
 // ばね（少しだけ行き過ぎて戻る）
 const STIFFNESS = 170;
 const DAMPING = 2 * Math.sqrt(STIFFNESS) * 0.72;
@@ -115,9 +111,6 @@ export default function GuideHand() {
         let hoveredRow: Element | null = null;
         let frame = 0;
         let last = 0;
-        // スマホ：いま全身を出しているしぐさと、引っ込むまでの時刻
-        let presented = '';
-        let presentUntil = 0;
         const timers = new Set<number>();
         const navBottom = () => (document.querySelector('.site-nav')?.getBoundingClientRect().bottom ?? 52) + NAV_GAP;
         // 指定の時刻にもう一度コマを回す（引っ込む・しぐさを戻す時刻に、スクロールが無くても動くように）
@@ -174,28 +167,23 @@ export default function GuideHand() {
             if (active?.classList.contains('mag-spread')) pose = 'dozo';
             else if (id === 'profile') { pose = 'thumbsUp'; flip = false; }
             else if (id === 'contact' && atBottom) { pose = 'wave'; flip = false; }
-            else if (id === 'contents' && !narrow) flip = false;
+            else if (id === 'contents') flip = false;
             if (override && override.until > performance.now()) {
                 pose = override.pose;
                 flip = pose === 'point' || pose === 'dozo';
-            }
-
-            if (narrow) {
-                // 右下の隅。絵の右下の角を、画面の右下から 14px 内側に置く
-                const { w, h } = poseSize(pose, true);
-                const { fx, fy } = tipOf(pose, flip);
-                return { pose, flip, x: vw - 14 - w + fx * w, y: vh - 14 - h + fy * h };
             }
 
             let x = vw - 40;
             let y = vh * 0.5;
             let found = false;
             const beside = (left: number, right: number, cy: number, preferLeft = false) => {
-                const { w } = poseSize(pose, false);
+                const { w } = poseSize(pose, narrow);
                 const fromLeft = preferLeft ? left >= w + 22 : right + w + 22 > vw && left >= w + 22;
                 flip = (pose === 'point' || pose === 'dozo') ? !fromLeft : fromLeft;
                 x = fromLeft ? left - 14 : right + 14;
-                y = cy;
+                // スマホの折り返したボタン列では、次の行に手が掛からないよう中央に収める。
+                const { h } = poseSize(pose, narrow);
+                y = narrow ? cy + (tipOf(pose, flip).fy - 0.5) * h : cy;
                 found = true;
             };
             if (id === 'contents') {
@@ -212,7 +200,8 @@ export default function GuideHand() {
                 }
                 if (list && row) {
                     const b = row.getBoundingClientRect();
-                    beside(list.getBoundingClientRect().left, b.right, b.top + b.height / 2, true);
+                    const text = row.querySelector('.mag-contents__text')?.getBoundingClientRect();
+                    beside(list.getBoundingClientRect().left, text?.right ?? b.right, b.top + b.height / 2, true);
                 }
             } else if (active?.classList.contains('mag-spread')) {
                 const links = active.querySelector('.mag-spread__links');
@@ -228,7 +217,7 @@ export default function GuideHand() {
             } else if (id === 'contact') {
                 const email = active.querySelector('.mag-back__email');
                 if (email) {
-                    const b = textEnd(email);
+                    const b = narrow ? email.getBoundingClientRect() : textEnd(email);
                     beside(b.left, b.right, b.top + b.height / 2);
                 }
             }
@@ -265,7 +254,7 @@ export default function GuideHand() {
                 const heroCy = cover.top + (HAND_BOX.y / SRC_H + off.y / 100) * cover.height + ((HAND_BOX.h / SRC_H) * cover.height) / 2;
                 // 降りた瞬間に、しぐさの絵と中心がそろう位置
                 const endCx = target.x + (0.5 - tip.fx) * size.w;
-                const endCy = target.y + (0.5 - tip.fy) * size.h;
+                const endCy = clamp(target.y + (0.5 - tip.fy) * size.h, navBottom() + size.h / 2, vh - size.h / 2 - 8);
                 const e = easeInOut(Math.max(0, p));
                 // 大きさは先に縮める（大きいまま画面の上へ流れていくと、ナビに隠れて見失う）
                 const w = lerp(heroW, size.w, 1 - (1 - Math.max(0, p)) ** 3);
@@ -285,23 +274,13 @@ export default function GuideHand() {
             }
 
             const top0 = navBottom();
-            if (narrow) {
-                // 節が変わったとき（しぐさが変わったとき）に全身を出し、PRESENT_MS たったら引っ込む
-                const key = target.pose + (target.flip ? '-flip' : '');
-                if (key !== presented || mode === 'hidden') {
-                    presented = key;
-                    presentUntil = now + PRESENT_MS;
-                    wakeAt(presentUntil);
-                }
-                if (now >= presentUntil) target.y += size.h * TUCK;
-            }
             // 行き先が画面の外なら身を引く。押そうとしている（フォーカスがある）あいだは引かない
             const margin = mode === 'away' ? AWAY_IN : AWAY_OUT;
-            const outside = !narrow && (Boolean(target.none) || target.y < top0 + margin || target.y > vh - margin);
+            const outside = Boolean(target.none) || target.y < top0 + margin || target.y > vh - margin;
             const away = outside && document.activeElement !== root;
             // ばねの行き先は画面の中に収める（外の行き先まで追って、戻るときに遠くから飛んでこないように）
             target.x = clamp(target.x, 0, vw);
-            target.y = clamp(target.y, top0, narrow ? vh + size.h : vh);
+            target.y = clamp(target.y, top0, vh);
             if (mode === 'hidden') {
                 // 途中から読み込んだとき（再読み込み・リンクで飛んできた）は、行き先にそのまま現れる
                 pos.x = target.x;
@@ -322,10 +301,9 @@ export default function GuideHand() {
             const rot = clamp(vel.x * 0.012, -12, 12);
             const ox = tip.fx * size.w;
             const oy = tip.fy * size.h;
-            // 絵が画面からはみ出さないように。スマホで引っ込んでいるときだけ、下の縁より下へ沈んでよい
-            const sink = narrow ? size.h * TUCK : 0;
+            // 絵が画面からはみ出さないようにする。
             const left = clamp(pos.x - ox, 8, vw - size.w - 8);
-            const top = clamp(pos.y - oy, top0, vh - size.h - 8 + sink);
+            const top = clamp(pos.y - oy, top0, vh - size.h - 8);
             place(left, top, size.w, ox, oy, rot);
 
             const settled = Math.hypot(target.x - pos.x, target.y - pos.y) < 0.3 && Math.hypot(vel.x, vel.y) < 4;
@@ -336,15 +314,15 @@ export default function GuideHand() {
 
         const react = (pose: Aim['pose'], ms: number) => {
             override = { pose, until: performance.now() + ms };
-            // しぐさを元に戻す時刻に起こす（スマホでは、しぐさが変わるので全身を出し直す）
+            // しぐさを元に戻す時刻に起こす。
             wakeAt(override.until);
             if (shown === pose) shown = null; // 同じしぐさでも、もう一度跳ねさせる
-            presented = ''; // スマホでは引っ込んでいても全身を出す
             kick();
         };
 
         // --- 読む人の操作に応える ---------------------------------------------
         const onPointerOver = (e: PointerEvent) => {
+            if (e.pointerType === 'touch') return;
             const row = (e.target as Element).closest?.('.mag-contents__list li');
             if (row !== hoveredRow) { hoveredRow = row; kick(); }
         };

@@ -60,7 +60,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .work-tag + .work-tag::before { content: '/'; margin-right: 8px; color: var(--line); }
 
 @media (max-width: 600px) {
-  :root { --nav-h: 5.375rem; }
+  :root { --nav-h: 5.625rem; }
 }
 
 @media (max-width: 760px) {
