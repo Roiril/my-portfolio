@@ -35,14 +35,14 @@ type Pose = {
 const POSES: Record<PoseKey, Pose> = {
     lift: { img: art.guideLift, tip: [0.5, 0.5], width: 0 },
     point: { img: art.guidePoint, tip: [0.995, 0.21], width: 136 },
-    dozo: { img: art.guideDozo, tip: [0.995, 0.34], width: 136 },
+    dozo: { img: art.guideDozo, tip: [0.975, 0.24], width: 136 },
     thumbsUp: { img: art.guideThumbsUp, tip: [0, 0.45], width: 86 },
     wave: { img: art.guideWave, tip: [0, 0.5], width: 86 },
 };
 const POSE_KEYS = Object.keys(POSES) as PoseKey[];
 
 // none：この節には指す物が無い（リンクの無い見開きなど）。そのときは身を引く
-type Aim = { pose: Exclude<PoseKey, 'lift'>; flip: boolean; x: number; y: number; none?: boolean };
+type Aim = { pose: Exclude<PoseKey, 'lift'>; flip: boolean; x: number; y: number; section: string; none?: boolean };
 
 // スマホでも対象を追い、手の大きさだけ画面に合わせる。
 const NARROW = 600;
@@ -124,6 +124,7 @@ export default function GuideHand() {
             const wasShown = shown;
             imgs.forEach((img, k) => img?.toggleAttribute('data-on', k === key));
             root.toggleAttribute('data-flip', flip);
+            root.dataset.pose = key;
             shown = key;
             shownFlip = flip;
             // 最初の 1 枚と、飛んでいる最中の絵へ戻るときは跳ねさせない
@@ -206,7 +207,15 @@ export default function GuideHand() {
             } else if (active?.classList.contains('mag-spread')) {
                 const links = active.querySelector('.mag-spread__links');
                 const end = links && firstLineEnd(links);
-                if (end) beside(end.left, end.right, end.y);
+                if (end && links) {
+                    beside(end.left, end.right, end.y);
+                    if (matchMedia('(max-width: 1100px)').matches && flip) {
+                        // 2 行目に長いリンクがあるときも、確保した右の余白に収める。
+                        const { w } = poseSize(pose, narrow);
+                        const right = links.getBoundingClientRect().right;
+                        x = Math.max(x, right - w + tipOf(pose, flip).fx * w);
+                    }
+                }
             } else if (id === 'gallery') {
                 const filter = active.querySelector('.mag-filter');
                 const end = filter && firstLineEnd(filter);
@@ -221,7 +230,7 @@ export default function GuideHand() {
                     beside(b.left, b.right, b.top + b.height / 2);
                 }
             }
-            return { pose, flip, x, y, none: !found };
+            return { pose, flip, x, y, section: id, none: !found };
         };
 
         // --- 1 コマ ----------------------------------------------------------
@@ -240,6 +249,7 @@ export default function GuideHand() {
             const vh = window.innerHeight;
             const narrow = matchMedia(`(max-width: ${NARROW}px)`).matches;
             const target = aim(vw, vh);
+            if (root.dataset.section !== target.section) root.dataset.section = target.section;
             const size = poseSize(target.pose, narrow);
             const tip = tipOf(target.pose, target.flip);
             const p = motion.flight;
@@ -383,19 +393,21 @@ export default function GuideHand() {
         <button ref={rootRef} type="button" className="mag-guide" aria-label="案内役の手とハイタッチする" aria-hidden="true">
             <span ref={popRef} className="mag-guide__pop">
                 <span className="mag-guide__bob">
-                    {POSE_KEYS.map((key) => (
-                        <Image
-                            key={key}
-                            data-pose={key}
-                            src={POSES[key].img.src}
-                            alt=""
-                            width={POSES[key].img.width}
-                            height={POSES[key].img.height}
-                            sizes={key === 'lift' ? '(max-width: 760px) 90vw, 560px' : '160px'}
-                            loading="eager"
-                            draggable={false}
-                        />
-                    ))}
+                    <span className="mag-guide__skin">
+                        {POSE_KEYS.map((key) => (
+                            <Image
+                                key={key}
+                                data-pose={key}
+                                src={POSES[key].img.src}
+                                alt=""
+                                width={POSES[key].img.width}
+                                height={POSES[key].img.height}
+                                sizes={key === 'lift' ? '(max-width: 760px) 90vw, 560px' : '160px'}
+                                loading="eager"
+                                draggable={false}
+                            />
+                        ))}
+                    </span>
                 </span>
             </span>
         </button>

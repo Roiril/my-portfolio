@@ -133,7 +133,15 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
                 </div>
                 {work.credits && (
                     <ul className="mag-spread__credits" aria-label="クレジット">
-                        {work.credits.map((credit) => <li key={credit}>{credit}</li>)}
+                        {work.credits.map((credit) => {
+                            const [role, ...names] = credit.split('　');
+                            return (
+                                <li key={credit}>
+                                    <span className="mag-spread__credit-role">{role}</span>
+                                    {names.length > 0 && <span className="mag-spread__credit-name">{names.join('　')}</span>}
+                                </li>
+                            );
+                        })}
                     </ul>
                 )}
             </div>

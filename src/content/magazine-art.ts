@@ -18,6 +18,6 @@ export const art = {
     guideLift: { src: '/images/magazine/guide-lift-49c78b39.webp', width: 925, height: 609, alt: '' },
     guidePoint: { src: '/images/magazine/guide-point-c55b939c.webp', width: 400, height: 194, alt: '' },
     guideThumbsUp: { src: '/images/magazine/guide-thumbsup-6f741cee.webp', width: 400, height: 527, alt: '' },
-    guideDozo: { src: '/images/magazine/guide-dozo-d38e94b2.webp', width: 400, height: 258, alt: '' },
+    guideDozo: { src: '/images/magazine/guide-dozo-3310229e.webp', width: 400, height: 267, alt: '' },
     guideWave: { src: '/images/magazine/guide-wave-c4395cb8.webp', width: 400, height: 550, alt: '' },
 } satisfies Record<string, ArtImage>;

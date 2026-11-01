@@ -84,7 +84,7 @@
 /* --- 目次 ----------------------------------------------------- */
 .mag-contents {
   display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 2rem;
-  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
+  padding: clamp(2.5rem, 5vw, 5rem) var(--gutter);
   border-top: 3px solid var(--ink); --rule-w: 3px; --rule-c: var(--ink);
 }
 .mag-contents__title { margin: 0; font-size: clamp(4rem, 11vw, 10rem); font-weight: 900; line-height: .9; }
@@ -144,6 +144,8 @@
 .mag-spread__links a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--spread-accent); }
 .mag-spread__links a:hover { color: var(--spread-accent-text, var(--spread-accent)); }
 .mag-spread__credits { list-style: none; margin: 1.5rem 0 0; padding: 1rem 0 0; border-top: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); columns: 2; column-gap: 1.5rem; font-size: .875rem; line-height: 1.9; opacity: .85; }
+.mag-spread__credits li { break-inside: avoid; }
+.mag-spread__credit-name::before { content: '　'; }
 
 /* 写真を横幅いっぱいに敷き、題を写真の下端に食い込ませる */
 .mag-spread--bleed .mag-spread__photo { grid-column: 1 / -1; margin-inline: calc(var(--gutter) * -1); }
@@ -312,7 +314,14 @@
   .mag-contents__text { flex-direction: column; gap: .125rem; }
   .mag-spread__sticker { width: 5.5rem; right: .5rem; top: -1.75rem; }
   .mag-spread--bleed .mag-spread__sticker { bottom: -2.5rem; right: 1rem; }
-  .mag-spread__credits { columns: 1; }
+  .mag-spread__credits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .875rem 1rem; columns: auto; font-size: .8125rem; line-height: 1.6; }
+  .mag-spread__credit-role, .mag-spread__credit-name { display: block; }
+  .mag-spread__credit-name { font-weight: 700; }
+  .mag-spread__credit-name::before { content: none; }
+  .mag-spread { padding-block: 3rem; }
+  .mag-spread--left .mag-spread__text, .mag-spread--right .mag-spread__text { margin-top: 2rem; }
+  .mag-spread--bleed .mag-spread__quote { margin-block: 1.25rem 1rem; }
+  .mag-spread--bleed .mag-spread__body { margin-top: 0; }
   .mag-gallery__head { grid-template-columns: minmax(0, 1fr); }
   .mag-gallery__grid { grid-template-columns: minmax(0, 1fr); }
   .mag-tile, .mag-tile--0, .mag-tile:last-child:nth-child(odd),
@@ -351,7 +360,8 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 .mag-cat__icon { width: 1.75rem; height: 1.75rem; object-fit: contain; mix-blend-mode: multiply; }
 
 .mag-contents__side { display: grid; align-content: start; gap: 2rem; }
-.mag-contents__spot { width: min(100%, 22rem); }
+/* 元絵の上下にある白紙を表示枠から外す。本そのものの大きさは保つ。 */
+.mag .mag-contents__spot { width: min(100%, 22rem); aspect-ratio: 900 / 720; object-fit: cover; }
 
 
 .mag-profile__art { width: min(100%, 30rem); margin-bottom: 2.5rem; }
@@ -365,7 +375,8 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 }
 @media (max-width: 600px) {
   .mag-cover__next { position: static; transform: none; justify-self: center; grid-column: 1; margin-top: 1rem; }
-  .mag-contents__spot { width: 60%; }
+  .mag-contents__side { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.5rem; }
+  .mag .mag-contents__spot { width: min(100%, 10rem); justify-self: end; }
 }
 
 /* ============================================================
@@ -456,7 +467,39 @@ html[data-motion="off"] .mag-sticker__face { transition: none; }
 .mag-guide__pop, .mag-guide__bob { display: block; }
 .mag-guide img { display: none; width: 100%; height: auto; user-select: none; }
 .mag-guide img[data-on] { display: block; }
-.mag-guide[data-flip] img { transform: scaleX(-1); }
+.mag-guide__skin { position: relative; display: block; }
+.mag-guide__skin img { filter: var(--guide-color, none); }
+.mag-guide[data-flip] .mag-guide__skin { transform: scaleX(-1); }
+/* 指先とキャンバスの寸法は変えず、作品に合わせて同じ機体が着替える。
+ * 手首の飾りは「どうぞ」の絵の内側だけに置き、リンクを指す位置を保つ。 */
+.mag-guide[data-state="free"][data-pose="dozo"] .mag-guide__skin::after {
+  content: ''; position: absolute; left: 9%; top: 72%; width: 15%; height: 19%;
+  box-sizing: border-box; transform: rotate(28deg); border-radius: 2px;
+  background: var(--guide-cuff, #2433ff); border-block: 2px solid var(--guide-trim, #a8b3ff);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .3); pointer-events: none;
+}
+.mag-guide[data-section="feature-mawarimi"] {
+  --guide-color: hue-rotate(130deg) saturate(.85) brightness(.9);
+  --guide-cuff: repeating-linear-gradient(15deg, #571a1a 0 3px, #7c2626 3px 5px); --guide-trim: #d24a3c;
+}
+.mag-guide[data-section="feature-robot-collab"] { --guide-cuff: #2433ff; --guide-trim: #bcc7ff; }
+.mag-guide[data-section="feature-ai-business-tools"] {
+  --guide-color: saturate(.35); --guide-cuff: #b5baca; --guide-trim: #323e66;
+}
+.mag-guide[data-section="feature-whiteout"] {
+  --guide-color: grayscale(1) contrast(1.15); --guide-cuff: #ff5a1f; --guide-trim: #fff;
+}
+.mag-guide[data-section="feature-couple-sync"] {
+  --guide-color: hue-rotate(100deg) saturate(.65) brightness(1.2);
+  --guide-cuff: repeating-linear-gradient(90deg, #f3dfc7 0 2px, #c9a98c 2px 3px); --guide-trim: #fff1df;
+}
+.mag-guide[data-section="feature-cogni-storage"] {
+  --guide-color: hue-rotate(175deg) saturate(.7) sepia(.25);
+  --guide-cuff: #946c38; --guide-trim: #efcc90;
+}
+.mag-guide[data-section="feature-intentlayer"] {
+  --guide-color: hue-rotate(-65deg) saturate(.7); --guide-cuff: #72c9c5; --guide-trim: #d1f9f2;
+}
 /* 着地したら白い縁取りを付けて、ステッカーのように色のある地の上でも読めるようにする */
 .mag-guide[data-state="free"] .mag-guide__bob {
   filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)

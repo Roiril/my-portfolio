@@ -34,7 +34,8 @@ ITEMS = {
     'guideLift': ('guide-lift', 'images/magazine/guide-lift.webp', 1000, '', 'layer'),
     'guidePoint': ('guide-point', 'images/magazine/guide-point.webp', 400, '', 'cutout'),
     'guideThumbsUp': ('guide-thumbsup', 'images/magazine/guide-thumbsup.webp', 400, '', 'cutout'),
-    'guideDozo': ('guide-dozo', 'images/magazine/guide-dozo.webp', 400, '', 'cutout'),
+    # 2026-11-01: 参考の実機と表紙から描き直した、指を軽く曲げた案内の手。生成済みの alpha を保持する。
+    'guideDozo': ('guide-dozo-relaxed', 'images/magazine/guide-dozo.webp', 400, '', 'layer'),
     'guideWave': ('guide-wave', 'images/magazine/guide-wave.webp', 400, '', 'cutout'),
 }
 THUMBS = {
