@@ -170,7 +170,7 @@ export const workDiagrams: Record<string, Diagram> = {
       { from: 'tex', to: 'vr', label: 'モデル' },
       { from: 'tex', to: 'shader', label: 'モデル' },
     ],
-    caption: '明治大学中野キャンパス 3 階を 3D にする手順。実寸で組んだモデルを VR やシェーダーの実験に使い回している。',
+    caption: '明治大学中野キャンパス 3 階を 3D にする手順。歩幅で測った寸法をもとに組んだモデルを、VR やシェーダーの実験に使っている。',
   },
 
   'uniqlo-future': {

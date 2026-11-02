@@ -15,7 +15,7 @@ export const resumeProfile = {
   portfolio: SITE_URL,
   links: SOCIAL_LINKS,
   summary:
-    '明治大学大学院でHCI（人とコンピュータの関わりの設計）を研究しています。VR・MRやエージェントとのやり取りを題材に、企画から実装、ユーザー評価までを自分で行います。チームではVR作品「廻リ視」の企画・監督・ソフトウェア開発を担当し、IVRC2026で総合優勝しました。長期インターンでは、社内で運用するAI業務ツール（RAG）を要件定義から運用まで担当しています。',
+    '明治大学大学院でHCI（人とコンピュータの関わりの設計）を研究しています。手だけを身体とするエージェントとの遊びを通じて、人による動きの解釈と遊び相手としての受け止めを調べ、インタラクション設計の要件を定義することを目指しています。チームではVR作品「廻リ視」の企画・監督・ソフトウェア開発を担当し、作品はIVRC2026で総合優勝しました。長期インターンでは、営業担当へのヒアリングから要件定義、AIを活用した実装、設計の把握、テストと動作検証、運用までを担当しています。',
 };
 
 export const resumeEducation: ResumeEducation[] = [
@@ -32,8 +32,8 @@ export const resumeEducation: ResumeEducation[] = [
 
 export const resumeSkills: ResumeSkillTier[] = [
   {
-    label: '主力',
-    note: '迷わず設計・実装できる',
+    label: '継続して使用',
+    note: 'AIを活用した開発で使用。要件整理、設計の把握、テストと動作検証に取り組む',
     items: ['TypeScript / JavaScript', 'React', 'Supabase', 'Git / GitHub', 'AI協働開発（Claude Code・Codex）'],
   },
   {
