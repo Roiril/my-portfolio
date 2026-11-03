@@ -79,14 +79,24 @@ function textEnd(el: Element) {
     return rects.length ? rects[rects.length - 1] : el.getBoundingClientRect();
 }
 
-/** 横に並んだ要素の 1 行目の右端と、その行の中心の高さ */
+/** 横に並んだ要素の 1 行目の右端と、その行の中心の高さ（高さの違う札と文字が並んでも、中心の高さで同じ行とみなす） */
 function firstLineEnd(container: Element) {
     const items = Array.from(container.children).map((c) => c.getBoundingClientRect()).filter((r) => r.width > 0);
     if (!items.length) return null;
-    const top = items[0].top;
-    const line = items.filter((r) => Math.abs(r.top - top) < 6);
-    return { left: Math.min(...line.map((r) => r.left)), right: Math.max(...line.map((r) => r.right)), y: top + items[0].height / 2 };
+    const y = items[0].top + items[0].height / 2;
+    const line = items.filter((r) => Math.abs(r.top + r.height / 2 - y) < 6);
+    return { left: Math.min(...line.map((r) => r.left)), right: Math.max(...line.map((r) => r.right)), y };
 }
+
+// 案内役の手が重なってはいけない、読む・押す物。写真には重なってよい（白い縁取りでシールのように見える）
+// 目次の行はリンクの箱ではなく中身で測る（スマホでは行の右に手の居場所を空けてあるため）
+const READABLE = [
+    'h2', 'h3', 'p', 'dt', 'dd',
+    '.mag-contents__name', '.mag-contents__cat', '.mag-contents__thumb', '.mag-spread__links a', '.mag-spread__facts li', '.mag-spread__credits li',
+    '.mag-filter__chip', '.mag-tile__caption', '.mag-profile__resume', '.mag-back__email', '.mag-back__links a',
+].join(', ');
+// 絵の外周には透明な余白があるので、その分を内側へ寄せて重なりを測る
+const HAND_INSET = 0.14;
 
 export default function GuideHand() {
     const rootRef = useRef<HTMLButtonElement>(null);
@@ -177,15 +187,46 @@ export default function GuideHand() {
             let x = vw - 40;
             let y = vh * 0.5;
             let found = false;
-            const beside = (left: number, right: number, cy: number, preferLeft = false) => {
-                const { w } = poseSize(pose, narrow);
-                const fromLeft = preferLeft ? left >= w + 22 : right + w + 22 > vw && left >= w + 22;
-                flip = (pose === 'point' || pose === 'dozo') ? !fromLeft : fromLeft;
-                x = fromLeft ? left - 14 : right + 14;
-                // スマホの折り返したボタン列では、次の行に手が掛からないよう中央に収める。
-                const { h } = poseSize(pose, narrow);
-                y = narrow ? cy + (tipOf(pose, flip).fy - 0.5) * h : cy;
-                found = true;
+            const top0 = navBottom();
+            // 行き先 (px, py) に指先を当てたとき、手の絵が実際に置かれる範囲（tick と同じく画面の中へ押し込んだ位置）
+            const handRect = (px: number, py: number, f: boolean) => {
+                const { w, h } = poseSize(pose, narrow);
+                const t = tipOf(pose, f);
+                const left = clamp(px - t.fx * w, 8, vw - w - 8);
+                const top = clamp(clamp(py, top0, vh) - t.fy * h, top0, vh - h - 8);
+                const ix = w * HAND_INSET;
+                const iy = h * HAND_INSET;
+                return { left: left + ix, right: left + w - ix, top: top + iy, bottom: top + h - iy };
+            };
+            type Box = { left: number; right: number; top: number; bottom: number };
+            const meets = (a: Box, b: Box) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+            // 文字の段落は箱が列の幅いっぱいなので、実際に文字がある行の範囲で測る
+            const blocked = (hand: Box) => Array.from(active?.querySelectorAll(READABLE) ?? []).some((el) => {
+                if (!meets(el.getBoundingClientRect(), hand)) return false;
+                if (!el.matches('h2, h3, p, dt, dd, .mag-back__email')) return true;
+                const range = document.createRange();
+                range.selectNodeContents(el);
+                return Array.from(range.getClientRects()).some((r) => r.width > 0 && meets(r, hand));
+            });
+            // 指す物の横（既定の側 → 反対の側）に置く。どちらに置いても読む物に重なるなら、身を引く
+            const beside = (left: number, right: number, cy: number, preferLeft = false, adjust?: (px: number, f: boolean) => number) => {
+                const { w, h } = poseSize(pose, narrow);
+                const leftFits = left >= w + 22;
+                const first = preferLeft ? leftFits : right + w + 22 > vw && leftFits;
+                for (const fromLeft of [first, !first]) {
+                    if (fromLeft && !leftFits) continue;
+                    const f = (pose === 'point' || pose === 'dozo') ? !fromLeft : fromLeft;
+                    let px = fromLeft ? left - 14 : right + 14;
+                    if (adjust) px = adjust(px, f);
+                    // スマホの折り返したボタン列では、次の行に手が掛からないよう中央に収める。
+                    const py = narrow ? cy + (tipOf(pose, f).fy - 0.5) * h : cy;
+                    if (blocked(handRect(px, py, f))) continue;
+                    flip = f;
+                    x = px;
+                    y = py;
+                    found = true;
+                    return;
+                }
             };
             if (id === 'contents') {
                 const list = active.querySelector('.mag-contents__list');
@@ -208,13 +249,13 @@ export default function GuideHand() {
                 const links = active.querySelector('.mag-spread__links');
                 const end = links && firstLineEnd(links);
                 if (end && links) {
-                    beside(end.left, end.right, end.y);
-                    if (matchMedia('(max-width: 1100px)').matches && flip) {
-                        // 2 行目に長いリンクがあるときも、確保した右の余白に収める。
+                    // 2 行目に長いリンクがあるときも、確保した右の余白に収める。
+                    const reserved = matchMedia('(max-width: 1100px)').matches;
+                    beside(end.left, end.right, end.y, false, (px, f) => {
+                        if (!reserved || !f) return px;
                         const { w } = poseSize(pose, narrow);
-                        const right = links.getBoundingClientRect().right;
-                        x = Math.max(x, right - w + tipOf(pose, flip).fx * w);
-                    }
+                        return Math.max(px, links.getBoundingClientRect().right - w + tipOf(pose, f).fx * w);
+                    });
                 }
             } else if (id === 'gallery') {
                 const filter = active.querySelector('.mag-filter');

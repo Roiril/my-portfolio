@@ -20,6 +20,8 @@ export type FeatureSpread = {
     stickerBack?: string;
     // 斜めに貼る 2 枚目の写真
     inset?: { src: string; alt: string };
+    // 本文の手前に並べる実績（受賞・評価・数字）。本文に埋もれさせず、拾い読みで目に入るようにする
+    facts?: string[];
 };
 
 export const issue = {
@@ -49,6 +51,7 @@ export const features: FeatureSpread[] = [
         theme: { paper: '#0c0a09', ink: '#efe9e1', accent: '#d3271c', accentText: '#ef4a3a' },
         sticker: 'IVRC2026\n総合優勝',
         stickerBack: 'DCEXPO\n11月に出展',
+        facts: ['IVRC2026 総合優勝', 'DCEXPO賞', '日本VR学会大会 体験展示'],
     },
     {
         workId: 'robot-collab',
@@ -76,6 +79,7 @@ export const features: FeatureSpread[] = [
         theme: { paper: '#111111', ink: '#ffffff', accent: '#ff5a1f' },
         sticker: '楽しさ\n4.434/5',
         stickerBack: '評価の高い\n作品に選出',
+        facts: ['楽しさ 4.434/5', 'X で 6 万回以上表示', 'unityroom 1.5 万回閲覧'],
     },
     {
         workId: 'couple-sync',

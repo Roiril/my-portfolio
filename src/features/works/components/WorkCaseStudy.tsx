@@ -88,7 +88,8 @@ function Reception({ reception }: { reception: WorkReception }) {
             <h2 id="reception-title" className="case-label">{reception.title ?? '反響'}</h2>
             <dl className="case-reception__list">
                 {reception.items.map((item) => (
-                    <div key={item.label}>
+                    // 同じ催しの賞が並ぶと label が重なる（IVRC2026 の総合優勝と DCEXPO 賞）ので、値と組にする
+                    <div key={item.label + item.value}>
                         <dt>{item.label}</dt>
                         <dd>{item.value}{item.unit && <small>{item.unit}</small>}</dd>
                     </div>

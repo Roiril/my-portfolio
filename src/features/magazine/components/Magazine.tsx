@@ -82,6 +82,20 @@ function Contents({ gallery }: { gallery: Work[] }) {
 function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
     const { main, sub } = splitTitle(work.title);
     const href = workHref(work);
+    const bleed = spread.layout === 'bleed';
+    const credits = work.credits && (
+        <ul className="mag-spread__credits" aria-label="クレジット">
+            {work.credits.map((credit) => {
+                const [role, ...names] = credit.split('　');
+                return (
+                    <li key={credit}>
+                        <span className="mag-spread__credit-role">{role}</span>
+                        {names.length > 0 && <span className="mag-spread__credit-name">{names.join('　')}</span>}
+                    </li>
+                );
+            })}
+        </ul>
+    );
     const style = {
         '--spread-paper': spread.theme.paper,
         '--spread-ink': spread.theme.ink,
@@ -95,7 +109,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
             alt={work.title}
             width={1600}
             height={1000}
-            sizes={spread.layout === 'bleed' ? '100vw' : '(max-width: 760px) 100vw, 62vw'}
+            sizes={bleed ? '100vw' : '(max-width: 760px) 100vw, 62vw'}
             className={work.imageFit === 'contain' ? 'is-contain' : undefined}
         />
     );
@@ -118,7 +132,16 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
                     {main}
                     {sub && <span className="mag-spread__sub">{sub}</span>}
                 </h3>
-                <p className="mag-spread__quote">{spread.pullQuote}</p>
+                {/* 全幅の見開きでは、引用・実績・クレジットを左の列にまとめる（本文とリンクは右の列） */}
+                <div className="mag-spread__aside">
+                    <p className="mag-spread__quote">{spread.pullQuote}</p>
+                    {spread.facts && (
+                        <ul className="mag-spread__facts" aria-label="実績">
+                            {spread.facts.map((fact) => <li key={fact}>{fact}</li>)}
+                        </ul>
+                    )}
+                    {bleed && credits}
+                </div>
                 <p className="mag-spread__body">{work.description}</p>
                 <p className="mag-spread__meta">{[work.period, work.role].filter(Boolean).join('　')}</p>
                 <div className="mag-spread__links">
@@ -131,19 +154,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
                         <SmartLink key={link.url} href={link.url} arrow>{linkLabel(link)}</SmartLink>
                     ))}
                 </div>
-                {work.credits && (
-                    <ul className="mag-spread__credits" aria-label="クレジット">
-                        {work.credits.map((credit) => {
-                            const [role, ...names] = credit.split('　');
-                            return (
-                                <li key={credit}>
-                                    <span className="mag-spread__credit-role">{role}</span>
-                                    {names.length > 0 && <span className="mag-spread__credit-name">{names.join('　')}</span>}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                )}
+                {!bleed && credits}
             </div>
         </article>
     );
