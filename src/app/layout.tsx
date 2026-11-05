@@ -1,15 +1,16 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Anton, Noto_Sans_JP } from "next/font/google";
+import { Anton, Noto_Sans_JP, Shippori_Antique_B1 } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from '@/components/motion/MotionProvider';
 import RevealObserver from '@/components/motion/RevealObserver';
 import ScrollChoreography from '@/components/motion/ScrollChoreography';
 import { SITE_URL, SOCIAL_LINKS } from '@/constants/site';
 
-// 誌面の見出し用（英字の詰まった太字）と、日本語の本文・見出し用
+// 誌面の声を 3 つに分ける。英字の大見出し（Anton）、日本語の見出し（アンチック体）、本文（Noto Sans JP）
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton", display: "swap" });
 const notoSansJp = Noto_Sans_JP({ weight: ["400", "700", "900"], subsets: ["latin"], variable: "--font-jp", display: "swap", preload: false });
+const shipporiAntique = Shippori_Antique_B1({ weight: "400", subsets: ["latin"], variable: "--font-antique", display: "swap", preload: false });
 
 const PERSON_NAME = "白石大晴";
 const PERSON_NAME_KANA = "しろいしたいせい";
@@ -136,7 +137,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ja" data-scroll-behavior="smooth" className={`${anton.variable} ${notoSansJp.variable}`} suppressHydrationWarning>
+    <html lang="ja" data-scroll-behavior="smooth" className={`${anton.variable} ${notoSansJp.variable} ${shipporiAntique.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "try{document.documentElement.dataset.motion=(!matchMedia('(prefers-reduced-motion: reduce)').matches&&localStorage.getItem('roil-motion')!=='off')?'on':'off'}catch{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'}" }} />
         <script

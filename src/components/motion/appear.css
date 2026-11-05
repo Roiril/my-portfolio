@@ -46,8 +46,6 @@
 @keyframes appear-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 /* 貼る：紙が浮いて少し傾いた状態から、台紙に押し付けられる。紙は透けないので不透明度は動かさない */
 @keyframes appear-lift { from { translate: var(--lift-x, -.4rem) var(--lift-y, -.6rem); rotate: var(--lift-r, -1.5deg); } to { translate: 0 0; rotate: 0deg; } }
-/* 台紙（差し色の板）は影の代わり。写真より遠くにずれた位置から寄ってくる */
-@keyframes appear-board { from { translate: var(--board-x, .75rem) var(--board-y, .75rem); } to { translate: 0 0; } }
 /* 叩く：面に向かって加速して当たり、少しつぶれて戻る */
 @keyframes appear-slap {
   0% { scale: 1.4; rotate: 22deg; opacity: 0; animation-timing-function: cubic-bezier(.5, 0, .9, .5); }

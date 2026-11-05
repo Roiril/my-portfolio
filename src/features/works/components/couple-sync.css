@@ -16,7 +16,7 @@
 .couple-wrap { width: min(1160px, calc(100% - 80px)); margin-inline: auto; }
 .couple-case :is(p, h1, h2, h3) { overflow-wrap: anywhere; }
 .couple-case p { line-height: 1.95; }
-.couple-case h2 { font-size: clamp(30px, 3.3vw, 44px); line-height: 1.45; font-weight: 600; letter-spacing: -.04em; }
+.couple-case h2 { font-family: var(--case-voice); font-weight: 400; font-feature-settings: 'palt'; font-size: clamp(30px, 3.3vw, 44px); line-height: 1.45; letter-spacing: -.01em; }
 .couple-case h3 { font-size: 21px; line-height: 1.65; font-weight: 600; letter-spacing: -.025em; }
 .couple-case figure { margin: 0; }
 .couple-case figcaption { color: var(--couple-muted); font-size: 12px; line-height: 1.8; }
@@ -26,7 +26,7 @@
 .couple-eyebrow { display: flex; gap: 12px; align-items: center; font-size: 11px; letter-spacing: .09em; }
 .couple-eyebrow > span { color: var(--couple-muted); }
 .couple-hero h1 { margin: 24px 0 30px; font-size: clamp(50px, 6.4vw, 86px); font-weight: 650; line-height: 1; letter-spacing: -.07em; white-space: nowrap; }
-.couple-hero .couple-hero-lead { font-size: clamp(23px, 2.25vw, 31px); line-height: 1.75; letter-spacing: -.035em; font-weight: 500; }
+.couple-hero .couple-hero-lead { font-family: var(--case-voice); font-weight: 400; font-feature-settings: 'palt'; font-size: clamp(23px, 2.25vw, 31px); line-height: 1.75; letter-spacing: -.01em; }
 .couple-intro { max-width: 450px; margin-block: 24px 30px; font-size: 15px; color: var(--couple-muted); }
 .couple-demo-link { display: inline-flex; justify-content: space-between; align-items: center; gap: 32px; min-height: 58px; padding: 15px 24px; border-radius: 8px; background: var(--couple-coral); color: var(--couple-paper); font-size: 14px; font-weight: 600; transition: background-color 160ms; }
 .couple-demo-link:hover { background: var(--couple-ink); }

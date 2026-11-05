@@ -7,6 +7,7 @@ import { SITE_EMAIL, SOCIAL_LINKS } from '@/constants/site';
 import Image from 'next/image';
 import { copyToClipboard } from '@/lib/clipboard';
 import { art } from '@/content/magazine-art';
+import { issue } from '@/content/magazine';
 
 type CopyStatus = 'idle' | 'success' | 'error';
 
@@ -38,10 +39,11 @@ export default function BackCover() {
             <figure className={'mag-print mag-back__art' + (copyStatus === 'success' ? ' is-sent' : '')}>
                 <Image src={art.spotContact.src} alt="" width={art.spotContact.width} height={art.spotContact.height} sizes="(max-width: 600px) 60vw, 24vw" />
             </figure>
-            <h2 id="contact-title" className="mag-back__title" data-plate="連絡先">連絡先</h2>
+            <h2 id="contact-title" className="mag-back__title"><span className="mag-no" aria-hidden="true">10</span><span data-plate="連絡先">連絡先</span></h2>
             <p className="mag-back__message">{contactMessage}</p>
             <button type="button" className="mag-back__email" onClick={handleCopy} aria-describedby="copy-email-status">
-                {SITE_EMAIL}
+                {/* 折り返すなら @ の前で。語の途中で切らない */}
+                {SITE_EMAIL.split('@')[0]}<wbr />@{SITE_EMAIL.split('@')[1]}
             </button>
             <p id="copy-email-status" className="mag-back__status" aria-live="polite">
                 {copyStatus === 'success'
@@ -64,6 +66,8 @@ export default function BackCover() {
                 <span>白石大晴のポートフォリオ</span>
                 <a href="#top">表紙へ戻る<span aria-hidden="true"> ↑</span></a>
             </p>
+            {/* 表紙の誌名を裏返した色で刷り、下の縁で断ち切る */}
+            <p className="mag-back__masthead" aria-hidden="true">{issue.masthead}</p>
         </footer>
     );
 }

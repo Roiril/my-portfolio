@@ -1,6 +1,4 @@
-import Image from 'next/image';
 import NextLink from 'next/link';
-import { art, type ArtImage } from '@/content/magazine-art';
 import { detailHref, hasDetailPage } from '@/features/works';
 import type { Work, WorkCategory, WorkLink } from '@/features/works/types';
 
@@ -13,22 +11,8 @@ export const CATEGORY_LABEL: Record<WorkCategory, string> = {
     creative: '制作',
 };
 
-// 分類ごとの小さな挿絵（2 色刷りのアイコン）
-const CATEGORY_ICON: Record<WorkCategory, ArtImage> = {
-    research: art.iconResearch,
-    personal: art.iconPersonal,
-    internship: art.iconInternship,
-    creative: art.iconCreative,
-};
-
 export function CategoryMark({ category }: { category: WorkCategory }) {
-    const icon = CATEGORY_ICON[category];
-    return (
-        <span className="mag-cat">
-            <Image src={icon.src} alt="" width={icon.width} height={icon.height} sizes="32px" className="mag-cat__icon" />
-            {CATEGORY_LABEL[category]}
-        </span>
-    );
+    return <span className="mag-cat">{CATEGORY_LABEL[category]}</span>;
 }
 
 const isExternal = (href: string) => /^https?:\/\//.test(href);

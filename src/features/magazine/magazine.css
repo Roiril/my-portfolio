@@ -1,7 +1,15 @@
 /* ============================================================
  * 誌面（トップページ）。写真が主役の雑誌として組む。
- * 地は白、文字は黒、差し色はコバルト 1 色。特集の見開きだけは
+ *
+ * 地は白、文字は墨、差し色はコバルト 1 色。特集の見開きだけは
  * 作品の写真から取った色（--spread-*）に着替える。
+ *
+ * 組みの決まり：
+ *   声は 3 つ。誌名と英字の題は Anton（大声）、日本語の見出しと引用は
+ *   アンチック体（--voice）、本文は Noto Sans JP。大声は 1 画面に 1 つまで。
+ *   写真は枠に入れず、外側の縁で断ち切る。白地の線画は地に直接刷る（乗算）。
+ *   飾りの枠・傾き・影は足さない。傾けて貼るのは裏表紙の封筒だけ。
+ *   番号は目次と同じ通し番号で、どの節にも同じ形で付く。
  * ============================================================ */
 
 .mag {
@@ -11,8 +19,12 @@
   --rule: #e2e2e2;
   --cobalt: #2433ff;
   --display: var(--font-anton), var(--font-jp), 'Yu Gothic', sans-serif;
+  --voice: var(--font-antique), var(--font-jp), 'Yu Gothic', sans-serif;
   --text: var(--font-jp), 'Yu Gothic Medium', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
   --gutter: clamp(20px, 4vw, 56px);
+  --gap: 1.5rem;
+  --section-y: clamp(4rem, 8vw, 7rem);
+  --h-section: clamp(2.5rem, 4.6vw, 4.25rem);
   background: var(--paper);
   color: var(--ink);
   font-family: var(--text);
@@ -26,12 +38,26 @@
 .mag :focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
 .mag img { display: block; max-width: 100%; height: auto; }
 
-/* --- ステッカー（丸いシール。事実だけを書く） ---------------- */
+/* アンチック体の見出しは字面が小さく、字間が空いて見えるので詰める */
+.mag-contents__title, .mag-contents__name, .mag-gallery__head h2, .mag-profile__head h2, .mag-profile__name span[lang="ja"],
+.mag-back__title, .mag-cover__name span[lang="ja"], .mag-spread__title.is-ja, .mag-spread__quote, .mag-tile__title {
+  font-family: var(--voice); font-weight: 400; font-feature-settings: 'palt'; letter-spacing: -.01em;
+}
+/* このアンチック体のカタカナは字面が小さく、片仮名だけの語は字間が抜けて見える */
+.mag-tight { letter-spacing: -.07em; }
+
+/* 節の番号。目次の行頭の数字と同じ字で、地の差し色で刷る */
+.mag-no { display: inline-block; margin-right: .5em; font-family: var(--display); font-weight: 400; font-feature-settings: normal; color: var(--no-color, var(--cobalt)); }
+
+/* 節の見出し（作品のページ・プロフィール・連絡先）は同じ大きさ。番号は見出しの 4 割の大きさで肩に置く */
+.mag-gallery__head h2 .mag-no, .mag-profile__head h2 .mag-no, .mag-back__title .mag-no { display: block; margin: 0 0 .5rem; font-size: 1.75rem; line-height: 1; }
+
+/* --- ステッカー（丸いシール。表紙に 1 枚だけ。事実だけを書く） ---------------- */
 .mag-sticker {
   position: relative; display: block; container-type: inline-size;
   width: 7.5rem; aspect-ratio: 1; border-radius: 50%;
   padding: 0; font-family: var(--text); font-weight: 900; text-align: center;
-  background: var(--sticker-bg, var(--cobalt)); color: var(--sticker-ink, #fff);
+  background: var(--sticker-bg, var(--ink)); color: var(--sticker-ink, #fff);
   transform: rotate(-12deg);
   transition: transform .3s cubic-bezier(.22, 1, .36, 1);
 }
@@ -59,193 +85,222 @@
   color: var(--cobalt); text-align: center; position: relative; z-index: 1;
   padding-top: .06em;
 }
-/* 写真は誌名に重ねる（雑誌の表紙の定番の重ね方） */
+/* 写真は誌名に重ねる（雑誌の表紙の定番の重ね方）。
+ * 重ね刷りは figure 側に掛ける（figure が z-index を持つので、img に掛けても figure の中でしか混ざらない） */
 .mag-cover__photo {
   grid-column: 2; grid-row: 2 / 4; align-self: end; justify-self: center;
-  margin: 0; width: min(130%, 36rem); position: relative; z-index: 2;
-  margin-top: clamp(4rem, 13vw, 13rem);
+  width: min(140%, 38rem); position: relative; z-index: 2;
+  margin: clamp(4rem, 13vw, 13rem) 0 0;
+  mix-blend-mode: multiply;
 }
 .mag-cover__photo img { width: 100%; height: auto; }
 .mag-cover__lines {
-  grid-column: 1; grid-row: 3; align-self: center;
+  grid-column: 1; grid-row: 3; align-self: end;
   list-style: none; margin: 2rem 0 0; padding: 0; max-width: 19rem;
-  display: grid; gap: 1.25rem; position: relative; z-index: 3;
+  display: grid; gap: .875rem; position: relative; z-index: 3;
 }
-.mag-cover__lines li { font-size: clamp(1rem, 1.4vw, 1.25rem); font-weight: 700; line-height: 1.45; }
-.mag-cover__line-label { display: inline-block; margin-right: .5rem; padding: .05rem .5rem; background: var(--ink); color: var(--paper); font-size: .8125rem; vertical-align: .15em; }
+.mag-cover__lines li { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); font-size: clamp(.9375rem, 1.1vw, 1.0625rem); line-height: 1.6; }
+.mag-cover__line-label { color: var(--cobalt); font-weight: 900; }
 .mag-cover__name {
   grid-column: 3; grid-row: 3; align-self: end; justify-self: end; text-align: right;
-  margin: 0; display: grid; gap: .25rem; position: relative; z-index: 3;
+  margin: 0; display: grid; gap: .375rem; position: relative; z-index: 3;
 }
-.mag-cover__name span[lang="ja"] { font-size: clamp(2rem, 4.4vw, 3.75rem); font-weight: 900; line-height: 1.1; }
-.mag-cover__name span[lang="en"] { font-family: var(--display); font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1; }
-.mag-cover__role { font-size: 1rem; font-weight: 700; color: var(--gray); margin-top: .5rem; }
+.mag-cover__name span[lang="ja"] { font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.1; }
+.mag-cover__name span[lang="en"] { font-family: var(--display); font-size: clamp(1.25rem, 1.8vw, 1.625rem); line-height: 1; }
+.mag-cover__role { font-size: .9375rem; color: var(--gray); margin-top: .5rem; line-height: 1.6; }
 .mag-cover__sticker { position: absolute; z-index: 4; right: calc(var(--gutter) + 22%); top: 52%; }
+.mag-cover__next {
+  position: absolute; left: 50%; bottom: .75rem; transform: translateX(-50%); z-index: 4;
+  display: grid; justify-items: center; gap: .125rem; text-decoration: none; font-size: .875rem; font-weight: 700;
+}
+.mag-cover__next img { width: 1.75rem; mix-blend-mode: multiply; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
+
+/* 分類の名前 */
+.mag-cat { font-weight: 700; white-space: nowrap; }
 
 /* --- 目次 ----------------------------------------------------- */
 .mag-contents {
-  display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 2rem;
-  padding: clamp(2.5rem, 5vw, 5rem) var(--gutter);
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap);
+  /* 目次は 1 画面に収める。10 行すべてが一度に見えることに意味がある */
+  padding: clamp(2.5rem, 5vw, 4.5rem) var(--gutter);
   border-top: 3px solid var(--ink); --rule-w: 3px; --rule-c: var(--ink);
 }
-.mag-contents__title { margin: 0; font-size: clamp(4rem, 11vw, 10rem); font-weight: 900; line-height: .9; }
-.mag-contents__list { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+.mag-contents__side { grid-column: 1 / 5; display: grid; align-content: start; gap: 2rem; }
+.mag-contents__title { margin: 0; font-size: clamp(3.5rem, 7vw, 6.5rem); line-height: 1; }
+/* 元絵の上下にある白紙を表示枠から外す。本そのものの大きさは保つ。 */
+.mag .mag-contents__spot { width: min(100%, 18rem); aspect-ratio: 900 / 720; object-fit: cover; }
+.mag-contents__list { grid-column: 5 / -1; list-style: none; margin: 0; padding: 0; counter-reset: toc; border-top: 1px solid var(--ink); }
 .mag-contents__list li { counter-increment: toc; border-bottom: 1px solid var(--rule); }
 .mag-contents__list a {
-  display: grid; grid-template-columns: 3.5rem 6rem minmax(0, 1fr); align-items: center; gap: 1.25rem;
-  padding: .5rem 0; text-decoration: none;
+  display: grid; grid-template-columns: 3.5rem 6.25rem minmax(0, 1fr); align-items: center; column-gap: 1.25rem;
+  min-height: 3.25rem; padding: .4375rem 0; text-decoration: none;
 }
-.mag-contents__list a::before { content: counter(toc, decimal-leading-zero); font-family: var(--display); font-size: 2.5rem; line-height: 1; color: var(--cobalt); }
-.mag-contents__list li:nth-last-child(-n+3) a { grid-template-columns: 3.5rem minmax(0, 1fr); }
+.mag-contents__list a::before { content: counter(toc, decimal-leading-zero); font-family: var(--display); font-size: 2.25rem; line-height: 1; color: var(--cobalt); }
 .mag-contents__thumb { overflow: hidden; }
-.mag-contents__thumb img { width: 6rem; height: 3.75rem; object-fit: cover; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
-.mag-contents__text { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
-.mag-contents__name { font-size: clamp(1.125rem, 2vw, 1.625rem); font-weight: 900; line-height: 1.35; }
+.mag-contents__thumb img { width: 6.25rem; height: 3.75rem; object-fit: cover; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
+/* 写真の無い行も、作品名と同じ列から始める */
+.mag-contents__text { grid-column: 3; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.mag-contents__name { font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.35; transition: color .2s; }
 .mag-contents__list a:hover .mag-contents__name { color: var(--cobalt); }
-.mag-contents__cat { font-size: .875rem; font-weight: 700; color: var(--gray); white-space: nowrap; }
+.mag-contents__cat { font-size: .875rem; color: var(--gray); white-space: nowrap; }
+.mag-contents__cat .mag-cat { font-weight: 400; }
 
 /* --- 特集の見開き ---------------------------------------------- */
 .mag-spread {
   position: relative;
-  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem;
-  padding: clamp(3rem, 6vw, 5.5rem) var(--gutter);
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap);
+  padding: 0 var(--gutter) clamp(3.5rem, 6vw, 6rem);
   background: var(--spread-paper); color: var(--spread-ink);
-  --sticker-bg: var(--spread-accent); --sticker-ink: var(--spread-paper);
+  --no-color: var(--spread-accent-text);
+  /* 写真は外側の縁で断ち切る。動いている途中に隣の見開きへはみ出さないよう、ここで切る */
+  overflow: clip;
 }
 /* 見開きの地は作品ごとに色が変わる。コバルトの枠が沈む地（黒・赤）もあるので、枠は文字の色にする */
 .mag-spread :focus-visible { outline-color: var(--spread-ink); }
-.mag-spread__photo { position: relative; margin: 0; isolation: isolate; }
-/* 写真の後ろに差し色の板をずらして敷く（切り抜きを台紙に貼ったように見せる） */
-.mag-spread--left .mag-spread__photo::before,
-.mag-spread--right .mag-spread__photo::before {
-  content: ''; position: absolute; z-index: -1; inset: 1.25rem -1.25rem -1.25rem 1.25rem;
-  background: var(--spread-accent);
-}
-.mag-spread--right .mag-spread__photo::before { inset: 1.25rem 1.25rem -1.25rem -1.25rem; }
-.mag-spread__photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.mag-spread__photo { position: relative; margin: 0; }
+.mag-spread__photo img { width: 100%; aspect-ratio: var(--photo-ratio, 16 / 10); object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
 .mag-spread__photo img.is-contain { object-fit: contain; background: #fff; }
 .mag-spread__photo a { display: block; overflow: hidden; }
-.mag-spread__sticker { position: absolute; right: -1rem; top: -2.5rem; }
 .mag-spread__text { position: relative; z-index: 2; }
-.mag-spread__kicker { margin: 0 0 1rem; font-size: 1rem; font-weight: 700; color: var(--spread-accent-text, var(--spread-accent)); }
+.mag-spread__kicker { display: flex; align-items: baseline; margin: 0 0 1rem; font-size: .9375rem; font-weight: 700; color: var(--spread-accent-text); }
+.mag-spread__kicker .mag-no { font-size: 1.75rem; line-height: 1; }
 .mag-spread__title { margin: 0; line-height: 1.02; }
 /* 英字だけの題は Anton（太さは 1 種類しかないので 400 のまま） */
 .mag-spread__title.is-latin { font-family: var(--display); font-weight: 400; font-size: clamp(3.25rem, 7.2vw, 7rem); letter-spacing: -.005em; }
-/* 日本語を含む題は Noto Sans JP の 900 */
-.mag-spread__title.is-ja { font-family: var(--text); font-weight: 900; font-size: clamp(2.5rem, 5.6vw, 5.5rem); letter-spacing: -.02em; }
-.mag-spread__title.is-ja.is-long { font-size: clamp(2rem, 3.6vw, 3.5rem); line-height: 1.2; }
-.mag-spread__sub { display: block; font-size: .42em; line-height: 1.2; margin-top: .35em; opacity: .75; }
-.mag-spread__quote {
-  margin: 1.75rem 0 1.25rem; font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 900; line-height: 1.5;
-  padding-left: 1rem; border-left: 6px solid var(--spread-accent);
-}
-.mag-spread__body { margin: 0; font-size: 1rem; line-height: 1.95; max-width: 34em; }
-.mag-spread__meta { margin: 1rem 0 0; font-size: .875rem; font-weight: 700; opacity: .75; }
+/* 日本語を含む題はアンチック体 */
+.mag-spread__title.is-ja { font-size: clamp(2.5rem, 4.6vw, 4.25rem); line-height: 1.15; }
+.mag-spread__title.is-ja.is-long { font-size: clamp(2rem, 3.2vw, 3rem); line-height: 1.25; }
+.mag-spread__sub { display: block; font-family: var(--text); font-size: .375em; font-weight: 400; line-height: 1.3; margin-top: .5em; letter-spacing: 0; color: color-mix(in srgb, var(--spread-ink) 72%, var(--spread-paper)); }
+/* 英字の題の sub は Anton の高さに負けないよう、本文の大きさで固定する */
+.mag-spread__title.is-latin .mag-spread__sub { font-size: clamp(1rem, 1.4vw, 1.25rem); }
+.mag-spread__quote { margin: 1.5rem 0 1.25rem; font-size: clamp(1.375rem, 2vw, 1.875rem); line-height: 1.5; }
+.mag-spread__body { margin: 0; font-size: 1rem; line-height: 1.95; max-width: 38ic; }
+.mag-spread__meta { margin: 1rem 0 0; font-size: .875rem; color: color-mix(in srgb, var(--spread-ink) 72%, var(--spread-paper)); }
 .mag-spread__links { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: 1.5rem; font-size: 1rem; font-weight: 700; }
-.mag-spread__links a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--spread-accent); }
-.mag-spread__links a:hover { color: var(--spread-accent-text, var(--spread-accent)); }
+.mag-spread__links a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--spread-accent-text); }
+.mag-spread__links a:hover { color: var(--spread-accent-text); }
 /* 詳細ページがいちばん読んでほしい行き先。外部リンクと同じ下線の文字にせず、墨で刷った札にする */
 .mag-spread__links .mag-spread__more {
   display: inline-flex; align-items: center; gap: .375rem; min-height: 2.75rem; padding: .5rem 1.375rem;
   background: var(--spread-ink); color: var(--spread-paper); font-weight: 900; text-decoration: none;
-  box-shadow: 0 0 0 transparent; transition: transform .2s cubic-bezier(.22, 1, .36, 1), box-shadow .2s cubic-bezier(.22, 1, .36, 1);
+  transition: background-color .2s;
 }
-.mag-spread__links .mag-spread__more:hover { color: var(--spread-paper); transform: translate(-.1875rem, -.1875rem); box-shadow: .1875rem .1875rem 0 var(--spread-accent); }
-.mag-spread__links .mag-spread__more:focus-visible { outline-color: var(--spread-accent-text, var(--spread-accent)); }
-/* 実績（受賞・評価・数字）。本文の手前で拾い読みできる札にする */
-.mag-spread__facts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
-.mag-spread__facts li { padding: .3125rem .75rem; border: 2px solid var(--spread-accent); font-size: .9375rem; font-weight: 900; line-height: 1.4; }
-.mag-spread__credits { list-style: none; margin: 1.5rem 0 0; padding: 1rem 0 0; border-top: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); columns: 2; column-gap: 1.5rem; font-size: .875rem; line-height: 1.9; opacity: .85; }
+.mag-spread__links .mag-spread__more:hover { color: var(--spread-paper); background: var(--spread-accent-text); }
+.mag-spread__links .mag-spread__more:focus-visible { outline-color: var(--spread-accent-text); }
+/* 実績（受賞・評価・数字）。囲まず、細い罫で行を分ける */
+.mag-spread__facts { list-style: none; margin: 0 0 1.25rem; padding: 0; border-top: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); }
+.mag-spread__facts li { padding: .4375rem 0; border-bottom: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); font-size: .9375rem; font-weight: 700; line-height: 1.5; }
+/* 数字の実績は 3 つ横に並べ、数字を大きく組む */
+.mag-spread__facts.is-figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 1rem; border-bottom: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); padding-block: .75rem; }
+.mag-spread__facts.is-figures li { padding: 0; border: 0; font-size: .8125rem; font-weight: 400; }
+/* 「万回」は Noto Sans JP に落ちるので 900 で Anton の太さに寄せる（Anton 自体は太字を合成させない） */
+.mag-spread__figure { display: block; font-family: var(--display); font-weight: 900; font-synthesis-weight: none; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.2; color: var(--spread-accent-text); }
+.mag-spread__credits { list-style: none; margin: 1.5rem 0 0; padding: 1rem 0 0; border-top: 1px solid color-mix(in srgb, var(--spread-ink) 30%, transparent); font-size: .8125rem; line-height: 1.7; color: color-mix(in srgb, var(--spread-ink) 80%, var(--spread-paper)); }
 .mag-spread__credits li { break-inside: avoid; }
-.mag-spread__credit-name::before { content: '　'; }
+.mag-spread__credit-role, .mag-spread__credit-name { display: block; }
+.mag-spread__credit-name { font-weight: 700; color: var(--spread-ink); }
 
-/* 写真を横幅いっぱいに敷き、題は写真の下に置く。
- * 写真（キービジュアル）には題字と制作者名が入っているので、題を重ねると二重になり、名前も隠れる */
+/* 全幅：キービジュアルを横幅いっぱいに敷き、題は写真の下に置く。
+ * 写真には題字と制作者名が入っているので、題を重ねると二重になり、名前も隠れる */
 .mag-spread--bleed .mag-spread__photo { grid-column: 1 / -1; margin-inline: calc(var(--gutter) * -1); }
-.mag-spread--bleed .mag-spread__photo img { aspect-ratio: 16 / 8; }
-/* 下の角には制作者名が入っているので、ステッカーは右上の幕の上に貼る */
-.mag-spread--bleed .mag-spread__sticker { right: var(--gutter); top: clamp(1rem, 2vw, 1.75rem); }
-/* 左の列（引用・実績・クレジット）が右の列（本文・時期・リンク）より長いとき、余りは最後の行で吸う。
- * 右の列の行のあいだが空かないように */
+/* 下の角に制作者名が入っているので切らない */
+.mag-spread--bleed .mag-spread__photo img { aspect-ratio: 16 / 9; }
 .mag-spread--bleed .mag-spread__text {
-  grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto auto auto auto auto 1fr;
-  column-gap: 1.5rem; margin-top: clamp(2rem, 3.5vw, 3.5rem);
+  grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap); margin-top: clamp(2.5rem, 4vw, 4rem);
 }
-.mag-spread--bleed .mag-spread__title { grid-column: 1 / -1; grid-row: 1; font-size: clamp(3rem, 7vw, 6.5rem); line-height: 1; }
-.mag-spread--bleed .mag-spread__sub { font-family: var(--display); font-weight: 400; font-size: .4em; letter-spacing: 0; }
-.mag-spread--bleed .mag-spread__kicker { grid-column: 1 / -1; grid-row: 2; margin: 1.25rem 0 0; }
-.mag-spread--bleed .mag-spread__aside { grid-column: 1 / 6; grid-row: 3 / -1; }
+.mag-spread--bleed .mag-spread__kicker { grid-column: 1 / -1; }
+.mag-spread--bleed .mag-spread__title { grid-column: 1 / 6; grid-row: 2; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.05; }
+.mag-spread--bleed .mag-spread__sub { font-family: var(--display); font-size: clamp(1.25rem, 1.8vw, 1.625rem); }
+.mag-spread--bleed .mag-spread__aside { grid-column: 1 / 6; grid-row: 3 / span 3; }
+.mag-spread--bleed .mag-spread__quote { margin-top: 1.5rem; }
 .mag-spread--bleed .mag-spread__body,
 .mag-spread--bleed .mag-spread__meta,
 .mag-spread--bleed .mag-spread__links { grid-column: 7 / -1; }
-.mag-spread--bleed .mag-spread__body { grid-row: 3; margin-top: 1.75rem; }
+.mag-spread--bleed .mag-spread__body { grid-row: 2 / span 2; font-size: 1.0625rem; }
 .mag-spread--bleed .mag-spread__meta { grid-row: 4; }
-.mag-spread--bleed .mag-spread__links { grid-row: 5; }
-/* 左右の見開きでは、実績の札と本文のあいだを空ける */
-.mag-spread:not(.mag-spread--bleed) .mag-spread__facts { margin-bottom: 1.25rem; }
+.mag-spread--bleed .mag-spread__links { grid-row: 5; align-self: start; }
+/* クレジットは映画の終わりのように、幅いっぱいに小さく流す */
+.mag-spread--bleed .mag-spread__credits { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem var(--gap); margin-top: clamp(2rem, 4vw, 3.5rem); }
 
-/* 写真を左 7 列、文を右 4 列。写真と文は重ねない（作品画像の中の文字と題がぶつかるため） */
-.mag-spread--left .mag-spread__photo { grid-column: 1 / 8; grid-row: 1; align-self: center; }
-.mag-spread--left .mag-spread__text { grid-column: 9 / -1; grid-row: 1; align-self: center; }
-.mag-spread--right .mag-spread__photo { grid-column: 6 / -1; grid-row: 1; align-self: center; }
-.mag-spread--right .mag-spread__text { grid-column: 1 / 5; grid-row: 1; align-self: center; }
-.mag-spread--right .mag-spread__sticker { right: auto; left: -1rem; }
-/* 横に並べる見開きでは文の列が 4 列しかないので、英字の題も一段小さく */
+/* 左右：写真は外側の上の角へ断ち切る。文は反対側の下へ寄せ、見開きごとに対角線で組む。
+ * 写真と文は重ねない（作品画像の中の文字と題がぶつかるため） */
+.mag-spread--left .mag-spread__photo { grid-column: 1 / 9; grid-row: 1; align-self: start; margin-left: calc(var(--gutter) * -1); margin-right: 1rem; }
+.mag-spread--left .mag-spread__text { grid-column: 9 / -1; grid-row: 1; align-self: end; padding-top: clamp(3rem, 5vw, 5rem); }
+.mag-spread--right .mag-spread__photo { grid-column: 5 / -1; grid-row: 1; align-self: start; margin-right: calc(var(--gutter) * -1); margin-left: 1rem; }
+.mag-spread--right .mag-spread__text { grid-column: 1 / 5; grid-row: 1; align-self: end; padding-top: clamp(3rem, 5vw, 5rem); }
+/* 文の列は 4 列しかないので、英字の題は一段小さく */
 .mag-spread--left .mag-spread__title.is-latin, .mag-spread--right .mag-spread__title.is-latin { font-size: clamp(3rem, 5.2vw, 5.25rem); overflow-wrap: anywhere; }
 
-/* 斜めに貼った 2 枚目の写真（スマホの画面など）。写真の外側の角に貼る */
-.mag-spread__inset {
-  position: absolute; z-index: 3; bottom: -2.5rem; width: clamp(6.5rem, 11vw, 10.5rem);
-  border: .5rem solid #fff; box-shadow: 0 1rem 2rem rgb(0 0 0 / .25);
-  transform: rotate(5deg);
-}
-.mag-spread--left .mag-spread__inset { right: -2rem; }
-.mag-spread--right .mag-spread__inset { left: -2rem; transform: rotate(-6deg); }
-.mag-spread__inset img { width: 100%; }
+/* 白地の線画は枠を消して地に刷る。外側の縁は切らず、余白の中に置く。
+ * 重ね刷りは figure 側に掛ける（中の要素は動きのために重なりの層を作るので、そこに掛けても地と混ざらない） */
+.mag-spread--printed { padding-top: clamp(3rem, 5vw, 5rem); }
+.mag-spread--printed .mag-spread__photo { mix-blend-mode: multiply; margin-inline: 0; align-self: center; }
+.mag-spread--printed .mag-spread__photo img { object-fit: contain; background: #fff; }
+.mag-spread--printed .mag-spread__text { padding-top: 0; align-self: center; }
 
 /* --- 作品のページ ---------------------------------------------- */
-.mag-gallery { padding: clamp(4rem, 9vw, 8rem) var(--gutter); border-top: 3px solid var(--ink); --rule-w: 3px; --rule-c: var(--ink); }
-.mag-gallery__head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem; align-items: end; margin-bottom: 3rem; }
-.mag-gallery__head h2 { margin: 0; font-size: clamp(2.75rem, 7vw, 6.5rem); font-weight: 900; line-height: 1; white-space: nowrap; }
-.mag-gallery__head p { margin: 0; font-size: 1.0625rem; line-height: 1.8; font-weight: 700; }
-/* 7 枚で 3 段が埋まる並び：4+2 ／ 2+2+2 ／ 3+3 */
-.mag-gallery__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3rem 1.5rem; align-items: start; }
-.mag-tile { grid-column: span 2; }
-.mag-tile--0 { grid-column: span 4; }
-.mag-tile--5, .mag-tile--6 { grid-column: span 3; }
-/* 段の頭（0・2・5 番）で 1 枚だけ残ったら、4 列幅で中央に置く */
-.mag-tile--0:last-child, .mag-tile--2:last-child, .mag-tile--5:last-child { grid-column: 2 / span 4; }
+.mag-gallery { padding: var(--section-y) var(--gutter); border-top: 3px solid var(--ink); --rule-w: 3px; --rule-c: var(--ink); }
+.mag-gallery__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: end; margin-bottom: 2.5rem; }
+.mag-gallery__head h2 { grid-column: 1 / 8; margin: 0; font-size: var(--h-section); line-height: 1.1; }
+.mag-gallery__head p { grid-column: 8 / -1; margin: 0; font-size: 1rem; line-height: 1.8; }
+/* 絞り込みは囲まず、見出しの下の罫に載せたタブにする */
+.mag-filter { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin: 0 0 2rem; border-bottom: 1px solid var(--ink); }
+.mag-filter__chip {
+  display: inline-flex; align-items: baseline; gap: .375rem; min-height: 2.75rem; padding: .5rem 0;
+  border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; background: none; color: var(--ink);
+  font: inherit; font-size: 1rem; font-weight: 700; cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.mag-filter__chip[aria-pressed="true"] { color: var(--cobalt); border-bottom-color: var(--cobalt); }
+.mag-filter__count { font-weight: 400; font-size: .875rem; color: var(--gray); font-variant-numeric: tabular-nums; }
+.mag-filter__chip[aria-pressed="true"] .mag-filter__count { color: inherit; }
+/* 7 枚で 3 段が埋まる並び：7+5 ／ 4+4+4 ／ 5+7。写真どうしの間は詰め、外の余白に回す */
+.mag-gallery__grid {
+  --tile-gap: 1rem;
+  /* 7 列ぶんの幅を 16:10 にしたときの高さ。5 列の写真も同じ高さにして段の底をそろえる */
+  --tile-tall: calc(((100cqi - 11 * var(--tile-gap)) / 12 * 7 + 6 * var(--tile-gap)) / 1.6);
+  list-style: none; margin: 0; padding: 0; container-type: inline-size;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3rem var(--tile-gap); align-items: start;
+}
+.mag-tile { grid-column: span 4; }
+.mag-tile--0, .mag-tile--6 { grid-column: span 7; }
+.mag-tile--1, .mag-tile--5 { grid-column: span 5; }
 .mag-tile__link { display: block; text-decoration: none; }
-.mag-tile__photo { display: block; overflow: hidden; position: relative; background: var(--ink); }
-.mag-tile__photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .5s cubic-bezier(.22, 1, .36, 1), filter .5s; }
+.mag-tile__photo { display: block; overflow: hidden; position: relative; background: #eeeeee; }
+.mag-tile__photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .5s cubic-bezier(.22, 1, .36, 1); }
 .mag-tile__photo img.is-contain { object-fit: contain; background: #fff; }
-.mag-tile--0 .mag-tile__photo img { aspect-ratio: 16 / 9; }
-.mag-tile--2 .mag-tile__photo { transform: rotate(-1.5deg); }
-.mag-tile--6 .mag-tile__photo { transform: rotate(1.2deg); }
-.mag-tile__caption { display: grid; gap: .25rem; margin-top: .875rem; }
-.mag-tile__title { font-size: 1.25rem; font-weight: 900; line-height: 1.35; }
+.mag-tile:is(.mag-tile--0, .mag-tile--1, .mag-tile--5, .mag-tile--6) .mag-tile__photo img { aspect-ratio: auto; height: var(--tile-tall); }
+.mag-tile__caption { display: grid; gap: .25rem; margin-top: .75rem; padding-right: 1rem; }
+.mag-tile__title { font-size: 1.375rem; line-height: 1.35; transition: color .2s; }
 .mag-tile__link:hover .mag-tile__title { color: var(--cobalt); }
-.mag-tile__note { font-size: .9375rem; line-height: 1.75; color: var(--gray); }
+.mag-tile__note { font-size: .9375rem; line-height: 1.75; color: var(--gray); max-width: 38ic; }
+.mag-tile__note .mag-cat { margin-right: .75rem; color: var(--ink); }
 /* 詳細ページへの送り。誌面の見開きの「詳細 →」と同じ下線の付け方 */
-.mag-tile__more { justify-self: start; margin-top: .375rem; font-size: 1rem; font-weight: 900; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--cobalt); }
+.mag-tile__more { justify-self: start; margin-top: .375rem; font-size: .9375rem; font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--cobalt); }
 .mag-tile__link:hover .mag-tile__more { color: var(--cobalt); }
 
-/* --- プロフィール ---------------------------------------------- */
+/* --- プロフィール（作品が並んだあとの静かなページ） -------------- */
 .mag-profile {
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem);
-  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
-  background: var(--cobalt); color: #fff;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap);
+  padding: var(--section-y) var(--gutter);
+  background: var(--paper); color: var(--ink);
+  border-top: 3px solid var(--ink); --rule-w: 3px; --rule-c: var(--ink);
 }
-.mag-profile__head h2 { margin: 0; font-size: clamp(2.75rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.05; }
-.mag-profile__name { display: grid; gap: .25rem; margin: 1.5rem 0 0; }
-.mag-profile__name span[lang="ja"] { font-size: 1.5rem; font-weight: 900; }
-.mag-profile__name span[lang="en"] { font-family: var(--display); font-size: 1.25rem; }
-.mag-profile__bio { margin: 0 0 1.25rem; font-size: 1.0625rem; line-height: 2; }
-.mag-profile__facts { margin: 2.5rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; border-top: 2px solid #fff; padding-top: 1.5rem; }
-.mag-profile__facts dt { font-size: .875rem; font-weight: 700; opacity: .8; }
-.mag-profile__facts dd { margin: .25rem 0 0; font-size: 1rem; font-weight: 700; line-height: 1.6; }
-.mag-profile__resume { display: inline-block; margin-top: 2.5rem; padding: .875rem 1.5rem; background: #fff; color: var(--cobalt) !important; font-weight: 900; text-decoration: none; }
-.mag-profile__resume:hover { background: var(--ink); color: #fff !important; }
+.mag-profile__head { grid-column: 1 / 6; }
+.mag-profile__head h2 { margin: 0; font-size: var(--h-section); line-height: 1.1; }
+.mag-profile__name { display: grid; gap: .25rem; margin: 1.25rem 0 0; }
+.mag-profile__name span[lang="ja"] { font-size: 1.5rem; }
+.mag-profile__name span[lang="en"] { font-family: var(--display); font-size: 1.125rem; }
+.mag .mag-profile__art { width: min(100%, 26rem); margin-top: 2.5rem; }
+.mag-profile__text { grid-column: 7 / -1; }
+.mag-profile__bio { margin: 0 0 1.25rem; font-size: 1.0625rem; line-height: 2; max-width: 38ic; }
+.mag-profile__facts { margin: 2.5rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap); border-top: 1px solid var(--ink); }
+.mag-profile__facts > div { padding: .875rem 0; border-bottom: 1px solid var(--rule); }
+.mag-profile__facts dt { font-size: .8125rem; color: var(--gray); }
+.mag-profile__facts dd { margin: .25rem 0 0; font-size: .9375rem; font-weight: 700; line-height: 1.6; }
+.mag-profile__resume { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: 2rem; padding: .5rem 1.375rem; background: var(--cobalt); color: #fff !important; font-weight: 900; text-decoration: none; transition: background-color .2s; }
+.mag-profile__resume:hover { background: var(--ink); }
 
 /* --- 見つからないページ（乱丁のページ） ------------------------- */
 .mag-404 {
@@ -259,7 +314,7 @@
 }
 .mag-404__body { grid-column: 1; margin-top: 2rem; max-width: 30rem; font-size: 1rem; line-height: 1.9; }
 .mag-404__body p { margin: 0 0 .75rem; }
-.mag-404__lead { font-size: clamp(1.25rem, 2vw, 1.625rem); font-weight: 900; line-height: 1.5; }
+.mag-404__lead { font-family: var(--voice); font-feature-settings: 'palt'; font-size: clamp(1.25rem, 2vw, 1.625rem); line-height: 1.5; }
 .mag-404__links { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; align-items: center; margin-top: 1.75rem; font-weight: 900; }
 .mag-404__links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; text-decoration-color: var(--cobalt); }
 .mag-404__links .mag-404__primary { padding: .75rem 1.5rem; background: var(--cobalt); color: #fff; text-decoration: none; }
@@ -269,59 +324,64 @@
   .mag-404 { grid-template-columns: minmax(0, 1fr); }
   .mag-404__hand { grid-column: 1; width: 55%; justify-self: end; }
 }
-.mag-profile :focus-visible { outline-color: #fff; }
 
-/* --- 裏表紙 ---------------------------------------------------- */
-.mag-back { padding: clamp(4rem, 9vw, 8rem) var(--gutter) 2rem; background: var(--ink); color: #fff; }
-/* 黒地の上のコバルトは 2.7:1 で大見出しの基準（3:1）に届かないので、少しだけ明るくする */
-.mag-back__title { margin: 0; font-weight: 900; font-size: clamp(4rem, 14vw, 13rem); line-height: 1; letter-spacing: -.03em; color: #3b4bff; }
-.mag-back__message { margin: 1.5rem 0 2.5rem; font-size: 1.125rem; font-weight: 700; }
+/* --- 裏表紙。表紙の色を裏返す（白地にコバルトの誌名 ↔ コバルト地に白の誌名） --- */
+.mag-back { position: relative; padding: var(--section-y) var(--gutter) 0; background: var(--cobalt); color: #fff; --no-color: #fff; overflow: clip; }
+.mag-back__title { margin: 0; font-size: var(--h-section); line-height: 1.1; }
+.mag-back__message { margin: 1.25rem 0 2.5rem; max-width: 38ic; font-size: 1.0625rem; line-height: 1.8; }
 .mag-back__email {
   display: block; padding: 0; border: 0; background: none; color: #fff; cursor: pointer; text-align: left;
-  font-family: var(--display); font-size: clamp(2rem, 6.4vw, 6rem); line-height: 1.05; word-break: break-all;
-  text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .12em; text-decoration-color: var(--cobalt);
+  font-family: var(--display); font-size: clamp(1.625rem, 6vw, 6rem); line-height: 1.05; word-break: normal; overflow-wrap: anywhere;
+  text-decoration: underline; text-decoration-thickness: .05em; text-underline-offset: .12em;
 }
-.mag-back__email:hover { color: #9aa2ff; }
-.mag-back__status { margin: .75rem 0 0; font-size: .9375rem; opacity: .8; }
-.mag-back__links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 3rem; font-size: 1.125rem; font-weight: 700; }
-.mag-back__links a { text-decoration: none; border-bottom: 2px solid var(--cobalt); padding-bottom: .125rem; }
-.mag-back__links a:hover { color: #9aa2ff; }
-.mag-back__colophon { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 5rem 0 0; padding-top: 1rem; border-top: 1px solid #444; font-size: .875rem; opacity: .85; }
-.mag-back :focus-visible { outline-color: #9aa2ff; }
+.mag-back__email:hover { color: #d5d9ff; }
+.mag-back__status { margin: .75rem 0 0; font-size: .9375rem; }
+.mag-back__links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 2.5rem; font-size: 1.0625rem; font-weight: 700; }
+.mag-back__links a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; }
+.mag-back__links a:hover { color: #d5d9ff; }
+.mag-back__colophon { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 4rem 0 0; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .5); font-size: .875rem; }
+/* 誌名の足の先が紙の外へ出る。L の横棒は残して ROIL と読めるようにする（高さ .87em で字の下端の少し上を切る） */
+.mag-back__masthead {
+  --size: 62vw;
+  margin: clamp(1.5rem, 3vw, 3rem) 0 0; height: calc(var(--size) * .87); overflow: hidden;
+  font-family: var(--display); font-size: var(--size); line-height: 1; letter-spacing: -.01em; text-align: center; white-space: nowrap;
+  color: #fff; user-select: none;
+}
+.mag-back :focus-visible { outline-color: #fff; }
 
 /* --- タブレット以下 -------------------------------------------- */
 @media (max-width: 960px) {
   .mag-cover { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto auto auto; row-gap: 1.5rem; }
-  .mag-cover__photo { grid-column: 1 / -1; grid-row: 3; width: min(92%, 32rem); margin-top: -14vw; }
+  .mag-cover__photo { grid-column: 1 / -1; grid-row: 3; width: min(100%, 36rem); margin-top: -14vw; }
   .mag-cover__lines { grid-column: 1; grid-row: 4; margin: 0; align-self: start; }
   .mag-cover__name { grid-column: 2; grid-row: 4; align-self: start; }
   .mag-cover__sticker { right: var(--gutter); top: auto; bottom: 46%; }
 
-  .mag-spread--left .mag-spread__photo, .mag-spread--right .mag-spread__photo,
-  .mag-spread--left .mag-spread__text, .mag-spread--right .mag-spread__text { grid-column: 1 / -1; grid-row: auto; }
-  .mag-spread--left .mag-spread__text, .mag-spread--right .mag-spread__text { margin-top: 3rem; }
-  .mag-spread__inset { width: 6.5rem; bottom: -1.5rem; }
-  .mag-spread--left .mag-spread__inset { right: -.5rem; }
-  .mag-spread--right .mag-spread__inset { left: auto; right: -.5rem; }
-  .mag-spread--left .mag-spread__photo::before { inset: .75rem -.75rem -.75rem .75rem; }
-  .mag-spread--right .mag-spread__photo::before { inset: .75rem .75rem -.75rem -.75rem; }
-  /* 1 列にしたら、引用と実績 → 本文 → リンク → クレジットの順に積む */
-  .mag-spread--bleed .mag-spread__text { grid-template-rows: none; }
-  .mag-spread--bleed .mag-spread__aside, .mag-spread--bleed .mag-spread__body,
-  .mag-spread--bleed .mag-spread__meta, .mag-spread--bleed .mag-spread__links { grid-column: 1 / -1; grid-row: auto; }
-  .mag-spread--bleed .mag-spread__aside { display: contents; }
-  .mag-spread--bleed .mag-spread__quote, .mag-spread--bleed .mag-spread__facts { grid-column: 1 / -1; }
-  .mag-spread--bleed .mag-spread__credits { grid-column: 1 / -1; order: 1; }
-  .mag-spread--bleed .mag-spread__facts { margin-bottom: 1.25rem; }
-  .mag-spread--bleed .mag-spread__body { margin-top: 0; }
+  .mag-contents__side, .mag-contents__list { grid-column: 1 / -1; }
+  .mag-contents__side { grid-template-columns: auto minmax(0, 1fr); align-items: center; margin-bottom: 1.5rem; }
+  .mag .mag-contents__spot { justify-self: end; width: min(100%, 12rem); }
 
+  /* 1 列にしたら、写真は両側の縁で断ち切る */
+  .mag-spread--left .mag-spread__photo, .mag-spread--right .mag-spread__photo { grid-column: 1 / -1; grid-row: auto; margin-inline: calc(var(--gutter) * -1); }
+  .mag-spread--left .mag-spread__text, .mag-spread--right .mag-spread__text { grid-column: 1 / -1; grid-row: auto; padding-top: 2.5rem; }
+  .mag-spread--printed .mag-spread__photo { margin-inline: 0; }
+  .mag-spread--printed .mag-spread__text { padding-top: 1.5rem; }
+  /* 引用と実績 → 本文 → リンク → クレジットの順に積む */
+  .mag-spread--bleed .mag-spread__title, .mag-spread--bleed .mag-spread__aside, .mag-spread--bleed .mag-spread__body,
+  .mag-spread--bleed .mag-spread__meta, .mag-spread--bleed .mag-spread__links { grid-column: 1 / -1; grid-row: auto; }
+  .mag-spread--bleed .mag-spread__credits { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .mag-gallery__head h2, .mag-gallery__head p { grid-column: 1 / -1; }
+  .mag-gallery__head p { margin-top: 1rem; }
   .mag-gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mag-tile, .mag-tile--5, .mag-tile--6 { grid-column: span 1; }
-  /* PC 用の「最後の 1 枚を 2〜5 列目に置く」指定を同じ強さで打ち消す。残すと見えない列が増え、1 列目が幅 0 になる */
-  .mag-tile--0, .mag-tile:last-child:nth-child(odd),
-  .mag-tile--0:last-child, .mag-tile--2:last-child, .mag-tile--5:last-child { grid-column: span 2; }
-  .mag-tile--2:last-child:nth-child(even), .mag-tile--5:last-child:nth-child(even) { grid-column: span 1; }
-  .mag-profile { grid-template-columns: minmax(0, 1fr); }
+  .mag-tile, .mag-tile--1, .mag-tile--5, .mag-tile--6 { grid-column: span 1; }
+  .mag-tile--0, .mag-tile:last-child:nth-child(odd) { grid-column: span 2; }
+  .mag-tile:is(.mag-tile--0, .mag-tile--1, .mag-tile--5, .mag-tile--6) .mag-tile__photo img { aspect-ratio: 3 / 2; height: auto; }
+
+  .mag-profile__head, .mag-profile__text { grid-column: 1 / -1; }
+  .mag-profile__text { margin-top: 2.5rem; }
+  .mag .mag-profile__art { width: min(100%, 22rem); }
+  .mag-back__art { position: static; width: min(70%, 18rem); margin-bottom: 2rem; }
 }
 
 /* --- スマホ ---------------------------------------------------- */
@@ -334,28 +394,14 @@
   .mag-cover__name { grid-row: 4; justify-self: start; text-align: left; }
   .mag-cover__lines { grid-row: 5; }
   .mag-cover__sticker { width: 6rem; bottom: auto; top: 40vw; right: 1rem; }
-  .mag-contents { grid-template-columns: minmax(0, 1fr); }
-  .mag-contents__list a { grid-template-columns: 2.5rem 5rem minmax(0, 1fr); gap: .875rem; }
-  .mag-contents__list li:nth-last-child(-n+3) a { grid-template-columns: 2.5rem minmax(0, 1fr); }
+  .mag-cover__next { position: static; transform: none; justify-self: center; grid-column: 1; margin-top: 1rem; }
+  .mag-contents__side { gap: 1.5rem; }
+  .mag .mag-contents__spot { width: min(100%, 10rem); }
   .mag-contents__list a::before { font-size: 1.75rem; }
-  .mag-contents__thumb img { width: 5rem; height: 3.25rem; }
   .mag-contents__text { flex-direction: column; gap: .125rem; }
-  .mag-spread__sticker { width: 5.5rem; right: .5rem; top: -1.75rem; }
-  .mag-spread--bleed .mag-spread__sticker { top: -1.75rem; right: 1rem; }
-  .mag-spread__credits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .875rem 1rem; columns: auto; font-size: .8125rem; line-height: 1.6; }
-  .mag-spread__credit-role, .mag-spread__credit-name { display: block; }
-  .mag-spread__credit-name { font-weight: 700; }
-  .mag-spread__credit-name::before { content: none; }
-  .mag-spread { padding-block: 3rem; }
-  .mag-spread--left .mag-spread__text, .mag-spread--right .mag-spread__text { margin-top: 2rem; }
-  .mag-spread--bleed .mag-spread__quote { margin-block: 1.25rem 1rem; }
-  .mag-spread--bleed .mag-spread__body { margin-top: 0; }
-  .mag-gallery__head { grid-template-columns: minmax(0, 1fr); }
+  .mag-spread--bleed .mag-spread__credits { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .875rem 1rem; }
   .mag-gallery__grid { grid-template-columns: minmax(0, 1fr); }
-  .mag-tile, .mag-tile--0, .mag-tile:last-child:nth-child(odd),
-  .mag-tile--0:last-child, .mag-tile--2:last-child, .mag-tile--5:last-child,
-  .mag-tile--2:last-child:nth-child(even), .mag-tile--5:last-child:nth-child(even) { grid-column: span 1; }
-  .mag-gallery__head h2 { white-space: normal; }
+  .mag-tile, .mag-tile--0, .mag-tile--1, .mag-tile--5, .mag-tile--6, .mag-tile:last-child:nth-child(odd) { grid-column: span 1; }
   .mag-profile__facts { grid-template-columns: minmax(0, 1fr); }
 }
 
@@ -367,44 +413,32 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 /* ============================================================
  * 2 色刷りの挿絵（Codex で生成。白い紙の上に黒と青で刷った絵）
  * 白地の上では multiply で紙の白を消し、誌面に直接刷ったように見せる。
- * 青や黒の地の上では白い紙のまま「貼った写真」として置く（.mag-print）。
+ * 色の地の上では白い紙のまま「貼った紙」として置く（.mag-print。裏表紙の封筒だけ）。
  * ============================================================ */
 .mag-spot { mix-blend-mode: multiply; }
-.mag-print { margin: 0; background: #fff; padding: .5rem; box-shadow: 0 1rem 2rem rgb(0 0 0 / .25); transform: rotate(-2.5deg); }
+.mag-print { margin: 0; background: #fff; padding: .5rem; transform: rotate(-2.5deg); }
 .mag-print img { width: 100%; }
-
-
-/* 表紙の絵は誌名の上に重ね刷りする */
-/* 重ね刷りは figure 側に掛ける（figure が z-index を持つので、img に掛けても figure の中でしか混ざらない） */
-.mag-cover__photo { width: min(140%, 38rem); mix-blend-mode: multiply; }
-.mag-cover__next {
-  position: absolute; left: 50%; bottom: .75rem; transform: translateX(-50%); z-index: 4;
-  display: grid; justify-items: center; gap: .125rem; text-decoration: none; font-size: .875rem; font-weight: 700;
-}
-.mag-cover__next img { width: 1.75rem; mix-blend-mode: multiply; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
-
-/* 分類の印（小さなアイコン＋名前） */
-.mag-cat { display: inline-flex; align-items: center; gap: .375rem; margin-right: .75rem; font-weight: 700; color: var(--ink); white-space: nowrap; vertical-align: middle; }
-.mag-cat__icon { width: 1.75rem; height: 1.75rem; object-fit: contain; mix-blend-mode: multiply; }
-
-.mag-contents__side { display: grid; align-content: start; gap: 2rem; }
-/* 元絵の上下にある白紙を表示枠から外す。本そのものの大きさは保つ。 */
-.mag .mag-contents__spot { width: min(100%, 22rem); aspect-ratio: 900 / 720; object-fit: cover; }
-
-
-.mag-profile__art { width: min(100%, 30rem); margin-bottom: 2.5rem; }
-
-.mag-back { position: relative; }
-.mag-back__art { position: absolute; right: var(--gutter); top: clamp(3rem, 7vw, 6rem); width: min(28vw, 22rem); transform: rotate(4deg); }
+.mag-back__art { position: absolute; right: var(--gutter); top: var(--section-y); width: min(20vw, 17rem); transform: rotate(4deg); }
 
 @media (max-width: 960px) {
-  .mag-cover__photo { width: min(100%, 36rem); }
   .mag-back__art { position: static; width: min(70%, 18rem); margin-bottom: 2rem; }
 }
+
+/* 通常のウィンドウでも案内役がボタンに重ならないよう、指す側の余白を確保する。 */
+@media (min-width: 601px) and (max-width: 1100px) {
+  .mag-filter, .mag-spread__links { padding-right: 8.5rem; }
+}
 @media (max-width: 600px) {
-  .mag-cover__next { position: static; transform: none; justify-self: center; grid-column: 1; margin-top: 1rem; }
-  .mag-contents__side { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.5rem; }
-  .mag .mag-contents__spot { width: min(100%, 10rem); justify-self: end; }
+  /* 本文の幅は保ち、案内する操作部にだけ手の居場所を作る。 */
+  .mag-filter, .mag-spread__links { padding-right: 6rem; }
+  .mag-contents__list a { grid-template-columns: 2.5rem 3rem minmax(0, 1fr); column-gap: .625rem; padding-right: 5.75rem; }
+  .mag-contents__thumb img { width: 3rem; height: 2.5rem; }
+  .mag-contents__text { min-width: 0; align-items: flex-start; }
+  .mag-contents__name, .mag-contents__cat { max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+  .mag-contents__cat .mag-cat { white-space: normal; }
+  .mag-profile__resume { max-width: calc(100% - 4.5rem); }
+  .mag-back__email { max-width: calc(100% - 6rem); }
+  .mag-guide { min-height: 44px; touch-action: manipulation; }
 }
 
 /* ============================================================
@@ -418,42 +452,13 @@ html[data-motion="off"] .mag *, html[data-motion="off"] .mag *::before, html[dat
 .mag-sticker__face {
   position: absolute; inset: 0; display: grid; place-items: center; padding: 0 9cqi; border-radius: 50%;
   font-size: 13cqi; line-height: 1.25; white-space: pre-line; word-break: keep-all; text-align: center;
-  background: var(--sticker-bg, var(--cobalt)); color: var(--sticker-ink, #fff);
+  background: var(--sticker-bg, var(--ink)); color: var(--sticker-ink, #fff);
   backface-visibility: hidden; transition: transform .5s cubic-bezier(.22, 1, .36, 1);
 }
-.mag-sticker__face--back { transform: rotateY(180deg); background: var(--sticker-ink, #fff); color: var(--sticker-bg, var(--cobalt)); box-shadow: inset 0 0 0 3px var(--sticker-bg, var(--cobalt)); }
+.mag-sticker__face--back { transform: rotateY(180deg); background: var(--sticker-ink, #fff); color: var(--sticker-bg, var(--ink)); box-shadow: inset 0 0 0 3px var(--sticker-bg, var(--ink)); }
 .mag-sticker--flip[data-flipped] .mag-sticker__face--front { transform: rotateY(-180deg); }
 .mag-sticker--flip[data-flipped] .mag-sticker__face--back { transform: rotateY(0deg); }
 
-/* --- 作品のページの絞り込み ------------------------------------- */
-.mag-filter { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .75rem; }
-.mag-filter__chip {
-  display: inline-flex; align-items: baseline; gap: .375rem; min-height: 2.75rem; padding: .5rem 1rem;
-  border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
-  font: inherit; font-size: 1rem; font-weight: 900; cursor: pointer;
-  transition: background .2s, color .2s, transform .2s;
-}
-.mag-filter__chip:active { transform: translateY(1px); }
-.mag-filter__chip[aria-pressed="true"] { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
-.mag-filter__count { font-weight: 700; font-size: .875rem; opacity: .65; font-variant-numeric: tabular-nums; }
-.mag-filter { margin-bottom: 2.5rem; }
-
-/* 通常のウィンドウでも案内役がボタンに重ならないよう、指す側の余白を確保する。 */
-@media (min-width: 601px) and (max-width: 1100px) {
-  .mag-filter, .mag-spread__links { padding-right: 8.5rem; }
-}
-@media (max-width: 600px) {
-  /* 本文の幅は保ち、案内する操作部にだけ手の居場所を作る。 */
-  .mag-filter, .mag-spread__links { padding-right: 6rem; }
-  .mag-contents__list a { grid-template-columns: 2.5rem 3rem minmax(0, 1fr); gap: .625rem; padding-right: 5.75rem; }
-  .mag-contents__thumb img { width: 3rem; height: 2.5rem; }
-  .mag-contents__text { min-width: 0; align-items: flex-start; }
-  .mag-contents__name, .mag-contents__cat { max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
-  .mag-contents__cat .mag-cat { margin-right: 0; white-space: normal; }
-  .mag-profile__resume { max-width: calc(100% - 4.5rem); }
-  .mag-back__email { max-width: calc(100% - 6rem); }
-  .mag-guide { min-height: 44px; touch-action: manipulation; }
-}
 /* 絞り込んだあと、作品を順に差し込む */
 .mag-gallery__grid[data-filtered] .mag-tile { animation: mag-tile-in .45s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i, 0) * 40ms); }
 @keyframes mag-tile-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }
@@ -545,13 +550,12 @@ html[data-motion="off"] .mag-guide { display: none; }
 @media (hover: hover) and (pointer: fine) {
   .mag-contents__list a:hover img { transform: scale(1.08); }
   .mag-spread__photo a:hover img { transform: scale(1.03); }
-  .mag-tile__link:hover .mag-tile__photo img { transform: scale(1.05); }
+  .mag-tile__link:hover .mag-tile__photo img { transform: scale(1.04); }
   .mag-cover__next:hover img { transform: translateY(.375rem); }
   .mag-sticker--flip:hover { transform: rotate(-12deg) scale(1.06); }
-  .mag-filter__chip:hover { transform: translateY(-2px); }
+  .mag-filter__chip:hover { color: var(--cobalt); }
   /* 押した瞬間は沈む（後に書いて :hover より優先する） */
   .mag-sticker--flip:active { transform: rotate(-12deg) scale(.96); }
-  .mag-filter__chip:active { transform: translateY(1px); }
 }
 
 /* ============================================================
@@ -561,37 +565,27 @@ html[data-motion="off"] .mag-guide { display: none; }
 /* 刷る：もう 1 版の色。地の上で見えて、墨版と取り違えない色にする */
 .mag-cover__masthead { --plate: var(--ink); }
 .mag-spread { --plate: var(--spread-accent); }
-.mag-profile { --plate: var(--ink); }
-.mag-back { --plate: #fff; }
+.mag-profile { --plate: var(--cobalt); }
+.mag-back { --plate: var(--ink); }
 
-/* 貼る：見開きの写真。台紙・写真・斜めの 2 枚目は 1 枚の図版として一緒に貼られるので、
- * 図版（figure）が画面に入る量 1 本で順番を組む（台紙 → 写真 → 2 枚目） */
+/* 差し込む：見開きの写真は、断ち切る側の縁の外から紙面へ押し込まれる。
+ * 図版（figure）が画面に入る量 1 本で進める */
 .mag-spread__photo { view-timeline: --paste block; }
-.mag-spread--left .mag-spread__photo { --board-x: .75rem; --board-y: .75rem; }
-.mag-spread--right .mag-spread__photo { --board-x: -.75rem; --board-y: .75rem; --lift-x: .4rem; --lift-r: 1.5deg; }
-/* 全幅の写真は傾けない（画面の端に三角の隙間が出る）。真上から置く */
+.mag-spread--left .mag-spread__photo { --lift-x: -2.5rem; --lift-y: 0rem; --lift-r: 0deg; }
+.mag-spread--right .mag-spread__photo { --lift-x: 2.5rem; --lift-y: 0rem; --lift-r: 0deg; }
 .mag-spread--bleed .mag-spread__photo { --lift-x: 0rem; --lift-y: -1rem; --lift-r: 0deg; }
-.mag-spread__inset { --lift-x: .5rem; --lift-y: -1rem; --lift-r: 6deg; }
+/* 刷った線画は紙から浮かない */
+.mag-spread--printed .mag-spread__photo { --lift-x: 0rem; --lift-y: 0rem; --lift-r: 0deg; }
 .mag-print { --lift-r: -2deg; }
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    html[data-motion='on'] :is(.mag-spread--left, .mag-spread--right) .mag-spread__photo::before {
-      animation: appear-board cubic-bezier(.35, .1, .25, 1) both;
-      animation-timeline: --paste;
-      animation-range: cover 0vh cover 30vh;
-    }
     html[data-motion='on'] .mag-spread__photo > :is(a, img) {
       animation: appear-lift cubic-bezier(.35, .1, .25, 1) both;
       animation-timeline: --paste;
       animation-range: cover 5vh cover 45vh;
     }
-    html[data-motion='on'] .mag-spread__inset {
-      animation: appear-lift cubic-bezier(.35, .1, .25, 1) both;
-      animation-timeline: --paste;
-      animation-range: cover 20vh cover 55vh;
-    }
-    /* 白枠の挿絵（青と黒の地の上）。封筒が飛ぶあいだは、そちらの動きに譲る */
+    /* 白枠の挿絵（コバルトの地の上）。封筒が飛ぶあいだは、そちらの動きに譲る */
     html[data-motion='on'] .mag-print:not(.is-sent) {
       animation: appear-lift cubic-bezier(.35, .1, .25, 1) both;
       animation-timeline: view();

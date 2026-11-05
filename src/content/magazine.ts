@@ -3,6 +3,8 @@
 
 export type SpreadLayout = 'bleed' | 'left' | 'right';
 
+export type FeatureFact = string | { figure: string; label: string };
+
 export type FeatureSpread = {
     // works.ts の id
     workId: string;
@@ -14,14 +16,12 @@ export type FeatureSpread = {
     // 写真から取った誌面の色。地・文字・差し色。
     // accentText は差し色で小さな文字を書くときの色（差し色のままだと地の上で読めない作品だけ置く。WCAG の 4.5:1 を目安）
     theme: { paper: string; ink: string; accent: string; accentText?: string };
-    // 写真の上に貼るステッカー（事実だけを書く）
-    sticker?: string;
-    // ステッカーを押すと裏返って出る、もう 1 つの事実
-    stickerBack?: string;
-    // 斜めに貼る 2 枚目の写真
-    inset?: { src: string; alt: string };
-    // 本文の手前に並べる実績（受賞・評価・数字）。本文に埋もれさせず、拾い読みで目に入るようにする
-    facts?: string[];
+    // 図版の縦横比（画像の実寸に合わせて切らないようにする。省略すると 16 / 10）
+    photoRatio?: string;
+    // 白地の線画。写真として置かず、誌面の地に直接刷る（乗算）
+    printed?: boolean;
+    // 本文の手前に並べる実績（受賞・評価・数字）。数字は figure と label に分けると大きく組む
+    facts?: FeatureFact[];
 };
 
 export const issue = {
@@ -49,8 +49,6 @@ export const features: FeatureSpread[] = [
         pullQuote: '監視カメラに映る自分を見ながら、現実空間を歩く。',
         layout: 'bleed',
         theme: { paper: '#0c0a09', ink: '#efe9e1', accent: '#d3271c', accentText: '#ef4a3a' },
-        sticker: 'IVRC2026\n総合優勝',
-        stickerBack: 'DCEXPO\n11月に出展',
         facts: ['IVRC2026 総合優勝', 'DCEXPO賞', '日本VR学会大会 体験展示'],
     },
     {
@@ -58,50 +56,54 @@ export const features: FeatureSpread[] = [
         kicker: '研究　修士研究・進行中',
         pullQuote: '話さない手と、ボードゲームを遊ぶ。',
         layout: 'left',
+        photoRatio: '16 / 9',
         theme: { paper: '#ffffff', ink: '#121212', accent: '#2433ff' },
-        sticker: '進行中',
-        stickerBack: '修士研究',
     },
     {
         workId: 'ai-business-tools',
         kicker: '実務　長期インターン',
         pullQuote: '下書きは AI に、確かめるのは人が。',
         layout: 'right',
+        photoRatio: '3 / 2',
+        printed: true,
         theme: { paper: '#f4f5fb', ink: '#14163a', accent: '#2433ff' },
-        sticker: '長期\nインターン',
-        stickerBack: '要件定義\nから運用',
     },
     {
         workId: 'whiteout',
         kicker: 'ゲーム　unity1week「しろ」',
         pullQuote: '白いインクで、9 つの面を塗りつぶす。',
         layout: 'left',
+        photoRatio: '16 / 9',
         theme: { paper: '#111111', ink: '#ffffff', accent: '#ff5a1f' },
-        sticker: '楽しさ\n4.434/5',
-        stickerBack: '評価の高い\n作品に選出',
-        facts: ['楽しさ 4.434/5', 'X で 6 万回以上表示', 'unityroom 1.5 万回閲覧'],
+        facts: [
+            { figure: '4.434/5', label: '楽しさの評価' },
+            { figure: '6万回+', label: 'X での表示' },
+            { figure: '1.5万回', label: 'unityroom の閲覧' },
+        ],
     },
     {
         workId: 'couple-sync',
         kicker: 'アプリ　ふたりのための共有アプリ',
         pullQuote: 'ふたりの毎日を、ひとつの部屋に。',
         layout: 'right',
-        theme: { paper: '#f3c6c1', ink: '#3d2420', accent: '#ffffff', accentText: '#3d2420' },
-        inset: { src: '/images/works/couple-sync/00-room.png', alt: '猫のいる部屋から各機能を開く画面' },
+        // 地は画像の地色に合わせ、写真の四角が見えないようにする
+        theme: { paper: '#f4c2bd', ink: '#3d2420', accent: '#fff5dc', accentText: '#3d2420' },
     },
     {
         workId: 'cogni-storage',
         kicker: 'アプリ　研究ログ PWA',
         pullQuote: '読む・考える・書くを、一本の流れに。',
         layout: 'left',
-        theme: { paper: '#1a1512', ink: '#f0e6d6', accent: '#d8a35c' },
-        inset: { src: '/images/works/cogni-storage/02-ideas.png', alt: '思いつきをカードで育てる Ideas の画面' },
+        photoRatio: '5 / 3',
+        theme: { paper: '#120e0b', ink: '#f0e6d6', accent: '#d8a35c' },
     },
     {
         workId: 'intentlayer',
         kicker: '研究　卒業研究',
         pullQuote: '「いま話しかけてよいか」を、空間に置く。',
         layout: 'right',
+        photoRatio: '654 / 400',
+        printed: true,
         theme: { paper: '#ffffff', ink: '#121212', accent: '#2433ff' },
     },
 ];

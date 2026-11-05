@@ -72,14 +72,19 @@ function Contents({ gallery }: { gallery: Work[] }) {
                     </li>
                 ))}
                 <li><a href="#gallery"><span className="mag-contents__text"><span className="mag-contents__name">作品のページ</span><span className="mag-contents__cat">{gallery.length} 点</span></span></a></li>
-                <li><a href="#profile"><span className="mag-contents__text"><span className="mag-contents__name">{profile.title}</span><span className="mag-contents__cat">経歴と技術</span></span></a></li>
+                <li><a href="#profile"><span className="mag-contents__text"><span className="mag-contents__name mag-tight">{profile.title}</span><span className="mag-contents__cat">経歴と技術</span></span></a></li>
                 <li><a href="#contact"><span className="mag-contents__text"><span className="mag-contents__name">連絡先</span><span className="mag-contents__cat">裏表紙</span></span></a></li>
             </ol>
         </section>
     );
 }
 
-function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
+// 節の番号。目次の番号と同じで、読んでいる場所がどの行かを示す
+function SectionNumber({ n }: { n: number }) {
+    return <span className="mag-no" aria-hidden="true">{String(n).padStart(2, '0')}</span>;
+}
+
+function Spread({ spread, work, number }: { spread: FeatureSpread; work: Work; number: number }) {
     const { main, sub } = splitTitle(work.title);
     const href = workHref(work);
     const bleed = spread.layout === 'bleed';
@@ -101,6 +106,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
         '--spread-ink': spread.theme.ink,
         '--spread-accent': spread.theme.accent,
         '--spread-accent-text': spread.theme.accentText ?? spread.theme.accent,
+        '--photo-ratio': spread.photoRatio,
     } as CSSProperties;
 
     const photo = (
@@ -115,32 +121,28 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
     );
 
     return (
-        <article id={'feature-' + work.id} className={'mag-spread mag-spread--' + spread.layout} style={style} aria-labelledby={'title-' + work.id}>
+        <article id={'feature-' + work.id} className={'mag-spread mag-spread--' + spread.layout + (spread.printed ? ' mag-spread--printed' : '')} style={style} aria-labelledby={'title-' + work.id}>
             <figure className="mag-spread__photo">
                 {/* 写真のリンクは下の「詳細」と同じ行き先。キーボードと読み上げでは 2 回出さない */}
                 {href ? <SmartLink href={href} hidden>{photo}</SmartLink> : photo}
-                {spread.sticker && <Sticker front={spread.sticker} back={spread.stickerBack} className="mag-spread__sticker" />}
-                {spread.inset && (
-                    <span className="mag-spread__inset">
-                        <Image src={spread.inset.src} alt={spread.inset.alt} width={402} height={880} sizes="200px" />
-                    </span>
-                )}
             </figure>
             <div className="mag-spread__text">
-                <p className="mag-spread__kicker">{spread.kicker}</p>
+                <p className="mag-spread__kicker"><SectionNumber n={number} />{spread.kicker}</p>
                 <h3 id={'title-' + work.id} className={'mag-spread__title ' + titleClass(main)} data-plate={main}>
                     {main}
                     {sub && <span className="mag-spread__sub">{sub}</span>}
                 </h3>
-                {/* 全幅の見開きでは、引用・実績・クレジットを左の列にまとめる（本文とリンクは右の列） */}
+                {/* 全幅の見開きでは、引用と実績を左の列にまとめる（本文とリンクは右の列） */}
                 <div className="mag-spread__aside">
                     <p className="mag-spread__quote">{spread.pullQuote}</p>
                     {spread.facts && (
-                        <ul className="mag-spread__facts" aria-label="実績">
-                            {spread.facts.map((fact) => <li key={fact}>{fact}</li>)}
+                        <ul className={'mag-spread__facts' + (spread.facts.some((f) => typeof f !== 'string') ? ' is-figures' : '')} aria-label="実績">
+                            {spread.facts.map((fact) => (typeof fact === 'string'
+                                ? <li key={fact}>{fact}</li>
+                                : <li key={fact.label}><span className="mag-spread__figure">{fact.figure}</span>{fact.label}</li>
+                            ))}
                         </ul>
                     )}
-                    {bleed && credits}
                 </div>
                 <p className="mag-spread__body">{work.description}</p>
                 <p className="mag-spread__meta">{[work.period, work.role].filter(Boolean).join('　')}</p>
@@ -154,7 +156,7 @@ function Spread({ spread, work }: { spread: FeatureSpread; work: Work }) {
                         <SmartLink key={link.url} href={link.url} arrow>{linkLabel(link)}</SmartLink>
                     ))}
                 </div>
-                {!bleed && credits}
+                {credits}
             </div>
         </article>
     );
@@ -164,7 +166,7 @@ function Gallery({ items }: { items: Work[] }) {
     return (
         <section id="gallery" className="mag-gallery" aria-labelledby="gallery-title" data-rule>
             <header className="mag-gallery__head">
-                <h2 id="gallery-title" data-plate="作品のページ">作品のページ</h2>
+                <h2 id="gallery-title"><SectionNumber n={features.length + 1} /><span data-plate="作品のページ">作品のページ</span></h2>
                 <p>映像・3D・サウンド・コードで作った作品です。</p>
             </header>
             <GalleryGrid items={items} />
@@ -174,16 +176,14 @@ function Gallery({ items }: { items: Work[] }) {
 
 function Profile() {
     return (
-        <section id="profile" className="mag-profile" aria-labelledby="profile-title">
+        <section id="profile" className="mag-profile" aria-labelledby="profile-title" data-rule>
             <div className="mag-profile__head">
-                <figure className="mag-print mag-profile__art">
-                    <Image src={art.profile.src} alt={art.profile.alt} width={art.profile.width} height={art.profile.height} sizes="(max-width: 960px) 90vw, 40vw" />
-                </figure>
-                <h2 id="profile-title" data-plate={profile.title}>{profile.title}</h2>
+                <h2 id="profile-title"><SectionNumber n={features.length + 2} /><span className="mag-tight" data-plate={profile.title}>{profile.title}</span></h2>
                 <p className="mag-profile__name">
                     <span lang="ja">白石 大晴</span>
                     <span lang="en">Taisei Shiroishi</span>
                 </p>
+                <Image src={art.profile.src} alt={art.profile.alt} width={art.profile.width} height={art.profile.height} sizes="(max-width: 960px) 90vw, 36vw" className="mag-spot mag-profile__art" />
             </div>
             <div className="mag-profile__text">
                 {aboutData.bio.map((paragraph) => <p key={paragraph} className="mag-profile__bio">{paragraph}</p>)}
@@ -212,9 +212,9 @@ export default function Magazine() {
                 <Cover />
                 <Contents gallery={gallery} />
                 <div id="features">
-                    {features.map((spread) => {
+                    {features.map((spread, index) => {
                         const work = works.find((w) => w.id === spread.workId);
-                        return work ? <Spread key={spread.workId} spread={spread} work={work} /> : null;
+                        return work ? <Spread key={spread.workId} spread={spread} work={work} number={index + 1} /> : null;
                     })}
                 </div>
                 <Gallery items={gallery} />
