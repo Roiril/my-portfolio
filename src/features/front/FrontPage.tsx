@@ -82,7 +82,8 @@ export default function FrontPage() {
           <p className="award">IVRC2026<br />総合優勝<br />DCEXPO賞</p>
           <ul>
             <li>第31回日本VR学会大会で体験展示</li>
-            <li>2026年11月 DCEXPO2026 で展示予定</li>
+            <li>2026年11月18〜20日 DCEXPO2026 で招待展示予定</li>
+            <li>2026年11月19日 Inter BEE で登壇予定</li>
           </ul>
         </div>
         <div className="m-r">
@@ -188,7 +189,7 @@ export default function FrontPage() {
           <h2>couple-sync</h2>
           <p className="say">ふたりの毎日を、ひとつの部屋に。</p>
           <p className="txt">離れて暮らすふたりのために開発した共有アプリです。予定や日々の記録を猫のいる部屋から開けます。</p>
-          <p className="kick">2026.03 –　単独（企画・設計・実装）</p>
+          <p className="kick">2026.03 –　個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。</p>
           <p className="links"><Link className="link" href="/works/couple-sync">詳しく見る</Link><a className="link" href="/demos/couple-sync/index.html">アプリのデモを見る</a></p>
         </div>
         <div className="shelf">
@@ -206,7 +207,7 @@ export default function FrontPage() {
           <h2>cogni-storage</h2>
           <p className="say">読む・考える・書くを、一本の流れに。</p>
           <p className="txt">研究のアイデア、論文、文献をまとめて管理する自分用の研究ログアプリです。オフラインでも使え、端末間で同期します。</p>
-          <p className="kick">2026.03 –　単独（企画・設計・実装）</p>
+          <p className="kick">2026.03 –　個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。</p>
           <p className="links"><Link className="link" href="/works/cogni-storage">詳しく見る</Link><a className="link" href="/demos/cogni-storage/index.html">アプリのデモを見る</a></p>
         </div>
       </div>
