@@ -357,13 +357,13 @@
 
   /* ───── 動き ───── */
   main { overflow-x: clip; }
-  /* 押せるのは名前の字の幅だけ。余白に触れても選ばれない */
+  /* 押せるのは名前の字の幅だけ */
   .name { cursor: pointer; width: fit-content; }
   .lab .name { margin-left: auto; }
 
-  /* 入口。線と面の位置は動かさない。動くのは最初の 1 回と、選んだときの 3 状態だけ */
+  /* 入口。線と面の位置は動かさない。動くのは最初の 1 回と、スクロールで伸びる線だけ。ホバーには反応しない */
   /* 最初の画は夜 1 面。線を引き、線から左右へ開く。最後の画は動きを止めた組みと同じ */
-  .door-face { --line-time: .3s; --open-delay: .32s; --open-time: .82s; --open-ease: cubic-bezier(.65, 0, .15, 1); --settle: cubic-bezier(.16, 1, .3, 1); }
+  .door-face { --line-time: .3s; --open-delay: .32s; --open-time: .82s; --open-ease: cubic-bezier(.65, 0, .15, 1); }
   .door-face::before { content: ""; position: absolute; inset: 0 50% 0 0; background: var(--paper); animation: front-open-l var(--open-time) var(--open-ease) var(--open-delay) backwards; }
   .door-face::after { content: ""; position: absolute; top: 0; bottom: 0; left: calc(50% - 2px); width: 2px; background: var(--paper); transform-origin: top; animation: front-draw var(--line-time) cubic-bezier(.65, 0, .35, 1) backwards; }
   .stage { z-index: 1; }
@@ -371,17 +371,8 @@
   .stu { animation: front-open-r var(--open-time) var(--open-ease) var(--open-delay) backwards; }
   .chrome nav { animation: front-cut 1ms linear .86s backwards; }
 
-  /* 選ぶ。待機、こちらを選ぶ、向こうを選ぶの 3 状態だけで、指の位置には追従しない */
-  .door { position: relative; overflow: hidden; }
-  .door::before { content: ""; position: absolute; z-index: 1; inset: 0 0 auto 0; height: calc(5 * var(--h)); background: var(--red); transform: scaleX(0); transition: transform .2s cubic-bezier(.4, 0, 1, 1); }
-  .lab .door::before { transform-origin: right; }
-  .stu .door::before { transform-origin: left; }
-  .block > * { transition: opacity .16s linear; }
-  @media (hover: hover) {
-    .side:has(.door:hover, .name:hover) .door::before, .door:focus-visible::before { transform: scaleX(1); transition: transform .42s var(--settle); }
-    .door-face:has(.lab .door:hover, .lab .name:hover, .lab .door:focus-visible) .stu .block > *,
-    .door-face:has(.stu .door:hover, .stu .name:hover, .stu .door:focus-visible) .lab .block > * { opacity: .45; transition: opacity .24s linear .06s; }
-  }
+  /* スクロールで中央に伸びる線。長さはスクロール量だけで決まり、時間の補間を持たない */
+  .door-rule { position: absolute; z-index: 2; top: 0; bottom: 0; left: calc(50% - 1.5px); width: 3px; background: var(--red); transform: scaleY(0); transform-origin: top; pointer-events: none; }
 
   /* 手 */
   .hand-cells { position: absolute; left: calc(110 * var(--u)); top: calc(340 * var(--u)); width: calc(1240 * var(--u)); max-width: none; height: auto; pointer-events: none; overflow: visible; }
@@ -430,7 +421,7 @@
     /* 入口のスマホ：名前の行だけ線から開き、下の 2 面は上から順に降りる */
     .lab, .stu { animation: none; }
     .door-face::before { display: none; }
-    .door-face::after { bottom: auto; height: calc(140 * var(--h)); }
+    .door-face::after, .door-rule { bottom: auto; height: calc(140 * var(--h)); }
     .head.l { animation: front-open-l var(--open-time) var(--open-ease) var(--open-delay) backwards; }
     .head.r { animation: front-open-r var(--open-time) var(--open-ease) var(--open-delay) backwards; }
     .block.l { animation: front-wipe-down .62s var(--open-ease) .62s backwards; }

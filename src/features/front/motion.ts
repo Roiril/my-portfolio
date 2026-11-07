@@ -141,7 +141,7 @@ export function startFrontMotion(): () => void {
     if (!past || Math.abs(dy) > 6) lastScrollY = scrollY;
   }
 
-  // ───── 入口：開く動きは CSS が 1 回だけ行う。ここでは名前の行き先と、開いた記録だけを持つ ─────
+  // ───── 入口：開く動きは CSS が 1 回だけ行う。ここでは名前の行き先と、開いた記録と、スクロールで伸びる線を持つ ─────
   all<HTMLElement>('.door-face .name').forEach((el, i) => {
     el.addEventListener('click', () => {
       document.getElementById(i === 0 ? 'research' : 'mawarimi')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
@@ -150,6 +150,13 @@ export function startFrontMotion(): () => void {
   // 作品ページから戻ったときは開き直さない
   const opening = document.getAnimations().filter((a) => a instanceof CSSAnimation && /^front-(open|draw|wipe|cut)/.test(a.animationName));
   void Promise.allSettled(opening.map((a) => a.finished)).then(() => { root.dataset.doorSeen = '1'; });
+
+  // 線の先は画面の上端から下へ、スクロールと同じ速さで進む。入口の下端に届いたら伸びきって、あとは入口と一緒に流れる
+  const doorRule = need<HTMLElement>('.door-rule');
+  function doorScroll() {
+    const length = doorRule.offsetHeight;
+    doorRule.style.transform = `scaleY(${length ? clamp((scrollY * 2) / length, 0, 1).toFixed(4) : 0})`;
+  }
 
   // ───── 手：盤のマスを指すと駒を運び、押すと合図する ─────
   const handFace = need<HTMLElement>('.hand-face');
@@ -690,6 +697,7 @@ export function startFrontMotion(): () => void {
     ticking = false;
     tone();
     if (reduce) return;
+    doorScroll();
     handScroll();
     worldScroll();
     camScroll();

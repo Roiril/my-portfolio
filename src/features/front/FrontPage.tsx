@@ -44,6 +44,7 @@ export default function FrontPage() {
           </div>
         </div>
       </div>
+      <i className="door-rule" aria-hidden="true" />
     </section>
     <script dangerouslySetInnerHTML={{ __html: HOLD_DOOR_FOR_FONTS }} />
 
