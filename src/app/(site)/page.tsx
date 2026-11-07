@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Magazine } from '@/features/magazine';
+import { FrontPage } from '@/features/front';
 
 // canonical はページごとに置く（layout に置くと、詳細ページまでトップを指してしまう）
 export const metadata: Metadata = {
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <Magazine />;
+  return <FrontPage />;
 }

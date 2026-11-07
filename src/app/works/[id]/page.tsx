@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { works } from '@/content/works';
 import { features } from '@/content/magazine';
+import { frontHrefOfWork } from '@/features/front';
 import { hasDetailPage } from '@/features/works';
 import Footer from '@/components/layout/Footer';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -69,10 +70,8 @@ export default async function WorkDetailPage({ params }: { params: Promise<Param
     // 詳細ページの差し色は小さな番号や副題に使うので、文字用の色（accentText）があればそちらを使う
     const base: CaseTheme & { accentText?: string } = feature?.theme ?? ART[id] ?? DEFAULT_THEME;
     const theme: CaseTheme = { paper: base.paper, ink: base.ink, accent: base.accentText ?? base.accent };
-    // 特集の作品は見開きへ、そのほかは作品のページのその作品の位置へ戻す
-    const back: CaseBack = feature
-        ? { href: '/#feature-' + id, label: '特集へ戻る' }
-        : { href: '/#work-' + id, label: '作品のページへ戻る' };
+    // トップの、その作品が載っている面へ戻す
+    const back: CaseBack = { href: frontHrefOfWork(id), label: 'トップへ戻る' };
     return (
         <>
             <SiteHeader />

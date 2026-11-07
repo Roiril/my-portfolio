@@ -1,6 +1,6 @@
 # 白石大晴 ポートフォリオ
 
-研究と制作の作品をまとめたWebサイトです。雑誌の誌面のような組みで作品を並べ、作品ごとに技術を説明する詳細ページを置いています。
+研究と制作の作品をまとめたWebサイトです。トップは面ごとに組みを変え、作品ごとに技術を説明する詳細ページを置いています。
 
 - 公開URL：https://my-portfolio-ruby-delta-87.vercel.app/
 - 作者：白石大晴（GitHub: Roiril）
@@ -9,7 +9,7 @@
 
 | ページ | 内容 |
 |---|---|
-| [トップ](https://my-portfolio-ruby-delta-87.vercel.app/) | 18件の作品を、研究・個人開発などの種類で絞り込めます |
+| [トップ](https://my-portfolio-ruby-delta-87.vercel.app/) | 手の研究、廻リ視、WhiteOut、ほかの研究と業務、アプリ、小さな作品の順に載せています。面ごとにスクロールと触ったときの動きが違います |
 | [廻リ視の詳細](https://my-portfolio-ruby-delta-87.vercel.app/works/mawarimi) | IVRC 2026で総合優勝したVR作品です。構成図・処理の流れ・工夫した点・トレイラーを載せています |
 | [couple-syncのデモ](https://my-portfolio-ruby-delta-87.vercel.app/demos/couple-sync/index.html) | 離れて暮らすふたりのための共有アプリです。ブラウザでそのまま触れます |
 | [cogni-storageのデモ](https://my-portfolio-ruby-delta-87.vercel.app/demos/cogni-storage/index.html) | 読書とリサーチを管理する研究ログアプリです。画面を操作できます |
@@ -23,10 +23,10 @@
 
 ## 工夫したところ
 
-- **作品の情報を1か所にまとめる。** 作品の説明・技術の説明・構成図は [`src/content/`](src/content/) にデータとして置いています。一覧と詳細ページは同じデータから作るので、作品を足しても表示がずれません
+- **詳細ページの情報を1か所にまとめる。** 作品の説明・技術の説明・構成図は [`src/content/`](src/content/) にデータとして置いています。トップの文面と配置は面ごとに [`src/features/front/`](src/features/front/) で組んでいます
 - **詳細ページを静的に生成する。** 作品ごとのページはビルド時に生成します（[`src/app/works/[id]/page.tsx`](src/app/works/%5Bid%5D/page.tsx)）
 - **デモから個人情報を除く。** 公開しているデモは、実際のアプリから匿名化したデータで作り直しています。公開前に [`scripts/check-demo-privacy.mjs`](scripts/check-demo-privacy.mjs) が、鍵や個人名が残っていないかを検査します
-- **動きを減らす設定に合わせる。** OSで動きを減らす設定にしている人には、スクロールに合わせた動きを止めて表示します。狭い画面や横向きでも表示が崩れないことを確認しています（[`docs/motion-verification.md`](docs/motion-verification.md)）
+- **動きが無くても読める。** トップの動きは [`src/features/front/motion.ts`](src/features/front/motion.ts) が後から足します。OSで動きを減らす設定にしている人にはスクロールの動きと動画の再生を止め、JavaScriptが無くても全文を読めます（[`docs/motion-verification.md`](docs/motion-verification.md)）
 
 ## コードの場所
 
@@ -34,7 +34,7 @@
 |---|---|
 | [`src/app/`](src/app/) | ページ（トップ・作品の詳細・履歴書） |
 | [`src/content/`](src/content/) | 作品のデータ |
-| [`src/features/`](src/features/) | 誌面の組み、作品一覧、自己紹介などの部品 |
+| [`src/features/`](src/features/) | トップページ（`front`）、作品の詳細ページなどの部品 |
 | [`src/components/`](src/components/) | ヘッダー、フッター、スクロールの動き |
 | [`scripts/`](scripts/) | デモの書き出しと検査 |
 | [`public/demos/`](public/demos/) | 公開しているデモ |
