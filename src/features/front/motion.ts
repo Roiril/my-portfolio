@@ -141,44 +141,15 @@ export function startFrontMotion(): () => void {
     if (!past || Math.abs(dy) > 6) lastScrollY = scrollY;
   }
 
-  // ───── 入口：線が指す側へ開き、読み進めると左右がずれて割れる ─────
-  const door = need<HTMLElement>('.door-face');
-  const lab = need<HTMLElement>('.lab');
-  const stu = need<HTMLElement>('.stu');
-  const names = all<HTMLElement>('.door-face .name');
-  const setDoor = chaser((v) => door.style.setProperty('--d', `${v}px`));
-  if (!touch) {
-    door.addEventListener('pointermove', (e) => {
-      const h = Math.min(vw / 1440, vh / 900);
-      setDoor((0.5 - e.clientX / vw) * 2 * 96 * h);
-    }, { signal });
-    door.addEventListener('pointerleave', () => setDoor(0), { signal });
-  }
-  names.forEach((el, i) => {
+  // ───── 入口：開く動きは CSS が 1 回だけ行う。ここでは名前の行き先と、開いた記録だけを持つ ─────
+  all<HTMLElement>('.door-face .name').forEach((el, i) => {
     el.addEventListener('click', () => {
-      setDoor((i === 0 ? 1 : -1) * vw * (mobile ? 0.12 : 0.07));
-      later(() => {
-        document.getElementById(i === 0 ? 'research' : 'mawarimi')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-        setDoor(0);
-      }, 260);
+      document.getElementById(i === 0 ? 'research' : 'mawarimi')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     }, { signal });
   });
-  function doorScroll() {
-    const r = door.getBoundingClientRect();
-    if (r.bottom < 0) return;
-    const p = clamp(-r.top / r.height, 0, 1);
-    if (mobile) {
-      lab.style.translate = '';
-      stu.style.translate = '';
-      names[0].style.translate = `${-p * vw * 0.34}px 0`;
-      names[1].style.translate = `${p * vw * 0.34}px 0`;
-    } else {
-      names[0].style.translate = '';
-      names[1].style.translate = '';
-      lab.style.translate = `0 ${-p * r.height * 0.2}px`;
-      stu.style.translate = `0 ${p * r.height * 0.2}px`;
-    }
-  }
+  // 作品ページから戻ったときは開き直さない
+  const opening = document.getAnimations().filter((a) => a instanceof CSSAnimation && /^front-(open|draw|wipe|cut)/.test(a.animationName));
+  void Promise.allSettled(opening.map((a) => a.finished)).then(() => { root.dataset.doorSeen = '1'; });
 
   // ───── 手：盤のマスを指すと駒を運び、押すと合図する ─────
   const handFace = need<HTMLElement>('.hand-face');
@@ -698,7 +669,7 @@ export function startFrontMotion(): () => void {
     });
   }
 
-  // ───── プロフィール：入口で割った名前が中央の線で合う ─────
+  // ───── プロフィール：入口と同じ名前が、中央の線で合う ─────
   const closing = need<HTMLElement>('.closing');
   const leftName = need<HTMLElement>('.cl h2');
   const rightName = need<HTMLElement>('.cr h2');
@@ -719,7 +690,6 @@ export function startFrontMotion(): () => void {
     ticking = false;
     tone();
     if (reduce) return;
-    doorScroll();
     handScroll();
     worldScroll();
     camScroll();

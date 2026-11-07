@@ -44,8 +44,8 @@
   .chrome nav a:hover { text-decoration: underline; text-underline-offset: .3em; }
 
   /* ───── 入口。選ばれた b2 の組みをそのまま使う ───── */
-  .door-face { --h: min(calc(100vw / 1440), calc(100svh / 900)); --d: 0px; position: relative; height: 100svh; min-height: calc(560 * var(--h)); background: linear-gradient(to right, var(--paper) calc(50% + var(--d)), var(--night) calc(50% + var(--d))); overflow: hidden; }
-  .stage { position: absolute; left: 50%; top: 50%; width: calc(1440 * var(--h)); height: calc(900 * var(--h)); transform: translate(-50%, -50%); display: grid; grid-template-columns: calc(50% + var(--d)) calc(50% - var(--d)); }
+  .door-face { --h: min(calc(100vw / 1440), calc(100svh / 900)); position: relative; height: 100svh; min-height: calc(560 * var(--h)); background: var(--night); overflow: hidden; }
+  .stage { position: absolute; left: 50%; top: 50%; width: calc(1440 * var(--h)); height: calc(900 * var(--h)); transform: translate(-50%, -50%); display: grid; grid-template-columns: 50% 50%; }
   .side { position: relative; display: flex; flex-direction: column; min-width: 0; }
   .lab { background: var(--paper); color: var(--ink); text-align: right; }
   .stu { background: var(--night); color: var(--light); }
@@ -64,8 +64,7 @@
   .cap em { display: block; font-style: normal; color: var(--red); font-weight: 500; font-size: calc(19 * var(--h)); line-height: 1.5; }
   .cap span { opacity: .72; }
   .door { display: block; margin-top: auto; }
-  .shot { display: block; width: 100%; height: calc(405 * var(--h)); object-fit: cover; transition: opacity .2s; }
-  .door:hover .shot { opacity: .86; }
+  .shot { display: block; width: 100%; height: calc(405 * var(--h)); object-fit: cover; }
 
   /* ───── Play with a Hand：巨大な 1 字の上に手が重なる ───── */
   .hand-face { position: relative; background: var(--paper); height: calc(1310 * var(--u)); overflow: hidden; }
@@ -227,7 +226,7 @@
     .chrome .wide-only { display: none; }
 
     .door-face { --h: calc(100vw / 375); height: auto; min-height: 100svh; background: var(--night); }
-    .stage { position: relative; left: 0; top: 0; transform: none; width: 100%; height: auto; min-height: 100svh; grid-template-columns: calc(50% + var(--d)) calc(50% - var(--d)); grid-template-rows: auto auto 1fr; }
+    .stage { position: relative; left: 0; top: 0; transform: none; width: 100%; height: auto; min-height: 100svh; grid-template-rows: auto auto 1fr; }
     .side { display: contents; }
     .head { padding: calc(52 * var(--h)) 0 calc(12 * var(--h)); }
     .head.l { grid-column: 1; grid-row: 1; background: var(--paper); color: var(--ink); text-align: right; }
@@ -358,10 +357,31 @@
 
   /* ───── 動き ───── */
   main { overflow-x: clip; }
-  .name { cursor: pointer; }
-  .shot { transition: opacity .2s, scale .5s cubic-bezier(.3, .7, .2, 1); }
-  .door { overflow: hidden; }
-  .door:hover .shot { opacity: 1; scale: 1.03; }
+  /* 押せるのは名前の字の幅だけ。余白に触れても選ばれない */
+  .name { cursor: pointer; width: fit-content; }
+  .lab .name { margin-left: auto; }
+
+  /* 入口。線と面の位置は動かさない。動くのは最初の 1 回と、選んだときの 3 状態だけ */
+  /* 最初の画は夜 1 面。線を引き、線から左右へ開く。最後の画は動きを止めた組みと同じ */
+  .door-face { --line-time: .3s; --open-delay: .32s; --open-time: .82s; --open-ease: cubic-bezier(.65, 0, .15, 1); --settle: cubic-bezier(.16, 1, .3, 1); }
+  .door-face::before { content: ""; position: absolute; inset: 0 50% 0 0; background: var(--paper); animation: front-open-l var(--open-time) var(--open-ease) var(--open-delay) backwards; }
+  .door-face::after { content: ""; position: absolute; top: 0; bottom: 0; left: calc(50% - 2px); width: 2px; background: var(--paper); transform-origin: top; animation: front-draw var(--line-time) cubic-bezier(.65, 0, .35, 1) backwards; }
+  .stage { z-index: 1; }
+  .lab { animation: front-open-l var(--open-time) var(--open-ease) var(--open-delay) backwards; }
+  .stu { animation: front-open-r var(--open-time) var(--open-ease) var(--open-delay) backwards; }
+  .chrome nav { animation: front-cut 1ms linear .86s backwards; }
+
+  /* 選ぶ。待機、こちらを選ぶ、向こうを選ぶの 3 状態だけで、指の位置には追従しない */
+  .door { position: relative; overflow: hidden; }
+  .door::before { content: ""; position: absolute; z-index: 1; inset: 0 0 auto 0; height: calc(5 * var(--h)); background: var(--red); transform: scaleX(0); transition: transform .2s cubic-bezier(.4, 0, 1, 1); }
+  .lab .door::before { transform-origin: right; }
+  .stu .door::before { transform-origin: left; }
+  .block > * { transition: opacity .16s linear; }
+  @media (hover: hover) {
+    .side:has(.door:hover, .name:hover) .door::before, .door:focus-visible::before { transform: scaleX(1); transition: transform .42s var(--settle); }
+    .door-face:has(.lab .door:hover, .lab .name:hover, .lab .door:focus-visible) .stu .block > *,
+    .door-face:has(.stu .door:hover, .stu .name:hover, .stu .door:focus-visible) .lab .block > * { opacity: .45; transition: opacity .24s linear .06s; }
+  }
 
   /* 手 */
   .hand-cells { position: absolute; left: calc(110 * var(--u)); top: calc(340 * var(--u)); width: calc(1240 * var(--u)); max-width: none; height: auto; pointer-events: none; overflow: visible; }
@@ -407,6 +427,14 @@
   .apps.on-b .p4 { transform: translateY(calc(-78 * var(--u))); }
 
   @media (max-width: 760px) {
+    /* 入口のスマホ：名前の行だけ線から開き、下の 2 面は上から順に降りる */
+    .lab, .stu { animation: none; }
+    .door-face::before { display: none; }
+    .door-face::after { bottom: auto; height: calc(140 * var(--h)); }
+    .head.l { animation: front-open-l var(--open-time) var(--open-ease) var(--open-delay) backwards; }
+    .head.r { animation: front-open-r var(--open-time) var(--open-ease) var(--open-delay) backwards; }
+    .block.l { animation: front-wipe-down .62s var(--open-ease) .62s backwards; }
+    .block.r { animation: front-wipe-down .62s var(--open-ease) .74s backwards; }
     .hand-cells { left: calc(-6 * var(--u)); top: calc(118 * var(--u)); width: calc(420 * var(--u)); }
     .hand-hint { position: static; width: auto; padding: 10px 18px 12px; }
     .wo-meter { display: block; margin: 2px 0 0; }
@@ -426,6 +454,16 @@
 body:has(.front) { background: #0b0908; }
 /* トップには作品ページの固定ナビが無いので、着地を上端に揃える */
 html:has(.front) { scroll-padding-top: 0; }
+
+@keyframes front-open-l { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
+@keyframes front-open-r { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes front-wipe-down { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes front-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes front-cut { from { visibility: hidden; } to { visibility: visible; } }
+/* 名前の書体を待つあいだは、線だけの画で止める。線そのものは止めない */
+html[data-door-wait] .front .door-face::before, html[data-door-wait] .front .stage *, html[data-door-wait] .front .chrome nav { animation-play-state: paused; }
+/* 開くのは 1 回だけ。作品ページから戻ったときは最後の画から始める */
+html[data-door-seen] .front .door-face::before, html[data-door-seen] .front .door-face::after, html[data-door-seen] .front .stage *, html[data-door-seen] .front .chrome nav { animation: none; }
 
 @keyframes front-hop {
   0%, 100% { transform: translateY(0) scale(1, 1); }

@@ -4,6 +4,10 @@ import FrontMotion from './FrontMotion';
 import { frontFonts } from './fonts';
 import './front.css';
 
+// 開いたあとに名前の書体が差し替わると、最後の画が跳ねる。名前の書体が来るまで線の画で待つ。
+// 待つのは 1.2 秒まで。そこで来なければ開く
+const HOLD_DOOR_FOR_FONTS = `try{var r=document.documentElement,go=function(){delete r.dataset.doorWait};r.dataset.doorWait='1';Promise.race([Promise.all([].map.call(document.querySelectorAll('.door-face .name'),function(e){var c=getComputedStyle(e);return document.fonts.load(c.fontWeight+' 1em '+c.fontFamily,e.textContent)})),new Promise(function(f){setTimeout(f,1200)})]).then(go,go)}catch(e){delete document.documentElement.dataset.doorWait}`;
+
 // トップページ。面ごとに型を変え、中央の線と赤 1 色で揃える。
 // 動きは FrontMotion が後から足す。JS が無くても全文が読める
 export default function FrontPage() {
@@ -41,6 +45,7 @@ export default function FrontPage() {
         </div>
       </div>
     </section>
+    <script dangerouslySetInnerHTML={{ __html: HOLD_DOOR_FOR_FONTS }} />
 
     <section className="hand-face" id="research" data-l="ink" data-r="ink" data-face="lab" aria-labelledby="hand-title">
       <div className="hand-pic">
