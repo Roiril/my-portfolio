@@ -183,7 +183,11 @@
   .p2 { left: calc(608 * var(--u)); top: calc(544 * var(--u)); }
   .p3 { left: calc(608 * var(--u)); top: calc(30 * var(--u)); }
   .p4 { left: calc(844 * var(--u)); top: calc(186 * var(--u)); }
-  .kitten { position: absolute; width: calc(178 * var(--u)); left: calc(462 * var(--u)); top: calc(770 * var(--u)); z-index: 2; }
+  .kitten { position: absolute; display: block; width: calc(210.8 * var(--u)); aspect-ratio: 379 / 394; left: calc(443.8 * var(--u)); top: calc(750.7 * var(--u)); z-index: 2; }
+  .kitten img { display: block; width: 100%; height: 100%; }
+  .kitten-frames { position: absolute; inset: 0; background-size: 800% 400%; background-repeat: no-repeat; visibility: hidden; }
+  .kitten.is-ready img { visibility: hidden; }
+  .kitten.is-ready .kitten-frames { visibility: visible; }
 
   /* ───── 小さな作品：同じ規則の一覧 ───── */
   .small { background: var(--paper); color: var(--ink); padding-top: calc(100 * var(--u)); }
@@ -332,7 +336,7 @@
     .p3 { left: 12%; top: 0; }
     .p4 { left: 49%; top: 22px; }
     .app-part.b .shelf { height: 310px; }
-    .kitten { width: 78px; left: 38%; top: 228px; }
+    .kitten { width: 92.4px; left: calc(38% - 8px); top: 219.5px; }
 
     .small { padding-top: 46px; }
     .small h2 { font-size: 40px; padding: 0 18px; }
@@ -413,7 +417,6 @@
   .shelf .phone, .shelf .kitten { cursor: pointer; }
   .apps.on-a .p1 { transform: translateX(calc(16 * var(--u))) rotate(4deg); }
   .apps.on-a .p2 { transform: translateX(calc(-16 * var(--u))) rotate(-4deg); }
-  .apps.on-a .kitten { animation: front-hop .62s cubic-bezier(.3, .7, .3, 1); }
   .apps.on-b .p3 { transform: translateY(calc(78 * var(--u))); }
   .apps.on-b .p4 { transform: translateY(calc(-78 * var(--u))); }
 
@@ -456,12 +459,6 @@ html[data-door-wait] .front .door-face::before, html[data-door-wait] .front .sta
 /* 開くのは 1 回だけ。作品ページから戻ったときは最後の画から始める */
 html[data-door-seen] .front .door-face::before, html[data-door-seen] .front .door-face::after, html[data-door-seen] .front .stage *, html[data-door-seen] .front .chrome nav { animation: none; }
 
-@keyframes front-hop {
-  0%, 100% { transform: translateY(0) scale(1, 1); }
-  22% { transform: translateY(0) scale(1.08, .9); }
-  52% { transform: translateY(calc(-74 * var(--u))) scale(.96, 1.05); }
-  84% { transform: translateY(0) scale(1.06, .94); }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .front *, .front *::before, .front *::after { transition: none !important; animation: none !important; }

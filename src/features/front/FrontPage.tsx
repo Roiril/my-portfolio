@@ -194,7 +194,7 @@ export default function FrontPage() {
         <div className="shelf">
           <img className="phone p1" src="/images/front/couple-room.webp" alt="猫のいる部屋の画面" width="560" height="1211" loading="lazy" decoding="async" />
           <img className="phone p2" src="/images/front/couple-gacha.webp" alt="家具を集めるガチャの画面" width="390" height="844" loading="lazy" decoding="async" />
-          <img className="kitten" src="/images/front/kitten.webp" alt="" aria-hidden="true" width="420" height="466" loading="lazy" decoding="async" />
+          <span className="kitten" aria-hidden="true"><img src="/images/front/cat-still.webp" alt="" width="379" height="394" loading="lazy" decoding="async" /><span className="kitten-frames" /></span>
         </div>
       </div>
       <div className="app-part b">

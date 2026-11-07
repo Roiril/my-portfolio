@@ -1,6 +1,8 @@
 // トップページの動き。面ごとにスクロールと、触れたときの動きを持つ。
 // 中身を読むのに動きは要らない。動きを減らす設定では、触ったときの応答だけを残す
 
+import { startKitten } from './kitten';
+
 const TONES = { ink: '#14110e', light: '#f1ebe2' } as const;
 type Tone = keyof typeof TONES;
 // 文字の色ごとの、見出しの帯の色。文字と反対の明るさにする
@@ -615,6 +617,7 @@ export function startFrontMotion(): () => void {
       later(() => apps.classList.remove(name), 1500);
     }, { signal });
   });
+  const stopKitten = reduce ? null : startKitten(need<HTMLElement>('.kitten', apps), signal, touch);
   function appScroll() {
     for (const f of appFlow) {
       const host = mobile ? f.el.parentElement! : apps;
@@ -727,5 +730,6 @@ export function startFrontMotion(): () => void {
     timers.forEach((id) => clearTimeout(id));
     frames.forEach((id) => cancelAnimationFrame(id));
     undo.reverse().forEach((fn) => fn());
+    stopKitten?.();
   };
 }
