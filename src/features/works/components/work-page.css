@@ -1,0 +1,229 @@
+/* 作品ページ。中央の線を綴じ目にした見開きで組む。色はトップと同じ。幅 1440 を基準に --u で伸縮する */
+.wp {
+  --paper: #f5f2eb;
+  --ink: #14110e;
+  --night: #0b0908;
+  --light: #f1ebe2;
+  --stone: #c9c5b9;
+  --red: #f0503f;
+  --vermilion: #d8321f;
+  --u: calc(100vw / 1440);
+  --serif: var(--font-front-serif), "Yu Mincho", "Hiragino Mincho ProN", serif;
+  --sans: var(--font-front-sans), "Yu Gothic", "Hiragino Sans", sans-serif;
+  --tall: var(--font-anton), "Impact", var(--font-front-sans), sans-serif;
+  --gutter: max(20px, calc(56 * var(--u)));
+  --body: max(15px, calc(16 * var(--u)));
+  position: relative;
+  overflow-x: clip;
+  background: var(--night);
+  color: var(--light);
+  font-family: var(--sans);
+  font-size: var(--body);
+  line-height: 1.85;
+  font-feature-settings: "palt";
+  -webkit-text-size-adjust: 100%;
+}
+.wp *, .wp *::before, .wp *::after { box-sizing: border-box; }
+.wp p, .wp h1, .wp h2, .wp h3, .wp dl, .wp dd, .wp ul, .wp figure { margin: 0; padding: 0; }
+.wp img, .wp svg, .wp video { display: block; max-width: 100%; }
+.wp a { color: inherit; }
+
+/* 綴じ目。全幅の面はこの線を隠す */
+.wp::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1px);
+  width: 2px;
+  background: var(--red);
+  pointer-events: none;
+}
+
+.wp [data-tone="paper"] { background: var(--paper); color: var(--ink); --sub: #5c574e; --accent: var(--vermilion); --hair: rgba(20, 17, 14, .28); }
+.wp [data-tone="white"] { background: #fff; color: var(--ink); --sub: #5c574e; --accent: var(--vermilion); --hair: rgba(20, 17, 14, .28); }
+.wp [data-tone="night"] { background: var(--night); color: var(--light); --sub: var(--stone); --accent: var(--red); --hair: rgba(241, 235, 226, .3); }
+
+/* ---------- 最初の見開き ---------- */
+.wp-hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: max(620px, min(100svh, calc(960 * var(--u)))); }
+.wp-hero__l { display: flex; flex-direction: column; justify-content: flex-end; gap: max(8px, calc(12 * var(--u))); padding: calc(120 * var(--u)) var(--gutter) max(28px, calc(44 * var(--u))); }
+.wp-hero__r { position: relative; overflow: hidden; min-height: 0; }
+.wp-hero__r > .wp-bleed, .wp-hero__phones, .wp-hero__clip, .wp-hero__contain { position: absolute; inset: calc(var(--band, 0) * var(--u)) 0 0 0; }
+.wp-hero__contain { display: flex; align-items: center; justify-content: center; padding: calc(230 * var(--u)) var(--gutter) calc(40 * var(--u)); }
+.wp-hero__contain img { width: 100%; height: auto; max-height: 100%; object-fit: contain; }
+.wp-hero__clip { display: flex; align-items: flex-end; }
+.wp-hero__clip video { width: 100%; height: 100%; object-fit: cover; }
+.wp-hero__phones > .wp-bleed { position: absolute; inset: 0; aspect-ratio: auto; }
+.wp-hero__r .wp-hero__phones .wp-bleed figcaption { top: 0; bottom: auto; right: auto; left: 0; z-index: 3; }
+.wp-hero__phoneset { position: absolute; inset: auto 0 0 0; display: flex; justify-content: center; align-items: flex-end; gap: calc(26 * var(--u)); padding: 0 var(--gutter); transform: translateY(calc(70 * var(--u))); }
+.wp-hero__phoneset img { width: calc(238 * var(--u)); height: auto; border-radius: calc(26 * var(--u)); box-shadow: 0 0 0 1px rgba(255, 255, 255, .18); }
+.wp-hero__phoneset img:nth-child(2) { margin-bottom: calc(92 * var(--u)); }
+
+.wp-say { font-family: var(--serif); font-weight: 700; font-size: max(21px, calc(29 * var(--u))); line-height: 1.5; max-width: 22em; }
+.wp-phrase { display: inline-block; word-break: auto-phrase; }
+.wp-sub { font-family: var(--serif); font-size: max(15px, calc(17 * var(--u))); }
+.wp-award { color: var(--accent); font-weight: 900; font-size: max(14.5px, calc(17 * var(--u))); }
+.wp-meta { color: var(--sub); font-size: max(13.5px, calc(14.5 * var(--u))); line-height: 1.7; }
+.wp-links { display: flex; flex-wrap: wrap; gap: .3em 1.4em; font-weight: 500; }
+.wp-links a { text-underline-offset: .28em; text-decoration-thickness: 1px; }
+.wp-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* 題字。全幅の箱に 2 枚重ね、線の左右で色を変える */
+.wp-mark { position: absolute; z-index: 3; left: 0; right: 0; top: calc(var(--mark-top) * var(--u)); text-align: center; white-space: nowrap; pointer-events: none; font-weight: 400; line-height: 1.04; background: transparent !important; }
+.wp-mark--tall { font-family: var(--tall); font-size: calc(var(--mark) * var(--u)); letter-spacing: .005em; }
+.wp-mark--serif { font-family: var(--serif); font-weight: 700; font-size: calc(var(--mark) * var(--u)); letter-spacing: .04em; }
+.wp-mark__l, .wp-mark__r { display: block; }
+.wp-mark__l { clip-path: inset(-10% 50% -10% -10%); }
+.wp-mark__r { position: absolute; inset: 0; clip-path: inset(-10% -10% -10% 50%); }
+.wp-mark__r[data-ink="light"] { color: var(--light); }
+.wp-mark__r[data-ink="ink"] { color: var(--ink); }
+.wp-mark--logo img { width: calc(1000 * var(--u)); height: auto; margin: 0 auto; }
+.wp-mark[data-tone="night"] .wp-mark__l { color: var(--light); }
+.wp-mark[data-tone="paper"] .wp-mark__l, .wp-mark[data-tone="white"] .wp-mark__l { color: var(--ink); }
+
+.wp-back { position: absolute; z-index: 4; top: max(16px, calc(28 * var(--u))); left: var(--gutter); font-size: max(13.5px, calc(14.5 * var(--u))); text-underline-offset: .28em; background: transparent !important; }
+
+/* ---------- 見開き ---------- */
+.wp-spread { display: grid; grid-template-columns: 1fr 1fr; }
+.wp-page { position: relative; display: flex; flex-direction: column; gap: max(20px, calc(28 * var(--u))); min-width: 0; padding: max(44px, calc(92 * var(--u))) var(--gutter); }
+.wp-page--bleed { gap: 0; padding: 0; }
+
+.wp-bleed { position: relative; flex: 1 1 0; min-height: calc(420 * var(--u)); overflow: hidden; }
+.wp-bleed img { object-fit: cover; }
+.wp-bleed figcaption, .wp-hero__r .wp-bleed figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: .3em .8em;
+  background: rgba(11, 9, 8, .72);
+  color: var(--light);
+  font-size: max(11.5px, calc(12 * var(--u)));
+  line-height: 1.5;
+}
+
+.wp-h2 { font-family: var(--serif); font-weight: 700; font-size: max(25px, calc(38 * var(--u))); line-height: 1.45; max-width: 15em; }
+.wp-h3 { font-family: var(--serif); font-weight: 700; font-size: max(20px, calc(25 * var(--u))); line-height: 1.5; }
+.wp-text { display: grid; gap: .9em; max-width: 36em; }
+.wp-note { color: var(--sub); font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.7; }
+
+.wp-pic img { width: 100%; height: auto; }
+.wp-pic figcaption, .wp-yt figcaption, .wp-phones figcaption, .wp-fig figcaption { margin-top: .6em; color: var(--sub); font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.65; }
+.wp-pics { display: grid; gap: calc(14 * var(--u)); grid-template-columns: repeat(2, 1fr); }
+.wp-pics[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+.wp-pics[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
+.wp-pics[data-cols="5"] { grid-template-columns: repeat(5, 1fr); }
+
+.wp-yt__frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.wp-yt__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.wp-yt--portrait { width: min(100%, calc(390 * var(--u))); min-width: min(100%, 260px); margin-inline: auto; }
+.wp-yt--portrait .wp-yt__frame { aspect-ratio: 9 / 16; }
+
+.wp-clips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.wp-clips video { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+
+.wp-phones { display: flex; justify-content: center; align-items: flex-start; gap: calc(24 * var(--u)); }
+.wp-phones figure { flex: 0 1 calc(240 * var(--u)); min-width: 0; }
+.wp-phones img { width: 100%; height: auto; border-radius: calc(22 * var(--u)); box-shadow: 0 0 0 1px var(--hair); }
+.wp-phones[data-count="3"] figure { flex-basis: calc(190 * var(--u)); }
+
+.wp-list { display: grid; gap: max(18px, calc(26 * var(--u))); max-width: 36em; }
+.wp-list dt { font-weight: 900; }
+.wp-list dd { color: var(--sub); font-size: .94em; line-height: 1.8; }
+
+.wp-numbers { display: flex; flex-wrap: wrap; gap: max(20px, calc(34 * var(--u))) max(28px, calc(52 * var(--u))); }
+.wp-numbers dd { font-family: var(--tall); font-size: max(38px, calc(66 * var(--u))); line-height: 1.1; color: var(--accent); }
+.wp-numbers small { margin-left: .22em; font-family: var(--sans); font-size: .3em; font-weight: 500; color: inherit; }
+.wp-numbers dt { color: var(--sub); font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.6; max-width: 15em; }
+
+.wp-stack { display: grid; gap: .55em; max-width: 36em; }
+.wp-stack > div { display: grid; grid-template-columns: 7.5em 1fr; gap: 1em; padding-top: .55em; border-top: 1px solid var(--hair); }
+.wp-stack dt { font-weight: 900; font-size: .92em; }
+.wp-stack dd { color: var(--sub); font-size: .92em; line-height: 1.7; }
+
+.wp-credits ul { list-style: none; margin: .5em 0 0; padding: 0; color: var(--sub); font-size: .94em; line-height: 1.85; }
+
+/* X の投稿 */
+.wp-post__frame { position: relative; background: #000; }
+.wp-post__frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.wp-post figcaption { display: grid; gap: .45em; margin-top: 1em; }
+.wp-post strong { font-family: var(--serif); font-size: max(20px, calc(25 * var(--u))); line-height: 1.5; }
+.wp-post span { color: var(--sub); font-size: .92em; }
+.wp-post q { display: block; font-size: .94em; line-height: 1.8; white-space: pre-line; quotes: none; }
+.wp-post dl { display: flex; flex-wrap: wrap; gap: .25em 1.4em; margin-top: .3em; padding-top: .6em; border-top: 1px solid var(--hair); }
+.wp-post dl > div { display: flex; align-items: baseline; gap: .4em; }
+.wp-post dt { color: var(--sub); font-size: .86em; }
+.wp-post dd { font-family: var(--tall); font-size: max(20px, calc(24 * var(--u))); line-height: 1.2; }
+.wp-post a { justify-self: start; font-weight: 500; text-underline-offset: .28em; text-decoration-thickness: 1px; }
+
+/* ---------- 全幅の面。線を隠す ---------- */
+.wp-full, .wp-figure, .wp-widefig { position: relative; z-index: 2; }
+.wp-full { display: grid; gap: max(20px, calc(28 * var(--u))); padding: max(44px, calc(80 * var(--u))) var(--gutter); }
+.wp-full > .wp-yt { width: min(100%, calc(1180 * var(--u))); margin-inline: auto; }
+.wp-full > .wp-pic { width: min(100%, calc(1180 * var(--u))); margin-inline: auto; }
+.wp-full:has(> .wp-clips) { padding: 0; }
+
+.wp-figure { display: grid; grid-template-columns: minmax(0, 1fr) calc(470 * var(--u)); gap: calc(40 * var(--u)); align-items: center; padding: max(36px, calc(60 * var(--u))) var(--gutter) max(36px, calc(60 * var(--u))) calc(24 * var(--u)); }
+.wp-figure__side { display: flex; flex-direction: column; gap: max(16px, calc(22 * var(--u))); }
+.wp-figure__side .wp-h2 { font-size: max(23px, calc(31 * var(--u))); }
+.wp-figure__side .wp-text { font-size: .94em; }
+
+.wp-widefig { display: grid; gap: max(16px, calc(26 * var(--u))); justify-items: center; padding: max(44px, calc(80 * var(--u))) var(--gutter); }
+.wp-widefig__head { justify-self: start; display: grid; gap: max(12px, calc(16 * var(--u))); max-width: 44em; }
+.wp-widefig .wp-fig { width: min(100%, calc(1180 * var(--u))); }
+
+.wp-fig__wide svg, .wp-fig__tall svg { width: 100%; height: auto; }
+.wp-fig text { font-family: var(--sans); }
+.wp-fig__tall { display: none; }
+@media (max-width: 1180px) {
+  .wp-fig__wide { display: none; }
+  .wp-fig__tall { display: block; }
+  .wp-fig { max-width: 560px; margin-inline: auto; }
+  .wp-figure { grid-template-columns: 1fr; padding-inline: var(--gutter); }
+}
+
+/* ---------- 前後の作品と足元 ---------- */
+.wp-np { text-decoration: none; min-height: calc(300 * var(--u)); gap: .4em; padding-right: calc(300 * var(--u)); }
+.wp-np__label { color: var(--sub); font-size: max(13px, calc(14 * var(--u))); }
+.wp-np__title { font-family: var(--serif); font-weight: 700; font-size: max(21px, calc(28 * var(--u))); line-height: 1.4; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.wp-np__say { color: var(--sub); font-size: .94em; line-height: 1.7; }
+.wp-np__thumb { position: absolute; top: 50%; right: var(--gutter); width: calc(220 * var(--u)); transform: translateY(-50%); }
+.wp-np__thumb img { width: 100%; height: calc(146 * var(--u)); object-fit: cover; }
+
+.wp-foot { position: relative; z-index: 2; display: flex; justify-content: space-between; gap: 1em; padding: 14px var(--gutter); background: var(--night); color: var(--stone); font-size: 12.5px; line-height: 1.6; }
+
+/* ---------- スマートフォン。線を隠して 1 列にする ---------- */
+@media (max-width: 760px) {
+  .wp { --body: 15.5px; }
+  .wp::before { display: none; }
+  .wp-hero { display: flex; flex-direction: column; min-height: 0; }
+  .wp .wp-mark { position: relative; order: -2; top: auto; padding: 58px var(--gutter) 14px; white-space: normal; text-align: left; line-height: 1.08; background: inherit !important; font-size: calc(var(--mark-m) * var(--u)); }
+  .wp .wp-mark--logo { padding-top: 54px; }
+  .wp-mark--logo img { width: 100%; }
+  .wp-mark[data-tone="paper"] { background: var(--paper) !important; }
+  .wp-mark[data-tone="white"] { background: #fff !important; }
+  .wp-mark[data-tone="night"] { background: var(--night) !important; }
+  .wp-mark__l { clip-path: none; }
+  .wp-mark__r { display: none; }
+  .wp-hero__r { order: -1; width: 100%; aspect-ratio: 4 / 3; border-top: 2px solid var(--red); }
+  .wp-hero__r > .wp-bleed, .wp-hero__phones, .wp-hero__clip, .wp-hero__contain { top: 0; }
+  .wp-hero__r > .wp-bleed { flex: none; min-height: 0; }
+  .wp-hero__contain { padding: 12px var(--gutter); }
+  .wp-hero__phoneset { gap: 14px; transform: translateY(26px); }
+  .wp-hero__phoneset img { width: 34vw; border-radius: 16px; }
+  .wp-hero__phoneset img:nth-child(2) { margin-bottom: 30px; }
+  .wp-hero__l { padding: 22px var(--gutter) 32px; gap: 8px; }
+
+  .wp-spread { grid-template-columns: 1fr; }
+  .wp-page--bleed .wp-bleed { flex: none; min-height: 0; aspect-ratio: var(--ratio); }
+  .wp-phones { gap: 12px; }
+  .wp-phones figure, .wp-phones[data-count="3"] figure { flex: 1 1 0; }
+  .wp-phones img { border-radius: 14px; }
+  .wp-pics { gap: 6px; }
+  .wp-pics[data-cols="3"], .wp-pics[data-cols="4"], .wp-pics[data-cols="5"] { grid-template-columns: repeat(2, 1fr); }
+  .wp-clips { grid-template-columns: repeat(2, 1fr); }
+  .wp-yt--portrait { width: min(100%, 260px); }
+  .wp-np { min-height: 0; padding-right: 150px; }
+  .wp-np__thumb { width: 118px; }
+  .wp-np__thumb img { height: 80px; }
+}

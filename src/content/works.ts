@@ -1,7 +1,6 @@
 ﻿import { Work } from '@/features/works/types';
 
 import { coupleSync } from './couple-sync';
-import { workDiagrams } from './works-diagrams';
 import { workTech } from './works-tech';
 
 const baseWorks: Work[] = [
@@ -10,7 +9,7 @@ const baseWorks: Work[] = [
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
     description:
-      '監視カメラに映る自分を見ながら、現実空間を歩く固定視点のホラー体験です。HMDと複数のカメラで固定視点を現実空間に再構成しました。体験者は怪異調査員として呪われた壁を調査します。IVRC2026で総合優勝し、DCEXPO賞を受賞しました。2026年11月にDCEXPO2026で展示予定です。私は企画・監督、体験設計、要件定義、動作検証を担当しています。実装にはAIエージェントを活用し、設計の把握とテストを通して品質を確かめています。',
+      '監視カメラに映る自分を見ながら、現実空間を歩く固定視点のホラー体験です。HMDと複数のカメラで固定視点を現実空間に再構成しました。体験者は怪異調査員として呪われた壁を調査します。IVRC2026で総合優勝し、DCEXPO賞を受賞しました。2026年11月18〜20日のDCEXPO2026で招待展示予定です。私は企画・監督、体験設計、要件定義、動作検証を担当しています。実装にはAIエージェントを活用し、設計の把握とテストを通して品質を確かめています。',
     image: '/images/works/mawarimi/key-visual.webp',
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
@@ -23,12 +22,13 @@ const baseWorks: Work[] = [
     ],
     reception: {
       title: '受賞と展示',
-      asOf: '2026 年 10 月 24 日時点。',
+      asOf: '2026 年 11 月 7 日時点。',
       items: [
         { value: '総合優勝', label: 'IVRC2026' },
         { value: 'DCEXPO賞', label: 'IVRC2026' },
         { value: '体験展示', label: '第31回日本VR学会大会' },
-        { value: '2026.11', label: 'DCEXPO2026 で展示予定' },
+        { value: '2026.11.18–20', label: 'DCEXPO2026 で招待展示予定' },
+        { value: '2026.11.19', label: 'Inter BEE で登壇予定' },
       ],
     },
     category: 'research',
@@ -128,6 +128,7 @@ const baseWorks: Work[] = [
     },
     category: 'personal',
     period: '2026.08',
+    role: '個人制作。実装には AI エージェントを活用。',
   },
   {
     id: 'couple-sync',
@@ -142,22 +143,7 @@ const baseWorks: Work[] = [
     ],
     category: 'personal',
     period: '2026.03 –',
-    role: '単独（企画・設計・実装）',
-    detail: {
-      lead: coupleSync.lead,
-      body: [coupleSync.introduction, ...coupleSync.play.body, ...coupleSync.engineering.map(item => item.body)],
-      phone: true,
-      gallery: [
-        { src: '/images/works/couple-sync/00-room.png', alt: '新デザイン：猫のいる部屋から各機能を開く' },
-        { src: '/images/works/couple-sync/01-calendar.png', alt: '新デザイン：ふたりのカレンダー' },
-        { src: '/images/works/couple-sync/02-notes.png', alt: '新デザイン：ふたりのノート' },
-        { src: '/images/works/couple-sync/03-gacha.png', alt: '新デザイン：ガチャで家具を集める' },
-        { src: '/images/works/couple-sync/04-health.png', alt: '体調・食事の記録' },
-        { src: '/images/works/couple-sync/05-memories.png', alt: '新デザイン：ふたりの記念日' },
-        { src: '/images/works/couple-sync/06-games.png', alt: 'ふたり専用ミニゲーム' },
-        { src: '/images/works/couple-sync/07-legacy.png', alt: '切り替えて使える旧デザイン' },
-      ],
-    },
+    role: '個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。',
   },
   {
     id: 'cogni-storage',
@@ -172,24 +158,7 @@ const baseWorks: Work[] = [
     ],
     category: 'personal',
     period: '2026.03 –',
-    role: '単独（企画・設計・実装）',
-    detail: {
-      lead: '研究の「読む・考える・書く」を、一本の流れにまとめるアプリです。',
-      body: [
-        '研究では、思いつき・読んだ文献・書きかけの論文が別々の場所に散らばりがちです。そこで思いつきをカード（Ideas）として貯め、確からしさを書き添えて育てる画面を中心に置きました。研究テーマ・執筆中の論文・読んだ文献もここから行き来でき、発表スライドの生成まで同じアプリで扱えます。',
-        '画面は常に端末内のデータから表示し、サーバー（Supabase）とは変わった分だけをやり取りします。通信が切れている間も書き続けられ、つながると別の端末に追いつきます。',
-        'Claude Code と連携し、文献の取り込み・翻訳・整理を半自動で進められます。見た目は黒とクリームを基調にしたレトロな配色でそろえました。',
-        '公開デモは実際の画面を使っています。研究資料と記録は架空の見本に置き換え、変更はこの端末内にだけ保存します。',
-      ],
-      phone: true,
-      gallery: [
-        { src: '/images/works/cogni-storage/02-ideas.png', alt: 'Ideas：思いつきをカードで育てる' },
-        { src: '/images/works/cogni-storage/03-themes.png', alt: 'Themes：研究テーマの管理' },
-        { src: '/images/works/cogni-storage/04-papers.png', alt: 'Papers：執筆中の論文' },
-        { src: '/images/works/cogni-storage/05-readings.png', alt: 'Readings：文献の記録' },
-        { src: '/images/works/cogni-storage/01-home.png', alt: 'ホーム画面' },
-      ],
-    },
+    role: '個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。',
   },
 
   // ===== 制作 / Creative（魅力的な順） =====
@@ -201,57 +170,6 @@ const baseWorks: Work[] = [
     image: '/images/works/blender-works/robot-game-01.png',
     tags: ['3D', 'Blender'],
     links: [],
-    detail: {
-      lead: 'Blenderで作ってきた小さな作品です。モデリング・ジオメトリノード・VFXをそれぞれ試しています。',
-      sections: [
-        {
-          title: 'ロボット製造ゲームのキービジュアル',
-          body: ['ロボットを製造するゲームのために制作したキービジュアルです。'],
-          gallery: [
-            { src: '/images/works/blender-works/robot-game-01.png', alt: 'ロボット製造ゲームのキービジュアル', wide: true },
-          ],
-        },
-        {
-          title: '地下鉄の通路',
-          body: ['「8番出口」のような、どこか不穏で見覚えのある地下鉄の通路を作りました。'],
-          gallery: [
-            { src: '/images/works/blender-works/subway-01.png', alt: '地下鉄の通路の3Dモデル' },
-            { src: '/images/works/blender-works/subway-02.png', alt: '地下鉄の通路の別アングル' },
-          ],
-        },
-        {
-          title: '好きなキャラクターのモデリング',
-          body: ['好きなキャラクターをモデリングし、表情を何種類か作り分けました。'],
-          columns: 4,
-          gallery: [
-            { src: '/images/works/blender-works/character-01.jpg', alt: 'キャラクターモデル（通常）' },
-            { src: '/images/works/blender-works/character-02.jpg', alt: 'キャラクターモデル（アイコン）' },
-            { src: '/images/works/blender-works/character-03.jpg', alt: 'キャラクターモデル（あっかんべー）' },
-            { src: '/images/works/blender-works/character-04.jpg', alt: 'キャラクターモデル（じと目）' },
-            { src: '/images/works/blender-works/character-05.jpg', alt: 'キャラクターモデル（目とじ）' },
-          ],
-        },
-        {
-          title: 'ジオメトリノード工作',
-          body: [
-            'ジオメトリノードを使った実験です。恐竜と文字が切り替わるアニメーションや、動く壁にメモ帳が張り付く表現を作りました。',
-          ],
-          gallery: [
-            { src: '/images/works/blender-works/geo-dino-01.png', alt: '恐竜と文字が切り替わるジオメトリノード' },
-            { src: '/images/works/blender-works/geo-memo-01.png', alt: 'うごくメモ帳を貼り付けた壁' },
-            { src: '/images/works/blender-works/geo-memo-02.png', alt: 'うごくメモ帳を貼り付けた壁（別アングル）' },
-          ],
-        },
-        {
-          title: 'VFX工作',
-          body: ['Blenderでエフェクトの表現を試しました。'],
-          gallery: [
-            { src: '/images/works/blender-works/vfx-01.png', alt: 'VFXの実験' },
-            { src: '/images/works/blender-works/vfx-02.png', alt: 'VFXの実験（別カット）' },
-          ],
-        },
-      ],
-    },
   },
   {
     id: 'meiji-3d',
@@ -263,54 +181,6 @@ const baseWorks: Work[] = [
     links: [
       { type: 'video', url: 'https://youtu.be/NfEQQwtwIPQ?si=VnYnw4MvY2MxgkEi' },
     ],
-    detail: {
-      lead: 'いつも通っている明治大学中野キャンパス3Fを、できるだけ実際の空間に忠実にデジタル化しました。',
-      body: [
-        '自分の足で歩き、歩幅を基準に各所の寸法を測りました。その寸法をもとに、空間全体の広さをおおよそ再現しています。',
-        'テクスチャには現地で撮った写真を貼り、柱や什器など写真だけでは表せない部分はモデリングで補いました。遠くから見たときだけ成り立つ「張りぼて」ではなく、近くで見ても本物らしく感じられることを目指しています。',
-      ],
-      gallery: [
-        { src: '/images/works/meiji-3d/meiji-3d-01.png', alt: '明治大学中野キャンパス3Fの3Dモデル', wide: true },
-        { src: '/images/works/meiji-3d/meiji-3d-02.png', alt: '3Dモデル化した3Fの空間' },
-        { src: '/images/works/meiji-3d/meiji-3d-03.png', alt: '写真テクスチャを貼り込んだ内観' },
-        { src: '/images/works/meiji-3d/meiji-3d-04.png', alt: 'モデリングで再現した什器まわり' },
-        { src: '/images/works/meiji-3d/meiji-3d-05.png', alt: '3Fフロアのデジタルツイン' },
-      ],
-      sections: [
-        {
-          title: 'モデルの活用',
-          body: [
-            '作ったモデルは眺めるだけでなく、ほかの用途にも使っています。',
-          ],
-        },
-        {
-          title: '未来の姿をVRで議論する',
-          body: [
-            'デジタル化した空間をVRに持ち込み、この場所が将来どうあるべきかを議論する場にしました。歩測をもとに再現した空間の中で、配置や見え方を確認しながら将来の姿を検討できます。',
-          ],
-          columns: 2,
-          gallery: [
-            { src: '/images/works/meiji-3d/use-vr-01.png', alt: 'VR空間で3Fモデルを使った議論' },
-            { src: '/images/works/meiji-3d/use-vr-02.png', alt: 'VRで未来の空間を検討する様子' },
-            { src: '/images/works/meiji-3d/use-vr-03.png', alt: 'VR空間内から見たフロア' },
-            { src: '/images/works/meiji-3d/use-vr-04.png', alt: 'VRでの空間体験' },
-          ],
-        },
-        {
-          title: 'シェーダーグラフで遊ぶ',
-          body: [
-            'シェーダーグラフを使い、空間の見え方そのものを変える表現も試しています。',
-          ],
-          columns: 2,
-          gallery: [
-            { src: '/images/works/meiji-3d/use-shader-01.png', alt: 'シェーダーグラフで表現を変えた3F', wide: true },
-          ],
-          links: [
-            { type: 'video', url: 'https://youtu.be/fjkS9zoACuA?si=Uvo_cloQzPg-bHW5' },
-          ],
-        },
-      ],
-    },
   },
   {
     id: 'uniqlo-future',
@@ -333,19 +203,6 @@ const baseWorks: Work[] = [
     links: [
       { type: 'video', url: 'https://youtu.be/J4vsNST7PLU?si=BqNEA6MSnnqmbqEN' },
     ],
-    detail: {
-      lead: 'Processingで一から組んだデジタル水槽です。水槽も魚も、群れの動きもすべてコードで描いています。',
-      body: [
-        '1匹ずつの魚には「近くの仲間に寄る」「ぶつからない」「向きを揃える」という単純な決まりだけを与えています。それでも群れ全体は、生き物のように自然にまとまって泳ぎます。',
-        '魚のかわいさと、アルゴリズムから生まれる生き物らしい動きの両立を目指しました。',
-      ],
-      gallery: [
-        { src: '/images/works/aquarium/aquarium-01.png', alt: 'Processingで描いたデジタル水槽' },
-        { src: '/images/works/aquarium/aquarium-02.png', alt: '群れて泳ぐデジ魚たち' },
-        { src: '/images/works/aquarium/aquarium-03.png', alt: 'プログラムされた魚の動き' },
-        { src: '/images/works/aquarium/aquarium-04.png', alt: 'デジタル水槽の様子' },
-      ],
-    },
   },
   {
     id: 'ai-anime',
@@ -363,6 +220,7 @@ const baseWorks: Work[] = [
     description: '工程ごとにAIツールを使い分けて作ったミュージックビデオです。曲はSuno AIで作り、編集はFilmoraで仕上げました。',
     image: '/images/Ai-Generated-Mv.png',
     tags: ['SunoAI', 'ChatGPT', 'Gemini', 'Flow', 'Filmora'],
+    role: '個人制作',
     links: [
       {
         type: 'video',
@@ -384,6 +242,7 @@ const baseWorks: Work[] = [
     image: '/images/retroTV-portfolio.png',
     tags: ['Web', 'Next.js', 'Three.js'],
     period: '2025.12',
+    role: '個人制作',
     links: [
       { type: 'launch', url: 'https://my-retro-portfolio-rust.vercel.app/' },
       { type: 'video', url: 'https://youtube.com/shorts/ZiNqQiZSbv4?si=H-t46FPwIpIVX0wS' },
@@ -397,7 +256,7 @@ const baseWorks: Work[] = [
     image: '/images/CubeDiary.png',
     tags: ['Web App', 'Next.js', 'Supabase'],
     category: 'personal',
-    role: '単独（企画・設計・実装）',
+    role: '個人制作',
     period: '2025.11',
     links: [
       { type: 'launch', url: 'https://cube-diary.vercel.app/' },
@@ -419,6 +278,7 @@ const baseWorks: Work[] = [
       'Studio Oneで以前作った自分の曲を、Suno AIで広げた作品です。元の曲とAI版を聞き比べられます。',
     image: '/images/works/ai-composition/illust-f9e5771d.webp',
     tags: ['Sound', 'Studio One', 'AI'],
+    role: '個人制作',
     links: [
       {
         type: 'video',
@@ -443,7 +303,7 @@ const baseWorks: Work[] = [
   },
 ];
 
-// 技術説明（works-tech.ts）と構成図（works-diagrams.ts）を作品に合わせる
+// 技術説明（works-tech.ts）を作品に合わせる
 export const works: Work[] = baseWorks.map((work) =>
-  workTech[work.id] ? { ...work, tech: { ...workTech[work.id], diagram: workDiagrams[work.id] } } : work,
+  workTech[work.id] ? { ...work, tech: workTech[work.id] } : work,
 );

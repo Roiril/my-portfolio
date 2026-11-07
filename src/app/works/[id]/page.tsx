@@ -1,55 +1,38 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { workPages } from '@/content/work-pages';
 import { works } from '@/content/works';
-import { features } from '@/content/magazine';
 import { frontHrefOfWork } from '@/features/front';
-import { hasDetailPage } from '@/features/works';
-import Footer from '@/components/layout/Footer';
-import SiteHeader from '@/components/layout/SiteHeader';
-import CoupleSyncDetail from '@/features/works/components/CoupleSyncDetail';
-import WorkCaseStudy, { type CaseBack, type CaseTheme } from '@/features/works/components/WorkCaseStudy';
+import WorkPage from '@/features/works/components/WorkPage';
 
 type Params = { id: string };
 
-// 詳細ページはトップの誌面と揃えず、作品ごとに 1 冊の雑誌として色を決める。
-// 特集の作品は見開きと同じ色（magazine.ts）。そのほかは作品の写真から取った色。
-// 差し色は小さな番号や副題にも使うので、地の上で読める濃さにする
-const ART: Record<string, CaseTheme> = {
-    'ai-business-tools': { paper: '#f4f5fb', ink: '#14163a', accent: '#2433ff' },
-    'blender-works': { paper: '#f2efe9', ink: '#1d1b18', accent: '#b4441c' },
-    'meiji-3d': { paper: '#eef1ee', ink: '#18211c', accent: '#2f6b4a' },
-    'uniqlo-future': { paper: '#ffffff', ink: '#111111', accent: '#d7000f' },
-    aquarium: { paper: '#fff6ec', ink: '#1f160e', accent: '#b34b09' },
-    'ai-music-video': { paper: '#14121c', ink: '#efeaf7', accent: '#b69cff' },
-    'retroTV-portfolio': { paper: '#f3ead8', ink: '#2a1f12', accent: '#a5520f' },
-    'cube-diary': { paper: '#0c0d12', ink: '#e8eaf2', accent: '#8fd3ff' },
-    'metaquest-devs': { paper: '#f2f4f7', ink: '#111827', accent: '#1d4ed8' },
-    'ai-composition': { paper: '#fbf2f5', ink: '#24121a', accent: '#b0215a' },
+const workOf = (id: string) => {
+    const work = works.find((w) => w.id === id && !w.hidden);
+    if (!work) throw new Error(`作品がありません: ${id}`);
+    return work;
 };
-const DEFAULT_THEME: CaseTheme = { paper: '#ffffff', ink: '#121212', accent: '#2433ff' };
-
-// 詳細ページを持つ作品（一覧に出しているものだけ）。前後の作品への送りもこの順
-const pages = works.filter((w) => !w.hidden && hasDetailPage(w));
 
 export function generateStaticParams(): Params[] {
-    return pages.map((w) => ({ id: w.id }));
+    return workPages.map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
     const { id } = await params;
-    const work = pages.find((w) => w.id === id);
-    if (!work) return {};
-    const description = work.detail?.lead ?? work.description;
+    const page = workPages.find((p) => p.id === id);
+    if (!page) return {};
+    const work = workOf(id);
+    const title = `${work.title} | 白石大晴 Portfolio`;
     return {
         // X の動画の配信元（video.twimg.com）は、外のサイトからの Referer が付くと 403 を返す。
         // X の動画を置くページだけ Referer を送らないようにする
         referrer: work.media?.some((m) => m.type === 'x') ? 'no-referrer' : undefined,
-        title: `${work.title} | 白石大晴 Portfolio`,
-        description,
+        title,
+        description: page.say,
         alternates: { canonical: '/works/' + work.id },
         openGraph: {
-            title: `${work.title} | 白石大晴 Portfolio`,
-            description,
+            title,
+            description: page.say,
             url: '/works/' + work.id,
             images: work.image ? [{ url: work.image }] : undefined,
         },
@@ -58,25 +41,17 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function WorkDetailPage({ params }: { params: Promise<Params> }) {
     const { id } = await params;
-    const index = pages.findIndex((w) => w.id === id);
+    const index = workPages.findIndex((p) => p.id === id);
     if (index < 0) notFound();
-    const work = pages[index];
-
-    if (id === 'couple-sync') {
-        return <><SiteHeader skipHref="#couple-content" /><CoupleSyncDetail tech={work.tech} /><Footer topHref="#couple-content" /></>;
-    }
-
-    const feature = features.find((f) => f.workId === id);
-    // 詳細ページの差し色は小さな番号や副題に使うので、文字用の色（accentText）があればそちらを使う
-    const base: CaseTheme & { accentText?: string } = feature?.theme ?? ART[id] ?? DEFAULT_THEME;
-    const theme: CaseTheme = { paper: base.paper, ink: base.ink, accent: base.accentText ?? base.accent };
-    // トップの、その作品が載っている面へ戻す
-    const back: CaseBack = { href: frontHrefOfWork(id), label: 'トップへ戻る' };
+    const page = workPages[index];
+    const neighbor = (i: number) => (workPages[i] ? { page: workPages[i], title: workOf(workPages[i].id).title } : undefined);
     return (
-        <>
-            <SiteHeader />
-            <WorkCaseStudy work={work} theme={theme} back={back} prev={pages[index - 1]} next={pages[index + 1]} />
-            <Footer />
-        </>
+        <WorkPage
+            page={page}
+            title={workOf(id).title}
+            backHref={frontHrefOfWork(id)}
+            prev={neighbor(index - 1)}
+            next={neighbor(index + 1)}
+        />
     );
 }

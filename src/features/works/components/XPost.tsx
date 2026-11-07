@@ -1,4 +1,4 @@
-// X の投稿を、誌面の組みで見せる（サーバーコンポーネント）。
+// X の投稿を見開きの中に置く（サーバーコンポーネント）。
 // 公式の埋め込み（widgets.js）は、ブラウザの設定によって高さ 0 のまま表示されないことがあったので使わない。
 // 代わりに、公開されている投稿データ（react-tweet と同じ syndication API）をビルド時に取り、
 // 動画は X の配信 URL を <video> でそのまま再生する。取れなかったときは投稿へのリンクだけを出す。
@@ -33,9 +33,9 @@ export default async function XPost({ url, title, caption, stats }: { url: strin
     const text = tweet?.text.replace(/\s*https:\/\/t\.co\/\S+/g, '').trim();
 
     return (
-        <figure className="case-post">
+        <figure className="wp-post">
             {mp4 ? (
-                <div className="case-post__frame" style={{ aspectRatio: ratio }}>
+                <div className="wp-post__frame" style={{ aspectRatio: ratio }}>
                     <video controls preload="none" playsInline poster={media?.media_url_https} aria-label={title}>
                         <source src={mp4.url} type="video/mp4" />
                     </video>
@@ -44,15 +44,15 @@ export default async function XPost({ url, title, caption, stats }: { url: strin
             <figcaption>
                 <strong>{title}</strong>
                 {caption && <span>{caption}</span>}
-                {text && <q className="case-post__text">{text}</q>}
+                {text && <q>{text}</q>}
                 {stats && stats.length > 0 && (
-                    <dl className="case-post__stats">
+                    <dl>
                         {stats.map((s) => (
                             <div key={s.label}><dt>{s.label}</dt><dd>{s.value}</dd></div>
                         ))}
                     </dl>
                 )}
-                <a href={url} target="_blank" rel="noopener noreferrer">X で投稿を見る<span aria-hidden="true"> ↗</span><span className="case-sr-only">（新しいタブで開きます）</span></a>
+                <a href={url} target="_blank" rel="noopener noreferrer">X で投稿を見る<span aria-hidden="true"> ↗</span><span className="wp-sr">（新しいタブで開きます）</span></a>
             </figcaption>
         </figure>
     );
