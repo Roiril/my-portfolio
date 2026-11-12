@@ -179,6 +179,21 @@ export default function FrontPage() {
               <p className="role">要件定義〜実装〜運用<br />写真は生成した画像によるイメージです。<br /><u>詳しく見る</u></p>
             </div>
           </Link>
+          <Link className="sheet book" href="/works/last-page">
+            <div className="pg pg-l">
+              <span className="vert ja">最後のページ</span>
+              <span className="leaf">
+                <img className="full" src="/images/works/last-page/lp_open.webp" alt="夕方の机の上で、布張りの古い日記帳が閉じている" width="960" height="540" loading="lazy" decoding="async" />
+                <video className="leaf-clip" data-src="/images/works/last-page/lp_open.mp4" muted playsInline preload="none" aria-hidden="true" />
+              </span>
+            </div>
+            <div className="pg pg-r">
+              <p className="kick">2026.11 –　ゲーム（制作中）</p>
+              <p className="q">日記の行を足場に、ひとりの一生を読む。</p>
+              <p className="b">机の上の古い日記帳で、1960年から2045年までのひなみの日記を読む約7分のゲームです。動かすのは、五歳のひなみがクレヨンで描いた自画像です。頁で拾ったひとことを持って、次の頁へめくります。</p>
+              <p className="role">Unity　個人制作<br />実装には AI エージェントを活用。<br />頁の絵と声は生成 AI で作っています。<br /><u>詳しく見る</u></p>
+            </div>
+          </Link>
         </div>
       </div>
     </section>

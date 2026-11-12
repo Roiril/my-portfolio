@@ -302,4 +302,26 @@ export const workTech: Record<string, WorkTech> = {
       { title: '自分の曲を素材にする', body: 'ゼロから AI に作らせるのではなく、自分で作った曲を元にして AI で広げました。' },
     ],
   },
+
+  // 事実は yohaku リポの Story/scenario_v3.json（lead / premise / carry / ending / implemented）と設定資料から。2026-11-13 時点で制作中
+  'last-page': {
+    summary: 'Unity で作りました。頁の絵と写真は画像生成 AI で、人物の声は ElevenLabs で作っています。',
+    stack: [
+      { label: 'エンジン', items: ['Unity 6000.3', 'URP 17'] },
+      { label: '言語', items: ['C#', 'Python（素材の加工）'] },
+      { label: '絵', items: ['画像生成 AI'] },
+      { label: '声', items: ['ElevenLabs'] },
+    ],
+    flow: [
+      { title: '自画像を動かす', body: '動かすのは、五歳のひなみがクレヨンで描いた自画像です。' },
+      { title: '行と列を渡る', body: '日記の横書きの行が足場になり、縦書きの列が登れる柱になります。頁の上を跳んで渡ります。' },
+      { title: 'ひとことを拾う', body: '人がひなみに言ったひとことや、頁の絵を拾って持っていきます。母の「ひなみ」や、父の「もう半歩、右。」です。' },
+      { title: '頁をめくる', body: '右下の角まで進むと、次の頁へめくれます。' },
+      { title: 'むぎがついてくる', body: '飼い犬のむぎが、途中からついてきます。' },
+    ],
+    points: [
+      { title: '拾った声をもう一度聞く', body: '前の頁で拾った声は、あとの頁の場面の中でもう一度聞こえます。' },
+      { title: '人ごとに声を変える', body: '声は ElevenLabs で作り、人物ごとに別の声を当てています。' },
+    ],
+  },
 };

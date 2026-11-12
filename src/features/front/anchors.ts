@@ -8,6 +8,7 @@ const FACE_OF_WORK: Record<string, string> = {
   intentlayer: 'sheets',
   'metaquest-devs': 'sheets',
   'ai-business-tools': 'sheets',
+  'last-page': 'sheets',
 };
 
 export const frontHrefOfWork = (workId: string): string => `/#${FACE_OF_WORK[workId] ?? 'small'}`;

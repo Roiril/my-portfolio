@@ -98,6 +98,10 @@
   .sheet .q { font-size: calc(22 * var(--u)); line-height: 1.4; font-weight: 900; margin-top: calc(8 * var(--u)); }
   .sheet .b { font-size: max(12.5px, calc(13.2 * var(--u))); line-height: 1.7; margin-top: calc(12 * var(--u)); }
   .sheet .role { margin-top: auto; font-size: max(12px, calc(12.5 * var(--u))); font-weight: 500; line-height: 1.5; }
+  /* 最後のページ：閉じた日記帳の画の上に、表紙が開く映像を重ねる。映像は触れたときだけ見せる */
+  .leaf { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; background: var(--night); }
+  .sheet .leaf > img, .sheet .leaf > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 56% 50%; padding: 0; }
+  .leaf-clip { opacity: 0; }
 
   /* ───── 廻リ視：墨の境界のあとに 1 枚絵と題字 ───── */
   .mawarimi { position: relative; background: var(--night); color: var(--light); font-family: var(--serif); }
@@ -411,6 +415,9 @@
   .pg-l img { transition: scale .5s cubic-bezier(.3, .7, .2, 1); }
   .sheet.is-on .pg-l img { scale: 1.05; }
   .sheet.is-on .pg-r { rotate: y -7deg; }
+  .leaf-clip { transition: opacity .3s, scale .5s cubic-bezier(.3, .7, .2, 1); }
+  .sheet.is-play .leaf-clip { opacity: 1; }
+  .sheet.is-on .leaf-clip { scale: 1.05; }
 
   /* アプリ */
   .phone, .kitten { will-change: transform; transition: transform .55s cubic-bezier(.3, .8, .2, 1); touch-action: manipulation; }

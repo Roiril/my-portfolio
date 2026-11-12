@@ -31,6 +31,8 @@ export type Slot =
   | { k: 'pics'; pics: Pic[]; cols: 2 | 3 | 4 | 5 }
   | { k: 'yt'; id: string; title: string; caption?: string; portrait?: boolean }
   | { k: 'clips'; items: { src: string; poster: string; label: string }[] }
+  // 音のある動画。押して再生する
+  | { k: 'video'; src: string; poster: string; title: string; caption?: string }
   | { k: 'phones'; pics: Pic[] }
   | { k: 'list'; items: TextItem[] }
   | { k: 'numbers'; items: NumberItem[] }
@@ -50,7 +52,8 @@ export type Section =
   | { type: 'wideFigure'; tone: Tone; name: string; caption: string; head?: Slot[] };
 
 export type Mark =
-  | { type: 'logo'; src: string; w: number; h: number; alt: string }
+  // size は幅 1440 での題字の幅。既定は 1000
+  | { type: 'logo'; src: string; w: number; h: number; alt: string; size?: number }
   // size は幅 1440 での文字の大きさ、sizeM はスマートフォンでの大きさ（どちらも 1440 分割の単位）
   | { type: 'text'; text: string; font: 'tall' | 'serif'; size: number; sizeM: number };
 
@@ -385,6 +388,77 @@ export const workPages: WorkPageDef[] = [
         type: 'spread',
         left: { tone: 'night', slots: [h3('作りの要点'), { k: 'list', items: points('ai-business-tools') }] },
         right: { tone: 'night', slots: [stack('ai-business-tools')] },
+      },
+    ],
+  },
+
+  {
+    id: 'last-page',
+    mark: { type: 'logo', src: '/images/works/last-page/logo.webp', w: 1100, h: 662, alt: '最後のページ', size: 760 },
+    markTop: 118,
+    say: '古い日記帳の頁を跳んで渡り、ひとりの一生を読む。',
+    sub: 'Unity で作った約 7 分のゲーム',
+    meta: '2026.11 –（制作中）　個人制作。実装には AI エージェントを活用。',
+    heroTone: ['night', 'night'],
+    hero: { type: 'pic', pic: { src: '/images/works/last-page/closed.webp', alt: '夕方の机に置かれた、布張りの古い日記帳と鉛筆', w: 1600, h: 900, pos: '30% 50%' } },
+    thumb: '/images/works/last-page/key-visual.webp',
+    sections: [
+      {
+        type: 'spread',
+        left: {
+          tone: 'night',
+          slots: [
+            h('日記の行が、足場になる。'),
+            p(
+              '机の上の古い日記帳が舞台です。1960 年から 2045 年まで、ひなみという女性の一生の日記を読みます。',
+              '動かすのは、五歳のひなみがクレヨンで描いた自画像です。横書きの行に乗り、縦書きの列を登って、頁の上を渡ります。',
+            ),
+          ],
+        },
+        right: { tone: 'night', bleed: [{ src: '/images/works/last-page/lines.webp', alt: '「一九六五年 五月七日」の行の上に、クレヨンで描いた女の子が立っている頁', w: 1600, h: 900, pos: '40% 50%' }] },
+      },
+      {
+        type: 'full',
+        tone: 'night',
+        slots: [{ k: 'video', src: '/images/works/last-page/trailer.mp4', poster: '/images/works/last-page/key-visual.webp', title: '最後のページ 予告動画', caption: '予告動画（1 分 41 秒）。音が出ます。' }],
+      },
+      {
+        type: 'spread',
+        left: { tone: 'paper', slots: [h3('遊び方'), { k: 'list', items: flow('last-page') }] },
+        right: { tone: 'night', bleed: [{ src: '/images/works/last-page/photo.webp', alt: '縁側の写真に撮った人の影が写る頁。横に「私がとった。」と書いてある', w: 1600, h: 900, pos: '60% 50%' }] },
+      },
+      {
+        type: 'full',
+        tone: 'night',
+        slots: [
+          {
+            k: 'clips',
+            items: [
+              { src: '/images/works/last-page/lp_open.mp4', poster: '/images/works/last-page/lp_open.webp', label: '日記帳の表紙が開き、最初の頁の絵が小さくなって動き出す場面' },
+              { src: '/images/works/last-page/lp_walk.mp4', poster: '/images/works/last-page/lp_walk.webp', label: 'クレヨンの女の子が頁を歩き、日記の行へ跳び乗る場面' },
+              { src: '/images/works/last-page/lp_mugi.mp4', poster: '/images/works/last-page/lp_mugi.webp', label: '頁の絵の中で、女の子のそばに子犬のむぎが描かれる場面' },
+              { src: '/images/works/last-page/lp_dream.mp4', poster: '/images/works/last-page/lp_dream.webp', label: '鉛筆で描いた夢の頁で、ひなみがむぎと遊ぶ場面' },
+            ],
+          },
+        ],
+      },
+      {
+        type: 'spread',
+        left: { tone: 'night', bleed: [{ src: '/images/works/last-page/ending.webp', alt: '開いた日記帳の見開きいっぱいに、家族が食卓を囲む絵が描かれている', w: 1600, h: 900, pos: '50% 50%' }] },
+        right: {
+          tone: 'paper',
+          slots: [
+            h('最後に、名前を呼ばれる。'),
+            p('結末では、母に名前を呼ばれます。遊ぶ人が返事をします。'),
+            h3('作りの要点'),
+            { k: 'list', items: points('last-page') },
+          ],
+        },
+      },
+      {
+        type: 'spread',
+        left: { tone: 'night', slots: [stack('last-page')] },
+        right: { tone: 'night', slots: [p(workTech['last-page'].summary, '実装には AI エージェントを活用しています。'), { k: 'note', text: 'このページの画面は、すべて制作中の版から撮ったものです。' }] },
       },
     ],
   },

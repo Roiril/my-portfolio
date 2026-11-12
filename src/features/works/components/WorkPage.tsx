@@ -85,9 +85,16 @@ function Render({ slot }: { slot: Slot }): ReactNode {
             );
         case 'clips':
             return (
-                <div className="wp-clips">
+                <div className="wp-clips" data-count={slot.items.length}>
                     {slot.items.map((c) => <LoopVideo key={c.src} src={c.src} poster={c.poster} label={c.label} />)}
                 </div>
+            );
+        case 'video':
+            return (
+                <figure className="wp-video">
+                    <video src={slot.src} poster={slot.poster} title={slot.title} aria-label={slot.title} controls playsInline preload="none" />
+                    {slot.caption && <figcaption>{slot.caption}</figcaption>}
+                </figure>
             );
         case 'phones':
             return (
@@ -233,6 +240,7 @@ export default function WorkPage({ page, title, backHref, prev, next }: { page: 
     const markStyle = {
         '--mark-top': page.markTop ?? 110,
         ...(mark.type === 'text' ? { '--mark': mark.size, '--mark-m': mark.sizeM } : {}),
+        ...(mark.type === 'logo' && mark.size ? { '--logo': mark.size } : {}),
     } as CSSProperties;
     // 題字の下端。ここから下に画像を置く
     const band = page.band && mark.type === 'text' ? (page.markTop ?? 110) + mark.size * 1.06 + 18 : 0;

@@ -264,6 +264,19 @@ const baseWorks: Work[] = [
     ],
   },
   {
+    id: 'last-page',
+    title: '最後のページ',
+    description:
+      '机の上の古い日記帳を舞台にした、約7分の短いゲームです。1960年から2045年まで、ひなみという女性の一生の日記を読みます。動かすのは、五歳のひなみがクレヨンで描いた自画像です。日記の横書きの行が足場に、縦書きの列が登れる柱になります。人がひなみに言ったひとことや頁の絵を拾って持っていき、右下の角から次の頁へめくります。',
+    image: '/images/works/last-page/key-visual.webp',
+    imageFit: 'cover',
+    tags: ['Game', 'Unity'],
+    links: [],
+    period: '2026.11 –',
+    role: '個人制作。実装には AI エージェントを活用。',
+    isCurrent: true,
+  },
+  {
     id: 'metaquest-devs',
     title: 'MetaQuest Devs',
     description: '卒業研究のためにMeta QuestとUnityで作った試作集です。通路で人とすれ違う場面など、現実の空間に情報を重ねる表現を試しました。',

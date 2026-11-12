@@ -21,6 +21,8 @@ const BOARD = {
 };
 const CLIP_HOLD = 1700;
 const CLIP_STAGGER = 420;
+// 最後のページの映像が消えきるまで（front.css の .leaf-clip の opacity と同じ長さ）
+const LEAF_FADE = 300;
 const GRID_STAGGER = [0, 74, 28, 112];
 
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
@@ -553,9 +555,52 @@ export function startFrontMotion(): () => void {
   const sheetsBox = need<HTMLElement>('.sheets');
   const sheetEls = all<HTMLElement>('.sheet');
   const rightColumn = need<HTMLElement>('.sheets-col.r');
+  // 最後のページ：触れると日記帳の表紙が開き、最初の頁の絵が動き出す。開いた画で止まり、離すと閉じた画へ戻す
+  const book = document.querySelector<HTMLElement>('.sheet.book');
+  const leafClip = book?.querySelector<HTMLVideoElement>('.leaf-clip') ?? null;
+  let leafOn = false;
+  let leafRest = 0;
+  // 指の端末にはホバーが無いので、見開きが画面に入ったら開く
+  let leafInView = false;
+  function syncLeaf() {
+    if (!book || !leafClip || reduce) return;
+    const on = book.classList.contains('is-on') || leafInView;
+    if (on === leafOn) return;
+    leafOn = on;
+    cancelLater(leafRest);
+    if (on) {
+      leafClip.muted = true;
+      if (!leafClip.getAttribute('src')) leafClip.src = leafClip.dataset.src ?? '';
+      if (leafClip.readyState > 0) leafClip.currentTime = 0;
+      // 省電力などで拒まれたときは閉じた画のまま残す
+      leafClip.play().then(() => { if (leafOn) book.classList.add('is-play'); }).catch(() => {});
+    } else {
+      book.classList.remove('is-play');
+      // 消えきってから止めて、初めに戻す
+      leafRest = later(() => {
+        leafClip.pause();
+        if (leafClip.readyState > 0) leafClip.currentTime = 0;
+      }, LEAF_FADE);
+    }
+  }
+  if (book && leafClip) {
+    if (touch && !reduce) {
+      const observer = new IntersectionObserver((entries) => {
+        leafInView = entries[entries.length - 1].isIntersecting;
+        syncLeaf();
+      }, { threshold: 0.6 });
+      observer.observe(book);
+      undo.push(() => observer.disconnect());
+    }
+    undo.push(() => {
+      leafClip.pause();
+      book.classList.remove('is-play');
+    });
+  }
   function sheetOn(el: HTMLElement, on: boolean) {
     el.classList.toggle('is-on', on);
     sheetsBox.classList.toggle('has-on', !!sheetsBox.querySelector('.sheet.is-on'));
+    syncLeaf();
   }
   sheetEls.forEach((el) => {
     el.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') sheetOn(el, true); }, { signal });

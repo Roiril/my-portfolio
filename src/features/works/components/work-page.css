@@ -78,7 +78,7 @@
 .wp-mark__r { position: absolute; inset: 0; clip-path: inset(-10% -10% -10% 50%); }
 .wp-mark__r[data-ink="light"] { color: var(--light); }
 .wp-mark__r[data-ink="ink"] { color: var(--ink); }
-.wp-mark--logo img { width: calc(1000 * var(--u)); height: auto; margin: 0 auto; }
+.wp-mark--logo img { width: calc(var(--logo, 1000) * var(--u)); height: auto; margin: 0 auto; }
 .wp-mark[data-tone="night"] .wp-mark__l { color: var(--light); }
 .wp-mark[data-tone="paper"] .wp-mark__l, .wp-mark[data-tone="white"] .wp-mark__l { color: var(--ink); }
 
@@ -121,6 +121,10 @@
 
 .wp-clips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
 .wp-clips video { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.wp-clips[data-count="4"] { grid-template-columns: repeat(4, 1fr); }
+
+.wp-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+.wp-video figcaption { margin-top: .6em; color: var(--sub); font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.65; }
 
 .wp-phones { display: flex; justify-content: center; align-items: flex-start; gap: calc(24 * var(--u)); }
 .wp-phones figure { flex: 0 1 calc(240 * var(--u)); min-width: 0; }
@@ -160,7 +164,7 @@
 .wp-full, .wp-figure, .wp-widefig { position: relative; z-index: 2; }
 .wp-full { display: grid; gap: max(20px, calc(28 * var(--u))); padding: max(44px, calc(80 * var(--u))) var(--gutter); }
 .wp-full > .wp-yt { width: min(100%, calc(1180 * var(--u))); margin-inline: auto; }
-.wp-full > .wp-pic { width: min(100%, calc(1180 * var(--u))); margin-inline: auto; }
+.wp-full > .wp-pic, .wp-full > .wp-video { width: min(100%, calc(1180 * var(--u))); margin-inline: auto; }
 .wp-full:has(> .wp-clips) { padding: 0; }
 
 .wp-figure { display: grid; grid-template-columns: minmax(0, 1fr) calc(470 * var(--u)); gap: calc(40 * var(--u)); align-items: center; padding: max(36px, calc(60 * var(--u))) var(--gutter) max(36px, calc(60 * var(--u))) calc(24 * var(--u)); }
@@ -221,7 +225,7 @@
   .wp-phones img { border-radius: 14px; }
   .wp-pics { gap: 6px; }
   .wp-pics[data-cols="3"], .wp-pics[data-cols="4"], .wp-pics[data-cols="5"] { grid-template-columns: repeat(2, 1fr); }
-  .wp-clips { grid-template-columns: repeat(2, 1fr); }
+  .wp-clips, .wp-clips[data-count="4"] { grid-template-columns: repeat(2, 1fr); }
   .wp-yt--portrait { width: min(100%, 260px); }
   .wp-np { min-height: 0; padding-right: 150px; }
   .wp-np__thumb { width: 118px; }
