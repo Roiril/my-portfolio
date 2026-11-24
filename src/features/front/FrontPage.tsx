@@ -82,8 +82,8 @@ export default function FrontPage() {
           <p className="award">IVRC2026<br />総合優勝<br />DCEXPO賞</p>
           <ul>
             <li>第31回日本VR学会大会で体験展示</li>
-            <li>2026年11月18〜20日 DCEXPO2026 で招待展示予定</li>
-            <li>2026年11月19日 Inter BEE で登壇予定</li>
+            <li>2026年11月18〜20日 DCEXPO2026 で招待展示</li>
+            <li>2026年11月19日 Inter BEE で登壇</li>
           </ul>
         </div>
         <div className="m-r">

@@ -39,7 +39,9 @@ export type Slot =
   | { k: 'stack'; items: { label: string; items: string[] }[] }
   | { k: 'credits'; title: string; items: string[] }
   | { k: 'links'; items: LinkItem[] }
-  | { k: 'post'; url: string; title: string; caption: string; stats: { label: string; value: string }[] };
+  | { k: 'post'; url: string; title: string; caption: string; stats: { label: string; value: string }[] }
+  // 来場した方の投稿。縦の動画と本文を並べ、投稿者の名前を出す。photos は投稿の写真の説明（投稿の順）
+  | { k: 'voice'; url: string; title: string; photos: string[] };
 
 export type Page = { tone: Tone; slots: Slot[]; center?: boolean } | { tone: Tone; bleed: Pic[] };
 
@@ -118,6 +120,23 @@ export const workPages: WorkPageDef[] = [
     thumb: '/images/front/room.webp',
     sections: [
       {
+        type: 'full',
+        tone: 'paper',
+        slots: [
+          {
+            k: 'voice',
+            url: 'https://x.com/kure_kure_zo/status/2122963059086086273',
+            title: 'Inter BEE 2026 出展時の感想',
+            photos: [
+              '廻リ視のポスター',
+              '展示台に置いた日本人形とタブレット',
+              'カーテンの周りを三周するよう伝えるタブレットの画面',
+              'コントローラーの操作を説明するタブレットの画面',
+            ],
+          },
+        ],
+      },
+      {
         type: 'spread',
         left: {
           tone: 'paper',
@@ -162,11 +181,11 @@ export const workPages: WorkPageDef[] = [
               items: [
                 { title: 'IVRC2026', body: '総合優勝。DCEXPO賞。' },
                 { title: '第31回日本VR学会大会', body: '体験展示。' },
-                { title: 'DCEXPO2026', body: '2026年11月18〜20日に招待展示予定。' },
-                { title: 'Inter BEE', body: '2026年11月19日に登壇予定。' },
+                { title: 'DCEXPO2026', body: '2026年11月18〜20日に招待展示。' },
+                { title: 'Inter BEE', body: '2026年11月19日に登壇。' },
               ],
             },
-            { k: 'note', text: '2026 年 11 月 7 日時点。' },
+            { k: 'note', text: '2026 年 11 月 25 日時点。' },
           ],
         },
         right: {

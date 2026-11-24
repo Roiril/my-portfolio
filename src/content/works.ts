@@ -9,7 +9,7 @@ const baseWorks: Work[] = [
     id: 'mawarimi',
     title: '廻リ視 — Mawarimi',
     description:
-      '監視カメラに映る自分を見ながら、現実空間を歩く固定視点のホラー体験です。HMDと複数のカメラで固定視点を現実空間に再構成しました。体験者は怪異調査員として呪われた壁を調査します。IVRC2026で総合優勝し、DCEXPO賞を受賞しました。2026年11月18〜20日のDCEXPO2026で招待展示予定です。私は企画・監督、体験設計、要件定義、動作検証を担当しています。実装にはAIエージェントを活用し、設計の把握とテストを通して品質を確かめています。',
+      '監視カメラに映る自分を見ながら、現実空間を歩く固定視点のホラー体験です。HMDと複数のカメラで固定視点を現実空間に再構成しました。体験者は怪異調査員として呪われた壁を調査します。IVRC2026で総合優勝し、DCEXPO賞を受賞しました。2026年11月18〜20日のDCEXPO2026で招待展示し、19日にInter BEEで登壇しました。私は企画・監督、体験設計、要件定義、動作検証を担当しています。実装にはAIエージェントを活用し、設計の把握とテストを通して品質を確かめています。',
     image: '/images/works/mawarimi/key-visual.webp',
     tags: ['Research', 'XR', 'Substitutional Reality'],
     links: [
@@ -17,18 +17,19 @@ const baseWorks: Work[] = [
       { type: 'paper', url: 'https://www.conference.vrsj.org/ac2026/program/doc/IVRC-15.pdf', label: 'Publication（日本VR学会）' },
     ],
     media: [
+      { type: 'x', src: 'https://x.com/kure_kure_zo/status/2122963059086086273', title: 'Inter BEE 2026 出展時の感想' },
       { type: 'youtube', src: 'uWf51qRwbhA', title: '廻リ視(MAWARIMI) トレイラー', caption: '最新のトレイラー', size: 'large' },
       { type: 'youtube', src: 'ipoU4gU9G4k', title: '廻り視トレイラー (IVRC2026 ver)', caption: 'IVRC2026 のときのトレイラー', size: 'small' },
     ],
     reception: {
       title: '受賞と展示',
-      asOf: '2026 年 11 月 7 日時点。',
+      asOf: '2026 年 11 月 25 日時点。',
       items: [
         { value: '総合優勝', label: 'IVRC2026' },
         { value: 'DCEXPO賞', label: 'IVRC2026' },
         { value: '体験展示', label: '第31回日本VR学会大会' },
-        { value: '2026.11.18–20', label: 'DCEXPO2026 で招待展示予定' },
-        { value: '2026.11.19', label: 'Inter BEE で登壇予定' },
+        { value: '2026.11.18–20', label: 'DCEXPO2026 で招待展示' },
+        { value: '2026.11.19', label: 'Inter BEE で登壇' },
       ],
     },
     category: 'research',

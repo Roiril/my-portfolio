@@ -151,6 +151,8 @@ function Render({ slot }: { slot: Slot }): ReactNode {
             return <Links items={slot.items} />;
         case 'post':
             return <XPost url={slot.url} title={slot.title} caption={slot.caption} stats={slot.stats} />;
+        case 'voice':
+            return <XPost url={slot.url} title={slot.title} photos={slot.photos} voice />;
     }
 }
 

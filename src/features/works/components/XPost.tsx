@@ -7,6 +7,7 @@ type Variant = { content_type: string; bitrate?: number; url: string };
 type TweetData = {
     text: string;
     created_at: string;
+    user?: { name: string; screen_name: string };
     mediaDetails?: { type: string; media_url_https: string; original_info?: { width: number; height: number }; video_info?: { variants: Variant[] } }[];
 };
 
@@ -23,7 +24,7 @@ async function fetchTweet(id: string): Promise<TweetData | null> {
     }
 }
 
-export default async function XPost({ url, title, caption, stats }: { url: string; title: string; caption?: string; stats?: { label: string; value: string }[] }) {
+export default async function XPost({ url, title, caption, stats, voice, photos = [] }: { url: string; title: string; caption?: string; stats?: { label: string; value: string }[]; voice?: boolean; photos?: string[] }) {
     const id = url.match(/status\/(\d+)/)?.[1];
     const tweet = id ? await fetchTweet(id) : null;
     const media = tweet?.mediaDetails?.[0];
@@ -32,8 +33,12 @@ export default async function XPost({ url, title, caption, stats }: { url: strin
     // 本文の末尾に付く t.co の短縮 URL は、下に投稿へのリンクを置くので外す
     const text = tweet?.text.replace(/\s*https:\/\/t\.co\/\S+/g, '').trim();
 
+    // 来場した方の投稿では、写真と投稿者の名前も出す
+    const pictures = voice ? (tweet?.mediaDetails ?? []).filter((m) => m.type === 'photo') : [];
+    const posted = tweet && new Date(tweet.created_at).toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'long', day: 'numeric' });
+
     return (
-        <figure className="wp-post">
+        <figure className={voice ? 'wp-post wp-post--voice' : 'wp-post'}>
             {mp4 ? (
                 <div className="wp-post__frame" style={{ aspectRatio: ratio }}>
                     <video controls preload="none" playsInline poster={media?.media_url_https} aria-label={title}>
@@ -45,6 +50,16 @@ export default async function XPost({ url, title, caption, stats }: { url: strin
                 <strong>{title}</strong>
                 {caption && <span>{caption}</span>}
                 {text && <q>{text}</q>}
+                {voice && tweet?.user && <span>{tweet.user.name}（@{tweet.user.screen_name}）さん　{posted}</span>}
+                {pictures.length > 0 && (
+                    <div className="wp-post__photos">
+                        {pictures.map((m, i) => (
+                            // X の配信画像をそのまま出す
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img key={m.media_url_https} src={`${m.media_url_https}?name=small`} alt={photos[i] ?? ''} loading="lazy" decoding="async" />
+                        ))}
+                    </div>
+                )}
                 {stats && stats.length > 0 && (
                     <dl>
                         {stats.map((s) => (

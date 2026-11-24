@@ -57,6 +57,6 @@ export const resumeSkills: ResumeSkillTier[] = [
 ];
 
 export const resumeAwards: ResumeAward[] = [
-  { period: '2026', text: '学生VRコンテスト IVRC2026 総合優勝・DCEXPO賞（「廻リ視」、チーム制作。企画・監督・ソフトウェア開発を担当）。第31回日本VR学会大会（富山県立大学）で体験展示し、2026年11月に DCEXPO2026 で展示予定' },
+  { period: '2026', text: '学生VRコンテスト IVRC2026 総合優勝・DCEXPO賞（「廻リ視」、チーム制作。企画・監督・ソフトウェア開発を担当）。第31回日本VR学会大会（富山県立大学）で体験展示し、2026年11月に DCEXPO2026 で招待展示、Inter BEE で登壇' },
   { period: '2026.08', text: 'unity1week「しろ」に「WhiteOut」を出品。楽しさの評価 4.434/5、評価の高い作品に選出' },
 ];
