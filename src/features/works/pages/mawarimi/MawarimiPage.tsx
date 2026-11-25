@@ -51,9 +51,9 @@ export default function MawarimiPage() {
 
             <section className="cams">
                 <svg className="cams__loop" viewBox="0 0 1440 760" preserveAspectRatio="none" aria-hidden="true"><path d="M1150 0 C1150 190 1400 250 1370 430 C1330 700 500 720 180 640 C-60 570 20 330 190 300" fill="none" stroke="currentColor" strokeWidth="44" /></svg>
-                <Photo className="cam a" pic={{ src: '/images/front/cam1.webp', alt: '棚のアームのカメラから見た部屋', w: 960, h: 720, caption: '棚のアームのカメラ' }} />
-                <Photo className="cam b" pic={{ src: '/images/front/cam2.webp', alt: '床に置いたカメラから見た部屋', w: 960, h: 720, caption: '床に置いたカメラ' }} />
-                <Photo className="cam c" pic={{ src: '/images/front/room.webp', alt: '黒い幕に囲まれた部屋', w: 1672, h: 941, caption: '黒い幕に囲まれた部屋' }} />
+                <Photo className="cam a" pic={{ src: '/images/front/cam1.webp', alt: '正面のスマホスタンド越しのカメラの映像。幕と手すり', w: 960, h: 720, caption: '正面のスマホスタンド越しのカメラ' }} />
+                <Photo className="cam b" pic={{ src: '/images/front/cam2.webp', alt: '床に置いたカメラの映像。床の低い位置から見た壁', w: 960, h: 720, caption: '床に置いたカメラ' }} />
+                <Photo className="cam c" pic={{ src: '/images/front/cam3.webp', alt: '棚のアームのカメラの映像。高い位置から見下ろした幕と床', w: 960, h: 720, caption: '棚のアームのカメラ' }} />
             </section>
 
             <section className="films">

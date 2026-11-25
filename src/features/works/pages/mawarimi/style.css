@@ -16,13 +16,14 @@ body:has(.p-mawarimi) { background: #080606; }
 .p-mawarimi .laps .wk-nums { gap: calc(16 * var(--u)) calc(40 * var(--u)); }
 .p-mawarimi .laps .wk-nums dd { font-weight: 800; color: #080606; font-size: max(54px, calc(108 * var(--u))); }
 
-.p-mawarimi .cams { position: relative; height: calc(1000 * var(--u)); }
+.p-mawarimi .cams { position: relative; height: calc(1040 * var(--u)); }
 .p-mawarimi .cams__loop { position: absolute; inset: 0; width: 100%; height: 100%; color: #b1160f; }
+/* 輪の切れ端と下の縁は、画で隠れる位置に置く */
 .p-mawarimi .cam { position: absolute; }
 .p-mawarimi .cam figcaption { position: absolute; left: 0; top: 0; margin: 0; padding: .1em .7em; background: #080606; }
 .p-mawarimi .cam.a { left: calc(64 * var(--u)); top: calc(70 * var(--u)); width: calc(560 * var(--u)); }
 .p-mawarimi .cam.b { right: calc(64 * var(--u)); top: calc(250 * var(--u)); width: calc(620 * var(--u)); }
-.p-mawarimi .cam.c { left: calc(200 * var(--u)); top: calc(560 * var(--u)); width: calc(660 * var(--u)); }
+.p-mawarimi .cam.c { left: calc(168 * var(--u)); top: calc(574 * var(--u)); width: calc(540 * var(--u)); }
 
 .p-mawarimi .films { position: relative; display: grid; grid-template-columns: 1.5fr 1fr; gap: calc(40 * var(--u)); align-items: end; padding: max(30px, calc(60 * var(--u))) var(--pad) max(48px, calc(100 * var(--u))); }
 .p-mawarimi .path { display: grid; grid-template-columns: 1.35fr 1fr; gap: calc(48 * var(--u)); align-items: center; padding: max(40px, calc(40 * var(--u))) var(--pad); background: #0b0908; }
@@ -53,18 +54,18 @@ body:has(.p-mawarimi) { background: #080606; }
   .p-mawarimi .laps__copy { position: static; width: auto; padding: 48px var(--pad) 26px; }
   .p-mawarimi .laps .wk-art { aspect-ratio: 1; }
   .p-mawarimi .laps .wk-art img { object-position: 88% 50%; }
-  .p-mawarimi .cams { height: 200vw; }
+  .p-mawarimi .cams { height: 224vw; }
   .p-mawarimi .cam.a { left: 0; top: 12vw; width: 84%; }
   .p-mawarimi .cam.b { right: 0; top: 82vw; width: 88%; }
-  .p-mawarimi .cam.c { left: 0; top: 148vw; width: 82%; }
+  .p-mawarimi .cam.c { left: 0; top: 155vw; width: 84%; }
   .p-mawarimi .films, .p-mawarimi .path, .p-mawarimi .record { grid-template-columns: 1fr; gap: 34px; }
 }
 @media (min-width: 600px) and (max-width: 900px) {
   .p-mawarimi .laps .wk-art { aspect-ratio: 4 / 3; }
-  .p-mawarimi .cams { height: 150vw; }
-  .p-mawarimi .cam.a { top: 8vw; width: 74%; }
-  .p-mawarimi .cam.b { top: 56vw; width: 80%; }
-  .p-mawarimi .cam.c { top: 104vw; width: 74%; }
+  .p-mawarimi .cams { height: 174vw; }
+  .p-mawarimi .cam.a { top: 8vw; width: 56%; }
+  .p-mawarimi .cam.b { top: 54vw; width: 88%; }
+  .p-mawarimi .cam.c { top: 124vw; width: 56%; }
   .p-mawarimi .films { grid-template-columns: 1.4fr 1fr; gap: 24px; }
   .p-mawarimi .record { grid-template-columns: 1fr 1fr; }
   .p-mawarimi .record > .wk-stack { grid-column: 1 / 3; }
