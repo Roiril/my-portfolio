@@ -40,15 +40,15 @@ export type Slot =
   | { k: 'credits'; title: string; items: string[] }
   | { k: 'links'; items: LinkItem[] }
   | { k: 'post'; url: string; title: string; caption: string; stats: { label: string; value: string }[] }
-  // 来場した方の投稿。縦の動画と本文を並べ、投稿者の名前を出す。photos は投稿の写真の説明（投稿の順）
-  | { k: 'voice'; url: string; title: string; photos: string[] };
+  // 来場した方の投稿。縦の動画と本文を並べ、投稿者の名前を出す。title は折り返す所で分ける。
+  // photos は投稿の写真の説明（投稿の順）。award は右上に小さく置く写真
+  | { k: 'voice'; url: string; title: string[]; photos: string[]; award: Pic };
 
 export type Page = { tone: Tone; slots: Slot[]; center?: boolean } | { tone: Tone; bleed: Pic[] };
 
 export type Section =
   | { type: 'spread'; left: Page; right: Page }
-  // corner は右上に掛ける小さな写真。上の面へ少しはみ出す
-  | { type: 'full'; tone: Tone; slots: Slot[]; corner?: Pic }
+  | { type: 'full'; tone: Tone; slots: Slot[] }
   // 図を大きく置き、横に文を添える。図は線をまたぐ
   | { type: 'figure'; tone: Tone; name: string; caption: string; side?: Slot[] }
   // 路線図のように横に長い図
@@ -123,18 +123,18 @@ export const workPages: WorkPageDef[] = [
       {
         type: 'full',
         tone: 'paper',
-        corner: {
-          src: '/images/front/mawarimi-award.webp',
-          alt: 'DCEXPO Prize at IVRC と映したスクリーンの前で、賞状が読み上げられている',
-          w: 660,
-          h: 495,
-          caption: 'DCEXPO賞の授賞式',
-        },
         slots: [
           {
             k: 'voice',
             url: 'https://x.com/kure_kure_zo/status/2122963059086086273',
-            title: 'Inter BEE 2026 出展時の感想',
+            title: ['Inter BEE 2026', '出展時の感想'],
+            award: {
+              src: '/images/front/mawarimi-award.webp',
+              alt: 'DCEXPO Prize at IVRC と映したスクリーンの前で、賞状が読み上げられている',
+              w: 660,
+              h: 495,
+              caption: 'DCEXPO賞の授賞式',
+            },
             photos: [
               '廻リ視のポスター',
               '展示台に置いた日本人形とタブレット',

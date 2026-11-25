@@ -160,23 +160,38 @@
 .wp-post dd { font-family: var(--tall); font-size: max(20px, calc(24 * var(--u))); line-height: 1.2; }
 .wp-post a { justify-self: start; font-weight: 500; text-underline-offset: .28em; text-decoration-thickness: 1px; }
 
-/* 面の右上に掛ける小さな写真。上の面との境目をまたぐ */
-.wp-corner { position: absolute; z-index: 1; top: calc(-64 * var(--u)); right: var(--gutter); width: max(190px, calc(290 * var(--u))); }
-.wp-corner img { width: 100%; height: auto; }
-.wp-corner figcaption { margin-top: .6em; color: var(--sub); font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.65; }
-
-/* 来場した方の投稿。縦の動画の横に本文を置く */
-.wp-post--voice { display: grid; grid-template-columns: max(240px, calc(390 * var(--u))) minmax(0, 1fr); gap: max(24px, calc(72 * var(--u))); align-items: center; width: 100%; max-width: calc(1180 * var(--u)); margin-inline: auto; }
-.wp .wp-post--voice figcaption { gap: 1em; margin-top: 0; }
-.wp-post--voice strong { font-size: max(22px, calc(32 * var(--u))); }
-.wp-post--voice q { font-size: max(15px, calc(18 * var(--u))); line-height: 1.9; }
-.wp-post__photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(10 * var(--u)); }
-.wp-post__photos img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+/* 来場した方の投稿と授賞式の写真。上端は見出しと写真、下端は動画と投稿の写真で揃える */
+.wp-voice {
+  --gap: max(24px, calc(56 * var(--u)));
+  display: grid;
+  grid-template: "video head award" auto "video text award" 1fr "video photos photos" auto / max(236px, calc(432 * var(--u))) minmax(0, 1fr) auto;
+  column-gap: var(--gap);
+}
+.wp-voice__video { grid-area: video; position: relative; align-self: stretch; width: 100%; background: #000; }
+.wp-voice__video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.wp .wp-voice__head { grid-area: head; margin-top: -.3em; font-family: var(--serif); font-weight: 700; font-size: max(23px, calc(38 * var(--u))); line-height: 1.4; }
+.wp-voice__head .wp-phrase { display: block; }
+.wp .wp-voice__text { grid-area: text; padding-top: max(16px, calc(26 * var(--u))); }
+.wp-voice blockquote { margin: 0; font-size: max(14.5px, calc(16 * var(--u))); line-height: 1.8; white-space: pre-line; }
+.wp .wp-voice__by { display: flex; flex-wrap: wrap; gap: .1em 1.2em; margin-top: 1em; color: var(--sub); font-size: max(13px, calc(13.5 * var(--u))); }
+.wp-voice__by a { font-weight: 500; text-underline-offset: .28em; text-decoration-thickness: 1px; }
+.wp .wp-voice__by a { color: var(--ink); }
+/* 綴じ目と同じ赤い線を添え、説明は縦に組む */
+.wp-voice__award { grid-area: award; align-self: start; display: grid; grid-template-columns: auto max(220px, calc(300 * var(--u))); column-gap: max(8px, calc(12 * var(--u))); }
+.wp-voice__award img { grid-area: 1 / 2; width: 100%; height: auto; }
+.wp-voice__award figcaption { grid-area: 1 / 1; justify-self: end; padding-right: max(8px, calc(12 * var(--u))); border-right: 2px solid var(--accent); writing-mode: vertical-rl; font-family: var(--serif); font-size: max(13px, calc(15 * var(--u))); line-height: 1.4; letter-spacing: .12em; }
+.wp-voice__photos { grid-area: photos; display: grid; grid-template-columns: repeat(4, 1fr); gap: max(6px, calc(12 * var(--u))); padding-top: max(20px, calc(30 * var(--u))); }
+.wp-voice__photos img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 12%; }
+@media (max-width: 1180px) {
+  .wp-voice { grid-template: "head head award" auto "video text text" 1fr "video photos photos" auto / max(236px, calc(432 * var(--u))) minmax(0, 1fr) auto; row-gap: 24px; }
+  .wp .wp-voice__head { align-self: end; margin: 0; }
+  .wp .wp-voice__text, .wp-voice__photos { padding-top: 0; }
+}
 @media (max-width: 760px) {
-  .wp .wp-corner { position: relative; top: auto; right: auto; justify-self: end; width: 62%; margin-top: -68px; }
-  .wp-post--voice { grid-template-columns: minmax(0, 1fr); max-width: none; }
-  .wp-post--voice .wp-post__frame { width: min(100%, 300px); margin-inline: auto; }
-  .wp-post__photos { gap: 6px; }
+  .wp-voice { grid-template: "head award" auto "video video" auto "text text" auto "photos photos" auto / minmax(0, 1fr) auto; column-gap: 12px; }
+  .wp .wp-voice__head { font-size: 19px; white-space: nowrap; }
+  .wp-voice__award { display: block; width: 46vw; }
+  .wp .wp-voice__award figcaption { margin-top: 8px; justify-self: stretch; padding: 0 0 0 8px; border: 0; border-left: 2px solid var(--accent); writing-mode: horizontal-tb; font-size: 13px; letter-spacing: .04em; }
 }
 
 /* ---------- 全幅の面。線を隠す ---------- */

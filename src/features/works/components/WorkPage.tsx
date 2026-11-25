@@ -5,7 +5,7 @@ import type { Hero, LinkItem, Mark, Page, Pic, Section, Slot, WorkPageDef } from
 import { frontFonts } from '@/features/front/fonts';
 import LoopVideo from './LoopVideo';
 import WorkFigure from './WorkFigure';
-import XPost from './XPost';
+import XPost, { XVoice } from './XPost';
 import './work-page.css';
 
 const HALF = '(max-width: 760px) 100vw, 50vw';
@@ -152,7 +152,7 @@ function Render({ slot }: { slot: Slot }): ReactNode {
         case 'post':
             return <XPost url={slot.url} title={slot.title} caption={slot.caption} stats={slot.stats} />;
         case 'voice':
-            return <XPost url={slot.url} title={slot.title} photos={slot.photos} voice />;
+            return <XVoice url={slot.url} title={slot.title} photos={slot.photos} award={slot.award} />;
     }
 }
 
@@ -187,12 +187,6 @@ function SectionBlock({ section }: { section: Section }) {
         case 'full':
             return (
                 <section className="wp-full" data-tone={section.tone}>
-                    {section.corner && (
-                        <figure className="wp-corner">
-                            <Image src={section.corner.src} alt={section.corner.alt} width={section.corner.w} height={section.corner.h} sizes="(max-width: 760px) 62vw, 22vw" />
-                            {section.corner.caption && <figcaption>{section.corner.caption}</figcaption>}
-                        </figure>
-                    )}
                     <Slots slots={section.slots} />
                 </section>
             );
