@@ -45,3 +45,6 @@ body:has(.p-blender) { background: #8fdcb4; }
   .p-blender .subway__copy { padding: 32px var(--pad); }
   .p-blender .vfx .wk-art:first-child, .p-blender .vfx .wk-art:last-child { min-height: 0; aspect-ratio: 16 / 10; }
 }
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-blender .say { font-size: max(17px, 2.5vw); }
+}

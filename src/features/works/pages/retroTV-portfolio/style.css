@@ -54,3 +54,11 @@ body:has(.p-retro) { background: #857b29; }
   .p-retro .night .wk-yt { width: 260px; }
   .p-retro .back > .wk-pic img { aspect-ratio: 16 / 9; object-position: 60% 50%; }
 }
+@media (min-width: 901px) and (min-aspect-ratio: 17 / 10) {
+  .p-retro .living .wk-art { aspect-ratio: auto; height: clamp(40vw, calc(100svh - 9.9vw), 47.2vw); }
+  .p-retro .living .wk-art img { object-position: 50% -2.5vw; }
+  .p-retro .screen { top: 15.23vw; }
+  .p-retro .title { padding-block: calc(14 * var(--u)); }
+  .p-retro .title h1 { font-size: calc(64 * var(--u)); }
+  .p-retro .title > div { gap: calc(6 * var(--u)); }
+}

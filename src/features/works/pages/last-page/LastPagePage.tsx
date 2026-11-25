@@ -16,7 +16,7 @@ export default function LastPagePage() {
                 <h1><Image src={`${f}logo.webp`} alt="最後のページ" width={1100} height={662} sizes="(max-width: 900px) 90vw, 46vw" priority /></h1>
                 <p className="say"><Ph text="古い日記帳の頁を跳んで渡り、ひとりの一生を読む。" /></p>
                 <p>Unity で作った約 7 分のゲーム</p>
-                <p>2026.11 –（制作中）　個人制作。実装には AI エージェントを活用。</p>
+                <p>2026.11 –（制作中）　個人制作。<span className="wk-ph">実装には AI エージェントを活用。</span></p>
             </Hero>
 
             <section className="crayon">

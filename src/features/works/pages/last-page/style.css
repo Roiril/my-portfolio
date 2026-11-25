@@ -56,3 +56,11 @@ body:has(.p-last-page) { background: #1a0d08; }
 @media (min-width: 600px) and (max-width: 900px) {
   .p-last-page .scenes .s2, .p-last-page .scenes .s3, .p-last-page .scenes .s5, .p-last-page .scenes .s6 { grid-column: span 3; }
 }
+@media (min-width: 901px) and (min-aspect-ratio: 17 / 10) {
+  .p-last-page .wk-hero__art { aspect-ratio: auto; height: min(var(--fit), 62.5vw); }
+  .p-last-page .wk-hero__copy { height: auto; bottom: calc(60 * var(--u)); }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-last-page .say { font-size: max(21px, 3.2vw); }
+  .p-last-page .wk-hero__copy p:not(.say) { font-size: max(14.5px, 2.15vw); }
+}

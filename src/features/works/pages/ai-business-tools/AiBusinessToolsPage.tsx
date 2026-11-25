@@ -22,7 +22,7 @@ export default function AiBusinessToolsPage() {
             <section className="check">
                 <Art src={`${f}check.webp`} alt="朱の鉛筆を持つ手が表の紙に丸をつける" />
                 <div className="check__copy">
-                    <h2><Ph text="下書きは AI に。最後は人が確かめる。" /></h2>
+                    <h2><span className="wk-ph">下書きは AI に。</span><Ph text="最後は人が確かめる。" /></h2>
                     <Text items={[
                         '長期インターンでは、営業担当へのヒアリングをもとに必要な機能を要件定義し、AIを活用して業務ツールを実装しています。品質を確かめるために実装の設計を把握し、テストと動作検証を行っています。',
                         '制作したのは、商談内容から見積書の下書きを作る機能と、社内マニュアルを検索して回答するRAGチャットです。',

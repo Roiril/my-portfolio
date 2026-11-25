@@ -64,7 +64,6 @@ function TwoWay({ src, tall, alt }: { src: string; tall: string; alt: string }) 
     return (
         <picture>
             <source media="(max-width: 900px)" srcSet={tallSet} sizes="100vw" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img {...rest} srcSet={srcSet} alt={alt} />
         </picture>
     );

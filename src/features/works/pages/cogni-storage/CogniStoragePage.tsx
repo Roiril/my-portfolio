@@ -22,7 +22,7 @@ export default function CogniStoragePage() {
             <Hero src={`${f}poster.webp`} tall={`${f}poster-tall.webp`} alt="天井まで続く目録の引き出しから、カードの葉をつけた木が伸びる版画">
                 <h1>cogni<br />storage</h1>
                 <p className="say"><Ph text="読む・考える・書くを、ひとつのアプリで行う。" /></p>
-                <p className="meta">2026.03 –　個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。</p>
+                <p className="meta">2026.03 –　個人制作。<span className="wk-ph">企画・設計・検証を担当。</span><span className="wk-ph">実装には AI エージェントを活用。</span></p>
                 <Links items={[{ label: 'アプリのデモを見る', url: '/demos/cogni-storage/index.html' }]} />
             </Hero>
 

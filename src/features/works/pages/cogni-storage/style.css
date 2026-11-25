@@ -44,3 +44,8 @@ body:has(.p-cogni) { background: #efe0c4; }
   .p-cogni .drawer .wk-pic:nth-child(4) { grid-column: 2 / 4; }
   .p-cogni .desk .wk-art { aspect-ratio: 4 / 3; }
 }
+@media (min-width: 901px) and (min-aspect-ratio: 17 / 10) {
+  .p-cogni .wk-hero__art { aspect-ratio: auto; height: var(--fit); }
+  .p-cogni .wk-hero__art img { object-position: 50% 72%; }
+  .p-cogni .wk-hero__copy { bottom: calc(52 * var(--u)); }
+}

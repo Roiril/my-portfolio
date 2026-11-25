@@ -25,7 +25,7 @@ body:has(.p-aquarium) { background: #f07303; }
   .p-aquarium .real .wk-art { min-height: 0; aspect-ratio: 3 / 2; }
   .p-aquarium .real > div { padding-inline: var(--pad); }
   .p-aquarium .swim { gap: 34px; }
-  .p-aquarium .rules .wk-fig { max-width: 560px; }
+  .p-aquarium .rules .wk-fig { max-width: 460px; }
   .p-aquarium .tanks { grid-template-columns: 1fr 1fr; }
   .p-aquarium .tanks .wk-pic { height: 44vw; }
 }
@@ -33,4 +33,7 @@ body:has(.p-aquarium) { background: #f07303; }
   .p-aquarium .real > div { grid-template-columns: 1fr 1.4fr; gap: 30px; }
   .p-aquarium .tanks .wk-pic { height: 36vw; }
   .p-aquarium .swim .wk-list { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+}
+@media (min-width: 901px) and (max-width: 979px) {
+  .p-aquarium .rules .wk-fig { max-width: 460px; }
 }

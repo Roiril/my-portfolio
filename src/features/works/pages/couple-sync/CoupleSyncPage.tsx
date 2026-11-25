@@ -19,7 +19,7 @@ export default function CoupleSyncPage() {
             <Hero src={`${f}poster.webp`} tall={`${f}poster-tall.webp`} alt="離れて建つ 2 軒の家の屋根に、ぶちの猫が橋のように寝そべっている">
                 <h1>couple-sync</h1>
                 <p className="say"><Ph text="ふたりの毎日を、ひとつの部屋に。" /></p>
-                <p className="meta">2026.03 –　個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。</p>
+                <p className="meta">2026.03 –　個人制作。<span className="wk-ph">企画・設計・検証を担当。</span><span className="wk-ph">実装には AI エージェントを活用。</span></p>
                 <Links items={[{ label: 'アプリのデモを見る', url: '/demos/couple-sync/index.html' }]} />
             </Hero>
 

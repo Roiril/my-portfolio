@@ -43,6 +43,8 @@ body:has(.p-mawarimi) { background: #080606; }
 .p-mawarimi .record li { font-size: .95em; }
 @media (max-width: 900px) {
   .p-mawarimi h1 img { width: 100%; margin-left: 0; }
+  .p-mawarimi .meta { max-width: none; }
+  .p-mawarimi .award { font-size: clamp(14.5px, 4.7vw, 18px); }
   .p-mawarimi .say { font-size: clamp(18px, 5.05vw, 30px); }
   @media (min-width: 600px) and (min-aspect-ratio: 4 / 5) { .p-mawarimi h1 img { width: 46vw; } }
   .p-mawarimi .wk-hero .wk-links a { padding-inline: .9em; font-size: 15px; }
@@ -79,4 +81,16 @@ body:has(.p-mawarimi) { background: #080606; }
   .p-mawarimi .tate .wk-list { gap: 16px; }
   .p-mawarimi .tate .wk-list > div { height: 430px; padding-right: 14px; }
   .p-mawarimi .tate dd { line-height: 1.85; }
+}
+@media (min-width: 901px) {
+  .p-mawarimi .wk-hero .wk-links a { outline: 4px solid #080606; }
+  .p-mawarimi .meta { padding: 0 .5em; margin-left: -.5em; background: #080606; }
+}
+@media (min-width: 901px) and (max-width: 1279px) {
+  .p-mawarimi .laps__copy { width: calc(460 * var(--u)); gap: 18px; }
+  .p-mawarimi .laps .wk-nums { display: grid; grid-template-columns: auto 1fr 1fr; gap: 14px; }
+  .p-mawarimi .laps .wk-nums dd { font-size: max(42px, calc(74 * var(--u))); }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-mawarimi .award { font-size: max(18px, 2.6vw); }
 }

@@ -42,11 +42,13 @@
 .wk-list { display: grid; gap: max(18px, calc(26 * var(--u))); }
 .wk-list dt { font-family: var(--f-head); font-weight: 700; font-size: max(17px, calc(21 * var(--u))); line-height: 1.5; }
 :where(.wk-list dd) { max-width: 34em; }
+.wk-list dt, .wk-stack dd { word-break: auto-phrase; }
+.wk-list dt { text-wrap: balance; }
 .wk-list dd { font-size: .95em; line-height: 1.8; }
 .wk-nums { display: flex; flex-wrap: wrap; gap: max(16px, calc(24 * var(--u))) max(28px, calc(54 * var(--u))); }
 .wk-nums dd { font-family: var(--f-num, var(--f-head)); font-size: max(44px, calc(84 * var(--u))); line-height: 1.1; color: var(--c-ac); }
 .wk-nums small { margin-left: .18em; font-size: .3em; }
-.wk-nums dt { font-size: max(13.5px, calc(14.5 * var(--u))); line-height: 1.6; max-width: 15em; }
+.wk-nums dt { word-break: auto-phrase; text-wrap: balance; font-size: max(13.5px, calc(14.5 * var(--u))); line-height: 1.6; max-width: 15em; }
 :where(.wk-stack) { max-width: 38em; }
 .wk-stack { display: grid; gap: .5em; align-content: start; }
 .wk-stack > div { display: grid; grid-template-columns: 8em 1fr; gap: 1em; padding-top: .5em; border-top: 1px solid var(--c-hair); }
@@ -72,6 +74,9 @@
 .wk-hero { position: relative; }
 .wk-hero__art { aspect-ratio: 3 / 2; }
 .wk-hero__copy { position: absolute; z-index: 3; display: flex; flex-direction: column; align-items: flex-start; gap: max(10px, calc(16 * var(--u))); }
+@media (max-width: 1279px) {
+  .wk :where(.wk-hero__copy p) { word-break: auto-phrase; text-wrap: balance; }
+}
 @media (max-width: 900px) {
   .wk.wk .wk-hero__copy { position: relative; inset: auto; transform: none; padding: 60px var(--pad) 26px; width: auto; max-width: none; }
   .wk-hero__art { aspect-ratio: 5 / 4; }
@@ -81,12 +86,12 @@
   .wk.wk .wk-hero--tall .wk-hero__art img { object-position: 50% 100%; }
   :where(.wk) :where(.wk-text, .wk-list dd, .wk-stack) { max-width: none; }
   .wk :where(h2, h3, .say) { text-wrap: balance; }
-  .wk :where(.wk-hero__copy p) { word-break: auto-phrase; }
 }
 /* 縦のタブレット */
 @media (min-width: 600px) and (max-width: 900px) and (max-aspect-ratio: 4 / 5) {
   .wk.wk .wk-hero--tall .say { font-size: 3.3vw; }
-  .wk.wk .wk-hero--tall .wk-hero__copy p:not(.say, .award, .name) { font-size: 2.15vw; }
+  .wk.wk .wk-hero--tall .wk-hero__copy p:not(.say, .award, .name) { font-size: max(14.5px, 2.15vw); }
+  .wk.wk .wk-hero__copy .wk-links a { font-size: max(15.5px, 2vw); }
 }
 /* 正方形に近い窓。題字の右に説明を置き、1 画面に絵を入れる */
 @media (min-width: 600px) and (max-width: 900px) and (min-aspect-ratio: 4 / 5) {
@@ -97,10 +102,15 @@
   .wk.wk .wk-hero--tall .say { font-size: 20px; margin-top: 0; }
 }
 
+/* 横に広く高さの低い窓。絵を画面の高さに切り、下端に置いた題字とボタンを 1 画面に入れる */
+@media (min-width: 901px) and (min-aspect-ratio: 17 / 10) {
+  .wk { --fit: clamp(50vw, 100svh, 66.667vw); }
+}
+
 .wk-np { position: relative; display: grid; grid-template-columns: 1fr 1fr; background: var(--np-bg, var(--c-fg)); color: var(--np-fg, var(--c-bg)); }
 .wk-np a { display: grid; grid-template-columns: 1fr auto; gap: 2px 18px; padding: max(22px, calc(40 * var(--u))) var(--pad); text-decoration: none; min-width: 0; }
 .wk-np a + a { border-left: 1px solid currentColor; }
-.wk-np b { font-family: var(--f-head); font-size: max(18px, calc(24 * var(--u))); line-height: 1.4; overflow-wrap: anywhere; }
+.wk-np b { grid-column: 1; font-family: var(--f-head); font-size: max(18px, calc(24 * var(--u))); line-height: 1.4; overflow-wrap: anywhere; }
 .wk-np a:hover b { text-decoration: underline; text-underline-offset: .25em; }
 .wk-np small { font-size: max(13px, calc(14 * var(--u))); align-self: end; }
 .wk-np img { grid-area: 1 / 2 / 3 / 3; align-self: center; width: max(84px, calc(170 * var(--u))); aspect-ratio: 3 / 2; object-fit: cover; }

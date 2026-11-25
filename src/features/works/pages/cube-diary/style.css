@@ -50,10 +50,17 @@ body:has(.p-cube) { background: #c1c5c8; }
   .p-cube .points .wk-list { grid-template-columns: 1fr; }
 }
 @media (min-width: 600px) and (max-width: 900px) {
-  .p-cube .dark { grid-template-columns: 1fr 250px; gap: 20px; padding: 36px var(--pad) 36px 0; justify-items: stretch; }
   .p-cube .net { --s: calc((100vw - var(--pad) * 2 - 8px) / 3); grid-template-columns: repeat(3, var(--s)); }
   .p-cube .net > div { padding: 18px; font-size: 14.5px; }
   .p-cube .net h2 { font-size: 3.5vw; }
   .p-cube .n0 { grid-area: 1 / 2; } .p-cube .n1 { grid-area: 2 / 1; } .p-cube .n2 { grid-area: 2 / 2; } .p-cube .n3 { grid-area: 2 / 3; } .p-cube .n4 { grid-area: 3 / 2; } .p-cube .n5 { grid-area: 4 / 2; }
   .p-cube .fold .wk-art { aspect-ratio: 4 / 3; }
+}
+@media (min-width: 720px) and (max-width: 900px) {
+  .p-cube .dark { grid-template-columns: 1fr 250px; gap: 20px; padding: 36px var(--pad) 36px 0; justify-items: stretch; }
+}
+@media (min-width: 901px) and (min-aspect-ratio: 17 / 10) {
+  .p-cube .wk-hero__art { aspect-ratio: auto; height: var(--fit); }
+  .p-cube .wk-hero__art img { object-position: 50% 100%; }
+  .p-cube .wk-hero__copy { bottom: calc(44 * var(--u)); }
 }
