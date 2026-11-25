@@ -1,0 +1,28 @@
+/* AI-Augmented Composition。群青の空と生成りの鍵盤。白鍵と黒鍵で面を割る */
+.p-compo { --c-bg: #1e2fab; --c-fg: #f7ecd0; --c-ac: #f7ecd0; --c-hair: rgba(247, 236, 208, .5); --f-head: var(--font-ac), var(--font-ac-j), "Yu Mincho", serif; --f-body: var(--font-ac-j), "Yu Mincho", serif; font-weight: 500; --np-bg: #0c1026; --np-fg: #f7ecd0; }
+body:has(.p-compo) { background: #1e2fab; }
+.p-compo .wk-hero__copy { left: 0; right: 0; top: calc(58 * var(--u)); align-items: center; text-align: center; gap: calc(6 * var(--u)); }
+.p-compo h1 { font-weight: 400; font-size: calc(112 * var(--u)); line-height: 1.04; white-space: nowrap; -webkit-text-stroke: max(1px, calc(2.4 * var(--u))) currentColor; }
+.p-compo h1 span { white-space: nowrap; }
+.p-compo .say { font-weight: 700; font-size: max(21px, calc(29 * var(--u))); }
+.p-compo .sides { display: grid; grid-template-columns: 1fr 1fr; }
+.p-compo .side { position: relative; display: grid; justify-items: center; align-content: center; gap: calc(34 * var(--u)); padding: max(40px, calc(80 * var(--u))) var(--pad); }
+.p-compo .side.a { background: #f7ecd0; color: #0c1026; }
+.p-compo .side.b { background: #0c1026; }
+.p-compo .side h2 { font-weight: 400; font-size: max(40px, calc(96 * var(--u))); line-height: 1; -webkit-text-stroke: max(.8px, calc(1.6 * var(--u))) currentColor; }
+.p-compo .side .wk-yt { width: calc(370 * var(--u)); min-width: 240px; text-align: center; }
+.p-compo .zero { display: grid; grid-template-columns: 1.3fr 1fr; gap: calc(50 * var(--u)); align-items: end; padding: max(48px, calc(110 * var(--u))) var(--pad); }
+.p-compo .zero h2 { font-size: max(36px, calc(92 * var(--u))); line-height: 1.2; }
+.p-compo .route { --fig-bg: #f7ecd0; --fig-fg: #0c1026; --fig-sub: #4a4f66; --fig-ac: #1e2fab; --c-hair: rgba(12, 16, 38, .4); display: grid; gap: calc(50 * var(--u)); padding: max(44px, calc(80 * var(--u))) calc(130 * var(--u)); background: #f7ecd0; color: #0c1026; --c-sub: #0c1026; }
+.p-compo .route .wk-stack { justify-self: center; width: 100%; }
+@media (max-width: 900px) {
+  .p-compo .wk-hero__copy { align-items: flex-start; text-align: left; }
+  .p-compo h1 { font-size: 13vw; white-space: normal; }
+  .p-compo .wk-hero__art { aspect-ratio: 1; }
+  .p-compo .wk-hero__art img { object-position: 46% 100%; }
+  .p-compo .zero { grid-template-columns: 1fr; gap: 14px; }
+  .p-compo .route { padding-inline: var(--pad); }
+}
+@media (max-width: 560px) {
+  .p-compo .sides { grid-template-columns: 1fr; }
+}

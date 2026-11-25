@@ -24,7 +24,7 @@
 ## 工夫したところ
 
 - **詳細ページの情報を1か所にまとめる。** 作品の説明・技術の説明・構成図は [`src/content/`](src/content/) にデータとして置いています。トップの文面と配置は面ごとに [`src/features/front/`](src/features/front/) で組んでいます
-- **詳細ページを静的に生成する。** 作品ごとのページはビルド時に生成します（[`src/app/works/[id]/page.tsx`](src/app/works/%5Bid%5D/page.tsx)）
+- **詳細ページを静的に生成する。** 作品ごとのページはビルド時に生成します（[`src/features/works/pages`](src/features/works/pages)）
 - **デモから個人情報を除く。** 公開しているデモは、実際のアプリから匿名化したデータで作り直しています。公開前に [`scripts/check-demo-privacy.mjs`](scripts/check-demo-privacy.mjs) が、鍵や個人名が残っていないかを検査します
 - **動きが無くても読める。** トップの動きは [`src/features/front/motion.ts`](src/features/front/motion.ts) が後から足します。OSで動きを減らす設定にしている人にはスクロールの動きと動画の再生を止め、JavaScriptが無くても全文を読めます（[`docs/motion-verification.md`](docs/motion-verification.md)）
 

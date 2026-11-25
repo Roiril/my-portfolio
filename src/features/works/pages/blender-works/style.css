@@ -1,0 +1,47 @@
+/* Blender Works。地の色は、載せた実物の画から取る */
+.p-blender { --c-bg: #8fdcb4; --c-fg: #14261f; --c-ac: #d96a1e; --f-head: var(--font-bw-j), "Yu Gothic", sans-serif; --f-body: var(--font-bw-j), "Yu Gothic", sans-serif; font-weight: 500; --np-bg: #14261f; --np-fg: #f4efb8; }
+body:has(.p-blender) { background: #8fdcb4; }
+.p-blender :is(h2, dt) { font-weight: 900; }
+.p-blender h2 { font-size: max(27px, calc(56 * var(--u))); line-height: 1.3; }
+.p-blender .cover { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); overflow: hidden; }
+.p-blender .face { grid-column: span 2; aspect-ratio: 1; overflow: hidden; }
+.p-blender .face img { width: 100%; height: 100%; object-fit: cover; }
+.p-blender .cover .f0 { grid-area: 1 / 1 / 2 / 3; }
+.p-blender .cover .f1 { grid-area: 1 / 3 / 2 / 5; }
+.p-blender .cover .f2 { grid-area: 1 / 5 / 2 / 7; }
+.p-blender .cover .f3 { grid-area: 2 / 5 / 3 / 6; }
+.p-blender .cover .f4 { grid-area: 2 / 6 / 3 / 7; }
+.p-blender h1 { grid-area: 2 / 1 / 3 / 5; align-self: end; z-index: 2; padding: 0 0 calc(22 * var(--u)) var(--pad); font-family: var(--font-bw), sans-serif; font-weight: 400; font-size: calc(124 * var(--u)); line-height: .95; letter-spacing: -.06em; color: #d96a1e; pointer-events: none; }
+.p-blender .say { position: absolute; z-index: 3; bottom: calc(260 * var(--u)); left: var(--pad); font-weight: 900; font-size: max(17px, calc(21 * var(--u))); }
+.p-blender .chara { display: grid; grid-template-columns: 1.4fr 1fr; gap: calc(50 * var(--u)); align-items: end; padding: calc(60 * var(--u)) var(--pad); background: #f1eca0; }
+.p-blender .robot { position: relative; background: #a9a493; }
+.p-blender .robot .wk-art { aspect-ratio: 16 / 9; }
+.p-blender .robot > div { display: grid; grid-template-columns: 1.4fr 1fr; gap: calc(50 * var(--u)); align-items: end; padding: calc(50 * var(--u)) var(--pad); background: #f0eadb; }
+.p-blender .subway { display: grid; grid-template-columns: 1.35fr 1fr; background: #1d1e1f; color: #f5f0d8; }
+.p-blender .subway .wk-art:first-child { grid-row: 1 / 3; aspect-ratio: 1.02; }
+.p-blender .subway__copy { display: grid; gap: calc(18 * var(--u)); align-content: center; padding: calc(60 * var(--u)); background: #b89b24; color: #121212; }
+.p-blender .dino { position: relative; background: #8d8b7a; color: #111; }
+.p-blender .dino .wk-art { aspect-ratio: 913 / 508; }
+.p-blender .dino > div { position: absolute; z-index: 2; top: calc(60 * var(--u)); left: var(--pad); right: var(--pad); display: grid; grid-template-columns: 1fr 1fr; gap: calc(50 * var(--u)); }
+.p-blender .memo { display: grid; grid-template-columns: 1fr 1.3fr; gap: 0; align-items: stretch; background: #f1e68c; }
+.p-blender .memo img { height: 100%; object-fit: cover; }
+.p-blender .vfx { display: grid; grid-template-columns: 1.3fr 1fr; background: #16080d; color: #ffe9df; --c-hair: rgba(255, 233, 223, .4); }
+.p-blender .vfx .wk-art:first-child { grid-row: 1 / 3; min-height: calc(860 * var(--u)); }
+.p-blender .vfx .wk-art:last-child { min-height: calc(400 * var(--u)); }
+.p-blender .vfx__copy { display: grid; gap: calc(20 * var(--u)); align-content: center; padding: max(34px, calc(60 * var(--u))); background: #d1431f; color: #fff; }
+@media (max-width: 900px) {
+  .p-blender .cover { padding-top: 108px; }
+  .p-blender .say { top: 48px; bottom: auto; right: var(--pad); }
+  .p-blender .cover .face { grid-column: span 3; grid-row: auto !important; }
+  .p-blender .cover .f0 { grid-area: 1 / 1 / 2 / 7 !important; }
+  .p-blender .cover .f1 { grid-area: 2 / 1 / 3 / 4 !important; } .p-blender .cover .f2 { grid-area: 2 / 4 / 3 / 7 !important; }
+  .p-blender .cover .f3 { grid-area: 3 / 1 / 4 / 4 !important; } .p-blender .cover .f4 { grid-area: 3 / 4 / 4 / 7 !important; }
+  .p-blender h1 { grid-area: 1 / 1 / 2 / 7; font-size: 14.8vw; }
+  .p-blender .chara, .p-blender .robot > div, .p-blender .dino > div, .p-blender .vfx, .p-blender .subway { grid-template-columns: 1fr; gap: 14px; padding-block: 32px; }
+  .p-blender .vfx, .p-blender .subway { padding-block: 0; gap: 0; }
+  .p-blender .dino { background: #a3a08d; }
+  .p-blender .dino > div { position: static; padding-inline: var(--pad); }
+  .p-blender .subway .wk-art:last-child { aspect-ratio: 1.25; }
+  .p-blender .subway__copy { padding: 32px var(--pad); }
+  .p-blender .vfx .wk-art:first-child, .p-blender .vfx .wk-art:last-child { min-height: 0; aspect-ratio: 16 / 10; }
+}

@@ -1,0 +1,46 @@
+/* CubeDiary。銀鼠と黒の切り絵。空色は 1 面だけ */
+.p-cube { --c-bg: #c1c5c8; --c-fg: #0f1113; --c-ac: #0f1113; --c-hair: rgba(15, 17, 19, .4); --f-head: var(--font-cd), var(--font-cd-j), "Yu Gothic", sans-serif; --f-body: var(--font-cd-j), "Yu Gothic", sans-serif; font-weight: 500; --l-bg: #14618f; --l-fg: #fff; }
+body:has(.p-cube) { background: #c1c5c8; }
+.p-cube :is(h2, h3, dt) { font-weight: 900; }
+.p-cube .wk-back { right: auto; left: var(--pad); }
+.p-cube .wk-hero__copy { left: var(--pad); bottom: calc(80 * var(--u)); width: calc(540 * var(--u)); }
+.p-cube h1 { font-size: calc(210 * var(--u)); line-height: .86; letter-spacing: -.05em; margin: 0 0 calc(20 * var(--u)) -.05em; }
+.p-cube .say { font-weight: 900; font-size: max(21px, calc(27 * var(--u))); line-height: 1.6; max-width: 15em; }
+.p-cube .dark { display: grid; grid-template-columns: 1fr auto; gap: calc(60 * var(--u)); align-items: center; padding-right: calc(120 * var(--u)); background: #000; }
+.p-cube .dark .wk-art { aspect-ratio: 909 / 675; }
+.p-cube .dark .wk-yt { width: calc(350 * var(--u)); min-width: 250px; }
+.p-cube .net { --s: calc(330 * var(--u)); display: grid; grid-template-columns: repeat(4, var(--s)); grid-template-rows: repeat(3, var(--s)); gap: 4px; justify-content: center; padding: calc(100 * var(--u)) 0; }
+.p-cube .net > div { display: grid; align-content: center; gap: .5em; padding: calc(30 * var(--u)); background: #0f1113; color: #f2f3f3; font-size: max(14px, calc(16 * var(--u))); line-height: 1.75; }
+.p-cube .net h3 { font-size: calc(30 * var(--u)); }
+.p-cube .net h2 { font-size: calc(39 * var(--u)); }
+.p-cube .n0 { grid-area: 1 / 2; } .p-cube .n1 { grid-area: 2 / 1; } .p-cube .n2 { grid-area: 2 / 2; } .p-cube .n3 { grid-area: 2 / 3; } .p-cube .n4 { grid-area: 2 / 4; } .p-cube .n5 { grid-area: 3 / 2; }
+.p-cube .net > .n0 { background: #14618f; color: #fff; }
+.p-cube .fold { position: relative; }
+.p-cube .fold .wk-art { aspect-ratio: 3 / 2; }
+.p-cube .fold__copy { position: absolute; z-index: 2; left: var(--pad); top: 50%; transform: translateY(-50%); width: calc(400 * var(--u)); }
+.p-cube .fold .wk-nums { flex-direction: column; }
+.p-cube .fold .wk-nums dd { font-size: max(58px, calc(128 * var(--u))); line-height: 1; }
+.p-cube .geo { padding: max(44px, calc(80 * var(--u))) calc(130 * var(--u)); background: #0b0908; --c-sub: #d6d9da; }
+.p-cube .points { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: calc(44 * var(--u)); padding: max(44px, calc(90 * var(--u))) var(--pad); }
+.p-cube .points h2 { grid-column: 1 / 4; }
+.p-cube .points .wk-list { grid-column: 1 / 4; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.p-cube .points .wk-list > div { padding: max(22px, calc(36 * var(--u))); background: #eef0f0; }
+.p-cube .points .wk-stack { grid-column: 1 / 4; }
+@media (max-width: 900px) {
+  .p-cube h1 { font-size: 27vw; }
+  .p-cube .wk-hero__art { aspect-ratio: 1; }
+  .p-cube .wk-hero__art img { object-position: 100% 50%; }
+  .p-cube .dark { grid-template-columns: 1fr; padding: 0 0 36px; justify-items: center; }
+  .p-cube .dark .wk-art { width: 100%; }
+  .p-cube .net { --s: 44vw; grid-template-columns: repeat(2, var(--s)); grid-template-rows: auto; grid-auto-rows: minmax(var(--s), auto); padding: 44px 0; }
+  .p-cube .net > div { grid-area: auto; padding: 14px; line-height: 1.6; }
+  .p-cube .net h3 { font-size: 20px; }
+  .p-cube .net h2 { font-size: 6vw; }
+  .p-cube .net .n5 { font-size: 13.5px; }
+  .p-cube .fold__copy { position: static; transform: none; width: auto; padding: 36px var(--pad) 10px; }
+  .p-cube .fold .wk-nums { flex-direction: row; }
+  .p-cube .fold .wk-art { aspect-ratio: 1; }
+  .p-cube .fold .wk-art img { object-position: 100% 50%; }
+  .p-cube .geo { padding-inline: var(--pad); }
+  .p-cube .points .wk-list { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,35 @@
+/* AI業務ツール。伝票の水色と藍。朱は人が確かめた印だけ */
+.p-biz { --c-bg: #c3dfe9; --c-fg: #1c3470; --c-ac: #c73520; --c-hair: #1c3470; --f-head: var(--font-bt), "Yu Mincho", serif; --f-body: var(--font-bt-b), "Yu Gothic", sans-serif; }
+body:has(.p-biz) { background: #c3dfe9; }
+.p-biz .wk-hero { padding-top: calc(60 * var(--u)); background: #c1deea; }
+.p-biz .wk-hero__copy { left: var(--pad); right: var(--pad); top: calc(18 * var(--u)); gap: calc(6 * var(--u)); }
+.p-biz h1 { font-size: calc(132 * var(--u)); line-height: 1.16; letter-spacing: -.02em; margin-left: -.02em; }
+.p-biz .lead { display: grid; grid-template-columns: 1fr auto; gap: calc(40 * var(--u)); padding-top: calc(14 * var(--u)); border-top: 3px double #1c3470; width: 100%; font-size: max(14px, calc(15.5 * var(--u))); }
+.p-biz .say { font-family: var(--f-head); font-weight: 700; font-size: max(20px, calc(25 * var(--u))); line-height: 1.55; }
+.p-biz .check { position: relative; }
+.p-biz .check .wk-art { aspect-ratio: 3 / 2; }
+.p-biz .check__copy { position: absolute; z-index: 2; left: var(--pad); top: 46%; transform: translateY(-50%); width: calc(430 * var(--u)); display: grid; gap: calc(28 * var(--u)); }
+.p-biz .check h2 { font-size: max(30px, calc(58 * var(--u))); line-height: 1.35; }
+.p-biz .slip { display: grid; gap: calc(40 * var(--u)); padding: max(44px, calc(90 * var(--u))) var(--pad); background: #fff; border-block: 3px double #1c3470; }
+.p-biz .slip .wk-list { grid-template-columns: repeat(3, 1fr); gap: 0; border: 2px solid #1c3470; }
+.p-biz .slip .wk-list > div { padding: max(22px, calc(38 * var(--u))); }
+.p-biz .slip .wk-list > div + div { border-left: 1px solid #1c3470; }
+.p-biz .slip .wk-list dt { font-size: max(21px, calc(32 * var(--u))); margin-bottom: .4em; }
+.p-biz .slip:not(.slip--ink) .wk-list > div:last-child dt { display: inline-block; padding: .1em 1em; border: 3px solid #c73520; border-radius: 50%; color: #c73520; }
+.p-biz .route { --fig-sub: #40588f; padding: max(44px, calc(80 * var(--u))) calc(130 * var(--u)); }
+.p-biz .slip--ink { background: #1c3470; color: #eaf4f8; --c-hair: rgba(234, 244, 248, .5); }
+.p-biz .slip--ink .wk-list { grid-template-columns: 1fr 1fr; border-color: #c3dfe9; }
+.p-biz .slip--ink .wk-list > div + div { border-color: #c3dfe9; }
+@media (max-width: 900px) {
+  .p-biz h1 { font-size: 13.4vw; }
+  .p-biz .lead { grid-template-columns: 1fr; gap: 10px; }
+  .p-biz .wk-hero { padding-top: 0; }
+  .p-biz .wk-hero__art { aspect-ratio: 1; }
+  .p-biz .wk-hero__art img { object-position: 62% 100%; }
+  .p-biz .check__copy { position: static; transform: none; width: auto; padding: 44px var(--pad) 18px; }
+  .p-biz .check .wk-art { aspect-ratio: 1; }
+  .p-biz .check .wk-art img { object-position: 100% 50%; }
+  .p-biz .slip .wk-list, .p-biz .slip--ink .wk-list { grid-template-columns: 1fr; }
+  .p-biz .slip .wk-list > div + div { border-left: 0; border-top: 1px solid #1c3470; }
+  .p-biz .route { padding-inline: var(--pad); }
+}

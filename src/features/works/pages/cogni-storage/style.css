@@ -1,0 +1,39 @@
+/* cogni-storage。生成りと黒の版画、金茶は葉と飾り罫だけ */
+.p-cogni { --c-bg: #efe0c4; --c-fg: #12100d; --c-ac: #8a5f1c; --c-hair: rgba(18, 16, 13, .4); --f-head: var(--font-cg), var(--font-cg-j), "Yu Mincho", serif; --f-body: var(--font-cg-j), "Yu Mincho", serif; --l-bg: #12100d; --l-fg: #efe0c4; }
+body:has(.p-cogni) { background: #efe0c4; }
+.p-cogni :is(h1, h2, h3, dt, .wk-back, .wk-links a, .wk-np b) { font-weight: 400; }
+.p-cogni .wk-back { background: #efe0c4; padding: 0 .8em; }
+.p-cogni .wk-hero__copy { left: var(--pad); bottom: calc(96 * var(--u)); width: calc(430 * var(--u)); gap: calc(12 * var(--u)); }
+.p-cogni h1 { font-size: calc(100 * var(--u)); line-height: .95; font-weight: 400; }
+.p-cogni .say { font-size: max(20px, calc(24 * var(--u))); line-height: 1.55; }
+.p-cogni .meta { font-size: max(14px, calc(15 * var(--u))); line-height: 1.7; }
+.p-cogni .ideas { padding: max(34px, calc(80 * var(--u))) var(--pad); background: #12100d; color: #efe0c4; }
+.p-cogni .frame { display: grid; grid-template-columns: 1fr 1.2fr; gap: calc(50 * var(--u)); align-items: center; padding: max(26px, calc(64 * var(--u))); border: 6px double #c79a4b; }
+.p-cogni .frame h2 { font-size: max(29px, calc(54 * var(--u))); color: #e3c48a; }
+.p-cogni .drawer { display: grid; grid-template-columns: repeat(5, 1fr); gap: calc(22 * var(--u)); padding: calc(80 * var(--u)) var(--pad); background: #cfa555; }
+.p-cogni .drawer .wk-pic { padding: calc(12 * var(--u)) calc(12 * var(--u)) calc(16 * var(--u)); background: #efe0c4; border: 2px solid #12100d; outline: 1px solid #12100d; outline-offset: 4px; }
+.p-cogni .drawer .wk-pic:nth-child(even) { transform: translateY(calc(36 * var(--u))); }
+.p-cogni .drawer figcaption { text-align: center; }
+.p-cogni .desk { position: relative; }
+.p-cogni .desk .wk-art { aspect-ratio: 3 / 2; }
+.p-cogni .desk__copy { position: absolute; z-index: 2; left: var(--pad); top: 50%; transform: translateY(-50%); width: calc(440 * var(--u)); display: grid; gap: calc(24 * var(--u)); }
+.p-cogni .desk h2 { font-size: max(28px, calc(46 * var(--u))); }
+.p-cogni .route { --fig-ac: #8a5f1c; --fig-sub: #574a38; padding: max(40px, calc(80 * var(--u))) calc(120 * var(--u)); border-top: 6px double #12100d; }
+.p-cogni .cards { padding: max(40px, calc(90 * var(--u))) var(--pad); background: #12100d; color: #efe0c4; }
+.p-cogni .cards .wk-list { grid-template-columns: repeat(4, 1fr); margin-bottom: calc(60 * var(--u)); }
+.p-cogni .cards .wk-list > div { padding: max(18px, calc(26 * var(--u))); background: #efe0c4; color: #12100d; border-top: max(10px, calc(22 * var(--u))) solid #a87c32; }
+@media (max-width: 900px) {
+  .p-cogni h1 { font-size: 22vw; }
+  .p-cogni .wk-hero__art img { object-position: 60% 50%; }
+  .p-cogni .wk-hero__art { aspect-ratio: 1; }
+  .p-cogni .frame { grid-template-columns: 1fr; gap: 18px; }
+  .p-cogni .drawer { grid-template-columns: 1fr 1fr; gap: 22px 18px; padding-block: 36px; }
+  .p-cogni .drawer .wk-pic:nth-child(even) { transform: none; }
+  .p-cogni .drawer .wk-pic:first-child { grid-column: 1 / 3; width: 60%; justify-self: center; }
+  .p-cogni .desk__copy { position: static; transform: none; width: auto; padding: 44px var(--pad) 20px; }
+  .p-cogni .desk .wk-art { aspect-ratio: 1; }
+  .p-cogni .desk .wk-art img { object-position: 100% 50%; }
+  .p-cogni .route { padding-inline: var(--pad); }
+  .p-cogni .cards .wk-list { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) { .p-cogni .cards .wk-list { grid-template-columns: 1fr; } }

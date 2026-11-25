@@ -1,0 +1,48 @@
+/* Retro TV。オリーブの壁、胡桃の木、象牙。画面の中だけ走査線の緑 */
+.p-retro { --c-bg: #f0dfba; --c-fg: #41200f; --c-ac: #7a3417; --c-hair: rgba(65, 32, 15, .45); --f-head: var(--font-rt-h), "Yu Mincho", serif; --f-body: var(--font-rt-h), "Yu Mincho", serif; font-weight: 500; }
+body:has(.p-retro) { background: #857b29; }
+.p-retro .wk-back { color: #41200f; background: #f0dfba; padding: 0 .7em; }
+.p-retro .living { position: relative; overflow: hidden; }
+.p-retro .living .wk-art { aspect-ratio: 1440 / 716; }
+.p-retro .living .wk-art img { object-position: 50% 0; }
+.p-retro .screen { position: absolute; z-index: 2; left: 25.4vw; top: calc(66.667vw * .266); width: 39.6vw; height: calc(66.667vw * .356); overflow: hidden; border-radius: 7% / 10%; background: #000; }
+.p-retro .screen img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transform: scale(1.75); transform-origin: 44% 45%; }
+.p-retro .title { display: grid; grid-template-columns: auto 1fr; gap: calc(50 * var(--u)); align-items: center; padding: calc(22 * var(--u)) var(--pad) calc(26 * var(--u)); background: #41200f; color: #f0dfba; --c-ac: #f0dfba; --c-bg: #41200f; }
+.p-retro h1 { font-family: var(--font-rt), sans-serif; font-weight: 400; font-size: calc(80 * var(--u)); line-height: 1.12; }
+.p-retro h1 span { display: block; white-space: nowrap; }
+.p-retro h1 span + span { font-size: .6em; }
+.p-retro .title > div { display: grid; gap: calc(10 * var(--u)); justify-items: start; }
+.p-retro .say { font-weight: 700; font-size: max(20px, calc(25 * var(--u))); line-height: 1.5; }
+.p-retro h2 { font-size: max(28px, calc(46 * var(--u))); }
+.p-retro .knob { position: relative; background: #857b29; }
+.p-retro .knob .wk-art { aspect-ratio: 3 / 2; }
+.p-retro .knob__copy { position: absolute; z-index: 2; left: var(--pad); top: calc(64 * var(--u)); width: calc(470 * var(--u)); display: grid; gap: calc(20 * var(--u)); color: #160c02; font-weight: 700; }
+.p-retro .knob__copy .wk-nums { margin-top: calc(330 * var(--u)); }
+.p-retro .knob .wk-nums dd { color: #f6e9c8; }
+.p-retro .night { display: grid; grid-template-columns: auto 1fr; gap: calc(110 * var(--u)); align-items: center; padding: max(44px, calc(90 * var(--u))) calc(170 * var(--u)); background: repeating-linear-gradient(#0b120c 0 3px, #10190f 3px 5px); color: #9fe7a8; --f-head: var(--font-rt-d), monospace; --f-body: var(--font-rt-d), monospace; font-family: var(--f-body); }
+.p-retro .night .wk-yt { width: calc(380 * var(--u)); min-width: 250px; }
+.p-retro .night > div { display: grid; gap: calc(34 * var(--u)); }
+.p-retro .night .wk-list { counter-reset: c; }
+.p-retro .night dt { font-size: max(19px, calc(25 * var(--u))); }
+.p-retro .night dt::before { counter-increment: c; content: "0" counter(c); margin-right: .8em; padding: 0 .4em; background: #9fe7a8; color: #0b120c; }
+.p-retro .layer { padding: max(44px, calc(80 * var(--u))) calc(220 * var(--u)); background: #f5f2eb; }
+.p-retro .back { display: grid; grid-template-columns: 1fr 1fr; }
+.p-retro .back > .wk-pic img { height: 100%; object-fit: cover; object-position: 78% 50%; }
+.p-retro .back > .wk-pic figcaption { position: absolute; left: 0; bottom: 0; padding: .2em .8em; background: #41200f; color: #f0dfba; }
+.p-retro .back > div { display: grid; gap: calc(30 * var(--u)); padding: max(44px, calc(90 * var(--u))) var(--pad); }
+@media (max-width: 900px) {
+  .p-retro .living { padding-top: 50px; background: #41200f; }
+  .p-retro .living .wk-art { aspect-ratio: 3 / 2; }
+  .p-retro .living .wk-art figcaption { right: 17vw; }
+  .p-retro .living > * { width: 130vw; margin-left: -13vw; }
+  .p-retro .screen { width: calc(130vw * .396); left: calc(130vw * .254); top: calc(50px + 86.67vw * .266); height: calc(86.67vw * .356); }
+  .p-retro .title { grid-template-columns: 1fr; gap: 14px; padding-block: 26px 34px; }
+  .p-retro h1 { font-size: 13.4vw; }
+  .p-retro .knob__copy .wk-nums { margin-top: 0; }
+  .p-retro .knob__copy { position: static; width: auto; padding: 44px var(--pad) 10px; }
+  .p-retro .knob .wk-art { aspect-ratio: 1; }
+  .p-retro .knob .wk-art img { object-position: 100% 50%; }
+  .p-retro .night { grid-template-columns: 1fr; gap: 34px; padding-inline: var(--pad); justify-items: center; }
+  .p-retro .layer { padding-inline: var(--pad); }
+  .p-retro .back { grid-template-columns: 1fr; }
+}
