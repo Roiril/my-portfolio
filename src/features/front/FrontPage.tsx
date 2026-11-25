@@ -173,7 +173,6 @@ export default function FrontPage() {
             </div>
           </Link>
           <div className="guides" id="guides">
-            <h3>架空のゲームの攻略本</h3>
             <GuideCards />
           </div>
         </div>

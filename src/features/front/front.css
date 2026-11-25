@@ -84,7 +84,7 @@
   .sheets-face { position: relative; background: var(--stone); padding: calc(96 * var(--u)) calc(48 * var(--u)) calc(110 * var(--u)); }
   .sheets { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(24 * var(--u)); align-items: start; }
   .sheets-col { display: grid; row-gap: calc(24 * var(--u)); }
-  .sheets-col.r { margin-top: calc(352 * var(--u)); }
+  .sheets-col.r { margin-top: calc(242 * var(--u)); }
   .sheets-face h2 { font-size: calc(76 * var(--u)); font-weight: 900; line-height: 1.1; height: calc(96 * var(--u)); letter-spacing: -.01em; }
   .sheet { display: grid; grid-template-columns: 1.22fr 1fr; min-height: calc(440 * var(--u)); text-decoration: none; color: var(--ink); perspective: calc(1500 * var(--u)); transition: opacity .25s; }
   .pg { position: relative; min-width: 0; overflow: hidden; box-shadow: 0 calc(14 * var(--u)) calc(26 * var(--u)) rgba(40, 34, 24, .22); }
@@ -112,8 +112,7 @@
   .pair .q { font-size: calc(21 * var(--u)); }
   .pair .role { padding-top: calc(12 * var(--u)); }
   /* 攻略本：左は表紙をそのまま、右は表紙の色で組む */
-  .guides { display: grid; row-gap: calc(16 * var(--u)); margin-top: calc(34 * var(--u)); scroll-margin-top: calc(80 * var(--u)); }
-  .guides h3 { font-size: calc(50 * var(--u)); font-weight: 900; line-height: 1.2; letter-spacing: -.01em; }
+  .guides { display: grid; row-gap: calc(24 * var(--u)); scroll-margin-top: calc(80 * var(--u)); }
   .sheet.guide { grid-template-columns: calc(311 * var(--u)) 1fr; }
   .guide .pg-l { border: 0; background: var(--ground); }
   .guide .pg-l img { object-fit: contain; object-position: top; padding: 0; }
@@ -312,8 +311,7 @@
     .pair .cell:first-child, .pair .cell + .cell { min-height: 0; }
     .pair .pg-r .cell { padding: 14px 16px 16px; }
     .vert.sub { font-size: 21px; padding-top: 10px; }
-    .guides { row-gap: 12px; margin-top: 30px; scroll-margin-top: 20px; }
-    .guides h3 { font-size: 30px; }
+    .guides { row-gap: 16px; scroll-margin-top: 20px; }
     .sheet.guide { grid-template-columns: 1fr; }
     .guide .pg-l { aspect-ratio: 760 / 1075; border: 0; }
     .guide .pg-l img { padding: 0; }
