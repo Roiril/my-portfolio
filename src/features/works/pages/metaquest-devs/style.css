@@ -1,5 +1,5 @@
 /* MetaQuest Devs。青緑、白、太い黒線のコマ */
-.p-devs { --c-bg: #06918c; --c-fg: #fff; --c-ac: #fff; --c-hair: rgba(255, 255, 255, .7); --f-head: var(--font-mq-b), "Yu Gothic", sans-serif; --f-body: var(--font-mq-b), "Yu Gothic", sans-serif; font-weight: 500; --np-bg: #0d1414; --np-fg: #fff; }
+.p-devs { --h1: 9vw; --tall-bg: #089593; --flat: 58vw; --c-bg: #06918c; --c-fg: #fff; --c-ac: #fff; --c-hair: rgba(255, 255, 255, .7); --f-head: var(--font-mq-b), "Yu Gothic", sans-serif; --f-body: var(--font-mq-b), "Yu Gothic", sans-serif; font-weight: 500; --np-bg: #0d1414; --np-fg: #fff; }
 body:has(.p-devs) { background: #06918c; }
 .p-devs :is(h2, dt) { font-weight: 900; }
 .p-devs .wk-back { right: auto; left: var(--pad); }
@@ -18,10 +18,21 @@ body:has(.p-devs) { background: #06918c; }
 .p-devs .tools { display: grid; grid-template-columns: 1fr 1fr; gap: calc(60 * var(--u)); padding: calc(80 * var(--u)) var(--pad); background: #fff; color: #0d1414; --c-hair: #0d1414; }
 .p-devs .tools a { font-weight: 900; }
 @media (max-width: 900px) {
-  .p-devs h1 { font-size: 15.6vw; }
-  .p-devs .wk-hero { padding-top: 0; }
-  .p-devs .wk-hero__art { aspect-ratio: 1; }
-  .p-devs .wk-hero__art img { object-position: 72% 50%; }
+  .p-devs h1 { font-size: 15.4vw; }
+  .p-devs .say { font-size: clamp(18px, 4.9vw, 30px); }
   .p-devs .panels { padding: 10px 0; }
+  .p-devs .corner .wk-art { aspect-ratio: 2; }
+  .p-devs .corner .wk-art img { object-position: 50% 100%; }
   .p-devs .corner__copy, .p-devs .tools { grid-template-columns: 1fr; gap: 18px; padding-block: 44px; }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-devs .wk-stack > div { grid-template-columns: 5em 1fr; }
+  .p-devs .corner__copy, .p-devs .tools { grid-template-columns: 1fr 1.2fr; gap: 34px; }
+}
+@media (min-width: 901px) and (max-width: 1279px) {
+  .p-devs .wk-hero__copy { top: 46px; }
+  .p-devs h1 { font-size: calc(80 * var(--u)); }
+  .p-devs .say { margin-top: 6px; }
+  .p-devs .corner .wk-art { aspect-ratio: 2; }
+  .p-devs .corner .wk-art img { object-position: 50% 100%; }
 }

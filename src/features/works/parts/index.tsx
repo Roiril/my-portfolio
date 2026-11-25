@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import type { ReactNode } from 'react';
 import type { Pic } from './types';
 import LoopVideo from './LoopVideo';
@@ -46,22 +46,35 @@ export function Photo({ pic, sizes = '(max-width: 900px) 100vw, 50vw', className
     );
 }
 
-// 面いっぱいに敷く絵。real は実物の画像で、生成の注記を出さない
-export function Art({ src, alt, className = '', sizes = '100vw', priority, real }: { src: string; alt: string; className?: string; sizes?: string; priority?: boolean; real?: boolean }) {
+// 面いっぱいに敷く絵。real は実物の画像で、生成の注記を出さない。tall は 900px 以下で使う縦長の版
+export function Art({ src, tall, alt, className = '', sizes = '100vw', priority, real }: { src: string; tall?: string; alt: string; className?: string; sizes?: string; priority?: boolean; real?: boolean }) {
     return (
         <figure className={`wk-art ${className}`}>
-            <Image src={src} alt={alt} fill sizes={sizes} priority={priority} />
+            {tall ? <TwoWay src={src} tall={tall} alt={alt} /> : <Image src={src} alt={alt} fill sizes={sizes} priority={priority} />}
             {!real && <figcaption>{GENERATED}</figcaption>}
         </figure>
     );
 }
 
-// 最初の面。絵の余白に題字を組む
-export function Hero({ src, alt, real, children, after }: { src: string; alt: string; real?: boolean; children: ReactNode; after?: ReactNode }) {
+// 横長と縦長を、幅で読み分ける
+function TwoWay({ src, tall, alt }: { src: string; tall: string; alt: string }) {
+    const common = { alt, fill: true, sizes: '100vw', loading: 'eager', fetchPriority: 'high' } as const;
+    const { props: { srcSet, ...rest } } = getImageProps({ ...common, src });
+    const { props: { srcSet: tallSet } } = getImageProps({ ...common, src: tall });
     return (
-        <header className="wk-hero">
+        <picture>
+            <source media="(max-width: 900px)" srcSet={tallSet} sizes="100vw" />
+            <img {...rest} srcSet={srcSet} alt={alt} />
+        </picture>
+    );
+}
+
+// 最初の面。絵の余白に題字を組む
+export function Hero({ src, tall, alt, real, sizes, children, after }: { src: string; tall?: string; alt: string; real?: boolean; sizes?: string; children: ReactNode; after?: ReactNode }) {
+    return (
+        <header className={tall ? 'wk-hero wk-hero--tall' : 'wk-hero'}>
             <div className="wk-hero__copy">{children}</div>
-            <Art className="wk-hero__art" src={src} alt={alt} real={real} priority />
+            <Art className="wk-hero__art" src={src} tall={tall} alt={alt} sizes={sizes} real={real} priority />
             {after}
         </header>
     );

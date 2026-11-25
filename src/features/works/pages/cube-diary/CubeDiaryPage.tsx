@@ -12,7 +12,7 @@ export default function CubeDiaryPage() {
     const flow = t.flow ?? [];
     return (
         <Shell id="cube-diary" className={`p-cube ${latin.variable} ${jp.variable}`}>
-            <Hero src="/images/works/cube-diary/poster.webp" alt="暮らしの場面を切り抜いた黒い立方体が、糸で吊られて球の形に並ぶ切り絵">
+            <Hero src="/images/works/cube-diary/poster.webp" tall="/images/works/cube-diary/poster-tall.webp" alt="暮らしの場面を切り抜いた黒い立方体が、糸で吊られて球の形に並ぶ切り絵">
                 <h1>Cube<br />Diary</h1>
                 <p className="say"><Ph text="写真を貼ったキューブを、暗い空間に並べる日記。" /></p>
                 <p>2025.11　個人制作</p>

@@ -1,5 +1,5 @@
 /* Aquarium。実物の橙と水色。白い魚が面をまたぐ */
-.p-aquarium { --c-bg: #f07303; --c-fg: #1c0d03; --c-ac: #b81a10; --c-hair: rgba(28, 13, 3, .45); --f-head: var(--font-aq), "Yu Gothic", sans-serif; --f-body: var(--font-aq-b), "Yu Gothic", sans-serif; font-weight: 500; --np-bg: #1c0d03; --np-fg: #fff; }
+.p-aquarium { --h1: 10.5vw; --tall-bg: #ef7503; --flat: 52vw; --c-bg: #f07303; --c-fg: #1c0d03; --c-ac: #b81a10; --c-hair: rgba(28, 13, 3, .45); --f-head: var(--font-aq), "Yu Gothic", sans-serif; --f-body: var(--font-aq-b), "Yu Gothic", sans-serif; font-weight: 500; --np-bg: #1c0d03; --np-fg: #fff; }
 body:has(.p-aquarium) { background: #f07303; }
 .p-aquarium :is(h1, h2, h3, dt) { font-weight: 400; }
 .p-aquarium .wk-back { right: auto; left: var(--pad); }
@@ -21,12 +21,19 @@ body:has(.p-aquarium) { background: #f07303; }
 .p-aquarium .swim > div { display: grid; gap: calc(28 * var(--u)); }
 @media (max-width: 900px) {
   .p-aquarium h1 { font-size: 17vw; }
-  .p-aquarium .wk-hero__art { aspect-ratio: 1; }
-  .p-aquarium .wk-hero__art img { object-position: 82% 50%; }
   .p-aquarium .real, .p-aquarium .swim { grid-template-columns: 1fr; gap: 0; }
   .p-aquarium .real .wk-art { min-height: 0; aspect-ratio: 3 / 2; }
+  .p-aquarium .real > div { padding-inline: var(--pad); }
   .p-aquarium .swim { gap: 34px; }
-  .p-aquarium .rules .wk-fig { max-width: 560px; }
+  .p-aquarium .rules .wk-fig { max-width: 460px; }
   .p-aquarium .tanks { grid-template-columns: 1fr 1fr; }
   .p-aquarium .tanks .wk-pic { height: 44vw; }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-aquarium .real > div { grid-template-columns: 1fr 1.4fr; gap: 30px; }
+  .p-aquarium .tanks .wk-pic { height: 36vw; }
+  .p-aquarium .swim .wk-list { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+}
+@media (min-width: 901px) and (max-width: 979px) {
+  .p-aquarium .rules .wk-fig { max-width: 460px; }
 }

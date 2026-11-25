@@ -1,5 +1,5 @@
 /* 服自販機。赤い壁と白い機械 */
-.p-uniqlo { --c-bg: #d72018; --c-fg: #fff; --c-ac: #fff; --c-hair: rgba(255, 255, 255, .6); --f-head: var(--font-uq), "Yu Gothic", sans-serif; --f-body: var(--font-uq-b), "Yu Gothic", sans-serif; --np-bg: #17171a; --np-fg: #fff; font-weight: 500; }
+.p-uniqlo { --h1: 20vw; --tall-bg: #d61d15; --flat: 52vw; --c-bg: #d72018; --c-fg: #fff; --c-ac: #fff; --c-hair: rgba(255, 255, 255, .6); --f-head: var(--font-uq), "Yu Gothic", sans-serif; --f-body: var(--font-uq-b), "Yu Gothic", sans-serif; --np-bg: #17171a; --np-fg: #fff; font-weight: 500; }
 body:has(.p-uniqlo) { background: #d72018; }
 .p-uniqlo :is(h1, h2, h3) { font-weight: 400; }
 .p-uniqlo .wk-back { right: auto; left: var(--pad); }
@@ -17,11 +17,18 @@ body:has(.p-uniqlo) { background: #d72018; }
 .p-uniqlo .slot { display: grid; grid-template-columns: 2.2fr 1fr; gap: calc(56 * var(--u)); align-items: center; padding: calc(90 * var(--u)) var(--pad); background: #17171a; }
 @media (max-width: 900px) {
   .p-uniqlo h1 { font-size: 40vw; }
-  .p-uniqlo .wk-hero__art { aspect-ratio: 7 / 8; }
-  .p-uniqlo .wk-hero__art img { object-position: 100% 50%; }
   .p-uniqlo .window { padding: 24px 14px; }
-  .p-uniqlo .mouth__copy { position: static; grid-template-columns: 1fr; gap: 14px; padding: 44px var(--pad) 10px; }
-  .p-uniqlo .mouth .wk-art { aspect-ratio: 6 / 5; }
+  .p-uniqlo .mouth__copy { position: static; grid-template-columns: 1fr; gap: 14px; padding: 34px var(--pad) 46px; }
+  .p-uniqlo .mouth .wk-art { aspect-ratio: 2; }
   .p-uniqlo .mouth .wk-art img { object-position: 60% 100%; }
   .p-uniqlo .slot { grid-template-columns: 1fr; padding-block: 44px; gap: 30px; }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-uniqlo .mouth__copy { grid-template-columns: 1fr 1.2fr; gap: 34px; }
+}
+@media (min-width: 901px) and (min-aspect-ratio: 17 / 10) {
+  .p-uniqlo .wk-hero__art { aspect-ratio: auto; height: var(--fit); }
+  .p-uniqlo .wk-hero__art img { object-position: 50% 100%; }
+  .p-uniqlo .wk-hero__copy { bottom: calc(56 * var(--u)); }
+  .p-uniqlo .wk-hero h1 { font-size: calc(220 * var(--u)); }
 }

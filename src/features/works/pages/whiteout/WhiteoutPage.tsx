@@ -28,7 +28,7 @@ export default function WhiteoutPage() {
                 </div>
                 <div className="c7 copy">
                     <p className="award">unity1week 楽しさの評価 4.434 / 5</p>
-                    <p>2026.08　個人制作。実装には AI エージェントを活用。</p>
+                    <p>2026.08　個人制作。<span className="wk-ph">実装には AI エージェントを活用。</span></p>
                     <Links items={[{ label: 'unityroomで遊ぶ', url: 'https://unityroom.com/games/whiteout-rogue' }]} />
                 </div>
                 <Clip className="c8" src={`${f}wo_star`} label="波打つ線の先に星の形が開く場面" />

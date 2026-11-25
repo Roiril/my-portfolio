@@ -15,6 +15,7 @@ export default function IntentlayerPage() {
         <Shell id="intentlayer" className={`p-intentlayer ${font.variable}`}>
             <Hero
                 src="/images/works/intentlayer/poster.webp"
+                tall="/images/works/intentlayer/poster-tall.webp"
                 alt="研究室を高い所から見た絵。手前に MR ゴーグルを着けた人が立ち、机で作業する人や休む人がいる"
                 after={<Scan tags={['今は話しかけないで欲しい', '作業中だが雑談歓迎', '話しかけてほしい']} />}
             >
@@ -22,7 +23,7 @@ export default function IntentlayerPage() {
                 <div className="lead">
                     <p className="say"><Ph text="「いま話しかけてよいか」の判断材料を、相手のそばに表示する。" /></p>
                     <div>
-                        <p className="meta">2025（卒業研究）　単独（着想・実装・実験・分析・執筆）</p>
+                        <p className="meta">2025（卒業研究）　<span className="wk-ph">単独（着想・実装・実験・分析・執筆）</span></p>
                         <Links items={[{ label: '卒業論文', url: '/soturon.pdf' }]} />
                     </div>
                 </div>

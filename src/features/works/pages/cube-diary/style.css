@@ -1,5 +1,5 @@
 /* CubeDiary。銀鼠と黒の切り絵。空色は 1 面だけ */
-.p-cube { --c-bg: #c1c5c8; --c-fg: #0f1113; --c-ac: #0f1113; --c-hair: rgba(15, 17, 19, .4); --f-head: var(--font-cd), var(--font-cd-j), "Yu Gothic", sans-serif; --f-body: var(--font-cd-j), "Yu Gothic", sans-serif; font-weight: 500; --l-bg: #14618f; --l-fg: #fff; }
+.p-cube { --h1: 15vw; --tall-bg: #bdc5ca; --flat: 58vw; --c-bg: #c1c5c8; --c-fg: #0f1113; --c-ac: #0f1113; --c-hair: rgba(15, 17, 19, .4); --f-head: var(--font-cd), var(--font-cd-j), "Yu Gothic", sans-serif; --f-body: var(--font-cd-j), "Yu Gothic", sans-serif; font-weight: 500; --l-bg: #14618f; --l-fg: #fff; }
 body:has(.p-cube) { background: #c1c5c8; }
 .p-cube :is(h2, h3, dt) { font-weight: 900; }
 .p-cube .wk-back { right: auto; left: var(--pad); }
@@ -28,19 +28,39 @@ body:has(.p-cube) { background: #c1c5c8; }
 .p-cube .points .wk-stack { grid-column: 1 / 4; }
 @media (max-width: 900px) {
   .p-cube h1 { font-size: 27vw; }
-  .p-cube .wk-hero__art { aspect-ratio: 1; }
-  .p-cube .wk-hero__art img { object-position: 100% 50%; }
+  /* 糸を絵の上の端から題字の裏まで伸ばす。文の所は地の色を敷いて糸を隠す */
+  .p-cube .wk-hero { --str: linear-gradient(#141618 0 0) 16.65% 0, linear-gradient(#141618 0 0) 28.7% 0, linear-gradient(#141618 0 0) 38.65% 0, linear-gradient(#141618 0 0) 49.5% 0, linear-gradient(#141618 0 0) 60.5% 0, linear-gradient(#141618 0 0) 71.65% 0, linear-gradient(#141618 0 0) 83.05% 0, linear-gradient(#141618 0 0) 92.85% 0; }
+  .p-cube .wk-hero::before { content: ""; position: absolute; inset: 0 0 60%; background: var(--str); background-size: .28vw 100%; background-repeat: no-repeat; }
+  .p-cube .wk-back { background: var(--tall-bg); }
+  .p-cube .wk-hero__copy > p:not(.wk-links) { background: var(--tall-bg); padding-right: .6em; }
   .p-cube .dark { grid-template-columns: 1fr; padding: 0 0 36px; justify-items: center; }
   .p-cube .dark .wk-art { width: 100%; }
-  .p-cube .net { --s: 44vw; grid-template-columns: repeat(2, var(--s)); grid-template-rows: auto; grid-auto-rows: minmax(var(--s), auto); padding: 44px 0; }
-  .p-cube .net > div { grid-area: auto; padding: 14px; line-height: 1.6; }
+  /* 狭い幅でも、畳めば立方体になる展開図にする。2 列 5 段 */
+  .p-cube .net { --s: calc(50vw - var(--pad)); grid-template-columns: repeat(2, var(--s)); grid-template-rows: none; grid-auto-rows: minmax(var(--s), auto); padding: 44px 0; }
+  .p-cube .net > div { padding: 13px; line-height: 1.6; }
+  .p-cube .n0 { grid-area: 1 / 1; } .p-cube .n1 { grid-area: 2 / 1; } .p-cube .n2 { grid-area: 3 / 1; } .p-cube .n3 { grid-area: 3 / 2; } .p-cube .n4 { grid-area: 4 / 2; } .p-cube .n5 { grid-area: 5 / 2; }
   .p-cube .net h3 { font-size: 20px; }
   .p-cube .net h2 { font-size: 6vw; }
   .p-cube .net .n5 { font-size: 13.5px; }
-  .p-cube .fold__copy { position: static; transform: none; width: auto; padding: 36px var(--pad) 10px; }
+  .p-cube .fold__copy { position: static; transform: none; width: auto; padding: 26px var(--pad) 44px; }
   .p-cube .fold .wk-nums { flex-direction: row; }
   .p-cube .fold .wk-art { aspect-ratio: 1; }
   .p-cube .fold .wk-art img { object-position: 100% 50%; }
   .p-cube .geo { padding-inline: var(--pad); }
   .p-cube .points .wk-list { grid-template-columns: 1fr; }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-cube .net { --s: calc((100vw - var(--pad) * 2 - 8px) / 3); grid-template-columns: repeat(3, var(--s)); }
+  .p-cube .net > div { padding: 18px; font-size: 14.5px; }
+  .p-cube .net h2 { font-size: 3.5vw; }
+  .p-cube .n0 { grid-area: 1 / 2; } .p-cube .n1 { grid-area: 2 / 1; } .p-cube .n2 { grid-area: 2 / 2; } .p-cube .n3 { grid-area: 2 / 3; } .p-cube .n4 { grid-area: 3 / 2; } .p-cube .n5 { grid-area: 4 / 2; }
+  .p-cube .fold .wk-art { aspect-ratio: 4 / 3; }
+}
+@media (min-width: 720px) and (max-width: 900px) {
+  .p-cube .dark { grid-template-columns: 1fr 250px; gap: 20px; padding: 36px var(--pad) 36px 0; justify-items: stretch; }
+}
+@media (min-width: 901px) and (min-aspect-ratio: 17 / 10) {
+  .p-cube .wk-hero__art { aspect-ratio: auto; height: var(--fit); }
+  .p-cube .wk-hero__art img { object-position: 50% 100%; }
+  .p-cube .wk-hero__copy { bottom: calc(44 * var(--u)); }
 }

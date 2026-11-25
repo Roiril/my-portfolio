@@ -11,7 +11,7 @@ const t = workTech['ai-composition'];
 export default function AiCompositionPage() {
     return (
         <Shell id="ai-composition" className={`p-compo ${latin.variable} ${jp.variable}`}>
-            <Hero src="/images/works/ai-composition/poster.webp" alt="鍵盤の道が 2 本に分かれる。左は小さな家へ、右は橋と花とラッパの塔へ続く">
+            <Hero src="/images/works/ai-composition/poster.webp" tall="/images/works/ai-composition/poster-tall.webp" alt="鍵盤の道が 2 本に分かれる。左は小さな家へ、右は橋と花とラッパの塔へ続く">
                 <h1><span>AI-Augmented</span> <span>Composition</span></h1>
                 <p className="say"><Ph text="自分の曲を素材にして、AI で広げる。" /></p>
                 <p>個人制作</p>

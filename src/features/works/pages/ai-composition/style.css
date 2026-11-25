@@ -1,5 +1,5 @@
 /* AI-Augmented Composition。群青の空と生成りの鍵盤。白鍵と黒鍵で面を割る */
-.p-compo { --c-bg: #1e2fab; --c-fg: #f7ecd0; --c-ac: #f7ecd0; --c-hair: rgba(247, 236, 208, .5); --f-head: var(--font-ac), var(--font-ac-j), "Yu Mincho", serif; --f-body: var(--font-ac-j), "Yu Mincho", serif; font-weight: 500; --np-bg: #0c1026; --np-fg: #f7ecd0; }
+.p-compo { --h1: 7.4vw; --tall-bg: #192caf; --flat: 54vw; --c-bg: #1e2fab; --c-fg: #f7ecd0; --c-ac: #f7ecd0; --c-hair: rgba(247, 236, 208, .5); --f-head: var(--font-ac), var(--font-ac-j), "Yu Mincho", serif; --f-body: var(--font-ac-j), "Yu Mincho", serif; font-weight: 500; --np-bg: #0c1026; --np-fg: #f7ecd0; }
 body:has(.p-compo) { background: #1e2fab; }
 .p-compo .wk-hero__copy { left: 0; right: 0; top: calc(58 * var(--u)); align-items: center; text-align: center; gap: calc(6 * var(--u)); }
 .p-compo h1 { font-weight: 400; font-size: calc(112 * var(--u)); line-height: 1.04; white-space: nowrap; -webkit-text-stroke: max(1px, calc(2.4 * var(--u))) currentColor; }
@@ -18,8 +18,6 @@ body:has(.p-compo) { background: #1e2fab; }
 @media (max-width: 900px) {
   .p-compo .wk-hero__copy { align-items: flex-start; text-align: left; }
   .p-compo h1 { font-size: 13vw; white-space: normal; }
-  .p-compo .wk-hero__art { aspect-ratio: 1; }
-  .p-compo .wk-hero__art img { object-position: 46% 100%; }
   .p-compo .zero { grid-template-columns: 1fr; gap: 14px; }
   .p-compo .route { padding-inline: var(--pad); }
 }
