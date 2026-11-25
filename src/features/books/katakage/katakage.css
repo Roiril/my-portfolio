@@ -1,0 +1,101 @@
+/* 片影の攻略本。色は紙面から取る。見開きを継ぎ目なく並べる。幅 1440 を基準に --u で伸縮する */
+.kt {
+  --u: calc(100vw / 1440);
+  --kt-yellow: #fbb71b;
+  --kt-ink: #15192b;
+  --kt-stone: #8797a0;
+  --kt-paper: #f3eedf;
+  --kt-display: var(--font-kt-display), "Yu Gothic", sans-serif;
+  background: var(--kt-ink);
+  color: var(--kt-paper);
+  font-family: var(--font-kt-body), "Yu Gothic", "Hiragino Sans", sans-serif;
+  font-size: max(14.5px, calc(16 * var(--u)));
+  line-height: 1.85;
+  font-feature-settings: "palt";
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+body:has(.kt) { background: #15192b; }
+html:has(.kt) { scroll-padding-top: 0; }
+.kt *, .kt-zoom * { box-sizing: border-box; }
+.kt p, .kt h1, .kt h2, .kt ol { margin: 0; padding: 0; list-style: none; }
+.kt img { display: block; width: 100%; height: auto; }
+.kt a { color: inherit; text-decoration: underline; text-underline-offset: .28em; text-decoration-thickness: 1px; }
+.kt :focus-visible, .kt-zoom :focus-visible { outline: 3px solid #e2412b; outline-offset: -3px; }
+.kt-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.kt-row { display: grid; grid-template-columns: 1fr 1fr; }
+.kt-page { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+
+/* 表紙と、その裏の見返し */
+.kt-inside { display: flex; flex-direction: column; padding: max(24px, calc(44 * var(--u))) max(20px, calc(56 * var(--u))) max(28px, calc(48 * var(--u))); }
+.kt-back { text-align: right; }
+.kt-title { margin-block: auto calc(52 * var(--u)); padding-top: calc(40 * var(--u)); }
+.kt-kind { color: var(--kt-yellow); font-weight: 700; font-size: max(15px, calc(20 * var(--u))); letter-spacing: .04em; }
+.kt h1 { margin-top: calc(26 * var(--u)); font-family: var(--kt-display); font-weight: 400; color: var(--kt-yellow); line-height: 1.05; }
+.kt h1 b { display: block; font-weight: 400; font-size: calc(168 * var(--u)); letter-spacing: .02em; }
+.kt h1 ruby { ruby-align: start; }
+.kt h1 rt { font-family: var(--font-kt-body), "Yu Gothic", sans-serif; font-size: max(13px, calc(16 * var(--u))); font-weight: 700; letter-spacing: .3em; color: var(--kt-paper); }
+.kt h1 span { display: block; margin-top: calc(10 * var(--u)); font-size: calc(50 * var(--u)); color: var(--kt-paper); }
+.kt-say { max-width: 34em; padding-top: calc(26 * var(--u)) !important; }
+.kt-toc { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(6, auto); grid-auto-flow: column; column-gap: calc(36 * var(--u)); border-top: 2px solid var(--kt-yellow); }
+.kt .kt-toc a { display: grid; grid-template-columns: 2.4em 1fr; align-items: baseline; padding: calc(9 * var(--u)) 0; border-bottom: 1px solid rgba(135, 151, 160, .5); text-decoration: none; font-weight: 700; line-height: 1.5; }
+.kt-toc b { font-family: var(--kt-display); font-weight: 400; color: var(--kt-yellow); }
+.kt-toc a:hover { background: var(--kt-yellow); color: var(--kt-ink); }
+.kt-toc a:hover b { color: inherit; }
+.kt-note { margin-top: calc(34 * var(--u)); font-size: max(13px, calc(14 * var(--u))); color: #c3ccd1; }
+.kt-note p:last-child { color: var(--kt-paper); }
+
+/* 最後の面。左の 12 ページの下の段と、右の 11 ページの下の段を同じ高さに置く */
+.kt-hold { display: flex; flex-direction: column; justify-content: flex-end; min-width: 0; }
+.kt-hold__text { padding: 0 max(20px, calc(56 * var(--u))); }
+.kt h2 { font-family: var(--kt-display); font-weight: 400; font-size: max(28px, calc(84 * var(--u))); line-height: 1.2; color: var(--kt-yellow); }
+.kt-hold__text p { max-width: 30em; padding-top: calc(16 * var(--u)); }
+.kt-sukashi > button { margin: max(18px, calc(26 * var(--u))) max(20px, calc(56 * var(--u))) max(24px, calc(44 * var(--u))); padding: .55em 1.5em; border: 0; background: var(--kt-yellow); color: var(--kt-ink); font: inherit; font-weight: 700; font-size: max(16px, calc(18 * var(--u))); cursor: pointer; }
+.kt-sukashi > button:hover { background: var(--kt-paper); }
+.kt-paper { position: relative; }
+.kt-lit { position: absolute; inset: 0; clip-path: circle(0 at 14.6% 73.4%); transition: clip-path .4s cubic-bezier(.4, 0, .7, .4); }
+/* lit.webp は 11 ページに 12 ページを裏返して重ねた画。提灯のまわりの紙だけ明るくしてある */
+[data-lit="true"] .kt-lit { clip-path: circle(110% at 14.6% 73.4%); transition: clip-path .9s cubic-bezier(.3, .1, .3, 1); }
+
+.kt-foot { display: flex; justify-content: space-between; gap: 20px; padding: max(26px, calc(40 * var(--u))) max(20px, calc(56 * var(--u))); }
+
+/* ページを大きく開いた面 */
+.kt-zoom { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #15192b; color: #f3eedf; overflow: hidden; }
+.kt-zoom[open] { display: flex; flex-direction: column; }
+.kt-zoom::backdrop { background: #15192b; }
+.kt-zoom__bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 20px; }
+.kt-zoom__bar p { margin: 0; min-width: 0; font-weight: 700; font-size: 15px; line-height: 1.4; }
+.kt-zoom__bar b { margin-right: .7em; color: #fbb71b; }
+.kt-zoom__bar div { flex: none; display: flex; gap: 6px; }
+.kt-zoom__bar button { min-height: 44px; padding: 0 14px; border: 1px solid rgba(243, 238, 223, .5); background: none; color: inherit; font: inherit; font-size: 14px; cursor: pointer; }
+.kt-zoom__bar button:hover:not(:disabled) { background: #fbb71b; border-color: #fbb71b; color: #15192b; }
+.kt-zoom__bar button:disabled { opacity: .35; cursor: default; }
+.kt-zoom__body { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; }
+.kt-zoom__body img { display: block; width: min(1280px, 100%); max-width: none; height: auto; margin: 0 auto; }
+html:has(.kt-zoom[open]) { overflow: hidden; }
+
+@media (max-width: 760px) {
+  .kt-row { grid-template-columns: 1fr; }
+  .kt-inside { padding: 22px 20px 34px; }
+  .kt-title { margin: 0 0 28px; padding-top: 18px; }
+  .kt h1 { margin-top: 10px; }
+  .kt h1 b { font-size: 96px; }
+  .kt h1 span { margin-top: 6px; font-size: 32px; }
+  .kt-say { padding-top: 16px !important; }
+  .kt-toc { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; }
+  .kt-toc a { padding: 9px 0; }
+  .kt-note { margin-top: 24px; }
+  .kt-hold__text { padding-top: 44px; }
+  .kt h2 { font-size: 44px; }
+  .kt-hold__text p { padding-top: 10px; }
+  .kt-foot { flex-wrap: wrap; }
+  /* 小さい画面では紙面の文字を読める大きさにし、指で動かして見る */
+  .kt-zoom__bar { flex-wrap: wrap; padding: 8px 12px; gap: 6px 12px; }
+  .kt-zoom__body img { width: 260vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kt-lit, [data-lit="true"] .kt-lit { transition: none; }
+}
+html[data-motion="off"] .kt-lit { transition: none !important; }

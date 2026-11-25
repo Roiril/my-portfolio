@@ -322,7 +322,10 @@ export const workPages: WorkPageDef[] = [
     markTop: 90,
     say: '「いま話しかけてよいか」の判断材料を、相手のそばに表示する。',
     meta: '2025（卒業研究）　単独（着想・実装・実験・分析・執筆）',
-    links: [{ label: '卒業論文', url: '/soturon.pdf' }],
+    links: [
+      { label: '卒業論文', url: '/soturon.pdf' },
+      { label: '試作集 MetaQuest Devs', url: '/works/metaquest-devs' },
+    ],
     heroTone: ['paper', 'white'],
     hero: { type: 'pic', fit: 'contain', pic: { src: '/images/front/intent.webp', alt: 'MR デバイスでスキャンすると、離れた 2 人のそばに「今は話しかけないで欲しい」「作業中だが雑談歓迎」と表示される図', w: 654, h: 400 } },
     thumb: '/images/front/intent.webp',

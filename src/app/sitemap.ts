@@ -1,6 +1,7 @@
 // src/app/sitemap.ts
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/constants/site";
+import { guideBooks } from "@/content/books";
 import { works } from "@/content/works";
 import { hasDetailPage } from "@/features/works";
 
@@ -15,5 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/`, lastModified, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/resume`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     ...workPages,
+    ...guideBooks.map((b) => ({ url: `${SITE_URL}/books/${b.id}`, lastModified, changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 }

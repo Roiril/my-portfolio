@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- 寸法と圧縮を済ませた絵を、そのまま切り抜いて重ねるため */
 import Link from 'next/link';
+import { GuideCards } from '@/features/books';
 import FrontMotion from './FrontMotion';
 import { frontFonts } from './fonts';
 import './front.css';
@@ -9,6 +10,7 @@ import './front.css';
 const HOLD_DOOR_FOR_FONTS = `try{var r=document.documentElement,go=function(){delete r.dataset.doorWait};r.dataset.doorWait='1';Promise.race([Promise.all([].map.call(document.querySelectorAll('.door-face .name'),function(e){var c=getComputedStyle(e);return document.fonts.load(c.fontWeight+' 1em '+c.fontFamily,e.textContent)})),new Promise(function(f){setTimeout(f,1200)})]).then(go,go)}catch(e){delete document.documentElement.dataset.doorWait}`;
 
 // トップページ。面ごとに型を変え、中央の線と赤 1 色で揃える。
+// 作品に置くリンクは「詳しく見る」だけ。動画・論文・デモ・公式サイトは詳細ページに置く（CLAUDE.md）。
 // 動きは FrontMotion が後から足す。JS が無くても全文が読める
 export default function FrontPage() {
   return (
@@ -91,7 +93,7 @@ export default function FrontPage() {
           <p className="txt">HMDと複数のカメラで固定視点を現実空間に再構成した固定視点のホラー体験です。体験者は怪異調査員として呪われた壁を調査します。</p>
           <p className="role">チーム制作。企画・監督・ソフトウェア開発を担当。</p>
           <p className="txt">要件定義、体験設計、動作検証も担当しています。実装にはAIエージェントを活用し、設計の把握とテストを通して品質を確かめています。</p>
-          <p className="links"><Link className="link" href="/works/mawarimi">詳しく見る</Link><a className="link" href="https://mawarimi.vercel.app/">公式サイト</a><a className="link" href="https://www.conference.vrsj.org/ac2026/program/doc/IVRC-15.pdf">日本VR学会の論文</a><a className="link" href="https://youtu.be/uWf51qRwbhA">予告動画</a></p>
+          <p className="links"><Link className="link" href="/works/mawarimi">詳しく見る</Link></p>
         </div>
       </div>
       <div className="cams">
@@ -123,7 +125,7 @@ export default function FrontPage() {
           <h2 className="wo-title" id="wo-title">WHITEOUT</h2>
           <p className="say">白いインクで、9 つの面を塗りつぶす。</p>
           <p className="txt">能力を組み合わせて速いクリアを目指すローグライトゲームです。unity1week のお題「しろ」に向けて制作しました。2026.08</p>
-          <p className="links"><Link className="link" href="/works/whiteout">詳しく見る</Link><a className="link" href="https://unityroom.com/games/whiteout-rogue">unityroom で遊ぶ</a></p>
+          <p className="links"><Link className="link" href="/works/whiteout">詳しく見る</Link></p>
           <p className="wo-hint"><span className="on-mouse">黒いところをなぞると、このページも塗れます。</span><span className="on-touch">黒いところを押すと、インクが飛びます。</span><span className="wo-meter">白くした面積 <b id="wo-pct">0.0</b>%</span></p>
         </div>
       </div>
@@ -150,24 +152,30 @@ export default function FrontPage() {
       <div className="sheets">
         <div className="sheets-col">
           <h2 id="sheets-title">ほかの研究と業務</h2>
-          <Link className="sheet" href="/works/intentlayer">
-            <div className="pg pg-l"><span className="vert">IntentLayer</span><img src="/images/front/intent.webp" alt="MRデバイスで人の意図を読み取る様子の図" width="654" height="400" loading="lazy" decoding="async" /></div>
+          <Link className="sheet pair" href="/works/intentlayer">
+            <div className="pg pg-l">
+              <div className="cell"><span className="vert">IntentLayer</span><span className="fig-box"><img src="/images/front/intent.webp" alt="MRデバイスで人の意図を読み取る様子の図" width="654" height="400" loading="lazy" decoding="async" /></span></div>
+              <div className="cell"><span className="vert sub">MetaQuest Devs</span><span className="fig-box"><img className="full" src="/images/front/devs-crop.webp" alt="試作の画面を集めた図" width="750" height="600" loading="lazy" decoding="async" /></span></div>
+            </div>
             <div className="pg pg-r">
-              <p className="kick">2025　卒業研究</p>
-              <p className="q">「いま話しかけてよいか」を、空間に置く。</p>
-              <p className="b">対面で話しかけてよいかを判断しやすくするMRシステムです。HMD版とWeb版を実装し、1週間運用して半構造化インタビューで評価しました。</p>
-              <p className="role">単独（着想・実装・実験・分析・執筆）<br /><u>詳しく見る</u></p>
+              <div className="cell">
+                <p className="kick">2025　卒業研究</p>
+                <p className="q">「いま話しかけてよいか」を、空間に置く。</p>
+                <p className="b">対面で話しかけてよいかを判断しやすくするMRシステムです。HMD版とWeb版を実装し、1週間運用して半構造化インタビューで評価しました。</p>
+                <p className="role">単独（着想・実装・実験・分析・執筆）</p>
+              </div>
+              <div className="cell">
+                <p className="kick">卒業研究のための試作集</p>
+                <p className="q">現実の空間に情報を重ねる表現を試す。</p>
+                <p className="b">Meta Quest と Unity で作りました。通路で人とすれ違う場面などを試しています。</p>
+                <p className="role"><u>詳しく見る</u></p>
+              </div>
             </div>
           </Link>
-          <Link className="sheet" href="/works/metaquest-devs">
-            <div className="pg pg-l"><span className="vert">MetaQuest Devs</span><img className="full" src="/images/front/devs.webp" alt="試作の画面を集めた図" width="900" height="600" loading="lazy" decoding="async" /></div>
-            <div className="pg pg-r">
-              <p className="kick">卒業研究のための試作集</p>
-              <p className="q">現実の空間に情報を重ねる表現を試す。</p>
-              <p className="b">Meta Quest と Unity で作りました。通路で人とすれ違う場面などを試しています。</p>
-              <p className="role">Meta Quest　Unity<br /><u>詳しく見る</u></p>
-            </div>
-          </Link>
+          <div className="guides" id="guides">
+            <h3>架空のゲームの攻略本</h3>
+            <GuideCards />
+          </div>
         </div>
         <div className="sheets-col r">
           <Link className="sheet" href="/works/ai-business-tools">
@@ -205,7 +213,7 @@ export default function FrontPage() {
           <p className="say">ふたりの毎日を、ひとつの部屋に。</p>
           <p className="txt">離れて暮らすふたりのために開発した共有アプリです。予定や日々の記録を猫のいる部屋から開けます。</p>
           <p className="kick">2026.03 –　個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。</p>
-          <p className="links"><Link className="link" href="/works/couple-sync">詳しく見る</Link><a className="link" href="/demos/couple-sync/index.html">アプリのデモを見る</a></p>
+          <p className="links"><Link className="link" href="/works/couple-sync">詳しく見る</Link></p>
         </div>
         <div className="shelf">
           <img className="phone p1" src="/images/front/couple-room.webp" alt="猫のいる部屋の画面" width="560" height="1211" loading="lazy" decoding="async" />
@@ -223,7 +231,7 @@ export default function FrontPage() {
           <p className="say">読む・考える・書くを、一本の流れに。</p>
           <p className="txt">研究のアイデア、論文、文献をまとめて管理する自分用の研究ログアプリです。オフラインでも使え、端末間で同期します。</p>
           <p className="kick">2026.03 –　個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。</p>
-          <p className="links"><Link className="link" href="/works/cogni-storage">詳しく見る</Link><a className="link" href="/demos/cogni-storage/index.html">アプリのデモを見る</a></p>
+          <p className="links"><Link className="link" href="/works/cogni-storage">詳しく見る</Link></p>
         </div>
       </div>
     </section>
