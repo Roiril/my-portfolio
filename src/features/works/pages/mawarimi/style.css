@@ -1,5 +1,5 @@
 /* 廻リ視。墨、朱、骨の 3 色。朱の帯が紙面を回る */
-.p-mawarimi { --c-bg: #080606; --c-fg: #e8dcc5; --c-ac: #cf2a20; --c-sub: #bfb39c; --c-hair: rgba(232, 220, 197, .35); --f-head: var(--font-mw), "Yu Mincho", serif; --f-body: var(--font-mw-b), "Yu Gothic", sans-serif; --np-bg: #080606; --np-fg: #e8dcc5; --l-bg: #b81c16; --l-fg: #fff; }
+.p-mawarimi { --tall-bg: #0b0707; --flat: 56vw; --c-bg: #080606; --c-fg: #e8dcc5; --c-ac: #cf2a20; --c-sub: #bfb39c; --c-hair: rgba(232, 220, 197, .35); --f-head: var(--font-mw), "Yu Mincho", serif; --f-body: var(--font-mw-b), "Yu Gothic", sans-serif; --np-bg: #080606; --np-fg: #e8dcc5; --l-bg: #b81c16; --l-fg: #fff; }
 body:has(.p-mawarimi) { background: #080606; }
 .p-mawarimi .wk-hero__copy { left: var(--pad); top: calc(38 * var(--u)); width: calc(590 * var(--u)); }
 .p-mawarimi h1 img { width: calc(620 * var(--u)); max-width: none; margin-left: calc(-14 * var(--u)); }
@@ -42,10 +42,12 @@ body:has(.p-mawarimi) { background: #080606; }
 .p-mawarimi .record dd, .p-mawarimi .record li { color: #fbeed8; }
 .p-mawarimi .record li { font-size: .95em; }
 @media (max-width: 900px) {
-  .p-mawarimi h1 img { width: 100%; }
-  .p-mawarimi .wk-hero__art { margin-top: -8vw; }
+  .p-mawarimi h1 img { width: 100%; margin-left: 0; }
+  .p-mawarimi .say { font-size: clamp(18px, 5.05vw, 30px); }
+  @media (min-width: 600px) and (min-aspect-ratio: 4 / 5) { .p-mawarimi h1 img { width: 46vw; } }
+  .p-mawarimi .wk-hero .wk-links a { padding-inline: .9em; font-size: 15px; }
   .p-mawarimi .wk-hero__copy { position: relative; }
-  .p-mawarimi .wk-hero__art img { object-position: 85% 50%; }
+  .p-mawarimi .laps .wk-nums { display: grid; grid-template-columns: repeat(3, auto); gap: 18px; }
   .p-mawarimi .laps__copy { position: static; width: auto; padding: 48px var(--pad) 26px; }
   .p-mawarimi .laps .wk-art { aspect-ratio: 1; }
   .p-mawarimi .laps .wk-art img { object-position: 88% 50%; }
@@ -54,9 +56,27 @@ body:has(.p-mawarimi) { background: #080606; }
   .p-mawarimi .cam.b { right: 0; top: 82vw; width: 88%; }
   .p-mawarimi .cam.c { left: 0; top: 148vw; width: 82%; }
   .p-mawarimi .films, .p-mawarimi .path, .p-mawarimi .record { grid-template-columns: 1fr; gap: 34px; }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-mawarimi .laps .wk-art { aspect-ratio: 4 / 3; }
+  .p-mawarimi .cams { height: 150vw; }
+  .p-mawarimi .cam.a { top: 8vw; width: 74%; }
+  .p-mawarimi .cam.b { top: 56vw; width: 80%; }
+  .p-mawarimi .cam.c { top: 104vw; width: 74%; }
+  .p-mawarimi .films { grid-template-columns: 1.4fr 1fr; gap: 24px; }
+  .p-mawarimi .record { grid-template-columns: 1fr 1fr; }
+  .p-mawarimi .record > .wk-stack { grid-column: 1 / 3; }
+}
+@media (max-width: 719px) {
   .p-mawarimi .tate { grid-template-columns: 1fr; }
   .p-mawarimi .tate h2 { grid-area: auto; writing-mode: horizontal-tb; }
   .p-mawarimi .tate .wk-list { grid-area: auto; display: grid; gap: 26px; }
   .p-mawarimi .tate .wk-list > div { writing-mode: horizontal-tb; height: auto; padding: 0 0 0 16px; border: 0; border-left: 3px solid #b1160f; }
   .p-mawarimi .tate dd { margin: .3em 0 0; }
+}
+@media (min-width: 720px) and (max-width: 900px) {
+  .p-mawarimi .tate { gap: 24px; }
+  .p-mawarimi .tate .wk-list { gap: 16px; }
+  .p-mawarimi .tate .wk-list > div { height: 430px; padding-right: 14px; }
+  .p-mawarimi .tate dd { line-height: 1.85; }
 }

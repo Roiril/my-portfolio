@@ -12,7 +12,7 @@ const f = '/images/works/last-page/';
 export default function LastPagePage() {
     return (
         <Shell id="last-page" className={`p-last-page ${font.variable}`}>
-            <Hero real src={`${f}closed.webp`} alt="夕方の机に置かれた、布張りの古い日記帳と鉛筆">
+            <Hero real sizes="(max-width: 900px) 290vw, 100vw" src={`${f}closed.webp`} alt="夕方の机に置かれた、布張りの古い日記帳と鉛筆">
                 <h1><Image src={`${f}logo.webp`} alt="最後のページ" width={1100} height={662} sizes="(max-width: 900px) 90vw, 46vw" priority /></h1>
                 <p className="say"><Ph text="古い日記帳の頁を跳んで渡り、ひとりの一生を読む。" /></p>
                 <p>Unity で作った約 7 分のゲーム</p>

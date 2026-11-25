@@ -33,9 +33,15 @@ body:has(.p-last-page) { background: #1a0d08; }
 .p-last-page .ending__copy { padding: calc(40 * var(--u)) var(--pad) calc(60 * var(--u)); text-align: center; }
 .p-last-page .ending h2 { font-size: max(30px, calc(62 * var(--u))); }
 @media (max-width: 900px) {
-  .p-last-page h1 img { width: 100%; }
-  .p-last-page .wk-hero__copy { height: auto; padding-bottom: 14px; }
-  .p-last-page .wk-hero__art { aspect-ratio: 4 / 3; }
+  .p-last-page .wk-hero { display: grid; min-height: min(165vw, 92svh); }
+  .p-last-page .wk-hero > * { grid-area: 1 / 1; }
+  .wk.p-last-page .wk-hero .wk-hero__copy { height: auto; padding: 48px var(--pad) 34px; }
+  .p-last-page .wk-hero .wk-hero__art { aspect-ratio: auto; position: absolute; inset: 0; }
+  .p-last-page .wk-hero__art img { object-position: 22% 50%; }
+  .p-last-page h1 img { width: min(100%, calc(46vw + 160px)); }
+  @media (min-width: 600px) and (min-aspect-ratio: 4 / 5) { .p-last-page h1 img { width: 50vw; } }
+  .p-last-page .trailer { padding-inline: 0; }
+  .p-last-page .trailer figcaption { padding-inline: var(--pad); }
   .p-last-page .crayon__copy { position: static; display: block; height: auto; padding: 44px var(--pad) 24px; }
   .p-last-page .crayon h2, .p-last-page .crayon .wk-text, .p-last-page .diary h2 { writing-mode: horizontal-tb; }
   .p-last-page .crayon .wk-text p + p { margin: .8em 0 0; }
@@ -46,4 +52,7 @@ body:has(.p-last-page) { background: #1a0d08; }
   .p-last-page .diary h2 { line-height: calc(var(--line) * 2); }
   .p-last-page .colophon { grid-template-columns: 1fr; padding: 20px; }
   .p-last-page .scenes .s2, .p-last-page .scenes .s3, .p-last-page .scenes .s4, .p-last-page .scenes > * { grid-column: span 6; }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-last-page .scenes .s2, .p-last-page .scenes .s3, .p-last-page .scenes .s5, .p-last-page .scenes .s6 { grid-column: span 3; }
 }

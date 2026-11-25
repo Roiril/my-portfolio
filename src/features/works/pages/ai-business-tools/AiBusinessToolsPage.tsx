@@ -12,7 +12,7 @@ const f = '/images/works/ai-business-tools/';
 export default function AiBusinessToolsPage() {
     return (
         <Shell id="ai-business-tools" className={`p-biz ${head.variable} ${body.variable}`}>
-            <Hero src={`${f}poster.webp`} alt="書類の山で小さな人たちが紙を運び、手前の人が朱の鉛筆で丸をつける">
+            <Hero src={`${f}poster.webp`} tall={`${f}poster-tall.webp`} alt="書類の山で小さな人たちが紙を運び、手前の人が朱の鉛筆で丸をつける">
                 <h1>AI業務ツール</h1>
                 <div className="lead">
                     <p className="say"><Ph text="商談から見積書の下書きを作り、社内マニュアルから根拠つきで答える。" /></p>

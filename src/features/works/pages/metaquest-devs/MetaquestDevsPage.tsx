@@ -12,7 +12,7 @@ const t = workTech['metaquest-devs'];
 export default function MetaquestDevsPage() {
     return (
         <Shell id="metaquest-devs" className={`p-devs ${head.variable} ${body.variable}`}>
-            <Hero src="/images/works/metaquest-devs/poster.webp" alt="ゴーグルの人の肩越しに見た通路。向こうから来る人の道筋が白い帯で床に伸びる">
+            <Hero src="/images/works/metaquest-devs/poster.webp" tall="/images/works/metaquest-devs/poster-tall.webp" alt="ゴーグルの人の肩越しに見た通路。向こうから来る人の道筋が白い帯で床に伸びる">
                 <h1>MetaQuest<br />Devs</h1>
                 <p className="say"><Ph text="現実の空間に情報を重ねる表現を試す。" /></p>
                 <p>卒業研究のために作った試作集</p>

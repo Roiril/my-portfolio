@@ -15,7 +15,7 @@ export default function RetroTVPortfolioPage() {
     return (
         <Shell id="retroTV-portfolio" className={`p-retro ${neon.variable} ${head.variable} ${dot.variable}`}>
             <header className="living">
-                <Art src={`${f}poster.webp`} alt="壁紙の居間に置かれた木の箱のテレビ" priority />
+                <Art src={`${f}poster.webp`} tall={`${f}poster-tall.webp`} alt="壁紙の居間に置かれた木の箱のテレビ" priority />
                 <div className="screen"><Image src="/images/retroTV-portfolio.png" alt="暗い部屋のブラウン管にプロフィールが映る画面" width={1212} height={817} sizes="50vw" priority /></div>
             </header>
             <section className="title">

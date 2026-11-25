@@ -12,7 +12,7 @@ const f = '/images/works/aquarium/';
 export default function AquariumPage() {
     return (
         <Shell id="aquarium" className={`p-aquarium ${font.variable} ${body.variable}`}>
-            <Hero src={`${f}poster.webp`} alt="三角の魚の群れが渦を巻いて鳥居をくぐり、真ん中を金魚が泳ぐ">
+            <Hero src={`${f}poster.webp`} tall={`${f}poster-tall.webp`} alt="三角の魚の群れが渦を巻いて鳥居をくぐり、真ん中を金魚が泳ぐ">
                 <h1>Aquarium<small>in Processing</small></h1>
                 <p className="say"><Ph text="3 つの決まりだけで、魚が群れになる。" /></p>
             </Hero>

@@ -16,7 +16,7 @@ const Phone = ({ src, alt, caption, h = 1688, w = 780 }: { src: string; alt: str
 export default function CoupleSyncPage() {
     return (
         <Shell id="couple-sync" className={`p-couple ${font.variable}`}>
-            <Hero src={`${f}poster.webp`} alt="離れて建つ 2 軒の家の屋根に、ぶちの猫が橋のように寝そべっている">
+            <Hero src={`${f}poster.webp`} tall={`${f}poster-tall.webp`} alt="離れて建つ 2 軒の家の屋根に、ぶちの猫が橋のように寝そべっている">
                 <h1>couple-sync</h1>
                 <p className="say"><Ph text="ふたりの毎日を、ひとつの部屋に。" /></p>
                 <p className="meta">2026.03 –　個人制作。企画・設計・検証を担当。実装には AI エージェントを活用。</p>

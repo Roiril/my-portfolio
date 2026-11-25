@@ -209,7 +209,7 @@ def retro(variant):
 def cube(variant):
     pal = NIGHT
     wide = variant == "wide"
-    W, H = (272, 130) if wide else (180, 330)
+    W, H = (272, 130) if wide else (180, 338)
     fs = 4.1 if wide else 6.0
     g = Iso(font=FONT, ink=pal["ink"])
     s = 15.0 if wide else 19.0
@@ -220,10 +220,10 @@ def cube(variant):
     for (a, b), col in zip(cells, fills):
         g.raw(f'<rect x="{nx + a * s:.2f}" y="{ny + b * s:.2f}" width="{s}" height="{s}" fill="{col}" stroke="{pal["ink"]}" stroke-width=".4"/>')
     g.text(nx, ny + 3 * s + (fs * 1.9), "展開図", size=fs, weight="700", fill=pal["ink"])
-    g.text(nx, ny + 3 * s + (fs * 3.2), "面ごとに写真を割り当てる", size=fs * .85, fill=pal["mid"])
+    g.text(nx, ny + 3 * s + (fs * 3.2), "面ごとに写真を割り当てる", size=fs * (.85 if wide else 1), fill=pal["mid"])
 
     R = 27.0 if wide else 42.0
-    centers = {"球面": (108, 62), "螺旋": (172, 62), "結び目": (236, 62)} if wide else {"球面": (90, 142), "螺旋": (45, 248), "結び目": (135, 248)}
+    centers = {"球面": (108, 62), "螺旋": (172, 62), "結び目": (236, 62)} if wide else {"球面": (90, 149), "螺旋": (45, 256), "結び目": (135, 256)}
     if not wide:
         R = 38.0
     rs = {"球面": R, "螺旋": R if wide else 36, "結び目": R if wide else 36}
@@ -264,7 +264,7 @@ def cube(variant):
         note = {"球面": "黄金角で置く", "螺旋": "順に巻いていく", "結び目": "線でつなぐ形"}[name]
         y0 = cy + rs[name] + fs * 2.0
         g.text(cx, y0, name, size=fs, anchor="middle", weight="700", fill=pal["ink"])
-        g.text(cx, y0 + fs * 1.35, note, size=fs * .85, anchor="middle", fill=pal["mid"])
+        g.text(cx, y0 + fs * 1.35, note, size=fs * (.85 if wide else 1), anchor="middle", fill=pal["mid"])
     save(g, "cube-diary-geometry", variant, W, H, pal, "CubeDiary の展開図と並べ方の図",
          "6 面の展開図と、キューブの 3 種類の並べ方。球面、螺旋、結び目。")
 
@@ -370,7 +370,7 @@ def aquarium(variant):
         g.text(212, 104 + fs * 1.3, "計算した軌跡", size=fs, anchor="start", weight="700", fill=pal["ink"])
     else:
         for i, (nm, note) in enumerate(names):
-            g.text(6, 252 + i * fs * 1.4, f"{nm}　{note}", size=fs * .85, fill=pal["mid"])
+            g.text(6, 252 + i * fs * 1.4, f"{nm}　{note}", size=fs, fill=pal["mid"])
     save(g, "aquarium-rules", variant, W, H, pal, "Aquarium in Processing の 3 つの決まりの図",
          "1 匹の魚に与える 3 つの決まり、寄る、ぶつからない、揃えると、それを実際に計算したときの群れの軌跡。")
 

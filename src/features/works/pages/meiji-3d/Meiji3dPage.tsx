@@ -11,7 +11,7 @@ const f = '/images/works/meiji-3d/';
 export default function Meiji3dPage() {
     return (
         <Shell id="meiji-3d" className={`p-meiji ${font.variable}`}>
-            <Hero src={`${f}poster.webp`} alt="校舎の長い廊下を、革靴が踏み出す。床に白い靴跡が続く">
+            <Hero src={`${f}poster.webp`} tall={`${f}poster-tall.webp`} alt="校舎の長い廊下を、革靴が踏み出す。床に白い靴跡が続く">
                 <h1>Meiji<br />Univ 3F</h1>
                 <p className="say"><Ph text="歩幅で測った校舎の 3 階を、3D にする。" /></p>
             </Hero>
@@ -48,7 +48,7 @@ export default function Meiji3dPage() {
 
             <section className="vr">
                 <div className="vr__copy">
-                    <h2>未来の姿を VR で議論する</h2>
+                    <h2>未来の姿を <span className="wk-ph">VR で議論する</span></h2>
                     <p>デジタル化した空間を VR に持ち込み、この場所が将来どうあるべきかを議論する場にしました。歩測をもとに再現した空間の中で、配置や見え方を確認しながら将来の姿を検討できます。</p>
                 </div>
                 <Photo pic={{ src: `${f}use-vr-01.png`, alt: 'VR 空間で 3 階のモデルを使った議論', w: 1377, h: 690 }} />

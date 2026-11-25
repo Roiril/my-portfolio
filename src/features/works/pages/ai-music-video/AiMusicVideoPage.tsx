@@ -11,7 +11,7 @@ const t = workTech['ai-music-video'];
 export default function AiMusicVideoPage() {
     return (
         <Shell id="ai-music-video" className={`p-mv ${latin.variable} ${jp.variable}`}>
-            <Hero src="/images/works/ai-music-video/poster.webp" alt="歌う人の横顔が縦の帯に分かれ、線や縞や楽器やフィルムで描かれている">
+            <Hero src="/images/works/ai-music-video/poster.webp" tall="/images/works/ai-music-video/poster-tall.webp" alt="歌う人の横顔が縦の帯に分かれ、線や縞や楽器やフィルムで描かれている">
                 <h1>AI Generated<br />Music Video</h1>
                 <p className="say"><Ph text="工程ごとに AI を使い分けたミュージックビデオ。" /></p>
                 <p>個人制作</p>
@@ -26,7 +26,7 @@ export default function AiMusicVideoPage() {
             <section className="desk">
                 <Art src="/images/works/ai-music-video/desk.webp" alt="フィルムが縞と鍵盤と音の波形に変わりながら 1 本につながる編集机" />
                 <div className="desk__copy">
-                    <h2><Ph text="1 つの AI ですべてを作らない。" /></h2>
+                    <h2>1 つの AI で<span className="wk-ph">すべてを作らない。</span></h2>
                     <p>曲は Suno AI で作り、編集は Filmora で仕上げました。曲・映像素材・編集の工程ごとに道具を試して組み合わせています。</p>
                     <Stack items={t.stack} />
                 </div>

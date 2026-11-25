@@ -1,5 +1,5 @@
 /* cogni-storage。生成りと黒の版画、金茶は葉と飾り罫だけ */
-.p-cogni { --c-bg: #efe0c4; --c-fg: #12100d; --c-ac: #8a5f1c; --c-hair: rgba(18, 16, 13, .4); --f-head: var(--font-cg), var(--font-cg-j), "Yu Mincho", serif; --f-body: var(--font-cg-j), "Yu Mincho", serif; --l-bg: #12100d; --l-fg: #efe0c4; }
+.p-cogni { --h1: 12vw; --tall-bg: #efe0c5; --flat: 55vw; --c-bg: #efe0c4; --c-fg: #12100d; --c-ac: #8a5f1c; --c-hair: rgba(18, 16, 13, .4); --f-head: var(--font-cg), var(--font-cg-j), "Yu Mincho", serif; --f-body: var(--font-cg-j), "Yu Mincho", serif; --l-bg: #12100d; --l-fg: #efe0c4; }
 body:has(.p-cogni) { background: #efe0c4; }
 .p-cogni :is(h1, h2, h3, dt, .wk-back, .wk-links a, .wk-np b) { font-weight: 400; }
 .p-cogni .wk-back { background: #efe0c4; padding: 0 .8em; }
@@ -24,16 +24,23 @@ body:has(.p-cogni) { background: #efe0c4; }
 .p-cogni .cards .wk-list > div { padding: max(18px, calc(26 * var(--u))); background: #efe0c4; color: #12100d; border-top: max(10px, calc(22 * var(--u))) solid #a87c32; }
 @media (max-width: 900px) {
   .p-cogni h1 { font-size: 22vw; }
-  .p-cogni .wk-hero__art img { object-position: 60% 50%; }
-  .p-cogni .wk-hero__art { aspect-ratio: 1; }
   .p-cogni .frame { grid-template-columns: 1fr; gap: 18px; }
   .p-cogni .drawer { grid-template-columns: 1fr 1fr; gap: 22px 18px; padding-block: 36px; }
   .p-cogni .drawer .wk-pic:nth-child(even) { transform: none; }
   .p-cogni .drawer .wk-pic:first-child { grid-column: 1 / 3; width: 60%; justify-self: center; }
-  .p-cogni .desk__copy { position: static; transform: none; width: auto; padding: 44px var(--pad) 20px; }
+  .p-cogni .wk-nums { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .p-cogni .desk__copy { position: static; transform: none; width: auto; padding: 36px var(--pad) 46px; }
   .p-cogni .desk .wk-art { aspect-ratio: 1; }
   .p-cogni .desk .wk-art img { object-position: 100% 50%; }
   .p-cogni .route { padding-inline: var(--pad); }
   .p-cogni .cards .wk-list { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) { .p-cogni .cards .wk-list { grid-template-columns: 1fr; } }
+@media (min-width: 600px) and (max-width: 900px) {
+  .p-cogni .frame { grid-template-columns: 1fr 1.5fr; gap: 26px; }
+  .p-cogni .drawer { grid-template-columns: repeat(6, 1fr); }
+  .p-cogni .drawer .wk-pic { grid-column: span 2; }
+  .p-cogni .drawer .wk-pic:first-child { grid-column: span 2; width: auto; justify-self: stretch; }
+  .p-cogni .drawer .wk-pic:nth-child(4) { grid-column: 2 / 4; }
+  .p-cogni .desk .wk-art { aspect-ratio: 4 / 3; }
+}

@@ -12,7 +12,7 @@ const t = workTech['uniqlo-future'];
 export default function UniqloFuturePage() {
     return (
         <Shell id="uniqlo-future" className={`p-uniqlo ${font.variable} ${body.variable}`}>
-            <Hero src="/images/works/uniqlo-future/poster.webp" alt="服が並ぶ自動販売機。しゃがんだ人が取り出し口から服を取り出す">
+            <Hero src="/images/works/uniqlo-future/poster.webp" tall="/images/works/uniqlo-future/poster-tall.webp" alt="服が並ぶ自動販売機。しゃがんだ人が取り出し口から服を取り出す">
                 <h1><span>服自販機</span></h1>
                 <p className="name">UNIQLO: Imaginary Service</p>
                 <p className="say">UNIQLO の架空サービス<span className="wk-ph">「服自販機」を、</span><span className="wk-ph">映像で見せる。</span></p>

@@ -15,6 +15,7 @@ export default function IntentlayerPage() {
         <Shell id="intentlayer" className={`p-intentlayer ${font.variable}`}>
             <Hero
                 src="/images/works/intentlayer/poster.webp"
+                tall="/images/works/intentlayer/poster-tall.webp"
                 alt="研究室を高い所から見た絵。手前に MR ゴーグルを着けた人が立ち、机で作業する人や休む人がいる"
                 after={<Scan tags={['今は話しかけないで欲しい', '作業中だが雑談歓迎', '話しかけてほしい']} />}
             >

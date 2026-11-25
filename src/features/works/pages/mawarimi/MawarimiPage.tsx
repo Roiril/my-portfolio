@@ -20,7 +20,7 @@ const roles = ['企画/監督　白石', '企画書/動画制作　白石', 'シ
 export default function MawarimiPage() {
     return (
         <Shell id="mawarimi" className={`p-mawarimi ${head.variable} ${body.variable}`}>
-            <Hero src="/images/works/mawarimi/poster.webp" alt="高い所から見た部屋。VR ゴーグルの人から伸びた朱の影が衝立のまわりを回り、日本人形の足もとにつながる">
+            <Hero src="/images/works/mawarimi/poster.webp" tall="/images/works/mawarimi/poster-tall.webp" alt="高い所から見た部屋。VR ゴーグルの人から伸びた朱の影が衝立のまわりを回り、日本人形の足もとにつながる">
                 <h1><Image src="/images/front/mawarimi-title.webp" alt="廻リ視" width={1210} height={531} sizes="(max-width: 900px) 90vw, 46vw" priority /></h1>
                 <p className="say"><Ph text="監視カメラに映る自分を見ながら、現実空間を歩く。" /></p>
                 <p className="award">IVRC2026 総合優勝／DCEXPO賞</p>
