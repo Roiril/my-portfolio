@@ -13,6 +13,8 @@ body:has(.p-whiteout) { background: #0c0c0c; }
 .p-whiteout .title { grid-column: 1 / 4; position: relative; display: grid; place-items: center; background: #0c0c0c; overflow: hidden; isolation: isolate; }
 .p-whiteout h1 { position: relative; z-index: 2; font-family: var(--font-anton), Impact, sans-serif; font-size: calc(344 * var(--u)); line-height: 1; letter-spacing: .012em; color: #fff; mix-blend-mode: difference; white-space: nowrap; }
 .p-whiteout .splash { position: absolute; z-index: 1; left: 50%; top: 50%; width: calc(760 * var(--u)); height: auto; max-width: none; transform: translate(-50%, -50%) rotate(33deg) scale(1.15); }
+/* 題字の反転で赤が水色になるので、しずくだけ題字の上に重ねる */
+.p-whiteout .drop { z-index: 3; }
 .p-whiteout .fast { position: relative; }
 .p-whiteout .fast .wk-clip video { aspect-ratio: 21 / 9; }
 .p-whiteout .fast__copy { position: absolute; right: 0; bottom: 0; width: calc(620 * var(--u)); display: grid; gap: calc(20 * var(--u)); padding: calc(44 * var(--u)) calc(52 * var(--u)); background: #f7f7f5; color: #0c0c0c; }

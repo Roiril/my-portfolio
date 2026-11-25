@@ -23,7 +23,8 @@ export default function WhiteoutPage() {
                 </div>
                 <div className="title">
                     <h1>WHITEOUT</h1>
-                    <Image className="splash" src={`${f}splash.webp`} alt="" width={1100} height={1160} sizes="70vw" priority />
+                    <Image className="splash" src={`${f}splash.webp`} alt="" width={1100} height={1165} sizes="70vw" priority />
+                    <Image className="splash drop" src={`${f}splash-drop.webp`} alt="" width={1100} height={1165} sizes="70vw" priority />
                 </div>
                 <div className="c7 copy">
                     <p className="award">unity1week 楽しさの評価 4.434 / 5</p>

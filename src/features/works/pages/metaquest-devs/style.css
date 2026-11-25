@@ -4,9 +4,9 @@ body:has(.p-devs) { background: #06918c; }
 .p-devs :is(h2, dt) { font-weight: 900; }
 .p-devs .wk-back { right: auto; left: var(--pad); }
 .p-devs .wk-hero { background: #06918c; }
-.p-devs .wk-hero__copy { left: var(--pad); top: calc(58 * var(--u)); width: calc(760 * var(--u)); gap: calc(2 * var(--u)); }
-.p-devs h1 { font-family: var(--font-mq), var(--f-head); font-weight: 400; font-size: calc(96 * var(--u)); line-height: 1; }
-.p-devs .say { font-weight: 900; font-size: max(20px, calc(26 * var(--u))); line-height: 1.5; }
+.p-devs .wk-hero__copy { left: var(--pad); top: calc(50 * var(--u)); width: calc(760 * var(--u)); gap: calc(6 * var(--u)); }
+.p-devs h1 { font-family: var(--font-mq), var(--f-head); font-weight: 400; font-size: calc(88 * var(--u)); line-height: 1; }
+.p-devs .say { margin-top: max(12px, calc(10 * var(--u))); font-weight: 900; font-size: max(20px, calc(26 * var(--u))); line-height: 1.4; }
 .p-devs .panels { padding: calc(40 * var(--u)) var(--pad); background: #000; border-block: calc(12 * var(--u)) solid #fff; }
 .p-devs .panels .all { width: min(100%, calc(1200 * var(--u))); margin-inline: auto; }
 .p-devs .corner { position: relative; }
