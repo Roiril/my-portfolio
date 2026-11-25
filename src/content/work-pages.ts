@@ -47,7 +47,8 @@ export type Page = { tone: Tone; slots: Slot[]; center?: boolean } | { tone: Ton
 
 export type Section =
   | { type: 'spread'; left: Page; right: Page }
-  | { type: 'full'; tone: Tone; slots: Slot[] }
+  // corner は右上に掛ける小さな写真。上の面へ少しはみ出す
+  | { type: 'full'; tone: Tone; slots: Slot[]; corner?: Pic }
   // 図を大きく置き、横に文を添える。図は線をまたぐ
   | { type: 'figure'; tone: Tone; name: string; caption: string; side?: Slot[] }
   // 路線図のように横に長い図
@@ -122,6 +123,13 @@ export const workPages: WorkPageDef[] = [
       {
         type: 'full',
         tone: 'paper',
+        corner: {
+          src: '/images/front/mawarimi-award.webp',
+          alt: 'DCEXPO Prize at IVRC と映したスクリーンの前で、賞状が読み上げられている',
+          w: 660,
+          h: 495,
+          caption: 'DCEXPO賞の授賞式',
+        },
         slots: [
           {
             k: 'voice',

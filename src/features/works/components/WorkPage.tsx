@@ -187,6 +187,12 @@ function SectionBlock({ section }: { section: Section }) {
         case 'full':
             return (
                 <section className="wp-full" data-tone={section.tone}>
+                    {section.corner && (
+                        <figure className="wp-corner">
+                            <Image src={section.corner.src} alt={section.corner.alt} width={section.corner.w} height={section.corner.h} sizes="(max-width: 760px) 62vw, 22vw" />
+                            {section.corner.caption && <figcaption>{section.corner.caption}</figcaption>}
+                        </figure>
+                    )}
                     <Slots slots={section.slots} />
                 </section>
             );

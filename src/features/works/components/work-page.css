@@ -160,6 +160,11 @@
 .wp-post dd { font-family: var(--tall); font-size: max(20px, calc(24 * var(--u))); line-height: 1.2; }
 .wp-post a { justify-self: start; font-weight: 500; text-underline-offset: .28em; text-decoration-thickness: 1px; }
 
+/* 面の右上に掛ける小さな写真。上の面との境目をまたぐ */
+.wp-corner { position: absolute; z-index: 1; top: calc(-64 * var(--u)); right: var(--gutter); width: max(190px, calc(290 * var(--u))); }
+.wp-corner img { width: 100%; height: auto; }
+.wp-corner figcaption { margin-top: .6em; color: var(--sub); font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.65; }
+
 /* 来場した方の投稿。縦の動画の横に本文を置く */
 .wp-post--voice { display: grid; grid-template-columns: max(240px, calc(390 * var(--u))) minmax(0, 1fr); gap: max(24px, calc(72 * var(--u))); align-items: center; width: 100%; max-width: calc(1180 * var(--u)); margin-inline: auto; }
 .wp .wp-post--voice figcaption { gap: 1em; margin-top: 0; }
@@ -168,6 +173,7 @@
 .wp-post__photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(10 * var(--u)); }
 .wp-post__photos img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 @media (max-width: 760px) {
+  .wp .wp-corner { position: relative; top: auto; right: auto; justify-self: end; width: 62%; margin-top: -68px; }
   .wp-post--voice { grid-template-columns: minmax(0, 1fr); max-width: none; }
   .wp-post--voice .wp-post__frame { width: min(100%, 300px); margin-inline: auto; }
   .wp-post__photos { gap: 6px; }
