@@ -1,0 +1,19 @@
+/* 図は 4 色で描いてある。紙面の色へ読み替える */
+.wk-fig { margin: 0; }
+.wk-fig svg { display: block; width: 100%; height: auto; }
+.wk-fig text { font-family: var(--f-body); }
+.wk-fig__tall { display: none; }
+.wk-fig figcaption { margin-top: .8em; font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.65; color: var(--c-sub); }
+@media (max-width: 1180px) {
+  .wk-fig__wide { display: none; }
+  .wk-fig__tall { display: block; }
+  .wk-fig { max-width: 560px; margin-inline: auto; }
+}
+.wk-recolor [fill="#f5f2eb"] { fill: var(--fig-bg, var(--c-bg)); }
+.wk-recolor [fill="#14110e"] { fill: var(--fig-fg, var(--c-fg)); }
+.wk-recolor [stroke="#14110e"] { stroke: var(--fig-fg, var(--c-fg)); }
+.wk-recolor [stroke="#f5f2eb"] { stroke: var(--fig-bg, var(--c-bg)); }
+.wk-recolor [fill="#8b867c"], .wk-recolor [fill="#5c574e"] { fill: var(--fig-sub, var(--c-fg)); }
+.wk-recolor [stroke="#8b867c"], .wk-recolor [stroke="#5c574e"] { stroke: var(--fig-sub, var(--c-fg)); }
+.wk-recolor [fill="#d8321f"], .wk-recolor [fill="#f0503f"] { fill: var(--fig-ac, var(--c-ac)); }
+.wk-recolor [stroke="#d8321f"], .wk-recolor [stroke="#f0503f"] { stroke: var(--fig-ac, var(--c-ac)); }

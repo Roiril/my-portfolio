@@ -1,0 +1,49 @@
+/* 最後のページ。日に焼けた紙、焦げ茶、クレヨンの赤。文字は罫線に乗せる */
+.p-last-page { --back: #f6e4bd; --c-bg: #ead3a2; --c-fg: #41230f; --c-ac: #b4331f; --c-sub: #5b3a20; --c-hair: rgba(65, 35, 15, .4); --f-head: var(--font-lp), "Yu Mincho", serif; --f-body: var(--font-lp), "Yu Mincho", serif; --np-bg: #2a150b; --np-fg: #ead3a2; }
+body:has(.p-last-page) { background: #1a0d08; }
+.p-last-page { font-size: max(16.5px, calc(19 * var(--u))); }
+.p-last-page :is(h1, h2, h3, dt) { font-weight: 600; }
+.p-last-page .wk-hero { color: #f6e4bd; --back: #f6e4bd; background: #1a0d08; }
+.p-last-page .wk-hero__art { aspect-ratio: 16 / 10; }
+.p-last-page .wk-hero__copy { right: var(--pad); top: calc(84 * var(--u)); height: calc(700 * var(--u)); width: calc(620 * var(--u)); gap: calc(10 * var(--u)); text-shadow: 0 0 12px #1a0d08; }
+.p-last-page h1 img { width: calc(600 * var(--u)); }
+.p-last-page .say { margin-top: auto; font-weight: 600; font-size: max(21px, calc(27 * var(--u))); line-height: 1.6; }
+.p-last-page .wk-hero__copy p:not(.say) { font-size: max(14.5px, calc(16 * var(--u))); line-height: 1.7; }
+.p-last-page .crayon { position: relative; }
+.p-last-page .crayon .wk-art { aspect-ratio: 3 / 2; }
+.p-last-page .crayon__copy { position: absolute; z-index: 2; right: var(--pad); top: calc(60 * var(--u)); display: flex; flex-direction: row-reverse; gap: calc(36 * var(--u)); height: calc(400 * var(--u)); writing-mode: horizontal-tb; }
+.p-last-page .crayon h2 { writing-mode: vertical-rl; font-size: max(30px, calc(52 * var(--u))); color: var(--c-ac); }
+.p-last-page .crayon .wk-text { writing-mode: vertical-rl; height: 100%; max-width: none; display: block; line-height: 2.1; }
+.p-last-page .crayon .wk-text p + p { margin-right: 1em; }
+.p-last-page .trailer { padding: max(40px, calc(90 * var(--u))) var(--pad); background: #1a0d08; color: #f6e4bd; }
+.p-last-page .trailer .wk-video { width: min(100%, calc(1120 * var(--u))); margin-inline: auto; }
+.p-last-page .diary { --line: max(34px, calc(46 * var(--u))); display: grid; grid-template-columns: 1fr auto; gap: calc(50 * var(--u)); padding: var(--line) var(--pad) calc(var(--line) * 2); background: repeating-linear-gradient(#0000 0 calc(var(--line) - 1px), rgba(65, 35, 15, .32) calc(var(--line) - 1px) var(--line)) 0 0 / 100% var(--line) local, #ead3a2; }
+.p-last-page .diary h2 { grid-area: 1 / 2; writing-mode: vertical-rl; font-size: max(36px, calc(76 * var(--u))); color: var(--c-ac); line-height: 1.2; }
+.p-last-page .diary .wk-list { grid-area: 1 / 1; gap: var(--line); line-height: var(--line); }
+.p-last-page .diary dt { font-size: max(21px, calc(29 * var(--u))); line-height: var(--line); }
+.p-last-page .diary dd { font-size: max(16.5px, calc(21 * var(--u))); line-height: var(--line); max-width: 40em; }
+.p-last-page .diary--end dt { color: var(--c-ac); }
+.p-last-page .colophon { grid-column: 1 / 3; display: grid; grid-template-columns: 1fr 1fr; gap: calc(40 * var(--u)); padding: calc(34 * var(--u)); background: #ead3a2; border: 2px solid #41230f; }
+.p-last-page .scenes { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; background: #1a0d08; }
+.p-last-page .scenes > * { grid-column: span 3; aspect-ratio: 16 / 9; }
+.p-last-page .scenes .s1 { grid-column: span 6; aspect-ratio: 21 / 9; overflow: hidden; }
+.p-last-page .scenes .s2, .p-last-page .scenes .s3, .p-last-page .scenes .s4 { grid-column: span 2; }
+.p-last-page .ending { position: relative; background: #1a0d08; color: #f6e4bd; }
+.p-last-page .ending .wk-art { aspect-ratio: 16 / 9; }
+.p-last-page .ending__copy { padding: calc(40 * var(--u)) var(--pad) calc(60 * var(--u)); text-align: center; }
+.p-last-page .ending h2 { font-size: max(30px, calc(62 * var(--u))); }
+@media (max-width: 900px) {
+  .p-last-page h1 img { width: 100%; }
+  .p-last-page .wk-hero__copy { height: auto; padding-bottom: 14px; }
+  .p-last-page .wk-hero__art { aspect-ratio: 4 / 3; }
+  .p-last-page .crayon__copy { position: static; display: block; height: auto; padding: 44px var(--pad) 24px; }
+  .p-last-page .crayon h2, .p-last-page .crayon .wk-text, .p-last-page .diary h2 { writing-mode: horizontal-tb; }
+  .p-last-page .crayon .wk-text p + p { margin: .8em 0 0; }
+  .p-last-page .crayon .wk-art img { object-position: 30% 100%; }
+  .p-last-page .crayon .wk-art { aspect-ratio: 5 / 4; }
+  .p-last-page .diary { grid-template-columns: 1fr; gap: var(--line); }
+  .p-last-page .diary h2, .p-last-page .diary .wk-list, .p-last-page .colophon { grid-area: auto; }
+  .p-last-page .diary h2 { line-height: calc(var(--line) * 2); }
+  .p-last-page .colophon { grid-template-columns: 1fr; padding: 20px; }
+  .p-last-page .scenes .s2, .p-last-page .scenes .s3, .p-last-page .scenes .s4, .p-last-page .scenes > * { grid-column: span 6; }
+}

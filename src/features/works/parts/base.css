@@ -1,0 +1,85 @@
+/* 16 の作品ページに共通する下地。色と書体と組み方は各ページの css が決める */
+.wk {
+  --u: calc(100vw / 1440);
+  --pad: max(22px, calc(64 * var(--u)));
+  --c-sub: var(--c-fg);
+  --c-hair: currentColor;
+  position: relative;
+  overflow-x: clip;
+  background: var(--c-bg);
+  color: var(--c-fg);
+  font-family: var(--f-body);
+  font-size: max(15.5px, calc(16.5 * var(--u)));
+  line-height: 1.9;
+  font-feature-settings: "palt";
+  -webkit-text-size-adjust: 100%;
+}
+.wk *, .wk *::before, .wk *::after { box-sizing: border-box; }
+.wk :where(p, h1, h2, h3, dl, dt, dd, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
+.wk :where(ul, ol) { list-style: none; }
+.wk :where(img, video) { display: block; max-width: 100%; height: auto; }
+.wk :where(a) { color: inherit; text-underline-offset: .28em; text-decoration-thickness: 1px; }
+.wk :focus-visible { outline: 3px solid var(--c-ac); outline-offset: 2px; }
+.wk :where(h1, h2, h3) { font-family: var(--f-head); font-weight: 700; line-height: 1.4; word-break: auto-phrase; }
+.wk :where(h2) { font-size: max(27px, calc(50 * var(--u))); }
+.wk :where(h3) { font-size: max(20px, calc(26 * var(--u))); }
+.wk-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.wk-ph { display: inline-block; word-break: auto-phrase; }
+
+.wk-back { position: absolute; z-index: 9; top: max(14px, calc(26 * var(--u))); right: var(--pad); font-size: max(14px, calc(15 * var(--u))); font-weight: 700; line-height: 1.6; color: var(--back, inherit); }
+
+.wk-text { display: grid; gap: .9em; max-width: 36em; }
+.wk-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.wk .wk-links a { display: inline-block; padding: .5em 1.2em; background: var(--l-bg, var(--c-ac)); color: var(--l-fg, var(--c-bg)); font-weight: 700; font-size: max(16px, calc(18 * var(--u))); line-height: 1.5; text-decoration: none; }
+.wk .wk-links a:hover { text-decoration: underline; }
+
+.wk-list { display: grid; gap: max(18px, calc(26 * var(--u))); }
+.wk-list dt { font-family: var(--f-head); font-weight: 700; font-size: max(17px, calc(21 * var(--u))); line-height: 1.5; }
+.wk-list dd { font-size: .95em; line-height: 1.8; max-width: 34em; }
+.wk-nums { display: flex; flex-wrap: wrap; gap: max(16px, calc(24 * var(--u))) max(28px, calc(54 * var(--u))); }
+.wk-nums dd { font-family: var(--f-num, var(--f-head)); font-size: max(44px, calc(84 * var(--u))); line-height: 1.1; color: var(--c-ac); }
+.wk-nums small { margin-left: .18em; font-size: .3em; }
+.wk-nums dt { font-size: max(13.5px, calc(14.5 * var(--u))); line-height: 1.6; max-width: 15em; }
+.wk-stack { display: grid; gap: .5em; max-width: 38em; align-content: start; }
+.wk-stack > div { display: grid; grid-template-columns: 8em 1fr; gap: 1em; padding-top: .5em; border-top: 1px solid var(--c-hair); }
+.wk-stack dt { font-weight: 700; font-size: .93em; }
+.wk-stack dd { font-size: .93em; line-height: 1.7; }
+.wk-note { font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.7; }
+
+.wk-pic { position: relative; }
+.wk-pic img { width: 100%; }
+.wk-pic figcaption, .wk-yt figcaption, .wk-video figcaption { margin-top: .6em; font-size: max(13px, calc(13.5 * var(--u))); line-height: 1.65; }
+/* 面に敷く絵。注記は絵の隅に重ねる */
+.wk-art { position: relative; overflow: hidden; }
+.wk-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.wk-art figcaption { position: absolute; z-index: 2; right: 0; bottom: 0; padding: .2em .8em; background: var(--c-bg); color: var(--c-fg); font-size: max(11.5px, calc(12 * var(--u))); line-height: 1.6; }
+.wk-yt__frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.wk-yt__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.wk-yt--tall .wk-yt__frame { aspect-ratio: 9 / 16; }
+.wk-video video { width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.wk-clip video { width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* 最初の面の下地。PC は絵の上に題字を重ね、狭い画面では題字、絵の順に積む */
+.wk-hero { position: relative; }
+.wk-hero__art { aspect-ratio: 3 / 2; }
+.wk-hero__copy { position: absolute; z-index: 3; display: flex; flex-direction: column; align-items: flex-start; gap: max(10px, calc(16 * var(--u))); }
+@media (max-width: 900px) {
+  .wk.wk .wk-hero__copy { position: static; padding: 60px var(--pad) 26px; width: auto; max-width: none; }
+  .wk-hero__art { aspect-ratio: 5 / 4; }
+}
+
+.wk-np { position: relative; display: grid; grid-template-columns: 1fr 1fr; background: var(--np-bg, var(--c-fg)); color: var(--np-fg, var(--c-bg)); }
+.wk-np a { display: grid; grid-template-columns: 1fr auto; gap: 2px 18px; padding: max(22px, calc(40 * var(--u))) var(--pad); text-decoration: none; min-width: 0; }
+.wk-np a + a { border-left: 1px solid currentColor; }
+.wk-np b { font-family: var(--f-head); font-size: max(18px, calc(24 * var(--u))); line-height: 1.4; overflow-wrap: anywhere; }
+.wk-np a:hover b { text-decoration: underline; text-underline-offset: .25em; }
+.wk-np small { font-size: max(13px, calc(14 * var(--u))); align-self: end; }
+.wk-np img { grid-area: 1 / 2 / 3 / 3; align-self: center; width: max(84px, calc(170 * var(--u))); aspect-ratio: 3 / 2; object-fit: cover; }
+.wk-foot { padding: 12px var(--pad); background: var(--np-bg, var(--c-fg)); color: var(--np-fg, var(--c-bg)); border-top: 1px solid currentColor; font-size: 12.5px; }
+@media (max-width: 900px) {
+  .wk-np { grid-template-columns: 1fr; }
+  .wk-np a + a { border-left: 0; border-top: 1px solid currentColor; }
+}
+@media (max-width: 480px) {
+  .wk-stack > div { grid-template-columns: 6.5em 1fr; }
+}

@@ -1,0 +1,32 @@
+/* Aquarium。実物の橙と水色。白い魚が面をまたぐ */
+.p-aquarium { --c-bg: #f07303; --c-fg: #1c0d03; --c-ac: #b81a10; --c-hair: rgba(28, 13, 3, .45); --f-head: var(--font-aq), "Yu Gothic", sans-serif; --f-body: var(--font-aq-b), "Yu Gothic", sans-serif; font-weight: 500; --np-bg: #1c0d03; --np-fg: #fff; }
+body:has(.p-aquarium) { background: #f07303; }
+.p-aquarium :is(h1, h2, h3, dt) { font-weight: 400; }
+.p-aquarium .wk-back { right: auto; left: var(--pad); }
+.p-aquarium .wk-hero__copy { left: var(--pad); top: calc(96 * var(--u)); width: calc(760 * var(--u)); }
+.p-aquarium h1 { font-size: calc(138 * var(--u)); line-height: 1; color: #fff; }
+.p-aquarium h1 small { display: block; font-size: .42em; margin-top: .25em; color: #1c0d03; }
+.p-aquarium .say { margin-top: calc(14 * var(--u)); font-weight: 900; font-size: max(21px, calc(30 * var(--u))); line-height: 1.5; max-width: 13em; }
+.p-aquarium h2 { font-size: max(30px, calc(56 * var(--u))); }
+.p-aquarium .real { display: grid; grid-template-columns: 1.5fr 1fr; }
+.p-aquarium .real .wk-art { min-height: calc(720 * var(--u)); background: #f07e00; }
+.p-aquarium .real > div { display: grid; gap: calc(26 * var(--u)); align-content: center; padding: max(40px, calc(64 * var(--u))); background: #fff; }
+.p-aquarium .rules { padding: max(44px, calc(80 * var(--u))) var(--pad); background: #f5f2eb; text-align: center; }
+.p-aquarium .rules .wk-fig { max-width: calc(1180 * var(--u)); margin: calc(30 * var(--u)) auto 0; }
+.p-aquarium .tanks { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; background: #75d6ff; }
+.p-aquarium .tanks .wk-pic { height: calc(540 * var(--u)); }
+.p-aquarium .tanks img { width: 100%; height: 100%; object-fit: cover; }
+.p-aquarium .tanks .k4 { background: #f07e00; }
+.p-aquarium .swim { display: grid; grid-template-columns: 1.5fr 1fr; gap: calc(60 * var(--u)); align-items: center; padding: max(44px, calc(100 * var(--u))) var(--pad); }
+.p-aquarium .swim > div { display: grid; gap: calc(28 * var(--u)); }
+@media (max-width: 900px) {
+  .p-aquarium h1 { font-size: 17vw; }
+  .p-aquarium .wk-hero__art { aspect-ratio: 1; }
+  .p-aquarium .wk-hero__art img { object-position: 82% 50%; }
+  .p-aquarium .real, .p-aquarium .swim { grid-template-columns: 1fr; gap: 0; }
+  .p-aquarium .real .wk-art { min-height: 0; aspect-ratio: 3 / 2; }
+  .p-aquarium .swim { gap: 34px; }
+  .p-aquarium .rules .wk-fig { max-width: 560px; }
+  .p-aquarium .tanks { grid-template-columns: 1fr 1fr; }
+  .p-aquarium .tanks .wk-pic { height: 44vw; }
+}

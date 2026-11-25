@@ -1,0 +1,62 @@
+/* 廻リ視。墨、朱、骨の 3 色。朱の帯が紙面を回る */
+.p-mawarimi { --c-bg: #080606; --c-fg: #e8dcc5; --c-ac: #cf2a20; --c-sub: #bfb39c; --c-hair: rgba(232, 220, 197, .35); --f-head: var(--font-mw), "Yu Mincho", serif; --f-body: var(--font-mw-b), "Yu Gothic", sans-serif; --np-bg: #080606; --np-fg: #e8dcc5; --l-bg: #b81c16; --l-fg: #fff; }
+body:has(.p-mawarimi) { background: #080606; }
+.p-mawarimi .wk-hero__copy { left: var(--pad); top: calc(38 * var(--u)); width: calc(590 * var(--u)); }
+.p-mawarimi h1 img { width: calc(620 * var(--u)); max-width: none; margin-left: calc(-14 * var(--u)); }
+.p-mawarimi .wk-back { padding: 0 .7em; background: #080606; }
+.p-mawarimi .say { font-family: var(--f-head); font-weight: 800; font-size: max(21px, calc(26 * var(--u))); line-height: 1.6; }
+.p-mawarimi .award { padding: .1em .7em; background: var(--c-fg); color: #080606; font-family: var(--f-head); font-weight: 800; font-size: max(17px, calc(23 * var(--u))); }
+.p-mawarimi .meta { font-size: max(14px, calc(15 * var(--u))); max-width: 24em; }
+.p-mawarimi .voice { --c-fg: #14100d; --c-sub: #574c40; --c-hair: rgba(20, 16, 13, .3); position: relative; z-index: 2; padding: max(40px, calc(84 * var(--u))) var(--pad); background: #e8dcc5; color: var(--c-fg); border-top: calc(14 * var(--u)) solid #b81c16; }
+
+.p-mawarimi .laps { position: relative; --c-bg: #080606; background: #b1160f; }
+.p-mawarimi .laps .wk-art { aspect-ratio: 3 / 2; }
+.p-mawarimi .laps__copy { position: absolute; z-index: 2; left: var(--pad); top: calc(96 * var(--u)); width: calc(440 * var(--u)); display: grid; gap: max(20px, calc(34 * var(--u))); color: #fbeed8; }
+.p-mawarimi .laps h2 { font-weight: 800; font-size: max(34px, calc(66 * var(--u))); line-height: 1.3; }
+.p-mawarimi .laps .wk-nums { gap: calc(16 * var(--u)) calc(40 * var(--u)); }
+.p-mawarimi .laps .wk-nums dd { font-weight: 800; color: #080606; font-size: max(54px, calc(108 * var(--u))); }
+
+.p-mawarimi .cams { position: relative; height: calc(1000 * var(--u)); }
+.p-mawarimi .cams__loop { position: absolute; inset: 0; width: 100%; height: 100%; color: #b1160f; }
+.p-mawarimi .cam { position: absolute; }
+.p-mawarimi .cam figcaption { position: absolute; left: 0; top: 0; margin: 0; padding: .1em .7em; background: #080606; }
+.p-mawarimi .cam.a { left: calc(64 * var(--u)); top: calc(70 * var(--u)); width: calc(560 * var(--u)); }
+.p-mawarimi .cam.b { right: calc(64 * var(--u)); top: calc(250 * var(--u)); width: calc(620 * var(--u)); }
+.p-mawarimi .cam.c { left: calc(200 * var(--u)); top: calc(560 * var(--u)); width: calc(660 * var(--u)); }
+
+.p-mawarimi .films { position: relative; display: grid; grid-template-columns: 1.5fr 1fr; gap: calc(40 * var(--u)); align-items: end; padding: max(30px, calc(60 * var(--u))) var(--pad) max(48px, calc(100 * var(--u))); }
+.p-mawarimi .path { display: grid; grid-template-columns: 1.35fr 1fr; gap: calc(48 * var(--u)); align-items: center; padding: max(40px, calc(40 * var(--u))) var(--pad); background: #0b0908; }
+.p-mawarimi .path__text { display: grid; gap: max(18px, calc(26 * var(--u))); }
+.p-mawarimi .path .wk-list { counter-reset: n; }
+.p-mawarimi .path dt::before { counter-increment: n; content: counter(n); display: inline-grid; place-items: center; width: 1.6em; margin-right: .6em; background: #b1160f; color: #fff; }
+
+.p-mawarimi .tate { display: grid; grid-template-columns: 1fr auto; gap: calc(70 * var(--u)); padding: max(48px, calc(110 * var(--u))) var(--pad); background: #e8dcc5; color: #14100d; }
+.p-mawarimi .tate h2 { grid-area: 1 / 2; writing-mode: vertical-rl; font-weight: 800; font-size: max(34px, calc(72 * var(--u))); color: #b1160f; }
+.p-mawarimi .tate .wk-list { grid-area: 1 / 1; display: flex; flex-direction: row-reverse; justify-content: space-between; gap: calc(40 * var(--u)); }
+.p-mawarimi .tate .wk-list > div { writing-mode: vertical-rl; height: calc(440 * var(--u)); padding-right: calc(24 * var(--u)); border-right: 2px solid #b1160f; }
+.p-mawarimi .tate dt { font-weight: 800; font-size: max(20px, calc(27 * var(--u))); }
+.p-mawarimi .tate dd { margin-right: 1em; max-width: none; line-height: 2; }
+
+.p-mawarimi .record { display: grid; grid-template-columns: 1.1fr 1fr 1.1fr; gap: calc(60 * var(--u)); padding: max(48px, calc(100 * var(--u))) var(--pad); background: #b1160f; color: #fbeed8; --c-hair: rgba(251, 238, 216, .5); }
+.p-mawarimi .record > div { display: grid; gap: max(14px, calc(18 * var(--u))); align-content: start; }
+.p-mawarimi .record dd, .p-mawarimi .record li { color: #fbeed8; }
+.p-mawarimi .record li { font-size: .95em; }
+@media (max-width: 900px) {
+  .p-mawarimi h1 img { width: 100%; }
+  .p-mawarimi .wk-hero__art { margin-top: -8vw; }
+  .p-mawarimi .wk-hero__copy { position: relative; }
+  .p-mawarimi .wk-hero__art img { object-position: 85% 50%; }
+  .p-mawarimi .laps__copy { position: static; width: auto; padding: 48px var(--pad) 26px; }
+  .p-mawarimi .laps .wk-art { aspect-ratio: 1; }
+  .p-mawarimi .laps .wk-art img { object-position: 88% 50%; }
+  .p-mawarimi .cams { height: 200vw; }
+  .p-mawarimi .cam.a { left: 0; top: 12vw; width: 84%; }
+  .p-mawarimi .cam.b { right: 0; top: 82vw; width: 88%; }
+  .p-mawarimi .cam.c { left: 0; top: 148vw; width: 82%; }
+  .p-mawarimi .films, .p-mawarimi .path, .p-mawarimi .record { grid-template-columns: 1fr; gap: 34px; }
+  .p-mawarimi .tate { grid-template-columns: 1fr; }
+  .p-mawarimi .tate h2 { grid-area: auto; writing-mode: horizontal-tb; }
+  .p-mawarimi .tate .wk-list { grid-area: auto; display: grid; gap: 26px; }
+  .p-mawarimi .tate .wk-list > div { writing-mode: horizontal-tb; height: auto; padding: 0 0 0 16px; border: 0; border-left: 3px solid #b1160f; }
+  .p-mawarimi .tate dd { margin: .3em 0 0; }
+}

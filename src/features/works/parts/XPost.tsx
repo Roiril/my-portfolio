@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import type { Pic } from '@/content/work-pages';
+import type { Pic } from './types';
+import './xpost.css';
 
 // X の投稿を見開きの中に置く（サーバーコンポーネント）。
 // 公式の埋め込み（widgets.js）は、ブラウザの設定によって高さ 0 のまま表示されないことがあったので使わない。
@@ -42,9 +43,9 @@ export default async function XPost({ url, title, caption, stats }: { url: strin
     const { media, mp4, ratio, text } = await readPost(url);
 
     return (
-        <figure className="wp-post">
+        <figure className="wk-post">
             {mp4 ? (
-                <div className="wp-post__frame" style={{ aspectRatio: ratio }}>
+                <div className="wk-post__frame" style={{ aspectRatio: ratio }}>
                     <video controls preload="none" playsInline poster={media?.media_url_https} aria-label={title}>
                         <source src={mp4.url} type="video/mp4" />
                     </video>
@@ -61,7 +62,7 @@ export default async function XPost({ url, title, caption, stats }: { url: strin
                         ))}
                     </dl>
                 )}
-                <a href={url} target="_blank" rel="noopener noreferrer">X で投稿を見る<span aria-hidden="true"> ↗</span><span className="wp-sr">（新しいタブで開きます）</span></a>
+                <a href={url} target="_blank" rel="noopener noreferrer">X で投稿を見る<span aria-hidden="true"> ↗</span><span className="wk-sr">（新しいタブで開きます）</span></a>
             </figcaption>
         </figure>
     );
@@ -74,29 +75,29 @@ export async function XVoice({ url, title, photos, award }: { url: string; title
     const posted = tweet && new Date(tweet.created_at).toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'long', day: 'numeric' });
 
     return (
-        <div className="wp-voice">
-            <h2 className="wp-voice__head">{title.map((t) => <span key={t} className="wp-phrase">{t}</span>)}</h2>
-            <figure className="wp-voice__award">
+        <div className="wk-voice">
+            <h2 className="wk-voice__head">{title.map((t) => <span key={t} className="wk-ph">{t}</span>)}</h2>
+            <figure className="wk-voice__award">
                 <Image src={award.src} alt={award.alt} width={award.w} height={award.h} sizes="(max-width: 760px) 46vw, 24vw" />
                 {award.caption && <figcaption>{award.caption}</figcaption>}
             </figure>
             {mp4 && (
-                <div className="wp-voice__video" style={{ aspectRatio: ratio }}>
+                <div className="wk-voice__video" style={{ aspectRatio: ratio }}>
                     <video controls preload="none" playsInline poster={media?.media_url_https} aria-label={title.join(' ')}>
                         <source src={mp4.url} type="video/mp4" />
                     </video>
                 </div>
             )}
-            <div className="wp-voice__text">
+            <div className="wk-voice__text">
                 {text && <blockquote cite={url}>{text}</blockquote>}
-                <p className="wp-voice__by">
+                <p className="wk-voice__by">
                     {tweet?.user && <span>{tweet.user.name}（@{tweet.user.screen_name}）さん</span>}
                     {posted && <span>{posted}</span>}
-                    <a href={url} target="_blank" rel="noopener noreferrer">X で投稿を見る<span aria-hidden="true"> ↗</span><span className="wp-sr">（新しいタブで開きます）</span></a>
+                    <a href={url} target="_blank" rel="noopener noreferrer">X で投稿を見る<span aria-hidden="true"> ↗</span><span className="wk-sr">（新しいタブで開きます）</span></a>
                 </p>
             </div>
             {pictures.length > 0 && (
-                <div className="wp-voice__photos">
+                <div className="wk-voice__photos">
                     {pictures.map((m, i) => (
                         // X の配信画像をそのまま出す
                         // eslint-disable-next-line @next/next/no-img-element

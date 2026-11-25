@@ -1,0 +1,29 @@
+/* AI Generated Music Video。葡萄酒と薄桃の 2 版 */
+.p-mv { --c-bg: #5f1026; --c-fg: #f6c9c0; --c-ac: #f6c9c0; --c-hair: rgba(246, 201, 192, .5); --f-head: var(--font-mv), var(--font-mv-j), "Yu Mincho", serif; --f-body: var(--font-mv-j), "Yu Mincho", serif; font-weight: 500; --np-bg: #f6b3a8; --np-fg: #2c0713; }
+body:has(.p-mv) { background: #5f1026; }
+.p-mv :is(h2, dt) { font-weight: 800; }
+.p-mv .wk-hero__copy { left: var(--pad); top: calc(56 * var(--u)); width: calc(780 * var(--u)); }
+.p-mv h1 { font-weight: 400; font-size: calc(94 * var(--u)); line-height: 1.04; white-space: nowrap; }
+.p-mv .wk-back { background: #5f1026; padding: 0 .6em; }
+.p-mv .say { font-weight: 800; font-size: max(21px, calc(27 * var(--u))); line-height: 1.6; max-width: 14em; }
+.p-mv .main { padding: calc(80 * var(--u)) calc(150 * var(--u)); background: repeating-linear-gradient(90deg, #f6b3a8 0 calc(48 * var(--u)), #1a080e calc(48 * var(--u)) calc(96 * var(--u))); }
+.p-mv .bands { display: grid; grid-template-columns: 1.5fr 1fr; align-items: stretch; background: #1a080e; }
+.p-mv .bands .wk-art { min-height: calc(700 * var(--u)); }
+.p-mv .bands .wk-yt { width: calc(340 * var(--u)); min-width: 240px; margin: calc(50 * var(--u)) auto; }
+.p-mv .desk { position: relative; }
+.p-mv .desk .wk-art { aspect-ratio: 3 / 2; }
+.p-mv .desk__copy { position: absolute; z-index: 2; left: var(--pad); top: 50%; transform: translateY(-50%); width: calc(450 * var(--u)); display: grid; gap: calc(24 * var(--u)); }
+.p-mv .desk h2 { font-size: max(28px, calc(50 * var(--u))); }
+.p-mv .route { --c-sub: #f1ebe2; padding: max(44px, calc(80 * var(--u))) calc(130 * var(--u)); background: #0b0908; }
+@media (max-width: 900px) {
+  .p-mv h1 { font-size: 13.6vw; }
+  .p-mv .wk-hero__art { aspect-ratio: 1; }
+  .p-mv .wk-hero__art img { object-position: 88% 50%; }
+  .p-mv .main { padding: 34px 20px; }
+  .p-mv .bands { grid-template-columns: 1fr; }
+  .p-mv .bands .wk-art { min-height: 0; aspect-ratio: 7 / 5; }
+  .p-mv .desk__copy { position: static; transform: none; width: auto; padding: 44px var(--pad) 16px; }
+  .p-mv .desk .wk-art { aspect-ratio: 1; }
+  .p-mv .desk .wk-art img { object-position: 100% 50%; }
+  .p-mv .route { padding-inline: var(--pad); }
+}
