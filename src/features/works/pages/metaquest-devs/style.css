@@ -32,7 +32,11 @@ body:has(.p-devs) { background: #06918c; }
 @media (min-width: 901px) and (max-width: 1279px) {
   .p-devs .wk-hero__copy { top: 46px; }
   .p-devs h1 { font-size: calc(80 * var(--u)); }
-  .p-devs .say { margin-top: 6px; }
+  .p-devs .say { margin-top: 12px; }
   .p-devs .corner .wk-art { aspect-ratio: 2; }
   .p-devs .corner .wk-art img { object-position: 50% 100%; }
+}
+@media (min-width: 901px) and (max-width: 1099px) {
+  .p-devs .wk-hero__art { aspect-ratio: 1.36; }
+  .p-devs .wk-hero__art img { object-position: 0 50%; }
 }
